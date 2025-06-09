@@ -1,6 +1,6 @@
 import { PrimaryButton } from "../components/base/Button";
 import { TextInput, TextInputWithLabels } from "../components/base/Input";
-
+import { FeedProfileImage, CrewProfileImage, MemberProfileImage } from "../components/profile/ProfileImage";
 
 const HomePage = () => {
     return (
@@ -23,6 +23,18 @@ const HomePage = () => {
                 <div>
                     <h4>TextInputWithLabels</h4>
                     <TextInputWithLabels />
+                </div>
+                <div>
+                    <h4>Feed Profile Image</h4>
+                    <FeedProfileImage/>
+                </div>
+                <div>
+                    <h4>Crew Profile Image</h4>
+                    <CrewProfileImage/>
+                </div>
+                <div>
+                    <h4>Member Profile Image</h4>
+                    <MemberProfileImage/>
                 </div>
             </div>
         </div>

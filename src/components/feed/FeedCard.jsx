@@ -1,8 +1,7 @@
 import feedCardStyle from './FeedCard.module.css'
 
-import BaseProfileImage from '../../assets/images/base_profile.png'
 import FeedSampleImage from '../../assets/sample_images/feed_sample.webp'
-import ProfileImage from '../profile/ProfileImage';
+import { FeedProfileImage } from '../profile/ProfileImage';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons'
@@ -12,7 +11,7 @@ const FeedCard = (props) => {
     return (
         <div className={feedCardStyle.container}>
             <div className={feedCardStyle.writer_row}>
-                <ProfileImage profileUrl={props.writerProfileUrl}/>
+                <FeedProfileImage profileUrl={props.writerProfileUrl} />
                 <span>{props.writerNickname}</span>
                 <div>⋯</div>
             </div>
