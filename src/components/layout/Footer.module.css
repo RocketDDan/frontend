@@ -1,0 +1,12 @@
+.container {
+    margin: 0 50px;
+    padding: 20px;
+    border-top: 1px solid #000;
+    text-align: center;
+    font-size: 14px;
+    background: #fff;
+}
+
+.bottom {
+    margin-top: 10px;
+}

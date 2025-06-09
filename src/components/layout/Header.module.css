@@ -1,0 +1,64 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 3rem;
+    padding-bottom: 1rem;
+    background: white;
+    border-bottom: 1px solid #ccc;
+}
+
+.up {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.desktopNav {
+    display: flex;
+    gap: 1rem;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: black;
+}
+
+/* 메뉴 */
+.down {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.down span a {
+    text-decoration: none;
+    color: black;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+    .desktopNav {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .down {
+        display: none;
+        flex-direction: column;
+    }
+
+    .down.open {
+        display: flex;
+    }
+}
