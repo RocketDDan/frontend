@@ -1,0 +1,14 @@
+.container {
+    text-align: center;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.big {
+    font-size: 18px;
+    padding: 20px 40px;
+    border-radius: 15px;
+}
