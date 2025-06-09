@@ -2,6 +2,19 @@
   text-align: center;
 }
 
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.router-container {
+  flex: 1;
+  overflow-y: auto;
+  /* TODO: padding, margin 고민 (스크롤 바 위치 차이) */
+  padding: 0 3rem; 
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +48,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
