@@ -1,0 +1,7 @@
+.contianer {
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    position: relative;
+}
