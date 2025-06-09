@@ -1,8 +1,10 @@
 import { Routes, Route } from "react-router-dom";
+// Component 확인 페이지
+import ComponentPage from "../page/ComponentPage"
 
 // 관리자 (admin)
-import MemberListPage from "../page/admin/MemberListPage.jsx"
-import MemberUpdatePage from "../page/admin/MemberUpdatePage.jsx"
+import MemberListPage from "../page/admin/MemberListPage"
+import MemberUpdatePage from "../page/admin/MemberUpdatePage"
 
 // 공지 (announcement)
 import AnnouncementListPage from "../page/announcement/AnnouncementListPage";
@@ -16,6 +18,7 @@ import AccountSettingPage from "../page/auth/AccountSettingPage";
 
 // 크루 (crew)
 import CrewProfilePage from "../page/crew/CrewProfilePage";
+import CrewListPage from "../page/crew/CrewListPage";
 
 // 피드 (feed)
 import FeedListPage from "../page/feed/FeedListPage";
@@ -31,6 +34,9 @@ import HomePage from "../page/HomePage"
 const Router = () => {
     return (
         <Routes>
+            {/* 컴포넌트 확인 */}
+            <Route path="/component" element={<ComponentPage/>} />
+
             {/* 관리자 */}
             <Route path="/admin/member/list" element={<MemberListPage/>} />
             <Route path="/admin/member/:memberId/update" element={<MemberUpdatePage/>} />
@@ -47,6 +53,7 @@ const Router = () => {
 
             {/* 크루 */}
             <Route path="/crew/profile" element={<CrewProfilePage/>} />
+            <Route path="/crew/list" element={<CrewListPage/>} />
 
             {/* 피드 */}
             <Route path="/feed/list" element={<FeedListPage/>} />
