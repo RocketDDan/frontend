@@ -32,8 +32,9 @@ const Header = () => {
             {/* 메뉴 */}
             <div className={`${headerStyle.down} ${menuOpen ? headerStyle.open : ''}`}>
                 <span><Link to="/feed/list">피드</Link></span>
-                <span><Link to="/crew/profile">크루</Link></span>
-                <span><Link to="#">러닝 대회</Link></span>
+                <span><Link to="/crew/list">크루</Link></span>
+                <span><Link to="/runner/list">러너</Link></span>
+                <span><Link to="/component">컴포넌트 확인</Link></span>
             </div>
         </header>
     );
