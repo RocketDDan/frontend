@@ -1,21 +1,63 @@
 import { Routes, Route } from "react-router-dom";
 
-import LoginPage from "../page/member/LoginPage";
+// 관리자 (admin)
+import MemberListPage from "../page/admin/MemberListPage.jsx"
+import MemberUpdatePage from "../page/admin/MemberUpdatePage.jsx"
+
+// 공지 (announcement)
+import AnnouncementListPage from "../page/announcement/AnnouncementListPage";
+import AnnouncementUploadPage from "../page/announcement/AnnouncementUploadPage";
+import AnnouncementUpdatePage from "../page/announcement/AnnouncementUpdatePage";
+
+// 멤버 인증/인가 (auth)
+import SignupPage from "../page/auth/SignupPage";
+import LoginPage from "../page/auth/LoginPage";
+import AccountSettingPage from "../page/auth/AccountSettingPage";
+
+// 크루 (crew)
 import CrewProfilePage from "../page/crew/CrewProfilePage";
+
+// 피드 (feed)
 import FeedListPage from "../page/feed/FeedListPage";
+import FeedUploadPage from "../page/feed/FeedUploadPage";
+import FeedUpdatePage from "../page/feed/FeedUpdatePage";
+
+// 러너 (runner)
+import RunnerListPage from "../page/runner/RunnerListPage"
+
+// 홈 (home)
 import HomePage from "../page/HomePage"
 
 const Router = () => {
     return (
         <Routes>
-            {/* 홈 */}
-            <Route path="/" element={<HomePage/>} />
-            {/* 멤버 */}
+            {/* 관리자 */}
+            <Route path="/admin/member/list" element={<MemberListPage/>} />
+            <Route path="/admin/member/:memberId/update" element={<MemberUpdatePage/>} />
+
+            {/* 공지 */}
+            <Route path="/announcement/list" element={<AnnouncementListPage/>} />
+            <Route path="/announcement/upload" element={<AnnouncementUploadPage/>} />
+            <Route path="/announcement/:announcementId/update" element={<AnnouncementUpdatePage/>} />
+
+            {/* 멤버 인증/인가 */}
+            <Route path="/signup" element={<SignupPage/>} />
             <Route path="/login" element={<LoginPage/>} />
-            {/* 피드 */}
-            <Route path="/feed/list" element={<FeedListPage/>} />
+            <Route path="/account/setting" element={<AccountSettingPage/>} />
+
             {/* 크루 */}
             <Route path="/crew/profile" element={<CrewProfilePage/>} />
+
+            {/* 피드 */}
+            <Route path="/feed/list" element={<FeedListPage/>} />
+            <Route path="/feed/upload" element={<FeedUploadPage/>} />
+            <Route path="/feed/:feedId/update" element={<FeedUpdatePage/>} />
+
+            {/* 러너 */}
+            <Route path="/runner/list" element={<RunnerListPage/>} />
+
+            {/* 홈 */}
+            <Route path="/" element={<HomePage/>} />
         </Routes>
     )
 }
