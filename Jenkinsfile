@@ -6,8 +6,8 @@ pipeline {
     }
     
     tools {
-		    nodejs 'NodeJS 16.13.2'
-		}
+        nodejs 'NodeJS 16.13.2'
+    }
 
     environment {
         AWS_ACCESS_KEY_ID     = credentials('AWS-Access-Key')
