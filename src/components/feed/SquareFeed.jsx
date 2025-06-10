@@ -15,4 +15,4 @@ const SquareFeed = (props) => {
     )
 }
 
-export default SquareFeed;
+export { SquareFeed };
