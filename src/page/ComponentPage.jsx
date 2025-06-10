@@ -1,21 +1,19 @@
 import { TextAreaWithLabel, TextInput, TextInputWithLabel } from "../components/base/Input";
+import { SearchBar } from "../components/search_bar/SearchBar";
 import { BasicCheckbox } from "../components/base/Checkbox";
+import { BasicRadio } from "../components/base/Radio";
+import { BasicSelect } from "../components/base/Select";
 import { FeedProfileImage, CrewProfileImage, MemberProfileImage } from "../components/profile/ProfileImage";
 import { PrimaryBigButton, PrimaryButton, SecondaryBigButton, SecondaryButton } from "../components/base/Button";
 import { BasicTable, TableWithNoLine } from "../components/base/Table";
 import { SquareFeed } from "../components/feed/SquareFeed";
 
 import MetamongImage from "../assets/images/metamong.jpeg"
-import Coffee from '../example/Coffee';
-import Number from "../example/Number";
-import { BasicRadio } from "../components/base/Radio";
-import Select from "../example/Select";
-import { BasicSelect } from "../components/base/Select";
-import Calculate from "../example/Calculate";
+
 
 const HomePage = () => {
     return (
-        <div>
+        <div style={{ width: '100%' }}>
             <div style={{
                 textAlign: "start",
                 display: "flex",
@@ -36,6 +34,17 @@ const HomePage = () => {
                     <div style={{ flex: '1' }}>
                         <h4>Text Area With Label</h4>
                         <TextAreaWithLabel />
+                    </div>
+                </div>
+                <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
+
+
+                {/* SearchBar */}
+                <h2>검색창</h2>
+                <div style={{ display: 'flex', justifyContent: 'start', gap: '5rem' }}>
+                    <div style={{ flex: '1' }}>
+                        <h4>검색창</h4>
+                        <SearchBar />
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
@@ -155,12 +164,6 @@ const HomePage = () => {
                     <SquareFeed url={MetamongImage} />
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
-
-                {/* 예제 */}
-                <Coffee />
-                <Number />
-                <Select fruit='apple' />
-                <Calculate/>
             </div>
         </div>
     )
