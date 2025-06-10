@@ -37,7 +37,7 @@ const TextInput = (props) => {
                     onClick={clearInput}
                     style={{
                         position: "absolute",
-                        right: "0px",
+                        right: "0.5rem",
                         top: "0.7rem",
                         cursor: "pointer",
                         color: "#999",
@@ -90,7 +90,7 @@ const TextInputWithLabel = (props) => {
                     onClick={clearInput}
                     style={{
                         position: "absolute",
-                        right: "0px",
+                        right: "0.5rem",
                         top: "2.2rem",
                         cursor: "pointer",
                         color: "#999",
@@ -141,7 +141,7 @@ const TextAreaWithLabel = (props) => {
                     onClick={clearInput}
                     style={{
                         position: "absolute",
-                        right: "0px",
+                        right: "0.5rem",
                         top: "2.2rem",
                         cursor: "pointer",
                         color: "#999",

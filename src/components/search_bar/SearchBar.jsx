@@ -13,7 +13,7 @@ const SearchBar = (props) => {
     const clearInput = () => setValue("");
 
     return (
-        <label className={searchBarStyle.container} style={{ width: props.width || "100%" }}>
+        <label className={searchBarStyle.container} style={{ width: props.width }}>
             <FontAwesomeIcon icon={faSearch} className={searchBarStyle.searchBtn}/>
             <input
                 type="text"

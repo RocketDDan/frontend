@@ -4,6 +4,7 @@
     flex-direction: column;
     gap: 0.3rem;
     position: relative;
+    width: 100%;
 }
 
 input {
@@ -23,7 +24,7 @@ input {
 
 .closeBtn {
     position: absolute;
-    right: 0px;
+    right: 0.5rem;
     top: 0.7rem;
     cursor: pointer;
     color: #999;
