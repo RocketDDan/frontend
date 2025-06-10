@@ -27,7 +27,7 @@ const Header = () => {
         <header className={headerStyle.container}>
             <div className={headerStyle.up}>
                 <h1>
-                    <Link to="/">Runners Hi</Link>
+                    <Link to="/home">Runners Hi</Link>
                 </h1>
 
                 <nav className={headerStyle.desktopNav}>

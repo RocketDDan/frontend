@@ -64,7 +64,7 @@ const Router = () => {
             <Route path="/runner/list" element={<RunnerListPage/>} />
 
             {/* 홈 */}
-            <Route path="/" element={<HomePage/>} />
+            <Route path="/home" element={<HomePage/>} />
         </Routes>
     )
 }
