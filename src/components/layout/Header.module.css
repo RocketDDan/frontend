@@ -18,6 +18,54 @@
     gap: 1rem;
 }
 
+.profileWrapper {
+    position: relative;
+}
+
+.dropdownMenu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 8px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 8px;
+}
+
+.dropdownMenu a {
+    color: #333;
+    text-decoration: none;
+    padding: 4px 8px;
+}
+
+.dropdownMenu a:hover {
+    /* #f5f5f5; */
+    background-color: #7CB2FC;
+    color: white;
+    border-radius: 5px;
+}
+
+.profileContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.nickname {
+    font-weight: bold;
+}
+
+.nim {
+    font-size: smaller;
+}
+
 .hamburger {
     display: none;
     flex-direction: column;
