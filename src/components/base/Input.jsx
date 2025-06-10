@@ -13,12 +13,8 @@ import InputStyle from "./Input.module.css";
  */
 const TextInput = (props) => {
     const [value, setValue] = useState(props.value || "");
-    const handleChange = (e) => {
-        setValue(e.target.value);
-    };
-    const clearInput = () => {
-        setValue("");
-    };
+    const handleChange = (e) => setValue(e.target.value);
+    const clearInput = () => setValue("");
 
     return (
         <span className={InputStyle.container} style={{ width: props.width || "100%" }}>
@@ -41,7 +37,7 @@ const TextInput = (props) => {
                     onClick={clearInput}
                     style={{
                         position: "absolute",
-                        right: "10px",
+                        right: "0px",
                         top: "0.7rem",
                         cursor: "pointer",
                         color: "#999",
@@ -94,7 +90,7 @@ const TextInputWithLabel = (props) => {
                     onClick={clearInput}
                     style={{
                         position: "absolute",
-                        right: "10px",
+                        right: "0px",
                         top: "2.2rem",
                         cursor: "pointer",
                         color: "#999",
@@ -145,7 +141,7 @@ const TextAreaWithLabel = (props) => {
                     onClick={clearInput}
                     style={{
                         position: "absolute",
-                        right: "10px",
+                        right: "0px",
                         top: "2.2rem",
                         cursor: "pointer",
                         color: "#999",
