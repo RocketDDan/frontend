@@ -30,7 +30,7 @@ const Header = () => {
                             <div className={headerStyle.profileContainer} onClick={toggleProfileMenu}>
                                 <LoginMemberProfileImage profileUrl={MetamongImage} />
                                 <span>
-                                    <span className={headerStyle.nickname}>{user.nickname}</span>
+                                    <span className={headerStyle.nickname}>{user.nickname}&nbsp;</span>
                                     <span className={headerStyle.nim}>님</span>
                                 </span>
                                 {/* <Link to="/logout">로그아웃</Link> */}
