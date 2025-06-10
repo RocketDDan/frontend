@@ -18,18 +18,22 @@ const BasicTable = (props) => {
 
     return (
         <table style={{ width: props.width || '100%', }}>
-            <tr className={`${tableStyle.row} ${tableStyle.borderButtom}`}>
-                {headers.map((header, idx) => (
-                    <td key={idx} className={`${tableStyle.row} ${tableStyle.borderButtom}`}>{header}</td>
-                ))}
-            </tr>
-            {data.map((d, rowIdx) => (
-                <tr key={rowIdx} className={`${tableStyle.row} ${tableStyle.borderButtom}`}>
-                    {keys.map((key, colIdx) => (
-                        <td key={colIdx} className={`${tableStyle.row} ${tableStyle.borderButtom}`}>{d[key]}</td>
+            <thead>
+                <tr className={`${tableStyle.row} ${tableStyle.borderButtom}`}>
+                    {headers.map((header, idx) => (
+                        <td key={idx} className={`${tableStyle.row} ${tableStyle.borderButtom}`}>{header}</td>
                     ))}
                 </tr>
-            ))}
+            </thead>
+            <tbody>
+                {data.map((d, rowIdx) => (
+                    <tr key={rowIdx} className={`${tableStyle.row} ${tableStyle.borderButtom}`}>
+                        {keys.map((key, colIdx) => (
+                            <td key={colIdx} className={`${tableStyle.row} ${tableStyle.borderButtom}`}>{d[key]}</td>
+                        ))}
+                    </tr>
+                ))}
+            </tbody>
         </table>
     )
 }
@@ -42,18 +46,22 @@ const TableWithNoLine = (props) => {
 
     return (
         <table style={{ width: props.width || '100%', }}>
-            <tr className={tableStyle.row}>
-                {headers.map((header, idx) => (
-                    <td key={idx} className={tableStyle.row}>{header}</td>
-                ))}
-            </tr>
-            {data.map((d, rowIdx) => (
-                <tr key={rowIdx} className={tableStyle.row}>
-                    {keys.map((key, colIdx) => (
-                        <td key={colIdx} className={tableStyle.row}>{d[key]}</td>
+            <thead>
+                <tr className={tableStyle.row}>
+                    {headers.map((header, idx) => (
+                        <td key={idx} className={tableStyle.row}>{header}</td>
                     ))}
                 </tr>
-            ))}
+            </thead>
+            <tbody>
+                {data.map((d, rowIdx) => (
+                    <tr key={rowIdx} className={tableStyle.row}>
+                        {keys.map((key, colIdx) => (
+                            <td key={colIdx} className={tableStyle.row}>{d[key]}</td>
+                        ))}
+                    </tr>
+                ))}
+            </tbody>
         </table>
     )
 }
