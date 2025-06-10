@@ -1,0 +1,30 @@
+.container {
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    position: relative;
+}
+
+input {
+    padding: 0.7rem 0 0.7rem 2.2rem;
+    border-radius: 10px;
+    border: solid 1px;
+    width: 100%;
+}
+
+.searchBtn {
+    position: absolute;
+    left: 0.7rem;
+    top: 0.7rem;
+    cursor: pointer;
+    color: #999;
+}
+
+.closeBtn {
+    position: absolute;
+    right: 0px;
+    top: 0.7rem;
+    cursor: pointer;
+    color: #999;
+}
