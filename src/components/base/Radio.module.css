@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.radio {
+    width: 16px;
+    height: 16px;
+    accent-color: #007bff;
+    /* 체크 시 색상 (파란색) */
+    cursor: pointer;
+}
+
+.labelText {
+    font-size: 1rem;
+    color: #333;
+}
