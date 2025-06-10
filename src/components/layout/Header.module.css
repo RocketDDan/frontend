@@ -110,3 +110,10 @@
         display: flex;
     }
 }
+
+.activeLink {
+    font-weight: bold;
+    color: #5164ED;
+    border-bottom: 2px solid #5164ED;
+    padding-bottom: 10px;
+}

@@ -1,10 +1,18 @@
+import headerStyle from './Header.module.css';
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import headerStyle from './Header.module.css';
+import { useLocation } from 'react-router-dom';
+
 import { LoginMemberProfileImage } from '../profile/ProfileImage'
+
 import MetamongImage from "../../assets/images/metamong.jpeg"
 
+
 const Header = () => {
+    const location = useLocation();
+    const currentPath = location.pathname;
+
     const [menuOpen, setMenuOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
 
@@ -55,10 +63,18 @@ const Header = () => {
 
             {/* 메뉴 */}
             <div className={`${headerStyle.down} ${menuOpen ? headerStyle.open : ''}`}>
-                <span><Link to="/feed/list">피드</Link></span>
-                <span><Link to="/crew/list">크루</Link></span>
-                <span><Link to="/runner/list">러너</Link></span>
-                <span><Link to="/component">컴포넌트 확인</Link></span>
+                <span><Link
+                    to="/feed/list"
+                    className={currentPath.startsWith("/feed") ? headerStyle.activeLink : ""}>피드</Link></span>
+                <span><Link
+                    to="/crew/list"
+                    className={currentPath.startsWith("/crew") ? headerStyle.activeLink : ""}>크루</Link></span>
+                <span><Link
+                    to="/runner/list"
+                    className={currentPath.startsWith("/runner") ? headerStyle.activeLink : ""}>러너</Link></span>
+                <span><Link
+                    to="/component"
+                    className={currentPath.startsWith("/component") ? headerStyle.activeLink : ""}>컴포넌트 확인</Link></span>
             </div>
         </header>
     );
