@@ -30,6 +30,7 @@ import RunnerListPage from "../page/runner/RunnerListPage"
 
 // 홈 (home)
 import HomePage from "../page/HomePage"
+import NotFoundPage from "../page/NotFoundPage";
 
 const Router = () => {
     return (
@@ -65,6 +66,9 @@ const Router = () => {
 
             {/* 홈 */}
             <Route path="/" element={<HomePage/>} />
+
+            {/* 나머지 경로 */}
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>
     )
 }
