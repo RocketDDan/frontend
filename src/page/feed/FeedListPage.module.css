@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    height: 100%;
+}
+
+.feedList {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.feedList::-webkit-scrollbar {
+    display: none;
+}

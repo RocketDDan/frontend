@@ -1,35 +1,54 @@
+// css
+import feedListStyle from './FeedListPage.module.css';
 // library
 import { useState, useEffect } from "react";
 // api
 import { fetchFeedList } from "../../api/feed.api";
 // dto
-import sampleFeed from "../../dto/feed.dto";
+import SampleFeed from "../../dto/feed.dto";
 // Component
 import FeedCard from "../../components/feed/FeedCard";
+import CommentPanel from '../../components/feed/CommentPanel';
 
 
 const FeedListPage = () => {
 
     const [feedList, setFeedList] = useState([]);
+    const [selectedFeed, setSelectedFeed] = useState(null);
 
     useEffect(() => {
-        fetchFeedList({ page: 1, perPage: 10, scope: "ME", order: "LATEST" })
+        fetchFeedList({ page: 1, perPage: 10, scope: "ALL_EXCEPT_ME", order: "LATEST" })
             .then(data => {
-                console.log('피드 목록:', data);
+                // console.log('피드 목록:', data);
                 setFeedList(data);
-            })
-            .catch(err => {
-                console.error('에러 발생:', err);
-                setFeedList([sampleFeed]);
             });
     }, []);
 
+    const handleCommentClick = (feed) => {
+        console.log("클릭 피드: ", feed);
+        if (selectedFeed == null) {
+            setSelectedFeed(feed);
+        } else {
+            setSelectedFeed(null);
+        }
+    };
+
+    const handleClosePanel = () => {
+        setSelectedFeed(null);
+    };
+
     return (
-        <div>
-            <h1>피드 목록</h1>
-            {feedList.map(feed => <FeedCard {...feed}/>)}
-            {/* <Base>라면,피자, 햄버거</Base> */}
-            {/* <CommentList/> */}
+        <div className={feedListStyle.container}>
+            <div className={feedListStyle.feedList}>
+                {feedList.map(feed =>
+                    <FeedCard
+                        feed={feed}
+                        key={feed.feedId}
+                        onCommentClick={() => handleCommentClick(feed)}
+                    />
+                )}
+            </div>
+            <CommentPanel feed={selectedFeed} onClose={handleClosePanel} />
         </div>
     )
 }
