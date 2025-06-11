@@ -72,6 +72,9 @@ const Header = () => {
                 <span><Link
                     to="/runner/list"
                     className={currentPath.startsWith("/runner") ? headerStyle.activeLink : ""}>러너</Link></span>
+                    <span><Link
+                    to="/announcement/list"
+                    className={currentPath.startsWith("/announcement") ? headerStyle.activeLink : ""}>공지</Link></span>
                 <span><Link
                     to="/component"
                     className={currentPath.startsWith("/component") ? headerStyle.activeLink : ""}>컴포넌트 확인</Link></span>
