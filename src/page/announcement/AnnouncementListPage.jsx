@@ -10,7 +10,7 @@ const AnnouncementListPage = () => {
             <h1>공지 사항</h1>
             <div className={styles.topBar}>
                 <div style={{ width: '300px' }}>
-                    <SearchBar />
+                    <SearchBar placeholder="검색하기"/>
                 </div>
                 <SecondaryButton width="160px" content="새 공지사항 등록" />
             </div>
