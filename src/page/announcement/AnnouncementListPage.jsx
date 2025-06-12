@@ -1,6 +1,6 @@
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { SecondaryButton } from "../../components/base/Button";
-import { TableView } from "../../components/announcement/AnnouncementTable";
+import { TableView } from "../../components/base/AnnouncementTable";
 import styles from "./AnnouncementListPage.module.css"
 
 const AnnouncementListPage = () => {
