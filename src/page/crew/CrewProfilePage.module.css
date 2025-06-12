@@ -1,0 +1,83 @@
+.profileWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  max-width: 1200px;          
+  margin: 10px auto 0 auto;    
+  min-height: 200px;
+}
+
+.profileImg {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #f3f3f3;
+  flex-shrink: 0;
+  display: block;
+}
+
+.infoSection {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  text-align: left;
+}
+
+.crewName {
+  font-size: 2.4rem;
+  font-weight: bold;
+}
+
+.memberCount,
+.region,
+.introduce {
+  font-size: 1.3rem;
+  word-break: keep-all;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.buttonSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  min-width: 120px;
+  height: 120px;
+  margin-left: 16px;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.actionBtn {
+  background: #7CB2FC;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 28px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.actionBtn:hover {
+  background: #5164ed;
+}
+
+.details {
+  display: flex;
+  gap: 16px;
+  font-size: 1rem;
+  color: #666;
+  font-weight: 400;
+}
