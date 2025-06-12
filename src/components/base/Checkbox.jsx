@@ -12,6 +12,7 @@ const BasicCheckbox = ({ content = "", onClick }) => {
     const handleChange = (val) => {
         onClick?.(val);
     }
+
     return (
         <label className={checkboxStyle.container}>
             <input type="checkbox"
