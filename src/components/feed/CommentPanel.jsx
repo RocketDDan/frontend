@@ -4,11 +4,21 @@ import style from './CommentPanel.module.css';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { TextInput } from '../base/Input';
 import { PrimaryButton } from '../base/Button';
+import { useState } from 'react';
 
 const CommentPanel = ({ feed, onClose }) => {
 
-    const handleComment = () => {
+    const [inputValue, setInputValue] = useState("");
+
+    const handleInputChange = (val) => {
+        setInputValue(val);
+    }
+
+    const handleSubmit = () => {
         console.log("클릭");
+        // 댓글 작성
+        console.log(inputValue);
+        setInputValue("");
     }
 
     return feed ? (
@@ -38,11 +48,18 @@ const CommentPanel = ({ feed, onClose }) => {
             </div>
             {/* 댓글 작성 */}
             <div className={style.write}>
-                <TextInput />
-                <PrimaryButton width='30%' content='입력' onClick={handleComment} />
+                <TextInput
+                    // closeBtnVisible={true}
+                    value={inputValue}
+                    placeholder={"댓글 입력"}
+                    onChange={handleInputChange} />
+                <PrimaryButton
+                    width='30%'
+                    content='입력'
+                    onClick={handleSubmit} />
             </div>
         </div>
-    ): null;
+    ) : null;
 }
 
 export default CommentPanel;
