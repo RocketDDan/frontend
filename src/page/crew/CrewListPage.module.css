@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    max-width: 1200px;
+    margin: 20px auto 0 auto;
+} 
+
+.searchHeader {
+    position: sticky;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    background: #fff;
+    padding: 10px 0 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center; /* 가운데 정렬 */
+}
+
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}

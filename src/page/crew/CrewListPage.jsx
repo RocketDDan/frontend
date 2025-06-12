@@ -1,8 +1,63 @@
+import React, { useEffect, useState } from "react";
+import CrewCard from "../../components/crew/CrewCard";
+import sampleCrewList from "../../dto/crewList.dto";
+import styles from './CrewListPage.module.css';
+import { CrewSearchBar } from "../../components/search_bar/CrewSearchBar";
+import RegionSelector from "../../components/base/RegionSelector";
+import { BasicRadio } from "../../components/base/Radio";
+
 const CrewListPage = () => {
-    
+    const [crewList, setCrewList] = useState(Array(15).fill(sampleCrewList)); // 임시
+    const [value, setValue] = useState("");
+    const [region, setRegion] = useState(""); // 지역명(full_addr)
+    const [sort, setSort] = useState("LATEST"); // 정렬 기준
+
+    const handleChange = (e) => {
+        setValue(e.target.value);
+    }
+
+    useEffect(() => {
+        console.log("Selected region:", region);
+    }, [region]);
+
     return (
-        <div>
-            <h1>크루 목록</h1>
+        <div className={styles.pageWrapper}>
+            <div className={styles.searchHeader}>
+                <RegionSelector
+                    region={region}
+                    setRegion={setRegion}
+                />
+                <CrewSearchBar 
+                    width={500} 
+                    placeholder="크루명을 입력해주세요." 
+                    value={value} 
+                    onChange={handleChange}
+                    maxLength={30} // 최대 30자 제한
+                />
+                <BasicRadio
+                    name="crewSort"
+                    value="LATEST"
+                    content="최신순"
+                    defaultChecked={true}
+                />
+                <BasicRadio
+                    name="crewSort"
+                    value="OLDEST"
+                    content="오래된순"
+                    defaultChecked={false}
+                />
+                <BasicRadio
+                    name="crewSort"
+                    value="MEMBER_CNT"
+                    content="크루원수"
+                    defaultChecked={false}
+                />
+            </div>
+            <div className={styles.container}>
+                {crewList.map((crew, index) => (
+                    <CrewCard key={index} crew={crew} />
+                ))}
+            </div>
         </div>
     )
 }

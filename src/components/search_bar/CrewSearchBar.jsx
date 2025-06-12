@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 
-const SearchBar = (props) => {
+const CrewSearchBar = (props) => {
     const [value, setValue] = useState(props.value || "");
     const clearInput = () => setValue("");
 
@@ -19,6 +19,7 @@ const SearchBar = (props) => {
                 onChange={props.onChange} // onChange로 연결
                 placeholder={props.placeholder}
                 style={{ width: props.width }}
+                maxLength={props.maxLength}
             />
             {value && (
                 <FontAwesomeIcon
@@ -31,4 +32,4 @@ const SearchBar = (props) => {
     )
 };
 
-export { SearchBar };
+export { CrewSearchBar };
