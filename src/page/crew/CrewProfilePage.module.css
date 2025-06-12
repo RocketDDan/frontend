@@ -3,9 +3,24 @@
   align-items: center;
   justify-content: center;
   gap: 40px;
-  max-width: 1200px;          
-  margin: 10px auto 0 auto;    
+  margin-top: 10px;
   min-height: 200px;
+}
+
+.crewMemberFeeds {
+  margin-top: 20px;
+  border-bottom: #ccc solid 1px;
+  font-size: 1.3rem;
+  padding: 20px;  
+  text-align: left;
+}
+
+.profileWrapper, .crewMemberFeeds{
+  max-width: 1000px;      /* profileWrapper와 동일하게 */
+  min-width: 750px;       /* profileWrapper와 동일하게 */
+  margin-left: auto;      /* 가운데 정렬 */
+  margin-right: auto;     /* 가운데 정렬 */
+  width: 100%;
 }
 
 .profileImg {
@@ -32,6 +47,7 @@
 .crewName {
   font-size: 2.4rem;
   font-weight: bold;
+  margin-bottom : 15px;
 }
 
 .memberCount,
