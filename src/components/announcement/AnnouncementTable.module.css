@@ -1,0 +1,47 @@
+.tableWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  min-width: 1200px;
+  border-collapse: collapse;
+  font-size: 15px;
+  color: #000;
+  text-align: center;
+}
+
+th,
+td {
+  padding: 16px 12px;
+  border-bottom: 1px solid #e0e0e0;
+  white-space: nowrap;
+}
+
+.wideColumn {
+  min-width: 300px;
+  max-width: 600px;
+  text-align: left;
+  text-align: center;
+}
+
+.th {
+  padding: 16px 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+tr:hover {
+  background-color: #f5f7fa;
+  transition: background-color 0.2s ease;
+}
+
+thead tr:hover {
+  background-color: inherit;
+}
+
+
+
+
