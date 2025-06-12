@@ -1,17 +1,55 @@
-import { TextAreaWithLabel, TextInput, TextInputWithLabel } from "../components/base/Input";
+import { TextAreaWithLabel, TextArea, TextInput, TextInputWithLabel } from "../components/base/Input";
 import { SearchBar } from "../components/search_bar/SearchBar";
 import { BasicCheckbox } from "../components/base/Checkbox";
 import { BasicRadio } from "../components/base/Radio";
 import { BasicSelect } from "../components/base/Select";
 import { FeedProfileImage, CrewProfileImage, MemberProfileImage } from "../components/profile/ProfileImage";
 import { PrimaryBigButton, PrimaryButton, SecondaryBigButton, SecondaryButton } from "../components/base/Button";
-import { BasicTable } from "../components/base/Table";
 import { SquareFeed } from "../components/feed/SquareFeed";
 
 import MetamongImage from "../assets/images/metamong.jpeg"
+import { useState } from "react";
 
 
 const HomePage = () => {
+    const [value1, setValue1] = useState(); // text input
+    const [value2, setValue2] = useState(); // text input with label
+    const [value3, setValue3] = useState(); // textarea 
+    const [value4, setValue4] = useState(); // textarea with label
+    const [value5, setValue5] = useState(); // searchbar
+    const [value6, setValue6] = useState("value2"); // radio
+    const [value7, setValue7] = useState();
+
+    const handleInput1 = (val) => {
+        setValue1(val);
+        console.log("change: ", val)
+    }
+    const handleInput2 = (val) => {
+        setValue2(val);
+        console.log("change: ", val)
+    }
+    const handleInput3 = (val) => {
+        setValue3(val);
+        console.log("change: ", val)
+    }
+    const handleInput4 = (val) => {
+        setValue4(val);
+        console.log("change: ", val)
+    }
+    const handleInput5 = (val) => {
+        setValue5(val);
+        console.log("change: ", val)
+    }
+    const handleInput6 = (val) => {
+        setValue6(val);
+        console.log("change: ", val)
+    }
+    const handleInput7 = (val) => {
+        setValue7(val);
+        console.log("change: ", val)
+    }
+
+
     return (
         <div style={{ width: '100%' }}>
             <div style={{
@@ -25,24 +63,37 @@ const HomePage = () => {
                 <div style={{ display: 'flex', justifyContent: 'start', gap: '5rem' }}>
                     <div style={{ flex: '1' }}>
                         <h4>Text Input</h4>
-                        <TextInput 
-                        width={"100%"} 
-                        placeholder={"placeholder"} 
-                        onChange={(val) => { console.log("change: ", val) }} />
+                        <TextInput
+                            width={"100%"}
+                            value={value1}
+                            placeholder={"placeholder"}
+                            onChange={handleInput1} />
                     </div>
                     <div style={{ flex: '1' }}>
                         <h4>Text Input With Label</h4>
-                        <TextInputWithLabel 
-                        width={"100%"} 
-                        placeholder={"placeholder"} 
-                        onChange={(val) => { console.log("change: ", val) }} />
+                        <TextInputWithLabel
+                            label={"라벨"}
+                            width={"100%"}
+                            value={value2}
+                            placeholder={"placeholder"}
+                            onChange={handleInput2} />
                     </div>
                     <div style={{ flex: '1' }}>
                         <h4>Text Area With Label</h4>
-                        <TextAreaWithLabel 
-                        width={"100%"} 
-                        placeholder={"placeholder"} 
-                        onChange={(val) => { console.log("change: ", val) }} />
+                        <TextArea
+                            width={"100%"}
+                            value={value3}
+                            placeholder={"placeholder"}
+                            onChange={handleInput3} />
+                    </div>
+                    <div style={{ flex: '1' }}>
+                        <h4>Text Area With Label</h4>
+                        <TextAreaWithLabel
+                            label={"라벨"}
+                            width={"100%"}
+                            value={value4}
+                            placeholder={"placeholder"}
+                            onChange={handleInput4} />
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
@@ -54,8 +105,9 @@ const HomePage = () => {
                         <h4>검색창</h4>
                         <SearchBar
                             width={"100%"}
+                            value={value5}
                             placeholder={"placeholder"}
-                            onChange={(val) => { console.log("change: ", val) }} />
+                            onChange={handleInput5} />
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
@@ -77,8 +129,8 @@ const HomePage = () => {
                                 { value: "value1", name: "name1" },
                                 { value: "value2", name: "name2" },
                                 { value: "value3", name: "name3" },]}
-                            defaultValue={"value2"}
-                            onChange={(val) => { console.log("change: ", val) }} />
+                            value={value6}
+                            onChange={handleInput6} />
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
@@ -89,8 +141,8 @@ const HomePage = () => {
                     <div>
                         <h4>Select 태그</h4>
                         <BasicSelect
-                            defaultValue="apple"
-                            onChange={(val) => { console.log("change: ", val) }}
+                            value={value7}
+                            onChange={handleInput7}
                             options={[
                                 { value: "orange", label: "오렌지" },
                                 { value: "apple", label: "사과" },
@@ -124,22 +176,30 @@ const HomePage = () => {
                     <div style={{ flex: '1' }}>
                         <h4>Primary Button</h4>
                         <p>width: 90px</p>
-                        <PrimaryButton width="90px" onClick={() => { console.log("click") }} />
+                        <PrimaryButton 
+                        width="90px" 
+                        onClick={() => { console.log("click") }} />
                     </div>
                     <div style={{ flex: '1' }}>
                         <h4>Secondary Button</h4>
                         <p>width: 120px</p>
-                        <SecondaryButton width="120px" onClick={() => { console.log("click") }} />
+                        <SecondaryButton 
+                        width="120px" 
+                        onClick={() => { console.log("click") }} />
                     </div>
                     <div style={{ flex: '1' }}>
                         <h4>Primary Big Button</h4>
                         <p>width: 120px</p>
-                        <PrimaryBigButton width="120px" onClick={() => { console.log("click") }} />
+                        <PrimaryBigButton 
+                        width="120px" 
+                        onClick={() => { console.log("click") }} />
                     </div>
                     <div style={{ flex: '1' }}>
                         <h4>Secondary Big Button</h4>
                         <p>width: 150px</p>
-                        <SecondaryBigButton width="150px" onClick={() => { console.log("click") }} />
+                        <SecondaryBigButton 
+                        width="150px" 
+                        onClick={() => { console.log("click") }} />
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />

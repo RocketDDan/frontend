@@ -9,17 +9,25 @@ import InputStyle from "./Input.module.css";
  * @component
  * @param {String} width 가로 길이
  * @param {String} placeholder placeholder
- * @param {String} defatultValue defatultValue
+ * @param {String} value value
  * @param {Function} onChange 값이 바뀔 때 이벤트
+ * @param {Boolean} closeBtnVisible 닫기 버튼 여부
  * @returns {JSX.Element} text input 컴퍼넌트
  */
-const TextInput = ({ width = "100%", placeholder = "", defatultValue, onChange }) => {
+const TextInput = ({
+    width = "100%",
+    placeholder = "",
+    value = "",
+    onChange,
+    closeBtnVisible = true,
+}) => {
 
-    const [inValue, setInValue] = useState(defatultValue || "");
+    const handleChange = (e) => {
+        onChange?.(e.target.value);
+    };
 
-    const handleChange = (val) => {
-        setInValue(val);
-        onChange?.(val);
+    const handleClear = () => {
+        onChange?.("");
     };
 
     return (
@@ -27,8 +35,8 @@ const TextInput = ({ width = "100%", placeholder = "", defatultValue, onChange }
             <input
                 type="text"
                 placeholder={placeholder}
-                value={inValue}
-                onChange={(e) => handleChange(e.target.value)}
+                value={value}
+                onChange={handleChange}
                 maxLength={50}
                 style={{
                     padding: "0.7rem 0 0.7rem 0.7rem",
@@ -37,10 +45,10 @@ const TextInput = ({ width = "100%", placeholder = "", defatultValue, onChange }
                     width: "100%",
                 }}
             />
-            {inValue && (
+            {value && closeBtnVisible && (
                 <FontAwesomeIcon
                     icon={faTimes}
-                    onClick={() => handleChange("")}
+                    onClick={handleClear}
                     style={{
                         position: "absolute",
                         right: "0.5rem",
@@ -60,19 +68,29 @@ const TextInput = ({ width = "100%", placeholder = "", defatultValue, onChange }
  * @param {String} placeholder placeholder
  * @param {String} label label
  * @param {String} width 가로 길이
- * @param {String} defatultValue defatultValue
+
+ * @param {String} value value
  * @param {Function} onChange 값이 바뀔 때 이벤트
+ * @param {Boolean} closeBtnVisible 닫기 버튼 여부
  * @returns {JSX.Element} text input 컴퍼넌트
  */
-const TextInputWithLabel = ({ placeholder = "", label = "label", width = "100%", defatultValue, onChange }) => {
+const TextInputWithLabel = ({
+    placeholder = "",
+    label = "label",
+    width = "100%",
+    value,
+    onChange,
+    closeBtnVisible = true,
+}) => {
 
     const id = uuidv7();
 
-    const [inValue, setInValue] = useState(defatultValue || "");
+    const handleChange = (e) => {
+        onChange?.(e.target.value);
+    };
 
-    const handleChange = (val) => {
-        setInValue(val);
-        onChange?.(val);
+    const handleClear = () => {
+        onChange?.("");
     };
 
     return (
@@ -84,8 +102,8 @@ const TextInputWithLabel = ({ placeholder = "", label = "label", width = "100%",
                 id={id}
                 type="text"
                 placeholder={placeholder}
-                value={inValue}
-                onChange={(e) => handleChange(e.target.value)}
+                value={value}
+                onChange={handleChange}
                 maxLength={50}
                 style={{
                     padding: "0.7rem 0 0.7rem 0.7rem",
@@ -94,14 +112,14 @@ const TextInputWithLabel = ({ placeholder = "", label = "label", width = "100%",
                     width: "100%",
                 }}
             />
-            {inValue && (
+            {value && closeBtnVisible && (
                 <FontAwesomeIcon
                     icon={faTimes}
-                    onClick={() => handleChange("")}
+                    onClick={handleClear}
                     style={{
                         position: "absolute",
                         right: "0.5rem",
-                        top: "2.2rem",
+                        top: "2.3rem",
                         cursor: "pointer",
                         color: "#999",
                     }}
@@ -118,29 +136,36 @@ const TextInputWithLabel = ({ placeholder = "", label = "label", width = "100%",
  * @param {String} width 가로 길이
  * @param {String} height 세로 길이
  * @param {String} label label
- * @param {String} defatultValue defatultValue
+ * @param {String} value value
  * @param {Function} onChange 값이 바뀔 때 이벤트
+ * @param {Boolean} closeBtnVisible 닫기 버튼 여부
  * @returns {JSX.Element} textarea 컴퍼넌트
  */
-const TextAreaWithLabel = ({ placeholder = "", width = "100%", height='100%', label="label", defatultValue, onChange }) => {
+const TextArea = ({
+    placeholder = "",
+    width = "100%",
+    height = '100%',
+    value, onChange,
+    closeBtnVisible = true,
+}) => {
 
     const id = uuidv7();
 
-    const [inValue, setInValue] = useState(defatultValue || "");
+    const handleChange = (e) => {
+        onChange?.(e.target.value);
+    };
 
-    const handleChange = (val) => {
-        setInValue(val);
-        onChange?.(val);
+    const handleClear = () => {
+        onChange?.("");
     };
 
     return (
-        <span className={InputStyle.container} style={{ width: width , height: height }}>
-            <label htmlFor={id}>{label}</label>
+        <span className={InputStyle.container} style={{ width: width, height: height }}>
             <textarea
                 id={id}
                 placeholder={placeholder}
-                value={inValue}
-                onChange={(e) => handleChange(e.target.value)}
+                value={value}
+                onChange={handleChange}
                 style={{
                     padding: "0.7rem 0 0.7rem 0.7rem",
                     borderRadius: "8px",
@@ -148,10 +173,73 @@ const TextAreaWithLabel = ({ placeholder = "", width = "100%", height='100%', la
                     width: "100%",
                 }}
             />
-            {inValue && (
+            {value && closeBtnVisible && (
                 <FontAwesomeIcon
                     icon={faTimes}
-                    onClick={() => handleChange("")}
+                    onClick={handleClear}
+                    style={{
+                        position: "absolute",
+                        right: "0.5rem",
+                        top: "0.7rem",
+                        cursor: "pointer",
+                        color: "#999",
+                    }}
+                />
+            )}
+        </span>
+    )
+}
+
+/**
+ * TextArea With Label Component
+ * @component
+ * @param {String} placeholder placeholder
+ * @param {String} width 가로 길이
+ * @param {String} height 세로 길이
+ * @param {String} label label
+ * @param {String} value value
+ * @param {Function} onChange 값이 바뀔 때 이벤트
+ * @param {Boolean} closeBtnVisible 닫기 버튼 여부
+ * @returns {JSX.Element} textarea 컴퍼넌트
+ */
+const TextAreaWithLabel = ({
+    placeholder = "",
+    width = "100%",
+    height = '100%',
+    label = "label",
+    value,
+    onChange,
+    closeBtnVisible = true,
+}) => {
+
+    const id = uuidv7();
+    const handleChange = (e) => {
+        onChange?.(e.target.value);
+    };
+
+    const handleClear = () => {
+        onChange?.("");
+    };
+
+    return (
+        <span className={InputStyle.container} style={{ width: width, height: height }}>
+            <label htmlFor={id}>{label}</label>
+            <textarea
+                id={id}
+                placeholder={placeholder}
+                value={value}
+                onChange={handleChange}
+                style={{
+                    padding: "0.7rem 0 0.7rem 0.7rem",
+                    borderRadius: "8px",
+                    border: "solid 1px",
+                    width: "100%",
+                }}
+            />
+            {value && closeBtnVisible && (
+                <FontAwesomeIcon
+                    icon={faTimes}
+                    onClick={handleClear}
                     style={{
                         position: "absolute",
                         right: "0.5rem",
@@ -165,4 +253,4 @@ const TextAreaWithLabel = ({ placeholder = "", width = "100%", height='100%', la
     )
 }
 
-export { TextInput, TextInputWithLabel, TextAreaWithLabel }
+export { TextInput, TextInputWithLabel, TextArea, TextAreaWithLabel }
