@@ -3,66 +3,41 @@ import tableStyle from './Table.module.css';
 /**
  * 테이블
  * @component
- * @param {Object} props 
- * @param {String} props.width 가로 길이
- * @param {String} props.headers 
- * @param {String} props.keys
- * @param {String} props.data
- * @returns 
+ * @param {String} width 가로 길이
+ * @param {Array} headers 
+ * @param {Array} keys
+ * @param {Array} data
+ * @param {Boolean} headerLine 헤더 아래 선 있는지 여부
+ * @param {Boolean} bodyLine 행마다 선 있는지 여부
+ * @param {Boolean} bodyLastLine 행마다 선 있는지 여부
+ * @returns {JSX.Element} table 컴퍼넌트
  */
-const BasicTable = (props) => {
-
-    const headers = props.headers;
-    const keys = props.keys;
-    const data = props.data;
+const BasicTable = ({ width = '100%', headers = [], keys = [], data = [], headerLine = false, bodyLine = false, bodyLastLine = true }) => {
 
     return (
-        <table style={{ width: props.width || '100%', }}>
+        <table style={{ width: width }}>
             <thead>
-                <tr className={`${tableStyle.row} ${tableStyle.borderButtom}`}>
+                <tr className={`${tableStyle.row} ${headerLine ? tableStyle.borderButtom : ""}`}>
                     {headers.map((header, idx) => (
-                        <td key={idx} className={`${tableStyle.row} ${tableStyle.borderButtom}`}>{header}</td>
+                        <td key={idx} className={`${tableStyle.row}`}>{header}</td>
                     ))}
                 </tr>
             </thead>
             <tbody>
-                {data.map((d, rowIdx) => (
-                    <tr key={rowIdx} className={`${tableStyle.row} ${tableStyle.borderButtom}`}>
-                        {keys.map((key, colIdx) => (
-                            <td key={colIdx} className={`${tableStyle.row} ${tableStyle.borderButtom}`}>{d[key]}</td>
-                        ))}
-                    </tr>
-                ))}
+                {data.map((d, rowIdx) => {
+                    const isLastRow = (rowIdx === data.length - 1);
+                    return (
+                        <tr key={rowIdx} className={`${tableStyle.row} ${bodyLine && !isLastRow ? tableStyle.borderButtom :
+                            bodyLastLine ? tableStyle.borderButtom
+                            : ""}`}>
+                            {keys.map((key, colIdx) => (
+                                <td key={colIdx} className={`${tableStyle.row}`}>{d[key]}</td>
+                            ))}
+                        </tr>
+                    )
+                })}
             </tbody>
         </table>
     )
 }
-
-const TableWithNoLine = (props) => {
-
-    const headers = props.headers;
-    const keys = props.keys;
-    const data = props.data;
-
-    return (
-        <table style={{ width: props.width || '100%', }}>
-            <thead>
-                <tr className={tableStyle.row}>
-                    {headers.map((header, idx) => (
-                        <td key={idx} className={tableStyle.row}>{header}</td>
-                    ))}
-                </tr>
-            </thead>
-            <tbody>
-                {data.map((d, rowIdx) => (
-                    <tr key={rowIdx} className={tableStyle.row}>
-                        {keys.map((key, colIdx) => (
-                            <td key={colIdx} className={tableStyle.row}>{d[key]}</td>
-                        ))}
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    )
-}
-export { BasicTable, TableWithNoLine };
+export { BasicTable };
