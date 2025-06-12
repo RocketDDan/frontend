@@ -68,6 +68,7 @@ const TextInput = ({
  * @param {String} placeholder placeholder
  * @param {String} label label
  * @param {String} width 가로 길이
+
  * @param {String} value value
  * @param {Function} onChange 값이 바뀔 때 이벤트
  * @param {Boolean} closeBtnVisible 닫기 버튼 여부
