@@ -39,18 +39,24 @@ const CrewProfilePage = () => {
     }, [crewId, crew.leader, crew.member]); // 의존성 배열에 crewId 등 추가
 
     return (
-        <div className={styles.profileWrapper}>
-            <img src={crew.profilePath} alt="크루 프로필" className={styles.profileImg} />
-            <div className={styles.infoSection}>
-                <span className={styles.crewName}>{crew.crewName}</span>
-                <div className={styles.introduce}>{crew.introduce}</div>
-                <div className={styles.details}>
-                    <div className={styles.region}>{crew.crewRegion}</div>
-                    <div className={styles.memberCount}><FontAwesomeIcon icon={faPersonRunning} /> {crew.totalMemberCnt}명</div>
+        <div>
+            <div className={styles.profileWrapper}>
+                <img src={crew.profilePath} alt="크루 프로필" className={styles.profileImg} />
+                <div className={styles.infoSection}>
+                    <span className={styles.crewName}>{crew.crewName}</span>
+                    <div className={styles.introduce}>{crew.introduce}</div>
+                    <div className={styles.details}>
+                        <div className={styles.region}>{crew.crewRegion}</div>
+                        <div className={styles.memberCount}><FontAwesomeIcon icon={faPersonRunning} /> {crew.totalMemberCnt}명</div>
+                    </div>
+                </div>
+                <div className={styles.buttonSection}>
+                    <div className={styles.buttonGroup}>{actionButtons}</div>
                 </div>
             </div>
-            <div className={styles.buttonSection}>
-                <div className={styles.buttonGroup}>{actionButtons}</div>
+            <div className={styles.crewMemberFeeds}>
+                <span>크루원들의 피드 모아보기</span>   
+                {/* 크루원들 피드 목록 조회 컴포넌트 추가 */}
             </div>
         </div>
     );
