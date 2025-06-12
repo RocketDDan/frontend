@@ -33,9 +33,14 @@
     padding: 0.5rem 0;
 }
 
-.commentList>* {
+.timeRow {
+    font-size: 0.7rem;
     display: flex;
-    gap: 1rem;
+    justify-content: end;
+}
+.commentRow {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 

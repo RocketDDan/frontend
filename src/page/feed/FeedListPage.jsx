@@ -26,10 +26,12 @@ const FeedListPage = () => {
 
     const handleCommentClick = (feed) => {
         console.log("클릭 피드: ", feed);
-        if (selectedFeed == null) {
+        if (selectedFeed == null) { // 열린 피드가 없으면 열기
             setSelectedFeed(feed);
-        } else {
+        } else if (selectedFeed.feedId == feed.id) {  // 같은 피드면 접기
             setSelectedFeed(null);
+        } else { // 현재 열린 피드와 클릭한 피드가 다르면 열기
+            setSelectedFeed(feed);
         }
     };
 
