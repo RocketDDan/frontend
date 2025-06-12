@@ -4,15 +4,17 @@ import CommonStyle from "../../Common.module.css"
 /**
  * Primary 버튼 컴포넌트
  * @component
- * @param {Object} props
- * @param {String} props.content 버튼 내 글자
- * @param {String} props.width 버튼 가로 길이
- * @returns {JSX.Element} 프로필 이미지 컴포넌트
+ * @param {String} content 글자
+ * @param {String} width 가로 길이
+ * @param {Function} onClick 클릭 이벤트
+ * @returns {JSX.Element} button 컴포넌트
  */
-const PrimaryButton = (props) => {
+const PrimaryButton = ({ content = "버튼", width = '100%', onClick }) => {
     return (
-        <button style={{ width: props.width || '100%' }} className={`${ButtonStyle.container} ${CommonStyle.primaryBg}`}>
-            {props.content || "버튼"}
+        <button style={{ width: width }}
+            className={`${ButtonStyle.container} ${CommonStyle.primaryBg}`}
+            onClick={onClick}>
+            {content}
         </button>
     )
 }
@@ -21,15 +23,17 @@ const PrimaryButton = (props) => {
 /**
  * Secondary 버튼 컴포넌트
  * @component
- * @param {Object} props
- * @param {String} props.content 버튼 내 글자
- * @param {String} props.width 버튼 가로 길이
- * @returns {JSX.Element} 프로필 이미지 컴포넌트
+ * @param {String} content 글자
+ * @param {String} width 가로 길이
+ * @param {Function} onClick 클릭 이벤트
+ * @returns {JSX.Element} button 컴포넌트
  */
-const SecondaryButton = (props) => {
+const SecondaryButton = ({ content = "버튼", width = '100%', onClick }) => {
     return (
-        <button style={{ width: props.width || '100%' }} className={`${ButtonStyle.container} ${CommonStyle.secondaryBg}`} >
-            {props.content || "버튼"}
+        <button style={{ width: width }}
+            className={`${ButtonStyle.container} ${CommonStyle.secondaryBg}`}
+            onClick={onClick}>
+            {content}
         </button>
     )
 }
@@ -37,15 +41,17 @@ const SecondaryButton = (props) => {
 /**
  * Primary Big 버튼 컴포넌트
  * @component
- * @param {Object} props
- * @param {String} props.content 버튼 내 글자
- * @param {String} props.width 버튼 가로 길이
- * @returns {JSX.Element} 프로필 이미지 컴포넌트
+ * @param {String} content 글자
+ * @param {String} width 가로 길이
+ * @param {Function} onClick 클릭 이벤트
+ * @returns {JSX.Element} button 컴포넌트
  */
-const PrimaryBigButton = (props) => {
+const PrimaryBigButton = ({ content = "버튼", width = '100%', onClick }) => {
     return (
-        <button style={{ width: props.width || '100%' }} className={`${ButtonStyle.container} ${ButtonStyle.big} ${CommonStyle.primaryBg}`}>
-            {props.content || "버튼"}
+        <button style={{ width: width }}
+            className={`${ButtonStyle.container} ${ButtonStyle.big} ${CommonStyle.primaryBg}`}
+            onClick={onClick}>
+            {content}
         </button>
     )
 }
@@ -53,15 +59,16 @@ const PrimaryBigButton = (props) => {
 /**
  * Secondary Big 버튼 컴포넌트
  * @component
- * @param {Object} props
- * @param {String} props.content 버튼 내 글자
- * @param {String} props.width 버튼 가로 길이
- * @returns {JSX.Element} 프로필 이미지 컴포넌트
+ * @param {String} content 글자
+ * @param {String} width 가로 길이
+ * @returns {JSX.Element} button 컴포넌트
  */
-const SecondaryBigButton = (props) => {
+const SecondaryBigButton = ({ content = "버튼", width = "100%", onClick }) => {
     return (
-        <button style={{ width: props.width || '100%' }} className={`${ButtonStyle.container} ${ButtonStyle.big} ${CommonStyle.secondaryBg}`}>
-            {props.content || "버튼"}
+        <button style={{ width: width }}
+            className={`${ButtonStyle.container} ${ButtonStyle.big} ${CommonStyle.secondaryBg}`}
+            onClick={onClick}>
+            {content}
         </button>
     )
 }
