@@ -15,6 +15,7 @@ pipeline {
         S3_BUCKET             = 'runners-hi-frontend-app'
         DIST_DIR              = 'build'
         REGION                = 'ap-northeast-2'
+        CLOUDFRONT_DISTRIBUTION_ID = 'E3ER1HUS82QK0A' 
     }
 
     stages {
@@ -41,6 +42,15 @@ pipeline {
                 sh '''
                 echo "🚀 Deploying to S3"
                 aws s3 sync $DIST_DIR s3://$S3_BUCKET --delete --region $REGION
+                '''
+            }
+        }
+
+        stage('Invalidate CloudFront Cache') {
+            steps {
+                sh '''
+                echo "🧹 Invalidating CloudFront Cache"
+                aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
                 '''
             }
         }

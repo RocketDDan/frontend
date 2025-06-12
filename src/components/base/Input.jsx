@@ -6,23 +6,29 @@ import InputStyle from "./Input.module.css";
 
 /**
  * Text Input Component
- * @param {Object} props 
- * @param {String} props.placeholder placeholder
- * @param {String} props.width width
- * @returns 
+ * @component
+ * @param {String} width 가로 길이
+ * @param {String} placeholder placeholder
+ * @param {String} defatultValue defatultValue
+ * @param {Function} onChange 값이 바뀔 때 이벤트
+ * @returns {JSX.Element} text input 컴퍼넌트
  */
-const TextInput = (props) => {
-    const [value, setValue] = useState(props.value || "");
-    const handleChange = (e) => setValue(e.target.value);
-    const clearInput = () => setValue("");
+const TextInput = ({ width = "100%", placeholder = "", defatultValue, onChange }) => {
+
+    const [inValue, setInValue] = useState(defatultValue || "");
+
+    const handleChange = (val) => {
+        setInValue(val);
+        onChange?.(val);
+    };
 
     return (
-        <span className={InputStyle.container} style={{ width: props.width || "100%" }}>
+        <span className={InputStyle.container} style={{ width: width }}>
             <input
                 type="text"
-                placeholder={props.placeholder || ""}
-                value={value}
-                onChange={handleChange}
+                placeholder={placeholder}
+                value={inValue}
+                onChange={(e) => handleChange(e.target.value)}
                 maxLength={50}
                 style={{
                     padding: "0.7rem 0 0.7rem 0.7rem",
@@ -31,10 +37,10 @@ const TextInput = (props) => {
                     width: "100%",
                 }}
             />
-            {value && (
+            {inValue && (
                 <FontAwesomeIcon
                     icon={faTimes}
-                    onClick={clearInput}
+                    onClick={() => handleChange("")}
                     style={{
                         position: "absolute",
                         right: "0.5rem",
@@ -50,32 +56,36 @@ const TextInput = (props) => {
 
 /**
  * Text Input With Label Component
- * @param {Object} props 
- * @param {String} props.placeholder placeholder
- * @param {String} props.width width
- * @returns 
+ * @component
+ * @param {String} placeholder placeholder
+ * @param {String} label label
+ * @param {String} width 가로 길이
+ * @param {String} defatultValue defatultValue
+ * @param {Function} onChange 값이 바뀔 때 이벤트
+ * @returns {JSX.Element} text input 컴퍼넌트
  */
-const TextInputWithLabel = (props) => {
+const TextInputWithLabel = ({ placeholder = "", label = "label", width = "100%", defatultValue, onChange }) => {
+
     const id = uuidv7();
-    const [value, setValue] = useState(props.value || "");
 
-    const handleChange = (e) => {
-        setValue(e.target.value);
-    };
+    const [inValue, setInValue] = useState(defatultValue || "");
 
-    const clearInput = () => {
-        setValue("");
+    const handleChange = (val) => {
+        setInValue(val);
+        onChange?.(val);
     };
 
     return (
-        <span className={InputStyle.container} style={{ width: props.width || "100%" }}>
-            <label htmlFor={id}>{props.label || "label"}</label>
+        <span className={InputStyle.container} style={{ width: width }}>
+            <label htmlFor={id}>
+                {label}
+            </label>
             <input
                 id={id}
                 type="text"
-                placeholder={props.placeholder || ""}
-                value={value}
-                onChange={handleChange}
+                placeholder={placeholder}
+                value={inValue}
+                onChange={(e) => handleChange(e.target.value)}
                 maxLength={50}
                 style={{
                     padding: "0.7rem 0 0.7rem 0.7rem",
@@ -84,10 +94,10 @@ const TextInputWithLabel = (props) => {
                     width: "100%",
                 }}
             />
-            {value && (
+            {inValue && (
                 <FontAwesomeIcon
                     icon={faTimes}
-                    onClick={clearInput}
+                    onClick={() => handleChange("")}
                     style={{
                         position: "absolute",
                         right: "0.5rem",
@@ -103,31 +113,34 @@ const TextInputWithLabel = (props) => {
 
 /**
  * TextArea With Label Component
- * @param {Object} props 
- * @param {String} props.placeholder placeholder
- * @param {String} props.width width
- * @returns 
+ * @component
+ * @param {String} placeholder placeholder
+ * @param {String} width 가로 길이
+ * @param {String} height 세로 길이
+ * @param {String} label label
+ * @param {String} defatultValue defatultValue
+ * @param {Function} onChange 값이 바뀔 때 이벤트
+ * @returns {JSX.Element} textarea 컴퍼넌트
  */
-const TextAreaWithLabel = (props) => {
+const TextAreaWithLabel = ({ placeholder = "", width = "100%", height='100%', label="label", defatultValue, onChange }) => {
+
     const id = uuidv7();
-    const [value, setValue] = useState(props.value || "");
 
-    const handleChange = (e) => {
-        setValue(e.target.value);
-    };
+    const [inValue, setInValue] = useState(defatultValue || "");
 
-    const clearInput = () => {
-        setValue("");
+    const handleChange = (val) => {
+        setInValue(val);
+        onChange?.(val);
     };
 
     return (
-        <span className={InputStyle.container} style={{ width: props.width || "100%" }}>
-            <label htmlFor={id}>{props.label || "label"}</label>
+        <span className={InputStyle.container} style={{ width: width , height: height }}>
+            <label htmlFor={id}>{label}</label>
             <textarea
                 id={id}
-                placeholder={props.placeholder || ""}
-                value={value}
-                onChange={handleChange}
+                placeholder={placeholder}
+                value={inValue}
+                onChange={(e) => handleChange(e.target.value)}
                 style={{
                     padding: "0.7rem 0 0.7rem 0.7rem",
                     borderRadius: "8px",
@@ -135,10 +148,10 @@ const TextAreaWithLabel = (props) => {
                     width: "100%",
                 }}
             />
-            {value && (
+            {inValue && (
                 <FontAwesomeIcon
                     icon={faTimes}
-                    onClick={clearInput}
+                    onClick={() => handleChange("")}
                     style={{
                         position: "absolute",
                         right: "0.5rem",

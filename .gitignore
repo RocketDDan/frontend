@@ -1,7 +1,7 @@
 *.env
 .env.local
 .env
-
+mkcret/
 example/
 
 
@@ -229,3 +229,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,react,macos,windows
+

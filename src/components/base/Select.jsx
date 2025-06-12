@@ -1,22 +1,38 @@
+import { useState } from 'react';
 import selectStyle from './Select.module.css'
 
 
 /**
  * 셀렉트 박스 컴포넌트
- * @param {Object} props 
- * @param {String} props.fruit - 초기 선택값 (기본값: 'orange')
- * @param {String} props.onChange - 실행할 함수
- * @param {String} props.options - 옵션 목록
- * @returns JSX.Element
+ * @component
+ * @param {String} defaultValue 초기 선택값
+ * @param {Function} onChange 실행할 함수
+ * @param {Array} options 옵션 목록
+ * @param {String} options.value 
+ * @param {String} options.label 
+ * @param {String} width 가로 길이
+ * @returns {JSX.Element} select 컴퍼넌트
  */
-const BasicSelect = ({ value, onChange, options = [] }) => {
+const BasicSelect = ({ defaultValue, onChange, options = [], width = "100%" }) => {
+
+    const [inValue, setInValue] = useState(defaultValue || "");
+
+    const handleSelect = (val) => {
+        setInValue(val);
+        onChange?.(val);
+    }
     return (
-        <select
-            className={selectStyle.container}
-            value={value}
-            onChange={e => onChange(e.target.value)}>
+        <select className={selectStyle.container}
+            onChange={e => handleSelect(e.target.value)}
+            style={{ width: width }}
+            value={inValue}>
             {options.map(opt => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                <option
+                    key={opt.value}
+                    value={opt.value}
+                    style={{ width: width }}>
+                    {opt.label}
+                </option>
             ))}
         </select>
     );

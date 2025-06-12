@@ -39,6 +39,7 @@ const CrewProfilePage = () => {
     }, [crewId, crew.leader, crew.member]); // 의존성 배열에 crewId 등 추가
 
     return (
+
         <div>
             <div className={styles.profileWrapper}>
                 <img src={crew.profilePath} alt="크루 프로필" className={styles.profileImg} />

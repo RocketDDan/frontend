@@ -5,25 +5,37 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faSearch } from "@fortawesome/free-solid-svg-icons";
 
+/**
+ * 
+ * @param {String} placeholder placeholder
+ * @param {String} defaultValue 기본 값
+ * @param {String} width 가로 길이
+ * @param {Function} onChange 가로 길이
+ * @returns {JSX.Element} search bar 컴퍼넌트
+ */
+const SearchBar = ({ placeholder = "", defaultValue, width = "100%", onChange }) => {
 
-const SearchBar = (props) => {
-    const [value, setValue] = useState(props.value || "");
-    const clearInput = () => setValue("");
+    const [inValue, setInValue] = useState(defaultValue || "");
+
+    const handleChange = (val) => {
+        setInValue(val);
+        onChange?.(val);
+    }
 
     return (
-        <label className={searchBarStyle.container} style={{ width: props.width }}>
-            <FontAwesomeIcon icon={faSearch} className={searchBarStyle.searchBtn}/>
+        <label className={searchBarStyle.container} style={{ width: width }}>
+            <FontAwesomeIcon icon={faSearch} className={searchBarStyle.searchBtn} />
             <input
                 type="text"
-                value={props.value}
-                onChange={props.onChange} // onChange로 연결
-                placeholder={props.placeholder}
-                style={{ width: props.width }}
+                placeholder={placeholder}
+                value={inValue}
+                onChange={(e) => { handleChange(e.target.value) }}
+                maxLength={50}
             />
-            {value && (
+            {inValue && (
                 <FontAwesomeIcon
                     icon={faTimes}
-                    onClick={clearInput}
+                    onClick={() => { handleChange("") }}
                     className={searchBarStyle.closeBtn}
                 />
             )}

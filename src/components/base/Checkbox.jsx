@@ -1,17 +1,25 @@
 import checkboxStyle from './Checkbox.module.css';
 
 /**
- * 체크 박스
+ * 기본 체크 박스
  * @component
- * @param {Object} props 
- * @param {String} props.content 글자
- * @returns 
+ * @param {String} content 글자 (안쓰면 없음)
+ * @param {Function} onClick 클릭했을 때 이벤트
+ * @returns {JSX.Element} checkbox 컴퍼넌트
  */
-const BasicCheckbox = (props) => {
+const BasicCheckbox = ({ content = "", onClick }) => {
+
+    const handleChange = (val) => {
+        onClick?.(val);
+    }
     return (
         <label className={checkboxStyle.container}>
-            <input type="checkbox" className={checkboxStyle.checkbox} />
-            <span className={checkboxStyle.text}>{props.content || ""}</span>
+            <input type="checkbox"
+                className={checkboxStyle.checkbox}
+                onChange={(e) => { handleChange(e.target.checked) }} />
+            <span className={checkboxStyle.text}>
+                {content}
+            </span>
         </label>
     );
 };
