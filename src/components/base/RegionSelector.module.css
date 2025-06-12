@@ -1,0 +1,92 @@
+.wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.selectButton {
+  padding: 10px 16px;
+  width: 200px;
+  height: 40px;
+  border: 1px solid #999;
+  border-radius: 12px;
+  background: white;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.modal {
+  display: flex;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  overflow: visible;
+  z-index: 10;
+  width: 365px;
+  height: 320px;
+}
+
+.cityColumn {
+  background: #f0f0f0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 320px;
+  overflow-y: auto;
+  width: 120px; /* 시/도 컬럼 고정 */
+  flex-shrink: 0;
+}
+
+.city {
+  font-size: 16px;
+  cursor: pointer;
+  color: #555;
+  padding: 6px 0;      /* 위아래 간격 추가 */
+  margin-bottom: 4px;  /* 아래쪽 여백 추가 */
+  transition: color 0.15s;
+}
+
+.city:hover {
+  color: #5164ED;
+}
+
+.activeCity {
+  font-weight: bold;
+  color: #5164ED;
+}
+
+.districtGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* 세 칼럼 고정 */
+  gap: 12px;                               /* 간격 통일 */
+  padding: 12px;
+  background: white;
+  height: 320px;
+  overflow-y: auto;
+  width: 245px;
+  flex-shrink: 0;
+  grid-auto-rows: 40px;
+}
+
+.district {
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;                 
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.district:hover {
+  color: #5164ED;
+  font-weight: bold;
+  background: #f3f6ff;
+}

@@ -53,7 +53,7 @@ const Router = () => {
             <Route path="/account/setting" element={<AccountSettingPage/>} />
 
             {/* 크루 */}
-            <Route path="/crew/profile" element={<CrewProfilePage/>} />
+            <Route path="/crew/:crewId" element={<CrewProfilePage />} />
             <Route path="/crew/list" element={<CrewListPage/>} />
 
             {/* 피드 */}
