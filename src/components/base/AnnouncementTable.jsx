@@ -26,7 +26,7 @@ const TableBody = ({ data, keys }) => (
                     <td
                         key={colIdx}
                         className={
-                            key === 'role'
+                            key === 'crewName'
                                 ? AcTableStyle.role
                                 : key === 'title'
                                     ? `${AcTableStyle.td} ${AcTableStyle.wideColumn}` 
@@ -60,7 +60,7 @@ const TableView = ({url, headers, keys}) => {
             .get(`${process.env.REACT_APP_API_BASE_URL}${url}`)
             .then((res) => {
                 console.log("데이터:", res.data);
-                setData(res.data);
+                setData(res.data.announcements);
             }
             )
             .catch((err) => console.error("데이터 요청 실패 ", err));

@@ -17,7 +17,7 @@ const AnnouncementListPage = () => {
             <TableView
                 url="/announcements"
                 headers={["번호", "제목" , "작성자", "작성날짜"]}
-                keys={["title", "email", "createdAt"]}
+                keys={["title", "crewName", "createdAt"]}
             />
         </div>
     )
