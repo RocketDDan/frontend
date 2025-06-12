@@ -10,7 +10,8 @@ const sampleCrew = {
     "introduce": "시대의 주인공은 우리들! 우리는 천하무적! 로켓단! 누구냐고 물으....",
     "createdAt": "2025-06-10",
     "member": false,
-    "leader": false
+    "leader": false,
+    "hasRequestedJoin": false,
 }
 
 export default sampleCrew;
