@@ -68,7 +68,6 @@ const RegionSelector = ({ region, setRegion}) => {
                   setSelectedCity(city);
                   setSelectedDistrict(null);
                   setCd(city.cd); // 선택한 시/도의 cd 저장
-                  setDistricts([]); // 구/군 초기화
                 }}
               >
                 {city.addr_name}

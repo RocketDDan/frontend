@@ -32,6 +32,7 @@ import RunnerListPage from "../page/runner/RunnerListPage"
 // 홈 (home)
 import HomePage from "../page/HomePage"
 import NotFoundPage from "../page/NotFoundPage";
+import CrewJoinRequestListPage from "../page/crew/CrewJoinRequestListPage";
 
 const Router = () => {
     return (
@@ -57,6 +58,7 @@ const Router = () => {
             {/* 크루 */}
             <Route path="/crew/:crewId" element={<CrewProfilePage />} />
             <Route path="/crew/list" element={<CrewListPage/>} />
+            <Route path="/crew/:crewId/join-request/list" element={<CrewJoinRequestListPage/>} />
 
             {/* 피드 */}
             <Route path="/feed/list" element={<FeedListPage/>} />

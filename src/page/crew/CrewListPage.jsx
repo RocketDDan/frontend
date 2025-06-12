@@ -2,24 +2,44 @@ import React, { useEffect, useState } from "react";
 import CrewCard from "../../components/crew/CrewCard";
 import sampleCrewList from "../../dto/crewList.dto";
 import styles from './CrewListPage.module.css';
-import { CrewSearchBar } from "../../components/search_bar/CrewSearchBar";
 import RegionSelector from "../../components/base/RegionSelector";
 import { BasicRadio } from "../../components/base/Radio";
-import { SearchBar } from "../../components/search_bar/SearchBar";
+import { CrewSearchBar } from "../../components/search_bar/CrewSearchBar";
+import { fetchCrewList } from "../../api/crew.api";
 
 const CrewListPage = () => {
-    const [crewList, setCrewList] = useState(Array(15).fill(sampleCrewList)); // 임시
-    const [value, setValue] = useState("");
-    const [region, setRegion] = useState(""); // 지역명(full_addr)
-    const [sort, setSort] = useState("LATEST"); // 정렬 기준
-    const sortOptions = [
+    const [crewList, setCrewList] = useState(Array(15).fill(sampleCrewList));
+    const [name, setName] = useState("");
+    const [region, setRegion] = useState("");
+    const [order, setOrder] = useState("LATEST");
+    const [page, setPage] = useState(1);
+
+    const perPage = 9;
+
+    const orderOptions = [
         { value: "LATEST", name: "최신순" }, 
         { value: "OLDEST", name: "오래된순" }, 
-        { value: "MEMBER_CNT", name: "크루원수" }];
+        { value: "MEMBER_CNT", name: "크루원수" }
+    ];
 
+    const params = {
+        crewName: name,
+        page: page,
+        perPage: perPage,
+        region: region,
+        order: order,
+    };
+
+    // 지역, 정렬, 이름 변경 시에는 자동 fetch
     useEffect(() => {
-        console.log("Selected region:", region);
-    }, [region, sort]);
+        fetchCrewList(params)
+            .then((data) => {
+                setCrewList(data);
+            })
+            .catch((error) => {
+                throw error;
+            });
+    }, [region, order, name]);
 
     return (
         <div className={styles.pageWrapper}>
@@ -28,24 +48,17 @@ const CrewListPage = () => {
                     region={region}
                     setRegion={setRegion}
                 />
-                {/* <CrewSearchBar 
+                <CrewSearchBar
                     width={500} 
                     placeholder="크루명을 입력해주세요." 
-                    value={value} 
-                    onChange={handleChange}
-                    maxLength={30} // 최대 30자 제한
-                /> */}
-                <SearchBar
-                    width={500} 
-                    placeholder="크루명을 입력해주세요." 
-                    defaultValue={value} 
-                    onChange={setValue}
+                    defaultValue={name} 
+                    onChange={setName}
                 />
                 <BasicRadio
-                    options={sortOptions}
-                    name="sort"
-                    defaultValue={'LATEST'}
-                    onChange={setSort}
+                    options={orderOptions}
+                    name="order"
+                    defaultValue={"LATEST"}
+                    onChange={setOrder}
                 />
             </div>
             <div className={styles.container}>
