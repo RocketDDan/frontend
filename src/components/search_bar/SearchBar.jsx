@@ -19,9 +19,20 @@ const SearchBar = ({ placeholder = "", defaultValue, width = "100%", onChange })
 
     const handleChange = (val) => {
         setInValue(val);
-        onChange?.(val);
+        // onChange?.(val);
     }
 
+    const handleSubmit = () => {
+        onChange?.(inValue);
+    }
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            handleSubmit();
+        }
+    }
+    
     return (
         <label className={searchBarStyle.container} style={{ width: width }}>
             <FontAwesomeIcon icon={faSearch} className={searchBarStyle.searchBtn} />
@@ -30,6 +41,7 @@ const SearchBar = ({ placeholder = "", defaultValue, width = "100%", onChange })
                 placeholder={placeholder}
                 value={inValue}
                 onChange={(e) => { handleChange(e.target.value) }}
+                onKeyDown={handleKeyDown}
                 maxLength={50}
             />
             {inValue && (

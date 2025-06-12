@@ -51,45 +51,44 @@ const CustomTable = ({headers, keys, data, page, limit}) => (
     </table>
 );
 
-const TableView = ({url, headers, keys}) => {
+const TableView = ({url, headers, keys, keyword, page, setPage}) => {
     const [data, setData] = useState([]);
-    const [page, setPage] = useState(1);
+    const [actualPage, setActualPage] = useState(page); 
     const [totalCount, setTotalCount] = useState(0);
     const limit = 6;
 
     useEffect(() => {
-        
         if (!url) return;
         const fullUrl = `${process.env.REACT_APP_API_BASE_URL}${url}`;
         console.log("호출 URL:", fullUrl);
-        
         axios
             .get(fullUrl, {
                 params: {
                     page,
                     perPage : limit,
+                    keyword: keyword || "",
                 },
             })
             .then((res) => {
-                console.log("데이터:", res.data);
                 setData(res.data.announcements);
                 setTotalCount(res.data.totalCount);
+                setActualPage(page);
             }
             )
             .catch((err) => console.error("데이터 요청 실패 ", err));
-    }, [url, page]);
+    }, [url, page, keyword]);
 
     return (
        <div className={AcTableStyle.outerWrapper}>
             <div className={AcTableStyle.tableWrapper}>
-                <CustomTable headers={headers} keys={keys} data={data} page={page} limit={limit} />
+                <CustomTable headers={headers} keys={keys} data={data} page={actualPage} limit={limit} />
             </div>
             <div className={AcTableStyle.paginationWrapper}>
                 <Pagination
                 page={page}
                 limit={limit}
                 total={totalCount}
-                onPageChange={(newPage) => setPage(newPage)}
+                onPageChange={setPage}
                 />
             </div>
         </div>
