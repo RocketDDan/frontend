@@ -145,7 +145,7 @@ const HomePage = () => {
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
 
                 {/* 테이블 */}
-                <h2>table 태그</h2>
+                {/* <h2>table 태그</h2>
                 <div style={{ display: 'flex', justifyContent: 'start', gap: '5rem' }}>
                     <div style={{ flex: '1' }}>
                         <h4>테이블</h4>
@@ -221,7 +221,7 @@ const HomePage = () => {
                         />
                     </div>
                 </div>
-                <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
+                <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} /> */}
 
                 {/* 피드 */}
                 <h2>피드 태그</h2>
