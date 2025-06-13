@@ -145,7 +145,8 @@ const TextArea = ({
     placeholder = "",
     width = "100%",
     height = '100%',
-    value, onChange,
+    value, 
+    onChange,
     closeBtnVisible = true,
 }) => {
 
@@ -234,6 +235,7 @@ const TextAreaWithLabel = ({
                     borderRadius: "8px",
                     border: "solid 1px",
                     width: "100%",
+                    height: "100%",
                 }}
             />
             {value && closeBtnVisible && (

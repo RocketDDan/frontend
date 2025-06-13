@@ -17,7 +17,7 @@ const FeedListPage = () => {
     const [selectedFeed, setSelectedFeed] = useState(null);
 
     useEffect(() => {
-        fetchFeedList({ page: 1, perPage: 10, scope: "ALL_EXCEPT_ME", order: "LATEST" })
+        fetchFeedList({ page: 1, perPage: 20, scope: "ME", order: "LATEST" })
             .then(data => {
                 // console.log('피드 목록:', data);
                 setFeedList(data);
