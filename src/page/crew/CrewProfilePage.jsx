@@ -5,7 +5,7 @@ import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fetchCrew } from "../../api/crew.api";
 import { useParams } from "react-router-dom";
-import { PinkButton, SecondaryHoverButton } from "../../components/base/Button";
+import { ThirdaryButton, SecondaryHoverButton } from "../../components/base/Button";
 import { CrewProfileImage } from "../../components/profile/ProfileImage";
 
 
@@ -17,13 +17,13 @@ const CrewProfilePage = () => {
         if (crew.leader) {
             return (
                 <>
-                    <PinkButton content="크루 삭제" width="150px"/>
+                    <ThirdaryButton content="크루 삭제" width="150px"/>
                     <SecondaryHoverButton content="가입 요청 확인" width="150px"/>
                 </>
             );
         } else if (crew.member) {
             return (
-                <PinkButton content="탈퇴" width="150px" />
+                <ThirdaryButton content="탈퇴" width="150px" />
             );
         } else {
             return (

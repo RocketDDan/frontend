@@ -66,7 +66,7 @@ const SecondaryHoverButton = ({ content = "버튼", width = '100%', onClick }) =
  * @param {Function} onClick 클릭 이벤트
  * @returns {JSX.Element} button 컴포넌트
  */
-const PinkButton = ({ content = "버튼", width = '100%', onClick }) => {
+const ThirdaryButton = ({ content = "버튼", width = '100%', onClick }) => {
     return (
         <button style={{ width: width }}
             className={`${ButtonStyle.container} ${CommonStyle.pinkBg} ${CommonStyle.pinkHoverBg}`}
@@ -111,4 +111,4 @@ const SecondaryBigButton = ({ content = "버튼", width = "100%", onClick }) => 
     )
 }
 
-export { PrimaryButton, SecondaryButton, SecondaryHoverButton, PinkButton, PrimaryBigButton, SecondaryBigButton };
+export { PrimaryButton, SecondaryButton, SecondaryHoverButton, ThirdaryButton, PrimaryBigButton, SecondaryBigButton };
