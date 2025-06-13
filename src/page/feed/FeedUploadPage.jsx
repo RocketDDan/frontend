@@ -1,11 +1,12 @@
 import { useState } from "react";
 import style from "./FeedUploadPage.module.css";
 import { PrimaryButton } from '../../components/base/Button'
-import { TextAreaWithLabel  } from '../../components/base/Input';
+import { TextAreaWithLabel } from '../../components/base/Input';
 import { ImageAddBlock } from "../../components/image/ImageAddBlock";
 import { ImageBlock } from "../../components/image/ImageBlock";
 import { v7 as uuid7 } from "uuid";
 import { uploadFeed } from "../../api/feed.api";
+import { useNavigate } from "react-router-dom";
 
 
 const FeedUploadPage = () => {
@@ -15,10 +16,16 @@ const FeedUploadPage = () => {
     const [lat, setLat] = useState(null);
     const [lng, setLng] = useState(null);
 
+    const navigate = useNavigate();
+
     // 파일 추가
     const handleFile = (e) => {
         const files = Array.from(e.target.files);
-        setFileList([...fileList, ...files]);
+        const filesWithId = files.map(file => ({
+            id: uuid7(),
+            file: file
+        }));
+        setFileList(prev => [...prev, ...filesWithId]);
     };
     // 글 
     const handleContent = (val) => {
@@ -31,9 +38,10 @@ const FeedUploadPage = () => {
     }
     // 등록
     const handleSubmit = () => {
-        uploadFeed(content, lat, lng, fileList).then((data) => {
-            // /feed/list로 이동
-        })
+        uploadFeed(content, lat, lng, fileList.map(file => file.file))
+            .then((data) => {
+                navigate("/feed/list");
+            })
     }
 
     return (
@@ -44,11 +52,10 @@ const FeedUploadPage = () => {
 
                 {/* 선택된 파일 미리보기 */}
                 <div className={style.imageList}>
-                    {fileList.map((file) => {
-                        const uuid = uuid7();
+                    {fileList.map(({ id, file }) => {
                         return (
                             <ImageBlock
-                                key={uuid}
+                                key={id}
                                 file={file}
                                 width="100px" />
                         )
