@@ -6,9 +6,21 @@ import 'react-quill-new/dist/quill.snow.css';
 import ReactQuill from "react-quill-new";
 
 const AnnouncementUploadPage = () => {
-
+    const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [attachedFiles, setAttachedFiles] = useState([]);
+
+    // 제목과 본문의 글자 수 제한 함수수
+    const handleSubmit = async () => {
+        if (title.length > 100) {
+            alert("제목은 100글자 이하로 입력해주세요.");
+            return;
+        }
+        if (content.length > 2000) {
+            alert("본문은 2000자 이하로 입력해주세요.");
+            return;
+        }
+    }
     
     return (
         <div className={styles.container}>
