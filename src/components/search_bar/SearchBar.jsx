@@ -24,18 +24,32 @@ const SearchBar = ({
         onChange?.(e.target.value);
     };
 
-    const handleClear = () => {
-        onChange?.("");
-    };
+    const handleChange = (val) => {
+        setInValue(val);
+        // onChange?.(val);
+    }
 
+    const handleSubmit = () => {
+        onChange?.(inValue);
+    }
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            handleSubmit();
+        }
+    }
+    
     return (
         <label className={searchBarStyle.container} style={{ width: width }}>
             <FontAwesomeIcon icon={faSearch} className={searchBarStyle.searchBtn} />
             <input
                 type="text"
                 placeholder={placeholder}
-                value={value}
-                onChange={handleChange}
+                value={inValue}
+                onChange={(e) => { handleChange(e.target.value) }}
+                onKeyDown={handleKeyDown}
+
                 maxLength={50}
             />
             {value && closeBtnVisible && (

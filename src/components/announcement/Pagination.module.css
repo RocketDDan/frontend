@@ -1,0 +1,42 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.pageButton {
+  border: 1px solid #ddd;
+  background-color: white;
+  color: #333;
+  padding: 6px 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.pageButton:hover {
+  background-color: #f0f0f0;
+}
+
+.activePage {
+  background-color: #7CB2FC;
+  color: white;
+  font-weight: bold;
+  border-color: #7CB2FC;
+}
+
+.iconButton {
+  background-color: white;
+  border: none;
+  color: #666;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.iconButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
