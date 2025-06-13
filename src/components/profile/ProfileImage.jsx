@@ -83,13 +83,13 @@ const MemberProfileImage = (props) => {
 const CrewProfileImage = (props) => {
     return (
         <div>
-            <div className={ProfileImageStyle.container} style={{
-                width: '100px',
-                height: '100px',
+            <div className={ProfileImageStyle.crewContainer} style={{
+                width: '200px',
+                height: '200px',
             }}>
                 {props.profileUrl
-                    ? <img src={props.profileUrl} alt="피드 프로필 이미지" width={'100%'} />
-                    : <img src={BaseProfileImage} alt="피드 프로필 이미지" width={'95%'} />}
+                    ? <img src={props.profileUrl} alt="피드 프로필 이미지" className={ProfileImageStyle.profileImg} />
+                    : <img src={BaseProfileImage} alt="피드 프로필 이미지" className={ProfileImageStyle.profileImg} />}
             </div>
         </div>
     )

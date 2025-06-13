@@ -1,60 +1,70 @@
 import React, { useEffect, useState } from "react";
 import CrewCard from "../../components/crew/CrewCard";
-import sampleCrewList from "../../dto/crewList.dto";
-import styles from './CrewListPage.module.css';
-import { CrewSearchBar } from "../../components/search_bar/CrewSearchBar";
+import { sampleCrewList } from "../../dto/crew.dto";
+import styles from "./CrewListPage.module.css";
 import RegionSelector from "../../components/base/RegionSelector";
 import { BasicRadio } from "../../components/base/Radio";
+import { CrewSearchBar } from "../../components/search_bar/CrewSearchBar";
+import { fetchCrewList } from "../../api/crew.api";
 import { SearchBar } from "../../components/search_bar/SearchBar";
 
 const CrewListPage = () => {
-    const [crewList, setCrewList] = useState(Array(15).fill(sampleCrewList)); // 임시
-    const [value, setValue] = useState("");
-    const [region, setRegion] = useState(""); // 지역명(full_addr)
-    const [sort, setSort] = useState("LATEST"); // 정렬 기준
-    const sortOptions = [
-        { value: "LATEST", name: "최신순" }, 
-        { value: "OLDEST", name: "오래된순" }, 
-        { value: "MEMBER_CNT", name: "크루원수" }];
+  const [crewList, setCrewList] = useState(Array(15).fill(sampleCrewList));
+  const [name, setName] = useState("");
+  const [region, setRegion] = useState("");
+  const [order, setOrder] = useState("LATEST");
+  const [page, setPage] = useState(1);
 
-    useEffect(() => {
-        console.log("Selected region:", region);
-    }, [region, sort]);
+  const perPage = 9;
 
-    return (
-        <div className={styles.pageWrapper}>
-            <div className={styles.searchHeader}>
-                <RegionSelector
-                    region={region}
-                    setRegion={setRegion}
-                />
-                {/* <CrewSearchBar 
-                    width={500} 
-                    placeholder="크루명을 입력해주세요." 
-                    value={value} 
-                    onChange={handleChange}
-                    maxLength={30} // 최대 30자 제한
-                /> */}
-                <SearchBar
-                    width={500} 
-                    placeholder="크루명을 입력해주세요." 
-                    defaultValue={value} 
-                    onChange={setValue}
-                />
-                <BasicRadio
-                    options={sortOptions}
-                    name="sort"
-                    defaultValue={'LATEST'}
-                    onChange={setSort}
-                />
-            </div>
-            <div className={styles.container}>
-                {crewList.map((crew, index) => (
-                    <CrewCard key={index} crew={crew} />
-                ))}
-            </div>
-        </div>
-    )
-}
+  const orderOptions = [
+    { value: "LATEST", name: "최신순" },
+    { value: "OLDEST", name: "오래된순" },
+    { value: "MEMBER_CNT", name: "크루원수" },
+  ];
+
+  const handleSearchBar = () => {
+    const params = {
+      crewName: name,
+      page: page,
+      perPage: perPage,
+      region: region,
+      order: order,
+    };
+    fetchCrewList(params).then((data) => {
+      setCrewList(data);
+    });
+  };
+  // 지역, 정렬, 이름 변경 시에는 자동 fetch
+  useEffect(() => {
+    handleSearchBar();
+  }, [region, order]);
+
+  return (
+    <div className={styles.pageWrapper}>
+      <div className={styles.searchHeader}>
+        <RegionSelector region={region} setRegion={setRegion} />
+        <SearchBar
+          width={500}
+          placeholder="크루명을 입력해주세요."
+          value={name}
+          onChange={setName}
+          onEnter={handleSearchBar}
+        />
+        <BasicRadio
+          options={orderOptions}
+          name="order"
+          defaultValue={"LATEST"}
+          onChange={setOrder}
+        />
+      </div>
+      <div className={styles.container}>
+        {crewList.map((crew, index) => (
+          <CrewCard key={index} crew={crew} />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default CrewListPage;
