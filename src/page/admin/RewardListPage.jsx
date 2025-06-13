@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styles from  "./MemberListPage.module.css";
 import { SearchBar } from "../../components/search_bar/SearchBar";
-import { SecondaryButton } from "../../components/base/Button";
 import { TableView } from "../../components/base/AnnouncementTable";
 
 const RewardListPage = () => {
@@ -19,7 +18,6 @@ const RewardListPage = () => {
                             setPage(1);
                         }}/>
                 </div>
-                
             </div>
             <TableView
                 url="/admin/rewards"
