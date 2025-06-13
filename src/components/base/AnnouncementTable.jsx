@@ -51,7 +51,7 @@ const CustomTable = ({headers, keys, data, page, limit}) => (
     </table>
 );
 
-const TableView = ({url, headers, keys, keyword, page, setPage}) => {
+const TableView = ({url, headers, keys, keyword, page, setPage, responseKey = "announcements"}) => {
     const [data, setData] = useState([]);
     const [actualPage, setActualPage] = useState(page); 
     const [totalCount, setTotalCount] = useState(0);
@@ -70,13 +70,13 @@ const TableView = ({url, headers, keys, keyword, page, setPage}) => {
                 },
             })
             .then((res) => {
-                setData(res.data.announcements);
+                setData(res.data[responseKey]); 
                 setTotalCount(res.data.totalCount);
                 setActualPage(page);
             }
             )
             .catch((err) => console.error("데이터 요청 실패 ", err));
-    }, [url, page, keyword]);
+    }, [url, page, keyword, responseKey]);
 
     return (
        <div className={AcTableStyle.outerWrapper}>
