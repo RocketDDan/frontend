@@ -1,11 +1,4 @@
-import axios from "axios";
-
-const apiClient = axios.create({
-    baseURL: process.env.REACT_APP_SERVER_DOMAIN, // .env에 설정 가능
-    headers: {
-        'Content-Type': 'application/json',
-    }
-});
+import apiClient from "./apiClient";
 
 const fetchCrewJoinRequestList = async (crewId, {params}) => {
     try {
