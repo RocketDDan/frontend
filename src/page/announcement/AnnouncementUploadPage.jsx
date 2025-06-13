@@ -2,8 +2,12 @@ import { useState } from "react";
 import AnnouncementFileUploader from "../../components/announcement/AnnouncementFileUploader";
 import { TextInput } from "../../components/base/Input";
 import styles from "./AnnouncementUploadPage.module.css";
+import 'react-quill-new/dist/quill.snow.css';
+import ReactQuill from "react-quill-new";
+
 const AnnouncementUploadPage = () => {
 
+    const [content, setContent] = useState("");
     const [attachedFiles, setAttachedFiles] = useState([]);
     
     return (
@@ -17,12 +21,12 @@ const AnnouncementUploadPage = () => {
         
             <div className={styles.formGroup}>
                 <AnnouncementFileUploader onFilesChange={(files) => setAttachedFiles(files)}/>
-                </div>
+            </div>
 
-                <div className={styles.formGroup}>
+            <div className={styles.formGroup}>
                 <label>본문</label>
-                <TextInput />
-                </div>
+                <ReactQuill value={content} onChange={setContent} />
+            </div>
 
             <button className={styles.submitBtn}>업로드</button>
             </div>
