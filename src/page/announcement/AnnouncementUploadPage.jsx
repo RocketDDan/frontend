@@ -1,6 +1,10 @@
+import { useState } from "react";
+import AnnouncementFileUploader from "../../components/announcement/AnnouncementFileUploader";
 import { TextInput } from "../../components/base/Input";
 import styles from "./AnnouncementUploadPage.module.css";
 const AnnouncementUploadPage = () => {
+
+    const [attachedFiles, setAttachedFiles] = useState([]);
     
     return (
         <div className={styles.container}>
@@ -12,13 +16,7 @@ const AnnouncementUploadPage = () => {
             </div>
         
             <div className={styles.formGroup}>
-                <label>첨부 파일</label>
-                <div className={styles.row}>
-                    <div className={styles.fileInputWrapper}>
-                    <input type="text" className={styles.textInput} />
-                    </div>
-                    <button className={styles.fileBtn}>내 PC</button>
-                </div>
+                <AnnouncementFileUploader onFilesChange={(files) => setAttachedFiles(files)}/>
                 </div>
 
                 <div className={styles.formGroup}>
