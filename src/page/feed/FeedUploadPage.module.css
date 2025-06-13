@@ -1,0 +1,12 @@
+.container {
+    width: 600px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+.imageList {
+    display: flex;
+    gap: 5px;
+}
