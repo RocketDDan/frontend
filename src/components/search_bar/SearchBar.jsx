@@ -1,21 +1,28 @@
 import searchBarStyle from "./SearchBar.module.css";
 
-import { useState } from "react";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 /**
- * 
+ * @component
  * @param {String} placeholder placeholder
- * @param {String} defaultValue 기본 값
+ * @param {String} value value
  * @param {String} width 가로 길이
- * @param {Function} onChange 가로 길이
+ * @param {Function} onChange 변화 이벤트
+ * @param {Boolean} closeBtnVisible 닫기 버튼 여부
  * @returns {JSX.Element} search bar 컴퍼넌트
  */
-const SearchBar = ({ placeholder = "", defaultValue, width = "100%", onChange }) => {
+const SearchBar = ({
+    placeholder = "",
+    value,
+    width = "100%",
+    onChange,
+    closeBtnVisible = true,
+}) => {
 
-    const [inValue, setInValue] = useState(defaultValue || "");
+    const handleChange = (e) => {
+        onChange?.(e.target.value);
+    };
 
     const handleChange = (val) => {
         setInValue(val);
@@ -42,12 +49,13 @@ const SearchBar = ({ placeholder = "", defaultValue, width = "100%", onChange })
                 value={inValue}
                 onChange={(e) => { handleChange(e.target.value) }}
                 onKeyDown={handleKeyDown}
+
                 maxLength={50}
             />
-            {inValue && (
+            {value && closeBtnVisible && (
                 <FontAwesomeIcon
                     icon={faTimes}
-                    onClick={() => { handleChange("") }}
+                    onClick={handleClear}
                     className={searchBarStyle.closeBtn}
                 />
             )}

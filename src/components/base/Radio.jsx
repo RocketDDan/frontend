@@ -8,13 +8,13 @@ import style from './Radio.module.css';
  * @param {String} options.value - 값
  * @param {String} options.name - 이름
  * @param {String} name - name
- * @param {String} defaultValue - 기본 값
+ * @param {String} value - 기본 값
  * @param {Function} onChange - 변경될 때 이벤트
  * @returns {JSX.Element} radio 컴퍼넌트
  */
-const BasicRadio = ({ options = [], name, defaultValue, onChange }) => {
+const BasicRadio = ({ options = [], name, value, onChange }) => {
 
-    const [inValue, setInValue] = useState(defaultValue);
+    const [inValue, setInValue] = useState(value);
 
     const handleChange = (value) => {
         setInValue(value);
