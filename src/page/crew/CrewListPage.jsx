@@ -4,7 +4,6 @@ import { sampleCrewList } from "../../dto/crew.dto";
 import styles from "./CrewListPage.module.css";
 import RegionSelector from "../../components/base/RegionSelector";
 import { BasicRadio } from "../../components/base/Radio";
-import { CrewSearchBar } from "../../components/search_bar/CrewSearchBar";
 import { fetchCrewList } from "../../api/crew.api";
 import { SearchBar } from "../../components/search_bar/SearchBar";
 
