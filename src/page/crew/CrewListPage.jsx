@@ -5,20 +5,21 @@ import styles from './CrewListPage.module.css';
 import { CrewSearchBar } from "../../components/search_bar/CrewSearchBar";
 import RegionSelector from "../../components/base/RegionSelector";
 import { BasicRadio } from "../../components/base/Radio";
+import { SearchBar } from "../../components/search_bar/SearchBar";
 
 const CrewListPage = () => {
     const [crewList, setCrewList] = useState(Array(15).fill(sampleCrewList)); // 임시
     const [value, setValue] = useState("");
     const [region, setRegion] = useState(""); // 지역명(full_addr)
     const [sort, setSort] = useState("LATEST"); // 정렬 기준
-
-    const handleChange = (e) => {
-        setValue(e.target.value);
-    }
+    const sortOptions = [
+        { value: "LATEST", name: "최신순" }, 
+        { value: "OLDEST", name: "오래된순" }, 
+        { value: "MEMBER_CNT", name: "크루원수" }];
 
     useEffect(() => {
         console.log("Selected region:", region);
-    }, [region]);
+    }, [region, sort]);
 
     return (
         <div className={styles.pageWrapper}>
@@ -27,30 +28,24 @@ const CrewListPage = () => {
                     region={region}
                     setRegion={setRegion}
                 />
-                <CrewSearchBar 
+                {/* <CrewSearchBar 
                     width={500} 
                     placeholder="크루명을 입력해주세요." 
                     value={value} 
                     onChange={handleChange}
                     maxLength={30} // 최대 30자 제한
+                /> */}
+                <SearchBar
+                    width={500} 
+                    placeholder="크루명을 입력해주세요." 
+                    defaultValue={value} 
+                    onChange={setValue}
                 />
                 <BasicRadio
-                    name="crewSort"
-                    value="LATEST"
-                    content="최신순"
-                    defaultChecked={true}
-                />
-                <BasicRadio
-                    name="crewSort"
-                    value="OLDEST"
-                    content="오래된순"
-                    defaultChecked={false}
-                />
-                <BasicRadio
-                    name="crewSort"
-                    value="MEMBER_CNT"
-                    content="크루원수"
-                    defaultChecked={false}
+                    options={sortOptions}
+                    name="sort"
+                    defaultValue={'LATEST'}
+                    onChange={setSort}
                 />
             </div>
             <div className={styles.container}>

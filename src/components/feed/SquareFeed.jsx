@@ -1,3 +1,5 @@
+import squareFeedStyle from './SquareFeed.module.css';
+
 
 /**
  * 정사각형 피드
