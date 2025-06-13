@@ -1,7 +1,24 @@
 .primaryBg {
-    background-color: #5164ED;
+    background: #7CB2FC;
+    color: #fff;
 }
 
 .secondaryBg {
-    background-color: #7CB2FC;
+    background: #e9f1ff;
+    color: #222;
+}
+
+.pinkBg {
+    background-color: #FFBABA;
+    color: #222;
+}
+
+.pinkBg:hover {
+  background: #e75480; /* deepPinkBg와 동일하게 */
+  color: #fff;
+}
+
+.secondaryHoverBg:hover {
+    background: #7CB2FC; /* primaryBg와 동일 */
+    color: #fff;
 }

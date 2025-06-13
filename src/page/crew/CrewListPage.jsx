@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CrewCard from "../../components/crew/CrewCard";
-import sampleCrewList from "../../dto/crewList.dto";
+import {sampleCrewList} from "../../dto/crew.dto";
 import styles from './CrewListPage.module.css';
 import RegionSelector from "../../components/base/RegionSelector";
 import { BasicRadio } from "../../components/base/Radio";

@@ -7,9 +7,9 @@ const apiClient = axios.create({
     }
 });
 
-const fetchCrewJoinRequestList = async (crewId) => {
+const fetchCrewJoinRequestList = async (crewId, {params}) => {
     try {
-        const response = await apiClient.get(`/crews/${crewId}/join-requests`);
+        const response = await apiClient.get(`/crews/${crewId}/join-requests`, { params });
         if (response.status !== 200) {
             throw new Error('크루 가입 요청 목록 조회 실패', response.data);
         }

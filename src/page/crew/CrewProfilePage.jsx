@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styles from "./CrewProfilePage.module.css";
-import sampleCrew from "../../dto/crew.dto";
+import {sampleCrew} from "../../dto/crew.dto";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fetchCrew } from "../../api/crew.api";
 import { useParams } from "react-router-dom";
+import { PinkButton, SecondaryHoverButton } from "../../components/base/Button";
+import { CrewProfileImage } from "../../components/profile/ProfileImage";
+
 
 const CrewProfilePage = () => {
     const { crewId } = useParams(); // 여기서 crewId를 받아옴
@@ -14,17 +17,19 @@ const CrewProfilePage = () => {
         if (crew.leader) {
             return (
                 <>
-                    <button className={styles.actionBtn}>삭제</button>
-                    <button className={styles.actionBtn}>가입 요청 확인</button>
+                    <PinkButton content="크루 삭제" width="150px"/>
+                    <SecondaryHoverButton content="가입 요청 확인" width="150px"/>
                 </>
             );
         } else if (crew.member) {
             return (
-                <button className={styles.actionBtn}>탈퇴</button>
+                <PinkButton content="탈퇴" width="150px" />
             );
         } else {
             return (
-                <button
+                <SecondaryHoverButton
+                    content="가입 요청"
+                    width="15   0px"
                     className={styles.actionBtn}
                     onClick={() => {
                         if (crew.hasRequestedJoin) {
@@ -34,9 +39,7 @@ const CrewProfilePage = () => {
                             console.log("가입 요청을 보냈습니다.");
                         }
                     }}
-                >
-                    가입 요청
-                </button>
+                />
             );
         }
     };
@@ -53,7 +56,7 @@ const CrewProfilePage = () => {
     return (
         <div>
             <div className={styles.profileWrapper}>
-                <img src={crew.profilePath} alt="크루 프로필" className={styles.profileImg} />
+                <CrewProfileImage profileUrl={crew.profilePath}/>
                 <div className={styles.infoSection}>
                     <span className={styles.crewName}>{crew.crewName}</span>
                     <div className={styles.introduce}>{crew.introduce}</div>
