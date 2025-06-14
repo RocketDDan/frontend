@@ -12,11 +12,16 @@
     height: 100%;
 }
 
+.container > * {
+    flex: 1;
+    height: 100%;
+}
+
 .feedList {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    max-width: 468px;
+    max-width: 700px;
     overflow-y: auto;
 }
 
