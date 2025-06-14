@@ -1,5 +1,5 @@
 // css
-import feedCardStyle from './FeedCard.module.css'
+import style from './FeedCard.module.css'
 // image
 import { ProfileImage } from '../profile/ProfileImage';
 // icon
@@ -22,44 +22,70 @@ const FeedCard = ({ feed, onCommentClick }) => {
 
     const [isLiked, setIsLiked] = useState(feed.like); // 유저가 좋아하는지 여부
     const [likeCount, setLikeCount] = useState(feed.likeCount); // 좋아요 수
+    const [currentIndex, setCurrentIndex] = useState(0); // 현재 이미지 인덱스
 
+    // 좋아요 클릭
     const handleLike = () => {
         setIsLiked(true);
         setLikeCount(likeCount + 1);
         fetchLikeFeed(feed.feedId);
     };
 
+    // 좋아요 취소
     const handleUnlike = () => {
         setIsLiked(false);
         setLikeCount(likeCount - 1);
         fetchUnlikeFeed(feed.feedId);
     };
-    
+
+    // 이전 사진/동영상 가져오기
+    const handlePrev = () => {
+        setCurrentIndex((prev) => (prev === 0 ? feed.feedFileUrlList.length - 1 : prev - 1));
+    };
+
+    // 다음 사진/동영상 가져오기
+    const handleNext = () => {
+        setCurrentIndex((prev) => (prev === feed.feedFileUrlList.length - 1 ? 0 : prev + 1));
+    };
 
     return (
-        <div className={feedCardStyle.container} key={feed.feedId}>
+        <div className={style.container} key={feed.feedId}>
             {/* 작성자 정보 */}
-            <div className={feedCardStyle.writerRow}>
-                <FeedProfileImage profileUrl={feed.writerProfileUrl} />
+            <div className={style.writerRow}>
+                <ProfileImage profileUrl={feed.writerProfileUrl} size="30px" />
                 <span>{feed.writerNickname}</span>
                 <div style={{ display: 'flex', justifyContent: 'end', paddingRight: '5px' }}>⋯</div>
             </div>
 
             {/* 피드 이미지들 */}
-            <div className={feedCardStyle.feedImageList}>
-                {feed.feedFileUrlList.map(feedFileUrl => {
-                    return (
-                        <img
-                            src={feedFileUrl.fileUrl}
-                            alt="피드 이미지"
-                            key={feed.feedId + "_" + feedFileUrl.order} />
-                    )
-                })}
+            <div className={style.feedImageList} style={{ position: 'relative' }}>
+                <img
+                    src={feed.feedFileUrlList?.[currentIndex]?.fileUrl}
+                    alt="피드 이미지"
+                    style={{ width: '100%', height: 'auto' }}
+                />
+                {/* 왼쪽 화살표 */}
+                {feed.feedFileUrlList.length > 1 && (
+                    <button
+                        onClick={handlePrev}
+                        className={style.image}
+                        style={{ left: '10px', }}
+                    >◀</button>
+                )}
+
+                {/* 오른쪽 화살표 */}
+                {feed.feedFileUrlList.length > 1 && (
+                    <button
+                        onClick={handleNext}
+                        className={style.image}
+                        style={{ right: '10px', }}
+                    >▶</button>
+                )}
             </div>
 
             {/* 이미지 아래 아이콘 행 */}
-            <div className={feedCardStyle.iconRow}>
-                <div className={feedCardStyle.heartMessage}>
+            <div className={style.iconRow}>
+                <div className={style.heartMessage}>
                     <span>
                         <span style={{ cursor: 'pointer' }}>
                             {
@@ -70,8 +96,8 @@ const FeedCard = ({ feed, onCommentClick }) => {
                         </span>
                         <span>{likeCount}</span>
                     </span>
-                    <span style={{ cursor: 'pointer' }}  onClick={onCommentClick}>
-                        <FontAwesomeIcon icon={faMessage} style={{marginTop: '2px',}} />
+                    <span style={{ cursor: 'pointer' }} onClick={onCommentClick}>
+                        <FontAwesomeIcon icon={faMessage} style={{ marginTop: '2px', }} />
                         <span>{feed.commentCount}</span>
                     </span>
                 </div>
@@ -83,13 +109,13 @@ const FeedCard = ({ feed, onCommentClick }) => {
             </div>
 
             {/* 피드 글 */}
-            <div className={feedCardStyle.feedContent}>
+            <div className={style.feedContent}>
                 <span style={{ fontWeight: "bold" }}>{feed.writerNickname}</span>
                 <span>{feed.content}</span>
             </div>
 
             {/* 댓글 */}
-            <div className={feedCardStyle.commentList}>
+            <div className={style.commentList}>
                 {/* 최대 3개만 보여주기 */}
                 {feed.commentList.map(comment => {
                     {/* 댓글 */ }
