@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { fetchCrewJoinRequestList } from "../../api/crewJoinRequest.api";
 import { sampleCrewJoinRequest } from "../../dto/crew.dto";
-import CrewMemberInfo from "../../components/crew/CrewMemberInfo";
-import CrewHeader from "../../components/crew/CrewHeader";
-import CheckModal from "../../components/base/CheckModal";
+import {CrewMemberInfo} from "../../components/crew/CrewMemberInfo";
+import {CrewHeader} from "../../components/crew/CrewHeader";
+import {CheckModal} from "../../components/base/CheckModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { approveCrewJoinRequest, rejectCrewJoinRequest } from "../../api/crewJoinRequest.api"; // 크루 가입 요청 승인 API
@@ -21,7 +21,7 @@ const CrewJoinRequestListPage = () => {
     const [modalDescription, setModalDescription] = useState(""); // 모달 설명 상태
     const [onConfirm, setOnConfirm] = useState(() => () => {}); // 모달 확인 버튼 클릭 핸들러 상태
 
-    const [crewJoinRequestList, setCrewJoinRequestList] = useState(Array(7).fill(sampleCrewJoinRequest)); // 크루 가입 요청 목록 상태
+    const [crewJoinRequestList, setCrewJoinRequestList] = useState([]); // 크루 가입 요청 목록 상태
     const [nickname, setNickname] = useState(""); // 닉네임 상태
     const [page, setPage] = useState(1); // 페이지 상태
     const [status, setStatus] = useState("REQUEST"); // 상태 필터링 상태
@@ -93,6 +93,7 @@ const CrewJoinRequestListPage = () => {
     }
 
     useEffect(() => {
+        console.log("crewId", crewId);
         handleSearchBar();
 
     }, [page, status, crewId])

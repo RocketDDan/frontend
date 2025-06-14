@@ -22,5 +22,5 @@ const CrewHeader = ({ columns }) => {
     );
 };
 
-export default CrewHeader;
+export {CrewHeader};
 
