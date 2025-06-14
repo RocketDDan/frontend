@@ -47,10 +47,6 @@ const CrewProfilePage = () => {
     useEffect(() => {
         fetchCrew(crewId) // crewId로 조회
             .then(data => setCrew(data))
-            .catch(err => {
-                console.error('크루 정보 조회 실패:', err);
-                setCrew(sampleCrew);
-            });
     }, [crewId]); // hasJoinRequest도 의존성에 추가
 
     return (

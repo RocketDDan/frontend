@@ -53,7 +53,7 @@ const CrewListPage = () => {
         <BasicRadio
           options={orderOptions}
           name="order"
-          defaultValue={"LATEST"}
+          value={"LATEST"}
           onChange={setOrder}
         />
       </div>
