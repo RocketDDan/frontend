@@ -1,4 +1,3 @@
-// TableView.jsx
 import AcTableStyle from "./AnnouncementTable.module.css";
 import Pagination from "../announcement/Pagination";
 
