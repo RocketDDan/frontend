@@ -99,9 +99,12 @@ const CommentPanel = ({ feed, onClose, writeComment, deleteComment }) => {
 
             {/* 댓글 목록 */}
             <div className={style.commentList}>
-                {commentList.map(comment => (
+                {commentList.length
+                ? commentList.map(comment => (
                     <Comment comment={comment} clickDelete={handleCommentDelete} key={comment.commentId} />
-                ))}
+                ))
+                : <span>댓글이 없습니다.</span>
+            }
             </div>
 
             {/* 댓글 작성 */}

@@ -59,7 +59,7 @@ const FeedListPage = () => {
     }
 
     return (
-        <div className={`${style.container} ${selectedFeed ? style.showCommentOnly : ''}`}>
+        <div className={`${style.container} ${selectedFeed ? style.openCommentPanel : ''}`}>
             {/* 피드 목록 (스크롤) */}
             <div className={style.feedList}>
                 {feedList.map(feed =>
@@ -71,13 +71,17 @@ const FeedListPage = () => {
                 )}
             </div>
             {/* 댓글창 */}
-            <div style={{display: selectedFeed ? 'block' : 'none'}}>
-                <CommentPanel 
-                feed={selectedFeed} 
-                onClose={handleClosePanel}
-                writeComment={handleFeedCommentCntUp}
-                deleteComment={handleFeedCommentCntDown} />
-            </div>
+            {
+                selectedFeed 
+                ?  <div className={style.commentPanel}>
+                    <CommentPanel
+                        feed={selectedFeed}
+                        onClose={handleClosePanel}
+                        writeComment={handleFeedCommentCntUp}
+                        deleteComment={handleFeedCommentCntDown} />
+                </div>
+                : null
+            }
         </div>
     )
 }

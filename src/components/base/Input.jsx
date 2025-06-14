@@ -2,7 +2,7 @@ import { v7 as uuidv7 } from 'uuid';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useState } from 'react';
-import InputStyle from "./Input.module.css";
+import style from "./Input.module.css";
 
 /**
  * Text Input Component
@@ -45,7 +45,7 @@ const TextInput = ({
     };
 
     return (
-        <span className={InputStyle.container} style={{ width: width }}>
+        <span className={style.container} style={{ width: width }}>
             <input
                 type="text"
                 placeholder={placeholder}
@@ -53,12 +53,7 @@ const TextInput = ({
                 onChange={handleChange}
                 onKeyDown={handleOnKeyDown}
                 maxLength={50}
-                style={{
-                    padding: "0.7rem 0 0.7rem 0.7rem",
-                    borderRadius: "8px",
-                    border: "solid 1px",
-                    width: "100%",
-                }}
+                className={style.inputStyle}
                 autoFocus={autoFocus}
             />
             {value && closeBtnVisible && (
@@ -110,7 +105,7 @@ const TextInputWithLabel = ({
     };
 
     return (
-        <span className={InputStyle.container} style={{ width: width }}>
+        <span className={style.container} style={{ width: width }}>
             <label htmlFor={id}>
                 {label}
             </label>
@@ -177,7 +172,7 @@ const TextArea = ({
     };
 
     return (
-        <span className={InputStyle.container} style={{ width: width, height: height }}>
+        <span className={style.container} style={{ width: width, height: height }}>
             <textarea
                 id={id}
                 placeholder={placeholder}
@@ -239,7 +234,7 @@ const TextAreaWithLabel = ({
     };
 
     return (
-        <span className={InputStyle.container} style={{ width: width, height: height }}>
+        <span className={style.container} style={{ width: width, height: height }}>
             <label htmlFor={id}>{label}</label>
             <textarea
                 id={id}

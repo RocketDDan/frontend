@@ -5,3 +5,10 @@
     gap: 5px;
     position: relative;
 }
+
+.inputStyle {
+    padding: 0.7rem 0 0.7rem 0.7rem;
+    border-radius: 8px;
+    border: solid 0.9px;
+    width: 100%;
+}

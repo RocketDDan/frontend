@@ -4,7 +4,7 @@ import style from './FeedCard.module.css'
 import { ProfileImage } from '../profile/ProfileImage';
 // icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faChevronRight, faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons'
 import { faMessage, faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons'
 // dto
 import SampleFeed from "../../dto/feed.dto";
@@ -68,18 +68,24 @@ const FeedCard = ({ feed, onCommentClick }) => {
                 {feed.feedFileUrlList.length > 1 && (
                     <button
                         onClick={handlePrev}
-                        className={style.image}
+                        className={style.imageChangeBtn}
                         style={{ left: '10px', }}
-                    >◀</button>
+                    >
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                    </button>
+                    // ◀
                 )}
 
                 {/* 오른쪽 화살표 */}
                 {feed.feedFileUrlList.length > 1 && (
                     <button
                         onClick={handleNext}
-                        className={style.image}
+                        className={style.imageChangeBtn}
                         style={{ right: '10px', }}
-                    >▶</button>
+                    >
+                        <FontAwesomeIcon icon={faChevronRight} />
+                    </button>
+                    // ▶
                 )}
             </div>
 
