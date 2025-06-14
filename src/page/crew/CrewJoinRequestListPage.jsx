@@ -12,6 +12,7 @@ import { approveCrewJoinRequest, rejectCrewJoinRequest } from "../../api/crewJoi
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { BasicRadio } from "../../components/base/Radio"; // 라디오 버튼 컴포넌트
 import commonStyles from "../../Common.module.css"; // 공통 스타일
+import Pagenation from "../../components/base/Pagenation";
 
 const CrewJoinRequestListPage = () => {
     const { crewId } = useParams(); // 여기서 crewId를 받아옴
@@ -20,11 +21,11 @@ const CrewJoinRequestListPage = () => {
     const [modalDescription, setModalDescription] = useState(""); // 모달 설명 상태
     const [onConfirm, setOnConfirm] = useState(() => () => {}); // 모달 확인 버튼 클릭 핸들러 상태
 
-    const [crewJoinRequestList, setCrewJoinRequestList] = useState(Array(15).fill(sampleCrewJoinRequest)); // 크루 가입 요청 목록 상태
+    const [crewJoinRequestList, setCrewJoinRequestList] = useState(Array(7).fill(sampleCrewJoinRequest)); // 크루 가입 요청 목록 상태
     const [nickname, setNickname] = useState(""); // 닉네임 상태
     const [page, setPage] = useState(1); // 페이지 상태
-    const [perPage, setPerPage] = useState(10); // 페이지당 항목 수 상태
     const [status, setStatus] = useState("REQUEST"); // 상태 필터링 상태
+    const [isExistNextPage, setIsExistNextPage] = useState(false);
 
     // 가입 요청 상태 옵션 정의
     const statusOptions = [
@@ -79,15 +80,15 @@ const CrewJoinRequestListPage = () => {
         const params = {
             nickname: nickname,
             page: page,
-            perPage: perPage,
+            perPage: 7,
             order: "LATEST", // 정렬 기준은 최신순으로 고정
             status: status
         }
         // 크루 가입 요청 목록을 가져오는 API 호출
         fetchCrewJoinRequestList(crewId, params)
         .then(data => {
-            console.log("닉네임", nickname);
-            setCrewJoinRequestList(data);
+            setCrewJoinRequestList(data.crewJoinRequestList);
+            setIsExistNextPage(data.isExistNextPage);
         })
     }
 
@@ -98,7 +99,6 @@ const CrewJoinRequestListPage = () => {
 
     return (
         <div className={styles.pageWrapper}>
-            <h1>크루 가입 신청 현황</h1>
             <div className={styles.header}>
                 <div className={styles.searchHeader}>
                     <SearchBar 
@@ -158,6 +158,7 @@ const CrewJoinRequestListPage = () => {
                     onClose={() => setOpen(false)}
                 />
             )}
+            <Pagenation page={page} isExistNextPage={isExistNextPage} setPage={setPage}/>
         </div>
     );
 }
