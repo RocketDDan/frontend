@@ -34,7 +34,7 @@ const Header = () => {
           ) : (
             <div className={headerStyle.profileWrapper}>
               <div className={headerStyle.profileContainer} onClick={toggleProfileMenu}>
-                <LoginMemberProfileImage profileUrl={user.profileImageUrl} />
+                <ProfileImage profileUrl={user.profileImageUrl} />
                 <span>
                   <span className={headerStyle.nickname}>{user.nickname}&nbsp;</span>
                   <span className={headerStyle.nim}>님</span>

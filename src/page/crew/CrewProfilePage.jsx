@@ -7,12 +7,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fetchCrew } from "../../api/crew.api";
 import { useParams } from "react-router-dom";
 import { ThirdaryButton, SecondaryHoverButton } from "../../components/base/Button";
-import { ProfileImage } from "../../components/profile/ProfileImage";
 import { CheckModal } from "../../components/base/CheckModal";
 import { deleteCrew } from "../../api/crew.api";
 import { resignCrewMember } from "../../api/crewMember.api";
 import {deleteCrewJoinRequest, requestCrewJoin} from "../../api/crewJoinRequest.api";
 import { TextArea } from "../../components/base/Input";
+import { ProfileImage } from "../../components/profile/ProfileImage";
+
 
 const CrewProfilePage = () => {
     const navigate = useNavigate();
