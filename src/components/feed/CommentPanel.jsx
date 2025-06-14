@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FeedProfileImage } from '../profile/ProfileImage';
+import { ProfileImage } from '../profile/ProfileImage';
 import style from './CommentPanel.module.css';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { TextInput } from '../base/Input';
@@ -69,7 +69,7 @@ const CommentPanel = ({ feed, onClose }) => {
                         </div>
                         <div className={style.commentRow}>
                             <span className={style.feedProfile}>
-                                <FeedProfileImage profileUrl={comment.writerProfileUrl} />
+                                <ProfileImage profileUrl={comment.writerProfileUrl} size="30px" />
                                 <b>{comment.writerNickname}</b>
                             </span>
                             <span>{comment.content}</span>

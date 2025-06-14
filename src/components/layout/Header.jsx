@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-import { LoginMemberProfileImage } from '../profile/ProfileImage'
+import { ProfileImage } from '../profile/ProfileImage'
 
 import MetamongImage from "../../assets/images/metamong.jpeg"
 
@@ -36,7 +36,7 @@ const Header = () => {
                     ) : (
                         <div className={headerStyle.profileWrapper}>
                             <div className={headerStyle.profileContainer} onClick={toggleProfileMenu}>
-                                <LoginMemberProfileImage profileUrl={MetamongImage} />
+                                <ProfileImage profileUrl={MetamongImage} size="30px"/>
                                 <span>
                                     <span className={headerStyle.nickname}>{user.nickname}&nbsp;</span>
                                     <span className={headerStyle.nim}>님</span>

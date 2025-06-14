@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fetchCrew } from "../../api/crew.api";
 import { useParams } from "react-router-dom";
 import { ThirdaryButton, SecondaryHoverButton } from "../../components/base/Button";
-import { CrewProfileImage } from "../../components/profile/ProfileImage";
+import { ProfileImage } from "../../components/profile/ProfileImage";
 
 
 const CrewProfilePage = () => {
@@ -56,7 +56,7 @@ const CrewProfilePage = () => {
     return (
         <div>
             <div className={styles.profileWrapper}>
-                <CrewProfileImage profileUrl={crew.profilePath}/>
+                <ProfileImage profileUrl={crew.profilePath} size="200px"/>
                 <div className={styles.infoSection}>
                     <span className={styles.crewName}>{crew.crewName}</span>
                     <div className={styles.introduce}>{crew.introduce}</div>

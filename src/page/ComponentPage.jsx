@@ -3,7 +3,7 @@ import { SearchBar } from "../components/search_bar/SearchBar";
 import { BasicCheckbox } from "../components/base/Checkbox";
 import { BasicRadio } from "../components/base/Radio";
 import { BasicSelect } from "../components/base/Select";
-import { FeedProfileImage, CrewProfileImage, MemberProfileImage } from "../components/profile/ProfileImage";
+import { ProfileImage } from "../components/profile/ProfileImage";
 import { PrimaryBigButton, PrimaryButton, SecondaryBigButton, SecondaryButton } from "../components/base/Button";
 import { SquareFeed } from "../components/feed/SquareFeed";
 
@@ -156,16 +156,16 @@ const HomePage = () => {
                 <h2>프로필 이미지 태그</h2>
                 <div style={{ display: 'flex', justifyContent: 'start', gap: '5rem' }}>
                     <div style={{ flex: '1' }}>
-                        <h4>Feed Profile Image</h4>
-                        <FeedProfileImage />
+                        <h4>Feed Profile Image (30px)</h4>
+                        <ProfileImage size="30px"/>
                     </div>
                     <div style={{ flex: '1' }}>
-                        <h4>Crew Profile Image</h4>
-                        <CrewProfileImage />
+                        <h4>Member Profile Image (100px)</h4>
+                        <ProfileImage size="100px"/>
                     </div>
                     <div style={{ flex: '1' }}>
-                        <h4>Member Profile Image</h4>
-                        <MemberProfileImage />
+                        <h4>Crew Profile Image (200px)</h4>
+                        <ProfileImage size="200px"/>
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />

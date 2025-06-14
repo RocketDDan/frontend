@@ -1,7 +1,7 @@
 // css
 import feedCardStyle from './FeedCard.module.css'
 // image
-import { FeedProfileImage } from '../profile/ProfileImage';
+import { ProfileImage } from '../profile/ProfileImage';
 // icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons'
