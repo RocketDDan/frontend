@@ -4,11 +4,13 @@ import { BasicCheckbox } from "../components/base/Checkbox";
 import { BasicRadio } from "../components/base/Radio";
 import { BasicSelect } from "../components/base/Select";
 import { ProfileImage } from "../components/profile/ProfileImage";
-import { PrimaryBigButton, PrimaryButton, SecondaryBigButton, SecondaryButton } from "../components/base/Button";
+import { PrimaryBigButton, PrimaryButton, SecondaryBigButton, SecondaryButton, ThirdaryButton } from "../components/base/Button";
 import { SquareFeed } from "../components/feed/SquareFeed";
 
 import MetamongImage from "../assets/images/metamong.jpeg"
 import { useState } from "react";
+import CheckModal from "../components/base/CheckModal";
+import CrewMemberInfo from "../components/crew/CrewMemberInfo";
 
 
 const HomePage = () => {
@@ -19,6 +21,7 @@ const HomePage = () => {
     const [value5, setValue5] = useState(); // searchbar
     const [value6, setValue6] = useState("value2"); // radio
     const [value7, setValue7] = useState();
+    const [modalOpen, setModalOpen] = useState(false);
 
     const handleInput1 = (val) => {
         setValue1(val);
@@ -201,6 +204,13 @@ const HomePage = () => {
                         width="150px" 
                         onClick={() => { console.log("click") }} />
                     </div>
+                    <div style={{ flex: '1' }}>
+                        <h4>Thirdary Button</h4>
+                        <p>width: 90px</p>
+                        <ThirdaryButton 
+                        width="90px" 
+                        onClick={() => { console.log("click") }} />
+                    </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
 
@@ -290,6 +300,26 @@ const HomePage = () => {
                     <SquareFeed url={MetamongImage} />
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
+
+                {/* 확인 모달창 */} 
+                <h2>확인 모달창</h2>
+                <div>
+                    <button onClick={() => setModalOpen(true)}> 모달 열기 </button>
+                    {modalOpen &&(
+                        <CheckModal 
+                        title="제목" 
+                        description="하시겠습니까?" 
+                        onConfirm={()=>setModalOpen(false)}
+                        onClose={()=>setModalOpen(false)}/>
+                    )}
+                </div>
+                <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
+
+                {/* 멤버 프로필 목록용 카드*/}
+                <h2>크루 멤버 정보</h2>
+                <CrewMemberInfo profilePath={MetamongImage} nickname="닉네임" date="2025-06-14 11:11:11"/>
+                <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
+
             </div>
         </div>
     )
