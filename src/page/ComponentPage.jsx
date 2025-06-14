@@ -12,7 +12,6 @@ import { useState } from "react";
 import CheckModal from "../components/base/CheckModal";
 import CrewMemberInfo from "../components/crew/CrewMemberInfo";
 
-
 const HomePage = () => {
     const [value1, setValue1] = useState(); // text input
     const [value2, setValue2] = useState(); // text input with label
