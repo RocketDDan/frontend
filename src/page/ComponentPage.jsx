@@ -9,8 +9,8 @@ import { SquareFeed } from "../components/feed/SquareFeed";
 
 import MetamongImage from "../assets/images/metamong.jpeg"
 import { useState } from "react";
-import CheckModal from "../components/base/CheckModal";
-import CrewMemberInfo from "../components/crew/CrewMemberInfo";
+import {CheckModal} from "../components/base/CheckModal";
+import {CrewMemberInfo} from "../components/crew/CrewMemberInfo";
 import Pagenation from "../components/base/Pagenation";
 
 const HomePage = () => {

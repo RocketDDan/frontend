@@ -32,4 +32,4 @@ const CheckModal = ({
     );    
 };
 
-export default CheckModal;
+export {CheckModal};

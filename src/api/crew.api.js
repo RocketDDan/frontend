@@ -6,10 +6,9 @@ const fetchCrew = async (crewId) => {
         if (response.status !== 200) {
             throw new Error('크루 정보 조회 실패', response.data);
         }
-        console.log('크루 정보 조회 성공:', response.data);
+        console.log('크루 정보 조회 성공', response.data);
         return response.data;
     } catch (error) {
-        console.error('크루 정보 조회 실패:', error);
         throw error;
     }
 }
@@ -20,12 +19,107 @@ const fetchCrewList = async (params) => {
         if (response.status !== 200) {
             throw new Error('크루 목록 조회 실패', response.data);
         }
-        console.log('크루 목록 조회 성공:', response);
+        console.log('크루 목록 조회 성공', response.data);
         return response.data;
     } catch (error) {
-        console.error('크루 목록 조회 실패:', error);
         throw error;
     }
 }
 
-export {fetchCrew, fetchCrewList};
+const createCrew = async (crew, profileFile) => {
+    try{
+        const formData = new FormData();
+        formData.append("crew", new Blob([JSON.stringify(crew)], { type: "application/json" }));
+        if (profileFile) {
+            formData.append("profile", profileFile);
+        }
+
+        const response = await apiClient.post('/crews', formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
+
+        if (response.status !== 200) {
+            throw new Error('크루 생성 실패', response.data);
+        }
+
+        console.log('크루 생성 성공', response.data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+
+};
+
+const updateCrew = async (crewId, crew, profileFile) => {
+    try{
+        const formData = new FormData();
+        formData.append("crew", new Blob([JSON.stringify(crew)], { type: "application/json" }));
+        if (profileFile) {
+            formData.append("profile", profileFile);
+        }
+
+        const response = await apiClient.put(`/crews/${crewId}`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
+
+        if (response.status !== 200) {
+            throw new Error('크루 수정 실패', response.data);
+        }
+
+        console.log('크루 수정 성공', response.data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+
+};
+
+const deleteCrew = async (crewId) => {
+    try{
+        const response = await apiClient.delete(`/crews/${crewId}`);
+        if (response.status !== 200) {
+            throw new Error('크루 삭제 실패', response.data);
+        }
+        console.log('크루 삭제 성공', response.data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// 내 크루 조회
+const fetchMyCrew = async () => {
+    try {
+        const response = await apiClient.put('/crews/me');
+        if (response.status !== 200) {
+            throw new Error('내 크루 조회 실패', response.data);
+        }
+        console.log('내 크루 조회 성공', response.data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+// 크루 이름 중복 조회
+const checkDuplicateCrewName = async (crewName) => {
+    try {
+        const response = await apiClient.get('/crews/duplicate', {
+            params: { crewName }
+        });
+        if (response.status !== 200) {
+            throw new Error('크루 이름 중복 조회 실패', response.data);
+        }
+        console.log('크루 이름 중복 조회 성공', response.data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+
+export {fetchCrew, fetchCrewList, createCrew, updateCrew, deleteCrew, fetchMyCrew, checkDuplicateCrewName};

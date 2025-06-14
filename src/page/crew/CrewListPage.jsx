@@ -8,7 +8,7 @@ import { fetchCrewList } from "../../api/crew.api";
 import { SearchBar } from "../../components/search_bar/SearchBar";
 
 const CrewListPage = () => {
-  const [crewList, setCrewList] = useState(Array(15).fill(sampleCrewList));
+  const [crewList, setCrewList] = useState([]);
   const [name, setName] = useState("");
   const [region, setRegion] = useState("");
   const [order, setOrder] = useState("LATEST");
@@ -58,9 +58,12 @@ const CrewListPage = () => {
         />
       </div>
       <div className={styles.container}>
-        {crewList.map((crew, index) => (
+        {crewList.length > 0 && crewList.map((crew, index) => (
           <CrewCard key={index} crew={crew} />
         ))}
+        {crewList.length === 0 && (
+          <div className={styles.noRequest}> 크루가 없습니다. </div>
+        )}
       </div>
     </div>
   );
