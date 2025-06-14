@@ -73,6 +73,29 @@ const MemberProfileImage = (props) => {
 }
 
 /**
+ * 크루 관련 멤버 프로필 이미지 컴포넌트
+ *
+ * @component
+ * @param {Object} props - 컴포넌트 속성
+ * @param {string} [props.profileUrl] - 프로필 이미지 URL (없으면 기본 이미지 사용)
+ * @returns {JSX.Element} 프로필 이미지 컴포넌트
+ */
+const CrewMemberProfileImage = (props) => {
+    return (
+        <div>
+            <div className={ProfileImageStyle.crewContainer} style={{
+                width: '40px',
+                height: '40px',
+            }}>
+                {props.profileUrl
+                    ? <img src={props.profileUrl} alt="크루 프로필 이미지" className={ProfileImageStyle.profileImg} />
+                    : <img src={BaseProfileImage} alt="기본 프로필 이미지" width={'95%'} />}
+            </div>
+        </div>
+    )
+}
+
+/**
  * 크루 프로필 이미지 컴포넌트
  *
  * @component
@@ -95,4 +118,4 @@ const CrewProfileImage = (props) => {
     )
 }
 
-export { LoginMemberProfileImage, FeedProfileImage, MemberProfileImage, CrewProfileImage };
+export { LoginMemberProfileImage, FeedProfileImage, MemberProfileImage, CrewMemberProfileImage, CrewProfileImage };

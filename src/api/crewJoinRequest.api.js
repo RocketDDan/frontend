@@ -1,6 +1,6 @@
 import apiClient from "./apiClient";
 
-const fetchCrewJoinRequestList = async (crewId, {params}) => {
+const fetchCrewJoinRequestList = async (crewId, params) => {
     try {
         const response = await apiClient.get(`/crews/${crewId}/join-requests`, { params });
         if (response.status !== 200) {
@@ -16,7 +16,7 @@ const fetchCrewJoinRequestList = async (crewId, {params}) => {
 
 const approveCrewJoinRequest = async (crewId, requestId) => {
     try {
-        const response = await apiClient.post(`/crews/${crewId}/join-requests/${requestId}/approve`);
+        const response = await apiClient.put(`/crews/${crewId}/join-requests/${requestId}/accept`);
         if (response.status !== 200) {
             throw new Error('크루 가입 요청 승인 실패', response.data);
         }
@@ -30,7 +30,7 @@ const approveCrewJoinRequest = async (crewId, requestId) => {
 
 const rejectCrewJoinRequest = async (crewId, requestId) => {
     try {
-        const response = await apiClient.post(`/crews/${crewId}/join-requests/${requestId}/reject`);
+        const response = await apiClient.put(`/crews/${crewId}/join-requests/${requestId}/deny`);
         if (response.status !== 200) {
             throw new Error('크루 가입 요청 거절 실패', response.data);
         }
