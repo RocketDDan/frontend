@@ -115,6 +115,7 @@ const FeedCard = ({ feed, onCommentClick }) => {
             </div>
 
             {/* 댓글 */}
+            
             <div className={style.commentList}>
                 {/* 최대 3개만 보여주기 */}
                 {feed.commentList.map(comment => {

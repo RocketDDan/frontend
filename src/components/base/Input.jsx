@@ -10,7 +10,9 @@ import InputStyle from "./Input.module.css";
  * @param {String} width 가로 길이
  * @param {String} placeholder placeholder
  * @param {String} value value
+ * @param {Boolean} autoFocus autoFocus (기본 포커싱)
  * @param {Function} onChange 값이 바뀔 때 이벤트
+ * @param {Function} onEnter 엔터 시 이벤트
  * @param {Boolean} closeBtnVisible 닫기 버튼 여부
  * @returns {JSX.Element} text input 컴퍼넌트
  */
@@ -20,6 +22,8 @@ const TextInput = ({
     value = "",
     onChange,
     closeBtnVisible = true,
+    onEnter,
+    autoFocus = false,
 }) => {
 
     const handleChange = (e) => {
@@ -30,6 +34,16 @@ const TextInput = ({
         onChange?.("");
     };
 
+    const handleOnKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            // react event queue 안정성 위해 defer 처리
+            setTimeout(() => {
+                onEnter?.(e.target.value);
+            }, 0);
+        }
+    };
+
     return (
         <span className={InputStyle.container} style={{ width: width }}>
             <input
@@ -37,6 +51,7 @@ const TextInput = ({
                 placeholder={placeholder}
                 value={value}
                 onChange={handleChange}
+                onKeyDown={handleOnKeyDown}
                 maxLength={50}
                 style={{
                     padding: "0.7rem 0 0.7rem 0.7rem",
@@ -44,6 +59,7 @@ const TextInput = ({
                     border: "solid 1px",
                     width: "100%",
                 }}
+                autoFocus={autoFocus}
             />
             {value && closeBtnVisible && (
                 <FontAwesomeIcon
@@ -145,7 +161,7 @@ const TextArea = ({
     placeholder = "",
     width = "100%",
     height = '100%',
-    value, 
+    value,
     onChange,
     closeBtnVisible = true,
 }) => {

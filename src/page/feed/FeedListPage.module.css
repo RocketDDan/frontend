@@ -6,14 +6,38 @@
     height: 100%;
 }
 
+.container > * {
+    flex: 1;
+    height: 100%;
+}
+
 .feedList {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    height: 100%;
+    max-width: 700px;
     overflow-y: auto;
 }
 
 .feedList::-webkit-scrollbar {
     display: none;
+}
+
+/* 모바일에서는 피드만 보이거나 댓글만 보이게 분기 */
+@media (max-width: 768px) {
+    .feedList {
+        display: block;
+    }
+
+    .commentPanel {
+        display: none;
+    }
+
+    .container.showCommentOnly .feedList {
+        display: none;
+    }
+
+    .container.showCommentOnly .commentPanel {
+        display: block;
+    }
 }

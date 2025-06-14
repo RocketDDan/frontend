@@ -1,5 +1,5 @@
 // css
-import feedListStyle from './FeedListPage.module.css';
+import style from './FeedListPage.module.css';
 // library
 import { useState, useEffect } from "react";
 // api
@@ -22,10 +22,10 @@ const FeedListPage = () => {
                 // console.log('피드 목록:', data);
                 setFeedList(data);
             });
-    }, []);
+    }, [feedList]);
 
+    // 댓글창 열거나 닫기
     const handleCommentClick = (feed) => {
-        console.log("클릭 피드: ", feed);
         if (selectedFeed == null) { // 열린 피드가 없으면 열기
             setSelectedFeed(feed);
         } else if (selectedFeed.feedId == feed.feedId) {  // 같은 피드면 접기
@@ -35,13 +35,33 @@ const FeedListPage = () => {
         }
     };
 
+    // 댓글창 닫기
     const handleClosePanel = () => {
         setSelectedFeed(null);
     };
 
+    // 댓글 개수 증가
+    const handleFeedCommentCntUp = (feedId) => {
+        feedList.map(feed => {
+            if (feed.feedId == feedId) {
+                feed.commentCount += 1;
+            }
+        })
+    }
+
+    // 댓글 개수 감소
+    const handleFeedCommentCntDown = (feedId) => {
+        feedList.map(feed => {
+            if (feed.feedId == feedId) {
+                feed.commentCount -= 1;
+            }
+        })
+    }
+
     return (
-        <div className={feedListStyle.container}>
-            <div className={feedListStyle.feedList}>
+        <div className={`${style.container} ${selectedFeed ? style.showCommentOnly : ''}`}>
+            {/* 피드 목록 (스크롤) */}
+            <div className={style.feedList}>
                 {feedList.map(feed =>
                     <FeedCard
                         feed={feed}
@@ -50,7 +70,14 @@ const FeedListPage = () => {
                     />
                 )}
             </div>
-            <CommentPanel feed={selectedFeed} onClose={handleClosePanel} />
+            {/* 댓글창 */}
+            <div style={{display: selectedFeed ? 'block' : 'none'}}>
+                <CommentPanel 
+                feed={selectedFeed} 
+                onClose={handleClosePanel}
+                writeComment={handleFeedCommentCntUp}
+                deleteComment={handleFeedCommentCntDown} />
+            </div>
         </div>
     )
 }
