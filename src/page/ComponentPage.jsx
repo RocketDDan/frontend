@@ -11,6 +11,7 @@ import MetamongImage from "../assets/images/metamong.jpeg"
 import { useState } from "react";
 import CheckModal from "../components/base/CheckModal";
 import CrewMemberInfo from "../components/crew/CrewMemberInfo";
+import Pagenation from "../components/base/Pagenation";
 
 const HomePage = () => {
     const [value1, setValue1] = useState(); // text input
@@ -320,7 +321,17 @@ const HomePage = () => {
 
                 {/* 멤버 프로필 목록용 카드*/}
                 <h2>크루 멤버 정보</h2>
-                <CrewMemberInfo profilePath={MetamongImage} nickname="닉네임" date="2025-06-14 11:11:11"/>
+                <div>
+                    <CrewMemberInfo profilePath={MetamongImage} nickname="닉네임" date="2025-06-14 11:11:11"/>
+                </div>
+
+                <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
+
+                {/* 페이지네이션 버튼 */}
+                <h2>페이지네이션 버튼</h2>
+                <div>
+                    <Pagenation page={1} isExistNextPage={false} setPage={() => console.log('nextPage')}/>
+                </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
 
             </div>
