@@ -22,3 +22,19 @@
     background: #7CB2FC; /* primaryBg와 동일 */
     color: #fff;
 }
+
+.primaryCheck{
+    color: #7CB2FC;
+}
+
+.primaryCheck:hover {
+    color: #3a8afb; /* hover 시 색상 변경 */
+}
+
+.primaryCancel {
+    color: #FFBABA; /* deepPinkBg와 동일 */
+}
+
+.primaryCancel:hover {
+    color: #ff0000; /* hover 시 색상 변경 */
+}

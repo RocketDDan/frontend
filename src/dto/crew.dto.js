@@ -34,4 +34,15 @@ const sampleCrewMember = {
     "leader": true
 }
 
-export {sampleCrew, sampleCrewList};
+const sampleCrewJoinRequest = {
+    "crewJoinRequestId": 1,
+    "crewId": 1,
+    "memberId": 2,
+    "nickname": "러닝러버",
+    "profilePath": crewSampleImage,
+    "requestDate": "2024-03-20 14:30:00",
+    "requestMessage": "안녕하세요! 크루 가입을 신청합니다. 함께 달리고 싶어요! 😊 저는 매사 열심히 참여하는 성격이구요, mbti ENFJ로 성격도 활발해요!",
+    "status": "ACCEPT"
+}
+
+export {sampleCrew, sampleCrewList, sampleCrewMember, sampleCrewJoinRequest};
