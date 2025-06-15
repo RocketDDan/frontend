@@ -4,8 +4,10 @@ import styles from "./AnnouncementListPage.module.css";
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { SecondaryButton } from "../../components/base/Button";
 import { TableView } from "../../components/base/AnnouncementTable";
+import { useNavigate } from "react-router-dom";
 
 const AnnouncementListPage = () => {
+  const navigate = useNavigate();
   const [keyword, setKeyword] = useState("");
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
@@ -44,7 +46,11 @@ const AnnouncementListPage = () => {
             onEnter={() => console.log("엔터")}
           />
         </div>
-        <SecondaryButton width="160px" content="새 공지사항 등록" />
+        <SecondaryButton
+          width="160px"
+          content="새 공지사항 등록"
+          onClick={() => navigate("/announcement/upload")}
+        />
       </div>
       <TableView
         headers={["번호", "제목", "작성자", "작성날짜"]}
