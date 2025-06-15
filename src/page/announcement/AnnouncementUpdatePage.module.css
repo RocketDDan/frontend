@@ -1,0 +1,97 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.heading {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.meta {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  color: #000;
+  margin-bottom: 24px;
+}
+
+.meta p {
+  background-color: #e0e0e0;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.section {
+  margin-bottom: 24px;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 8px;
+  display: block;
+  text-align: left;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white; 
+}
+
+.quillWrapper {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  min-height: 200px;
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.quillWrapper .ql-editor {
+  text-align: left;
+}
+
+.attachSection {
+  margin-top: 12px;
+}
+
+.fileList {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 4px;
+  text-align: left;
+}
+
+.fileItem {
+  margin-bottom: 6px;
+}
+
+.fileIcon {
+  margin-right: 6px;
+}
+
+.downloadLink {
+  color: #007bff;
+  font-size: 14px;
+  text-decoration: underline;
+  display: inline-block;
+  text-align: left;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 40px;
+}

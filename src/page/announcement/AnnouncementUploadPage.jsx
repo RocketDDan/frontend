@@ -64,7 +64,6 @@ const AnnouncementUploadPage = () => {
                 />
             </div>
 
-        
             <div className={styles.formGroup}>
                 <label>첨부 파일</label>
                 <AnnouncementFileUploader
@@ -84,8 +83,6 @@ const AnnouncementUploadPage = () => {
                     <ReactQuill value={content} onChange={setContent} style={{ height: '100%' }} />
                 </div>
             </div>
-
-
             <button className={styles.submitBtn} onClick={handleSubmit}>
                 업로드
             </button>
