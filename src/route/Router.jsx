@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 // Component 확인 페이지
-import ComponentPage from "../page/ComponentPage"
+import ComponentPage from "../page/ComponentPage";
 
 // 관리자 (admin)
 import MemberListPage from "../page/admin/MemberListPage"
@@ -13,6 +13,8 @@ import AnnouncementUploadPage from "../page/announcement/AnnouncementUploadPage"
 import AnnouncementUpdatePage from "../page/announcement/AnnouncementUpdatePage";
 
 // 멤버 인증/인가 (auth)
+import LoginCallback from "../page/auth/LoginCallback";
+import LogoutCallback from "../page/auth/LogoutCallback";
 import SignupPage from "../page/auth/SignupPage";
 import LoginPage from "../page/auth/LoginPage";
 import AccountSettingPage from "../page/auth/AccountSettingPage";
@@ -27,10 +29,10 @@ import FeedUploadPage from "../page/feed/FeedUploadPage";
 import FeedUpdatePage from "../page/feed/FeedUpdatePage";
 
 // 러너 (runner)
-import RunnerListPage from "../page/runner/RunnerListPage"
+import RunnerListPage from "../page/runner/RunnerListPage";
 
 // 홈 (home)
-import HomePage from "../page/HomePage"
+import HomePage from "../page/HomePage";
 import NotFoundPage from "../page/NotFoundPage";
 import CrewJoinRequestListPage from "../page/crew/CrewJoinRequestListPage";
 
@@ -51,6 +53,8 @@ const Router = () => {
             <Route path="/announcement/:announcementId/update" element={<AnnouncementUpdatePage/>} />
 
             {/* 멤버 인증/인가 */}
+            <Route path="/auth/callback" element={<LoginCallback />} />
+            <Route path="/logout/callback" element={<LogoutCallback />} />
             <Route path="/signup" element={<SignupPage/>} />
             <Route path="/login" element={<LoginPage/>} />
             <Route path="/account/setting" element={<AccountSettingPage/>} />
