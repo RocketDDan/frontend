@@ -143,12 +143,13 @@ const TextInputWithLabel = ({
  * @returns {JSX.Element} textarea 컴퍼넌트
  */
 const TextArea = ({
-  placeholder = "",
-  width = "100%",
-  height = '100%',
-  value,
-  onChange,
-  closeBtnVisible = true,
+    placeholder = "",
+    width = "100%",
+    height = '100%',
+    value, 
+    onChange,
+    maxLength,
+    closeBtnVisible = true,
 }) => {
   const id = uuidv7();
 
@@ -160,36 +161,38 @@ const TextArea = ({
     onChange?.("");
   };
 
-  return (
-    <span className={InputStyle.container} style={{ width: width, height: height }}>
-      <textarea
-        id={id}
-        placeholder={placeholder}
-        value={value}
-        onChange={handleChange}
-        style={{
-          padding: "0.7rem 0 0.7rem 0.7rem",
-          borderRadius: "8px",
-          border: "solid 1px",
-          width: "100%",
-        }}
-      />
-      {value && closeBtnVisible && (
-        <FontAwesomeIcon
-          icon={faTimes}
-          onClick={handleClear}
-          style={{
-            position: "absolute",
-            right: "0.5rem",
-            top: "0.7rem",
-            cursor: "pointer",
-            color: "#999",
-          }}
-        />
-      )}
-    </span>
-  );
-};
+    return (
+        <span className={InputStyle.container} style={{ width: width, height: height }}>
+            <textarea
+                id={id}
+                placeholder={placeholder}
+                value={value}
+                onChange={handleChange}
+                maxLength={maxLength}
+                style={{
+                    padding: "0.7rem 0 0.7rem 0.7rem",
+                    borderRadius: "8px",
+                    border: "solid 1px",
+                    width: "100%",
+                    height: height, // 이 줄을 추가하세요!
+                }}
+            />
+            {value && closeBtnVisible && (
+                <FontAwesomeIcon
+                    icon={faTimes}
+                    onClick={handleClear}
+                    style={{
+                        position: "absolute",
+                        right: "0.5rem",
+                        top: "0.7rem",
+                        cursor: "pointer",
+                        color: "#999",
+                    }}
+                />
+            )}
+        </span>
+    )
+}
 
 /**
  * TextArea With Label Component

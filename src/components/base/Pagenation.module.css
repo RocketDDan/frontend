@@ -1,0 +1,35 @@
+.paginationWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;           /* 간격 줄임 */
+  margin: 20px 0;      /* 위아래 여백 줄임 */
+}
+
+.arrowBtn {
+  background: none;
+  border: none;
+  font-size: 20px;     /* 아이콘 크기 줄임 */
+  color: #888;
+  cursor: pointer;
+  padding: 4px 10px;   /* 패딩 줄임 */
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.arrowBtn:disabled {
+  color: #bbb;
+  cursor: not-allowed;
+  background: none;
+}
+
+.arrowBtn:not(:disabled):hover {
+  background: #f3f3f3;
+}
+
+.pageNumber {
+  font-size: 1.1rem;   /* 숫자 크기 줄임 */
+  font-weight: 500;
+  min-width: 24px;
+  text-align: center;
+}

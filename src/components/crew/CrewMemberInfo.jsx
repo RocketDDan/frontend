@@ -20,4 +20,4 @@ const CrewMemberInfo = ({ profilePath, nickname, date }) => {
     );
 }
 
-export default CrewMemberInfo;
+export {CrewMemberInfo};

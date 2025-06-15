@@ -30,12 +30,15 @@ import FeedUploadPage from "../page/feed/FeedUploadPage";
 import FeedUpdatePage from "../page/feed/FeedUpdatePage";
 
 // 러너 (runner)
-import RunnerListPage from "../page/runner/RunnerListPage";
+import RunnerListPage from "../page/runner/RunnerListPage"
+import RunnerProfilePage from "../page/runner/RunnerProfilePage";
 
 // 홈 (home)
 import HomePage from "../page/HomePage";
 import NotFoundPage from "../page/NotFoundPage";
 import CrewJoinRequestListPage from "../page/crew/CrewJoinRequestListPage";
+import CrewCreatePage from "../page/crew/CrewCreatePage";
+import CrewUpdatePage from "../page/crew/CrewUpdatePage";
 
 const Router = () => {
     return (
@@ -66,6 +69,8 @@ const Router = () => {
             <Route path="/crew/:crewId" element={<CrewProfilePage />} />
             <Route path="/crew/list" element={<CrewListPage/>} />
             <Route path="/crew/:crewId/join-request/list" element={<CrewJoinRequestListPage/>} />
+            <Route path="/crew/create" element={<CrewCreatePage />} />
+            <Route path="/crew/:crewId/update" element={<CrewUpdatePage />} />
 
             {/* 피드 */}
             <Route path="/feed/list" element={<FeedListPage/>} />
@@ -74,6 +79,7 @@ const Router = () => {
 
             {/* 러너 */}
             <Route path="/runner/list" element={<RunnerListPage/>} />
+            <Route path="/runner/:memberId" element={<RunnerProfilePage/>}/>
 
             {/* 홈 */}
             <Route path="/" element={<HomePage/>} />

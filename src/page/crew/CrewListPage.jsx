@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CrewCard from "../../components/crew/CrewCard";
 import { sampleCrewList } from "../../dto/crew.dto";
 import styles from "./CrewListPage.module.css";
@@ -8,11 +9,12 @@ import { fetchCrewList } from "../../api/crew.api";
 import { SearchBar } from "../../components/search_bar/SearchBar";
 
 const CrewListPage = () => {
-  const [crewList, setCrewList] = useState(Array(15).fill(sampleCrewList));
+  const [crewList, setCrewList] = useState([]);
   const [name, setName] = useState("");
   const [region, setRegion] = useState("");
   const [order, setOrder] = useState("LATEST");
   const [page, setPage] = useState(1);
+  const navigate = useNavigate();
 
   const perPage = 9;
 
@@ -34,6 +36,7 @@ const CrewListPage = () => {
       setCrewList(data);
     });
   };
+
   // 지역, 정렬, 이름 변경 시에는 자동 fetch
   useEffect(() => {
     handleSearchBar();
@@ -58,9 +61,12 @@ const CrewListPage = () => {
         />
       </div>
       <div className={styles.container}>
-        {crewList.map((crew, index) => (
-          <CrewCard key={index} crew={crew} />
+        {crewList.length > 0 && crewList.map((crew, index) => (
+          <CrewCard key={index} crew={crew}/>
         ))}
+        {crewList.length === 0 && (
+          <div className={styles.noRequest}> 크루가 없습니다. </div>
+        )}
       </div>
     </div>
   );
