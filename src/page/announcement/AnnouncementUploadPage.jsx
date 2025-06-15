@@ -28,11 +28,19 @@ const AnnouncementUploadPage = () => {
 
             <div className={styles.formGroup}>
                 <label>제목</label>
-                <TextInput />
+                <TextInput value={title} onChange={(e) => setTitle(e.target.value)} />
             </div>
         
             <div className={styles.formGroup}>
-                <AnnouncementFileUploader onFilesChange={(files) => setAttachedFiles(files)}/>
+                <AnnouncementFileUploader
+                    onFilesChange={(files) => {
+                        if (files.length > 3) {
+                        alert("파일은 최대 3개까지 첨부할 수 있습니다.");
+                        return;
+                        }
+                        setAttachedFiles(files);
+                    }}
+                    />
             </div>
 
             <div className={styles.formGroup}>

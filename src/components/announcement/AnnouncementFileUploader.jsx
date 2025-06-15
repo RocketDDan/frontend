@@ -7,16 +7,30 @@ const AnnouncementFileUploader = ({maxFiles = 3, accept= [".pdf", ".png", ".jpg"
 
     const handleFileChange = (e) => {
         const selected = Array.from(e.target.files);
-        const totalFiles = [...files, ...selected].slice(0, maxFiles);
+        inputRef.current.value = null;
 
-        const uniqueFiles = totalFiles.filter(
-            (file, index, self) => index === self.findIndex(f => f.name === file.name && f.size === file.size)
+        // 한글 포함된 파일이 있는지 검사
+        const hasKorean = selected.some(file => /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(file.name));
+        if (hasKorean) {
+            alert("파일 이름에 한글이 포함되어 있습니다. 영문 파일명으로 변경해주세요.");
+            return;
+        }
+
+        const combined = [...files, ...selected];
+        if (combined.length > maxFiles) {
+            alert(`파일은 최대 ${maxFiles}개까지 첨부할 수 있습니다.`);
+            return;
+        }
+
+        const uniqueFiles = combined.filter(
+            (file, index, self) =>
+            index === self.findIndex(f => f.name === file.name && f.size === file.size)
         );
 
         setFiles(uniqueFiles);
         onFilesChange?.(uniqueFiles);
-
     };
+
 
     const handleRemove = (index) => {
         const updated = [...files];
@@ -59,7 +73,7 @@ const AnnouncementFileUploader = ({maxFiles = 3, accept= [".pdf", ".png", ".jpg"
                     onClick={() => handleRemove(idx)}
                     className={styles.removeBtn}
                     >
-                    ❌
+                    ×
                     </button>
                 </li>
                 ))
