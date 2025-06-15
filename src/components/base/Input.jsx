@@ -12,6 +12,7 @@ import InputStyle from "./Input.module.css";
  * @param {String} value value
  * @param {Function} onChange 값이 바뀔 때 이벤트
  * @param {Boolean} closeBtnVisible 닫기 버튼 여부
+ * @param {Boolean} disabled 입력 비활성화 여부
  * @returns {JSX.Element} text input 컴퍼넌트
  */
 const TextInput = ({
@@ -20,6 +21,7 @@ const TextInput = ({
   value = "",
   onChange,
   closeBtnVisible = true,
+  disabled = false,
 }) => {
   const handleChange = (e) => {
     onChange?.(e.target.value);
@@ -43,6 +45,7 @@ const TextInput = ({
           border: "solid 1px",
           width: "100%",
         }}
+        disabled={disabled}
       />
       {value && closeBtnVisible && (
         <FontAwesomeIcon
@@ -67,10 +70,10 @@ const TextInput = ({
  * @param {String} placeholder placeholder
  * @param {String} label label
  * @param {String} width 가로 길이
-
  * @param {String} value value
  * @param {Function} onChange 값이 바뀔 때 이벤트
  * @param {Boolean} closeBtnVisible 닫기 버튼 여부
+ * @param {Boolean} disabled 입력 비활성화 여부
  * @returns {JSX.Element} text input 컴퍼넌트
  */
 const TextInputWithLabel = ({
@@ -80,6 +83,7 @@ const TextInputWithLabel = ({
   value,
   onChange,
   closeBtnVisible = true,
+  disabled = false,
 }) => {
   const id = uuidv7();
 
@@ -107,6 +111,7 @@ const TextInputWithLabel = ({
           border: "solid 1px",
           width: "100%",
         }}
+        disabled={disabled}
       />
       {value && closeBtnVisible && (
         <FontAwesomeIcon
@@ -138,12 +143,12 @@ const TextInputWithLabel = ({
  * @returns {JSX.Element} textarea 컴퍼넌트
  */
 const TextArea = ({
-    placeholder = "",
-    width = "100%",
-    height = '100%',
-    value, 
-    onChange,
-    closeBtnVisible = true,
+  placeholder = "",
+  width = "100%",
+  height = '100%',
+  value,
+  onChange,
+  closeBtnVisible = true,
 }) => {
   const id = uuidv7();
 
