@@ -37,8 +37,11 @@ const AnnouncementUploadPage = () => {
 
             <div className={styles.formGroup}>
                 <label>본문</label>
-                <ReactQuill value={content} onChange={setContent} />
+                <div className={styles.quillWrapper}>
+                    <ReactQuill value={content} onChange={setContent} style={{ height: '100%' }} />
+                </div>
             </div>
+
 
             <button className={styles.submitBtn}>업로드</button>
             </div>

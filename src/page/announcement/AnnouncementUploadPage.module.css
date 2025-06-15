@@ -81,3 +81,11 @@
   cursor: pointer;
 }
 
+.quillWrapper {
+  height: 300px; 
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+
