@@ -9,15 +9,19 @@ import SampleFeed from "../../dto/feed.dto";
 // Component
 import FeedCard from "../../components/feed/FeedCard";
 import CommentPanel from '../../components/feed/CommentPanel';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 
 const FeedListPage = () => {
 
     const [feedList, setFeedList] = useState([]);
     const [selectedFeed, setSelectedFeed] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetchFeedList({ page: 1, perPage: 20, scope: "ME", order: "LATEST" })
+        fetchFeedList({ page: 1, perPage: 20, scope: "ALL_EXCEPT_ME", order: "LATEST" })
             .then(data => {
                 // console.log('피드 목록:', data);
                 setFeedList(data);
@@ -57,6 +61,10 @@ const FeedListPage = () => {
             }
         })
     }
+    
+    const handlePlusBtn = () => {
+        navigate("/feed/upload");
+    }
 
     return (
         <div className={`${style.container} ${selectedFeed ? style.openCommentPanel : ''}`}>
@@ -72,16 +80,19 @@ const FeedListPage = () => {
             </div>
             {/* 댓글창 */}
             {
-                selectedFeed 
-                ?  <div className={style.commentPanel}>
-                    <CommentPanel
-                        feed={selectedFeed}
-                        onClose={handleClosePanel}
-                        writeComment={handleFeedCommentCntUp}
-                        deleteComment={handleFeedCommentCntDown} />
-                </div>
-                : null
+                selectedFeed
+                    ? <div className={style.commentPanel}>
+                        <CommentPanel
+                            feed={selectedFeed}
+                            onClose={handleClosePanel}
+                            writeComment={handleFeedCommentCntUp}
+                            deleteComment={handleFeedCommentCntDown} />
+                    </div>
+                    : null
             }
+            <button className={style.uploadBtn} onClick={handlePlusBtn}>
+                <FontAwesomeIcon icon={faPlus} size="2xl" />
+            </button>
         </div>
     )
 }
