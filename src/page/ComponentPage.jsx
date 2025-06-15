@@ -1,10 +1,10 @@
-import { TextAreaWithLabel, TextArea, TextInput, TextInputWithLabel } from "../components/base/Input";
+import { TextAreaWithLabel, TextArea, TextInput, TextInputWithLabel, PasswordInputWithLabel } from "../components/base/Input";
 import { SearchBar } from "../components/search_bar/SearchBar";
 import { BasicCheckbox } from "../components/base/Checkbox";
 import { BasicRadio } from "../components/base/Radio";
 import { BasicSelect } from "../components/base/Select";
 import { FeedProfileImage, CrewProfileImage, MemberProfileImage, CrewMemberProfileImage } from "../components/profile/ProfileImage";
-import { PrimaryBigButton, PrimaryButton, SecondaryBigButton, SecondaryButton, ThirdaryButton } from "../components/base/Button";
+import { PrimaryBigButton, PrimaryButton, SecondaryBigButton, SecondaryButton, ThirdaryButton, CustomButton } from "../components/base/Button";
 import { SquareFeed } from "../components/feed/SquareFeed";
 
 import MetamongImage from "../assets/images/metamong.jpeg"
@@ -20,6 +20,7 @@ const HomePage = () => {
     const [value5, setValue5] = useState(); // searchbar
     const [value6, setValue6] = useState("value2"); // radio
     const [value7, setValue7] = useState();
+    const [value8, setValue8] = useState(); // password input with label
     const [modalOpen, setModalOpen] = useState(false);
 
     const handleInput1 = (val) => {
@@ -48,6 +49,10 @@ const HomePage = () => {
     }
     const handleInput7 = (val) => {
         setValue7(val);
+        console.log("change: ", val)
+    }
+    const handleInput8 = (val) => {
+        setValue8(val);
         console.log("change: ", val)
     }
 
@@ -96,6 +101,15 @@ const HomePage = () => {
                             value={value4}
                             placeholder={"placeholder"}
                             onChange={handleInput4} />
+                    </div>
+                    <div style={{ flex: '1' }}>
+                        <h4>Password Input With Label</h4>
+                        <PasswordInputWithLabel
+                            label={"라벨"}
+                            width={"100%"}
+                            value={value8}
+                            placeholder={"placeholder"}
+                            onChange={handleInput8} />
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
@@ -212,6 +226,21 @@ const HomePage = () => {
                         <p>width: 90px</p>
                         <ThirdaryButton 
                         width="90px" 
+                        onClick={() => { console.log("click") }} />
+                    </div>
+                    <div style={{ flex: '1' }}>
+                        <h4>Custom Button</h4>
+                        <p>width: 90px</p>
+                        <CustomButton 
+                        width="90px" 
+                        onClick={() => { console.log("click") }} />
+                    </div>
+                    <div style={{ flex: '1' }}>
+                        <h4>Disabled Button</h4>
+                        <p>width: 90px</p>
+                        <CustomButton 
+                        width="90px" 
+                        active={false}
                         onClick={() => { console.log("click") }} />
                     </div>
                 </div>
