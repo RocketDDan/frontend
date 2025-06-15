@@ -1,7 +1,11 @@
 import styles from './CrewCard.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
-
+/**
+ * 
+ * @param {crew} sampleCrew crew.dto.js에서 정의된 크루 객체
+ * @returns 
+ */
 function CrewCard({crew}) {
   
   return (

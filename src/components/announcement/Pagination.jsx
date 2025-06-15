@@ -9,7 +9,7 @@ import {
 
 const Pagination = ({ page, total, limit, onPageChange }) => {
   const totalPages = Math.ceil(total / limit);
-  if (totalPages <= 1) return null;
+  if (totalPages === 0) return null;
 
   const createPageNumbers = () => {
     const pages = [];

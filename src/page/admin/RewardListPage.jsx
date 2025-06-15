@@ -21,7 +21,13 @@ const RewardListPage = () => {
                         keyword,
                     },
                 });
-                setData(res.data.feeds);
+                setData(
+                    res.data.feeds.map(item => ({
+                        ...item,
+                        createdAt: item.createdAt.split(" ")[0] + " " + item.createdAt.split(" ")[1].split(".")[0],
+                    }))
+                );
+
                 setTotalCount(res.data.totalCount);
             } catch (err) {
                 console.error("피드 광고 데이터 요청 실패", err);

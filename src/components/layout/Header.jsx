@@ -1,86 +1,94 @@
-import headerStyle from './Header.module.css';
+import headerStyle from "./Header.module.css";
 
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useAuthStore } from "../../store/authStore";
 
-import { LoginMemberProfileImage } from '../profile/ProfileImage'
-
-import MetamongImage from "../../assets/images/metamong.jpeg"
-
+import { LoginMemberProfileImage } from "../profile/ProfileImage";
 
 const Header = () => {
-    const location = useLocation();
-    const currentPath = location.pathname;
+  const KAKAO_LOGOUT_REDIRECT_URL = `${process.env.REACT_APP_API_BASE_URL}/auth/logout`;
+  const KAKAO_LOGOUT_URL = `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&logout_redirect_uri=${KAKAO_LOGOUT_REDIRECT_URL}`;
 
-    const [menuOpen, setMenuOpen] = useState(false);
-    const [profileOpen, setProfileOpen] = useState(false);
+  const location = useLocation();
+  const currentPath = location.pathname;
 
-    const user = {
-        nickname: "러너스하이",
-        role: 'USER', // TODO: 어디선가 빼올 예정 (ANONYMOUS, USER, ADMIN, COMPANY)
-    }
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
-    const toggleProfileMenu = () => setProfileOpen(prev => !prev);
+  const user = useAuthStore((state) => state.user);
 
-    return (
-        <header className={headerStyle.container}>
-            <div className={headerStyle.up}>
-                <h1>
-                    <Link to="/">Runners Hi</Link>
-                </h1>
+  const toggleProfileMenu = () => setProfileOpen((prev) => !prev);
 
-                <nav className={headerStyle.desktopNav}>
-                    {user.role === 'ANONYMOUS' ? (
-                        <Link to="/login">로그인</Link>
-                    ) : (
-                        <div className={headerStyle.profileWrapper}>
-                            <div className={headerStyle.profileContainer} onClick={toggleProfileMenu}>
-                                <LoginMemberProfileImage profileUrl={MetamongImage} />
-                                <span>
-                                    <span className={headerStyle.nickname}>{user.nickname}&nbsp;</span>
-                                    <span className={headerStyle.nim}>님</span>
-                                </span>
-                                {/* <Link to="/logout">로그아웃</Link> */}
-                            </div>
-                            {profileOpen && (
-                                <div className={headerStyle.dropdownMenu}>
-                                    <Link to="/account/setting">내 정보 수정</Link>
-                                    <Link to="/logout">로그아웃</Link>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </nav>
+  return (
+    <header className={headerStyle.container}>
+      <div className={headerStyle.up}>
+        <h1>
+          <Link to="/">Runners Hi</Link>
+        </h1>
 
-                {/* 햄버거 버튼 */}
-                <div className={headerStyle.hamburger} onClick={() => setMenuOpen(!menuOpen)}>
-                    <div />
-                    <div />
-                    <div />
+        <nav className={headerStyle.desktopNav}>
+          {!user ? (
+            <Link to="/login">로그인</Link>
+          ) : (
+            <div className={headerStyle.profileWrapper}>
+              <div className={headerStyle.profileContainer} onClick={toggleProfileMenu}>
+                <LoginMemberProfileImage profileUrl={user.profileImageUrl} />
+                <span>
+                  <span className={headerStyle.nickname}>{user.nickname}&nbsp;</span>
+                  <span className={headerStyle.nim}>님</span>
+                </span>
+                {/* <Link to="/logout">로그아웃</Link> */}
+              </div>
+              {profileOpen && (
+                <div className={headerStyle.dropdownMenu}>
+                  <Link to="/account/setting">내 정보 수정</Link>
+                  <Link to={KAKAO_LOGOUT_URL}>로그아웃</Link>
                 </div>
+              )}
             </div>
+          )}
+        </nav>
 
-            {/* 메뉴 */}
-            <div className={`${headerStyle.down} ${menuOpen ? headerStyle.open : ''}`}>
-                <span><Link
-                    to="/feed/list"
-                    className={currentPath.startsWith("/feed") ? headerStyle.activeLink : ""}>피드</Link></span>
-                <span><Link
-                    to="/crew/list"
-                    className={currentPath.startsWith("/crew") ? headerStyle.activeLink : ""}>크루</Link></span>
-                <span><Link
-                    to="/runner/list"
-                    className={currentPath.startsWith("/runner") ? headerStyle.activeLink : ""}>러너</Link></span>
-                    <span><Link
-                    to="/announcement/list"
-                    className={currentPath.startsWith("/announcement") ? headerStyle.activeLink : ""}>공지</Link></span>
-                <span><Link
-                    to="/component"
-                    className={currentPath.startsWith("/component") ? headerStyle.activeLink : ""}>컴포넌트 확인</Link></span>
-            </div>
-        </header>
-    );
+        {/* 햄버거 버튼 */}
+        <div className={headerStyle.hamburger} onClick={() => setMenuOpen(!menuOpen)}>
+          <div />
+          <div />
+          <div />
+        </div>
+      </div>
+
+      {/* 메뉴 */}
+      <div className={`${headerStyle.down} ${menuOpen ? headerStyle.open : ""}`}>
+        <span>
+          <Link to="/feed/list" className={currentPath.startsWith("/feed") ? headerStyle.activeLink : ""}>
+            피드
+          </Link>
+        </span>
+        <span>
+          <Link to="/crew/list" className={currentPath.startsWith("/crew") ? headerStyle.activeLink : ""}>
+            크루
+          </Link>
+        </span>
+        <span>
+          <Link to="/runner/list" className={currentPath.startsWith("/runner") ? headerStyle.activeLink : ""}>
+            러너
+          </Link>
+        </span>
+        <span>
+          <Link to="/announcement/list" className={currentPath.startsWith("/announcement") ? headerStyle.activeLink : ""}>
+            공지
+          </Link>
+        </span>
+        <span>
+          <Link to="/component" className={currentPath.startsWith("/component") ? headerStyle.activeLink : ""}>
+            컴포넌트 확인
+          </Link>
+        </span>
+      </div>
+    </header>
+  );
 };
 
 export default Header;

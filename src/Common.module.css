@@ -1,7 +1,40 @@
 .primaryBg {
-    background-color: #5164ED;
+    background: #7CB2FC;
+    color: #fff;
 }
 
 .secondaryBg {
-    background-color: #7CB2FC;
+    background: #e9f1ff;
+    color: #222;
+}
+
+.pinkBg {
+    background-color: #FFBABA;
+    color: #222;
+}
+
+.pinkBg:hover {
+  background: #e75480; /* deepPinkBg와 동일하게 */
+  color: #fff;
+}
+
+.secondaryHoverBg:hover {
+    background: #7CB2FC; /* primaryBg와 동일 */
+    color: #fff;
+}
+
+.primaryCheck{
+    color: #7CB2FC;
+}
+
+.primaryCheck:hover {
+    color: #3a8afb; /* hover 시 색상 변경 */
+}
+
+.primaryCancel {
+    color: #FFBABA; /* deepPinkBg와 동일 */
+}
+
+.primaryCancel:hover {
+    color: #ff0000; /* hover 시 색상 변경 */
 }

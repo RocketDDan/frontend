@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  gap: 20px;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.kakaoLoginButtonTextContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}

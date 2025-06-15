@@ -1,0 +1,88 @@
+.pageWrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+	gap: 30px;
+	margin: 0 auto;
+}
+
+.header{
+	display: flex;
+	flex-direction: column;
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	background: #fff;
+	gap: 10px;
+}
+
+.searchHeader{
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	justify-content: space-between; /* 가운데 정렬 */
+	margin: 0 0 10px 50px;
+}
+
+.radioWrapper {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.noRequests {
+	text-align: center;
+	color: #888;
+	font-size: 1.1rem;
+	margin: 40px 0;
+}
+
+.requestWrapper{
+	display: flex;
+	align-items: center;
+	gap: 50px;
+}
+
+.buttonWrapper {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.messageWrapper {
+	width: 480px;      /* 원하는 최대 너비로 조정 */
+	white-space: nowrap;   /* 한 줄로 표시 */
+	overflow-x: auto;      /* 가로 스크롤 표시 */
+	text-overflow: ellipsis;
+	display: flex;           /* 추가 */
+	align-items: center;     /* 추가 */
+	scrollbar-width: thin;           /* Firefox */
+	scrollbar-color: transparent transparent; /* 기본은 투명 */
+	transition: scrollbar-color 0.2s;
+}
+
+/* 마우스 오버 시에만 스크롤바 색상 표시 (Firefox) */
+.messageWrapper:hover {
+	  scrollbar-color: #bbb #f5f5f5;
+}
+
+/* Chrome, Edge, Safari */
+.messageWrapper::-webkit-scrollbar {
+	height: 6px;
+	background: transparent;
+}
+
+.messageWrapper::-webkit-scrollbar-thumb {
+	background: transparent;
+	border-radius: 3px;
+	transition: background 0.2s;
+}
+
+.messageWrapper:hover::-webkit-scrollbar-thumb {
+	background: #bbb;
+}
+
+.messageWrapper::-webkit-scrollbar-track {
+	background: transparent;
+}
