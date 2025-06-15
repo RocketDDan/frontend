@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 // Component 확인 페이지
-import ComponentPage from "../page/ComponentPage"
+import ComponentPage from "../page/ComponentPage";
 
 // 관리자 (admin)
 import MemberListPage from "../page/admin/MemberListPage"
@@ -11,8 +11,11 @@ import RewardListPage from "../page/admin/RewardListPage";
 import AnnouncementListPage from "../page/announcement/AnnouncementListPage";
 import AnnouncementUploadPage from "../page/announcement/AnnouncementUploadPage";
 import AnnouncementUpdatePage from "../page/announcement/AnnouncementUpdatePage";
+import AnnouncementDetailPage from "../page/announcement/AnnouncementDetailPage";
 
 // 멤버 인증/인가 (auth)
+import LoginCallback from "../page/auth/LoginCallback";
+import LogoutCallback from "../page/auth/LogoutCallback";
 import SignupPage from "../page/auth/SignupPage";
 import LoginPage from "../page/auth/LoginPage";
 import AccountSettingPage from "../page/auth/AccountSettingPage";
@@ -31,7 +34,7 @@ import RunnerListPage from "../page/runner/RunnerListPage"
 import RunnerProfilePage from "../page/runner/RunnerProfilePage";
 
 // 홈 (home)
-import HomePage from "../page/HomePage"
+import HomePage from "../page/HomePage";
 import NotFoundPage from "../page/NotFoundPage";
 import CrewJoinRequestListPage from "../page/crew/CrewJoinRequestListPage";
 import CrewCreatePage from "../page/crew/CrewCreatePage";
@@ -52,8 +55,12 @@ const Router = () => {
             <Route path="/announcement/list" element={<AnnouncementListPage/>} />
             <Route path="/announcement/upload" element={<AnnouncementUploadPage/>} />
             <Route path="/announcement/:announcementId/update" element={<AnnouncementUpdatePage/>} />
+            <Route path="/announcement/:announcementId/detail" element={<AnnouncementDetailPage />} />
+
 
             {/* 멤버 인증/인가 */}
+            <Route path="/auth/callback" element={<LoginCallback />} />
+            <Route path="/logout/callback" element={<LogoutCallback />} />
             <Route path="/signup" element={<SignupPage/>} />
             <Route path="/login" element={<LoginPage/>} />
             <Route path="/account/setting" element={<AccountSettingPage/>} />
