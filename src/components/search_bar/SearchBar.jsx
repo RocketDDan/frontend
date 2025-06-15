@@ -9,6 +9,7 @@ import { faTimes, faSearch } from "@fortawesome/free-solid-svg-icons";
  * @param {String} value value
  * @param {String} width 가로 길이
  * @param {Function} onChange 변화 이벤트
+ * @param {Function} onEnter 엔터 이벤트
  * @param {Boolean} closeBtnVisible 닫기 버튼 여부
  * @returns {JSX.Element} search bar 컴퍼넌트
  */
@@ -17,16 +18,24 @@ const SearchBar = ({
     value,
     width = "100%",
     onChange,
+    onEnter,
     closeBtnVisible = true,
 }) => {
-
+    // 값 바뀜 감지
     const handleChange = (e) => {
         onChange?.(e.target.value);
     };
-
+    // X 버튼 클릭 감지
     const handleClear = () => {
         onChange?.("");
-    };
+    }
+    // 엔터 감지
+    const handleEnter = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            onEnter?.(e);
+        }
+    }
 
     return (
         <label className={searchBarStyle.container} style={{ width: width }}>
@@ -36,6 +45,7 @@ const SearchBar = ({
                 placeholder={placeholder}
                 value={value}
                 onChange={handleChange}
+                onKeyDown={handleEnter}
                 maxLength={50}
             />
             {value && closeBtnVisible && (

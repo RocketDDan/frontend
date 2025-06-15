@@ -77,6 +77,44 @@ const CustomButton = ({
 };
 
 /**
+ * Secondary Hover 버튼 컴포넌트
+ * @component
+ * @param {String} content 글자
+ * @param {String} width 가로 길이
+ * @param {Function} onClick 클릭 이벤트
+ * @returns {JSX.Element} button 컴포넌트
+ */
+const SecondaryHoverButton = ({ content = "버튼", width = '100%', onClick }) => {
+    return (
+        <button
+            style={{ width: width }}
+            className={`${ButtonStyle.container} ${CommonStyle.secondaryBg} ${CommonStyle.secondaryHoverBg}`}
+            onClick={onClick}
+        >
+            {content}
+        </button>
+    )
+}
+
+/**
+ * pink 버튼 컴포넌트
+ * @component
+ * @param {String} content 글자
+ * @param {String} width 가로 길이
+ * @param {Function} onClick 클릭 이벤트
+ * @returns {JSX.Element} button 컴포넌트
+ */
+const ThirdaryButton = ({ content = "버튼", width = '100%', onClick }) => {
+    return (
+        <button style={{ width: width }}
+            className={`${ButtonStyle.container} ${CommonStyle.pinkBg} ${CommonStyle.pinkHoverBg}`}
+            onClick={onClick}>
+            {content}
+        </button>
+    )
+}
+
+/**
  * Primary Big 버튼 컴포넌트
  * @component
  * @param {String} content 글자
@@ -120,4 +158,4 @@ const SecondaryBigButton = ({ content = "버튼", width = "100%", onClick, activ
   );
 };
 
-export { PrimaryButton, SecondaryButton, CustomButton, PrimaryBigButton, SecondaryBigButton };
+export { PrimaryButton, SecondaryButton, CustomButton, SecondaryHoverButton, ThirdaryButton, PrimaryBigButton, SecondaryBigButton };

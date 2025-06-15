@@ -3,8 +3,9 @@ import { Routes, Route } from "react-router-dom";
 import ComponentPage from "../page/ComponentPage";
 
 // 관리자 (admin)
-import MemberListPage from "../page/admin/MemberListPage";
-import MemberUpdatePage from "../page/admin/MemberUpdatePage";
+import MemberListPage from "../page/admin/MemberListPage"
+import MemberUpdatePage from "../page/admin/MemberUpdatePage"
+import RewardListPage from "../page/admin/RewardListPage";
 
 // 공지 (announcement)
 import AnnouncementListPage from "../page/announcement/AnnouncementListPage";
@@ -33,48 +34,51 @@ import RunnerListPage from "../page/runner/RunnerListPage";
 // 홈 (home)
 import HomePage from "../page/HomePage";
 import NotFoundPage from "../page/NotFoundPage";
+import CrewJoinRequestListPage from "../page/crew/CrewJoinRequestListPage";
 
 const Router = () => {
-  return (
-    <Routes>
-      {/* 컴포넌트 확인 */}
-      <Route path="/component" element={<ComponentPage />} />
+    return (
+        <Routes>
+            {/* 컴포넌트 확인 */}
+            <Route path="/component" element={<ComponentPage/>} />
 
-      {/* 관리자 */}
-      <Route path="/admin/member/list" element={<MemberListPage />} />
-      <Route path="/admin/member/:memberId/update" element={<MemberUpdatePage />} />
+            {/* 관리자 */}
+            <Route path="/admin/member/list" element={<MemberListPage/>} />
+            <Route path="/admin/member/:memberId/update" element={<MemberUpdatePage/>} />
+            <Route path="/admin/reward/list" element={<RewardListPage/>} />
 
-      {/* 공지 */}
-      <Route path="/announcement/list" element={<AnnouncementListPage />} />
-      <Route path="/announcement/upload" element={<AnnouncementUploadPage />} />
-      <Route path="/announcement/:announcementId/update" element={<AnnouncementUpdatePage />} />
+            {/* 공지 */}
+            <Route path="/announcement/list" element={<AnnouncementListPage/>} />
+            <Route path="/announcement/upload" element={<AnnouncementUploadPage/>} />
+            <Route path="/announcement/:announcementId/update" element={<AnnouncementUpdatePage/>} />
 
-      {/* 멤버 인증/인가 */}
-      <Route path="/auth/callback" element={<LoginCallback />} />
-      <Route path="/logout/callback" element={<LogoutCallback />} />
-      <Route path="/signup" element={<SignupPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/account/setting" element={<AccountSettingPage />} />
+            {/* 멤버 인증/인가 */}
+            <Route path="/auth/callback" element={<LoginCallback />} />
+            <Route path="/logout/callback" element={<LogoutCallback />} />
+            <Route path="/signup" element={<SignupPage/>} />
+            <Route path="/login" element={<LoginPage/>} />
+            <Route path="/account/setting" element={<AccountSettingPage/>} />
 
-      {/* 크루 */}
-      <Route path="/crew/:crewId" element={<CrewProfilePage />} />
-      <Route path="/crew/list" element={<CrewListPage />} />
+            {/* 크루 */}
+            <Route path="/crew/:crewId" element={<CrewProfilePage />} />
+            <Route path="/crew/list" element={<CrewListPage/>} />
+            <Route path="/crew/:crewId/join-request/list" element={<CrewJoinRequestListPage/>} />
 
-      {/* 피드 */}
-      <Route path="/feed/list" element={<FeedListPage />} />
-      <Route path="/feed/upload" element={<FeedUploadPage />} />
-      <Route path="/feed/:feedId/update" element={<FeedUpdatePage />} />
+            {/* 피드 */}
+            <Route path="/feed/list" element={<FeedListPage/>} />
+            <Route path="/feed/upload" element={<FeedUploadPage/>} />
+            <Route path="/feed/:feedId/update" element={<FeedUpdatePage/>} />
 
-      {/* 러너 */}
-      <Route path="/runner/list" element={<RunnerListPage />} />
+            {/* 러너 */}
+            <Route path="/runner/list" element={<RunnerListPage/>} />
 
-      {/* 홈 */}
-      <Route path="/" element={<HomePage />} />
+            {/* 홈 */}
+            <Route path="/" element={<HomePage/>} />
 
-      {/* 나머지 경로 */}
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
-  );
-};
+            {/* 나머지 경로 */}
+            <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+    )
+}
 
 export default Router;

@@ -138,12 +138,12 @@ const TextInputWithLabel = ({
  * @returns {JSX.Element} textarea 컴퍼넌트
  */
 const TextArea = ({
-  placeholder = "",
-  width = "100%",
-  height = "100%",
-  value,
-  onChange,
-  closeBtnVisible = true,
+    placeholder = "",
+    width = "100%",
+    height = '100%',
+    value, 
+    onChange,
+    closeBtnVisible = true,
 }) => {
   const id = uuidv7();
 

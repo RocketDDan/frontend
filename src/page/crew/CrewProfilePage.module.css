@@ -23,16 +23,6 @@
   width: 100%;
 }
 
-.profileImg {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  background: #f3f3f3;
-  flex-shrink: 0;
-  display: block;
-}
-
 .infoSection {
   flex: 1 1 0;
   min-width: 0;
@@ -73,21 +63,6 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.actionBtn {
-  background: #7CB2FC;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 28px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.actionBtn:hover {
-  background: #5164ed;
 }
 
 .details {

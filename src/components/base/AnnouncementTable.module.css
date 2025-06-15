@@ -46,6 +46,14 @@ thead tr:hover {
   color: #5164ED;
 }
 
+.paginationWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 
-
-
+.outerWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
