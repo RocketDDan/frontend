@@ -60,6 +60,7 @@ const AnnouncementListPage = () => {
         limit={limit}
         totalCount={totalCount}
         setPage={setPage}
+        onRowClick={(row) => navigate(`/announcement/${row.announcementId}/detail`)}
       />
     </div>
   );
