@@ -69,26 +69,25 @@ const AnnouncementUpdatePage = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-      </div>
+    </div>
 
-      <div className={styles.section}>
+    <div className={styles.section}>
         <label className={styles.label}>첨부파일</label>
-        <AnnouncementFileUploader
-          maxFiles={3}
-          onFilesChange={handleNewFilesChange}
-          initialFiles={existingFiles}
-          onRemoveInitialFile={(file) => removeExistingFile(file.url)}
-        />
-      </div>
+            <AnnouncementFileUploader
+            maxFiles={3}
+            onFilesChange={handleNewFilesChange}
+            initialFiles={existingFiles}
+            onRemoveInitialFile={(file) => removeExistingFile(file.url)}/>
+    </div>
 
-      <div className={styles.section}>
+    <div className={styles.formGroup}>
         <label className={styles.label}>본문</label>
-        <div className={styles.quillWrapper}>
-          <ReactQuill value={content} onChange={setContent} />
-        </div>
-      </div>
+            <div className={styles.quillWrapper}>
+                <ReactQuill value={content} onChange={setContent} style={{ height: '100%' }} />
+            </div>
+    </div>
 
-      <div className={styles.buttonGroup}>
+    <div className={styles.buttonGroup}>
         <SecondaryButton content="수정 완료" width="120px" onClick={handleUpdate} />
         <SecondaryButton content="취소" width="120px" onClick={() => navigate(-1)} />
       </div>

@@ -48,18 +48,10 @@
 }
 
 .quillWrapper {
-  background-color: white;
+  height: 300px; 
+  overflow-y: auto;
+  border: 1px solid #ccc;
   border-radius: 10px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  min-height: 200px;
-  font-size: 15px;
-  line-height: 1.6;
-  text-align: left;
-}
-
-.quillWrapper .ql-editor {
-  text-align: left;
 }
 
 .attachSection {
