@@ -31,7 +31,7 @@ const ProfileImage = ({ profileUrl, size = "30px", onClick }) => {
                     : <img src={BaseProfileImage} alt="피드 프로필 이미지" width={'95%'} />}
             </div>
         </div>
-    )
+  )
 }
 
 export { ProfileImage };
