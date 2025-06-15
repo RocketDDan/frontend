@@ -19,6 +19,7 @@ const ImageAddBlock = ({ width = "100px", height = "100px", handleFile }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            cursor: "pointer",
         }}
             onClick={handleClick}>
 
