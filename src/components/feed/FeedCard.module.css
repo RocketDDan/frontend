@@ -19,6 +19,7 @@
 
 .writerRow>* {
     flex: 1;
+    cursor: pointer;
 }
 
 /* 피드 이미지 행 */

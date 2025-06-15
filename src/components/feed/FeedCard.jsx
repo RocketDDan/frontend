@@ -23,6 +23,7 @@ const FeedCard = ({ feed, onCommentClick }) => {
     const [isLiked, setIsLiked] = useState(feed.like); // 유저가 좋아하는지 여부
     const [likeCount, setLikeCount] = useState(feed.likeCount); // 좋아요 수
     const [currentIndex, setCurrentIndex] = useState(0); // 현재 이미지 인덱스
+    const navigate = useNavigate();
 
     // 좋아요 클릭
     const handleLike = () => {
@@ -48,12 +49,17 @@ const FeedCard = ({ feed, onCommentClick }) => {
         setCurrentIndex((prev) => (prev === feed.feedFileUrlList.length - 1 ? 0 : prev + 1));
     };
 
+    // 러너 프로필 페이지 이동
+    const handleClickProfile = () => {
+        navigate(`/runner/${feed.writerId}`)
+    }
+
     return (
         <div className={style.container} key={feed.feedId}>
             {/* 작성자 정보 */}
             <div className={style.writerRow}>
-                <ProfileImage profileUrl={feed.writerProfileUrl} size="30px" />
-                <span>{feed.writerNickname}</span>
+                <ProfileImage profileUrl={feed.writerProfileUrl} size="30px" onClick={handleClickProfile} />
+                <span onClick={handleClickProfile}>{feed.writerNickname}</span>
                 <div style={{ display: 'flex', justifyContent: 'end', paddingRight: '5px' }}>⋯</div>
             </div>
 
