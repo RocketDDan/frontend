@@ -30,6 +30,56 @@ const SignupPage = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [profileImageUrl, setProfileImageUrl] = useState("");
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const nicknameValid = (nickname) => /^[a-zA-Z0-9가-힣]{2,20}$/.test(nickname);
+  const passwordValid = (password) =>
+    /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/.test(password);
+  const passwordConfirmValid = (password, passwordConfirm) =>
+    password === passwordConfirm;
+  const phoneValid = (phone) => /^\d{10,11}$/.test(phone);
+
+  useEffect(() => {
+    const isNicknameValid = nicknameValid(signUpFormData.nickname);
+    const isPasswordValid = passwordValid(signUpFormData.password);
+    const isPasswordConfirmValid = passwordConfirmValid(
+      signUpFormData.password,
+      signUpFormData.passwordConfirm
+    );
+    const isPhoneValid = phoneValid(signUpFormData.phone);
+
+    setIsFormValid(
+      isNicknameValid &&
+        isPasswordValid &&
+        isPasswordConfirmValid &&
+        isPhoneValid &&
+        isNicknameChecked
+    );
+
+    const newErrors = {};
+    if (!isNicknameValid) {
+      newErrors.nickname =
+        "닉네임은 한글, 영어, 숫자만 포함한 2~20자여야 합니다.";
+    }
+    if (!isPasswordValid) {
+      newErrors.password = "비밀번호는 영어와 숫자를 포함한 8~16자여야 합니다.";
+    }
+    if (!isPasswordConfirmValid) {
+      newErrors.passwordConfirm = "비밀번호가 일치하지 않습니다.";
+    }
+    if (!isPhoneValid) {
+      newErrors.phone = "휴대폰 번호는 '-' 없이 10~11자리 숫자여야 합니다.";
+    }
+    if (!isNicknameChecked) {
+      newErrors.nicknameCheck = "닉네임 중복 확인을 해주세요.";
+    }
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      setErrors({});
+    }
+  }, [signUpFormData, isNicknameChecked]);
 
   useEffect(() => {
     return () => {
@@ -105,13 +155,21 @@ const SignupPage = () => {
           </div>
         </div>
         <div className={styles.nicknameContainer}>
-          <TextInputWithLabel
-            placeholder="닉네임"
-            label="닉네임"
-            width="80%"
-            value={signUpFormData.nickname}
-            onChange={(value) => handleChange("nickname", value)}
-          />
+          <div className={styles.errorContainer}>
+            <TextInputWithLabel
+              placeholder="2~20자의 한글, 영문, 숫자만 입력."
+              label="닉네임"
+              width="100%"
+              value={signUpFormData.nickname}
+              onChange={(value) => handleChange("nickname", value)}
+            />
+            {errors.nickname && (
+              <div className={styles.error}>{errors.nickname}</div>
+            )}
+            {errors.nicknameCheck && (
+              <div className={styles.error}>{errors.nicknameCheck}</div>
+            )}
+          </div>
           <PrimaryButton
             content="중복 확인"
             width="20%"
@@ -147,38 +205,44 @@ const SignupPage = () => {
           disabled={true}
         />
 
-        <PasswordInputWithLabel
-          placeholder="비밀번호"
-          label="비밀번호"
-          width="100%"
-          value={signUpFormData.password}
-          onChange={(value) => handleChange("password", value)}
-        />
-        <PasswordInputWithLabel
-          placeholder="비밀번호 확인"
-          label="비밀번호 확인"
-          width="100%"
-          value={signUpFormData.passwordConfirm}
-          onChange={(value) => handleChange("passwordConfirm", value)}
-        />
-
-        <TextInputWithLabel
-          placeholder="휴대폰 번호"
-          label="휴대폰 번호"
-          width="100%"
-          value={signUpFormData.phone}
-          onChange={(value) => handleChange("phone", value)}
-        />
-
+        <div className={styles.errorContainer}>
+          <PasswordInputWithLabel
+            placeholder="영문, 숫자 포함 8~16자"
+            label="비밀번호"
+            width="100%"
+            value={signUpFormData.password}
+            onChange={(value) => handleChange("password", value)}
+          />
+          {errors.password && (
+            <div className={styles.error}>{errors.password}</div>
+          )}
+        </div>
+        <div className={styles.errorContainer}>
+          <PasswordInputWithLabel
+            placeholder="비밀번호 재입력"
+            label="비밀번호 확인"
+            width="100%"
+            value={signUpFormData.passwordConfirm}
+            onChange={(value) => handleChange("passwordConfirm", value)}
+          />
+          {errors.passwordConfirm && (
+            <div className={styles.error}>{errors.passwordConfirm}</div>
+          )}
+        </div>
+        <div className={styles.errorContainer}>
+          <TextInputWithLabel
+            placeholder="'-'제외 10~11자리 입력"
+            label="휴대폰 번호"
+            width="100%"
+            value={signUpFormData.phone}
+            onChange={(value) => handleChange("phone", value)}
+          />
+          {errors.phone && <div className={styles.error}>{errors.phone}</div>}
+        </div>
         <PrimaryButton
           content="회원가입"
           onClick={handleSubmit}
-          active={
-            signUpFormData.password &&
-            signUpFormData.password === signUpFormData.passwordConfirm &&
-            signUpFormData.phone &&
-            isNicknameChecked
-          }
+          active={isFormValid}
         />
       </div>
     </div>
