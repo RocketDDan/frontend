@@ -16,10 +16,15 @@ const TableHeader = ({ headers }) => (
   </thead>
 );
 
-const TableBody = ({ data, keys, page, limit }) => (
+const TableBody = ({ data, keys, page, limit, onRowClick }) => (
   <tbody>
     {data.map((row, rowIdx) => (
-      <tr key={rowIdx} className={AcTableStyle.tr}>
+      <tr
+        key={rowIdx}
+        className={AcTableStyle.tr}
+        onClick={() => onRowClick?.(row)} 
+        style={{ cursor: "pointer" }}
+      >
         <td className={AcTableStyle.td}>{(page - 1) * limit + rowIdx + 1}</td>
         {keys.map((key, colIdx) => (
           <td
@@ -40,22 +45,37 @@ const TableBody = ({ data, keys, page, limit }) => (
   </tbody>
 );
 
-const CustomTable = ({ headers, keys, data, page, limit }) => (
+
+const CustomTable = ({ headers, keys, data, page, limit, onRowClick }) => (
   <table className={AcTableStyle.table}>
     <TableHeader headers={headers} />
-    <TableBody data={data} keys={keys} page={page} limit={limit} />
+    <TableBody
+      data={data}
+      keys={keys}
+      page={page}
+      limit={limit}
+      onRowClick={onRowClick} 
+    />
   </table>
 );
 
-const TableView = ({ headers, keys, data, page, limit, totalCount, setPage }) => (
+const TableView = ({ headers, keys, data, page, limit, totalCount, setPage, onRowClick }) => (
   <div className={AcTableStyle.outerWrapper}>
     <div className={AcTableStyle.tableWrapper}>
-      <CustomTable headers={headers} keys={keys} data={data} page={page} limit={limit} />
+      <CustomTable
+        headers={headers}
+        keys={keys}
+        data={data}
+        page={page}
+        limit={limit}
+        onRowClick={onRowClick} 
+      />
     </div>
     <div className={AcTableStyle.paginationWrapper}>
       <Pagination page={page} limit={limit} total={totalCount} onPageChange={setPage} />
     </div>
   </div>
 );
+
 
 export { TableView };
