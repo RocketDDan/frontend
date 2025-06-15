@@ -9,7 +9,8 @@ import { faMessage, faHeart as faRegularHeart } from '@fortawesome/free-regular-
 // dto
 import SampleFeed from "../../dto/feed.dto";
 import { fetchLikeFeed, fetchUnlikeFeed } from '../../api/likeFeed.api';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 /**
@@ -29,14 +30,16 @@ const FeedCard = ({ feed, onCommentClick }) => {
     const handleLike = () => {
         setIsLiked(true);
         setLikeCount(likeCount + 1);
-        fetchLikeFeed(feed.feedId);
+        fetchLikeFeed(feed.feedId)
+            .catch((err) => { setLikeCount(likeCount - 1); });
     };
 
     // 좋아요 취소
     const handleUnlike = () => {
         setIsLiked(false);
         setLikeCount(likeCount - 1);
-        fetchUnlikeFeed(feed.feedId);
+        fetchUnlikeFeed(feed.feedId)
+            .catch((err) => { setLikeCount(likeCount + 1); });;
     };
 
     // 이전 사진/동영상 가져오기
@@ -65,11 +68,7 @@ const FeedCard = ({ feed, onCommentClick }) => {
 
             {/* 피드 이미지들 */}
             <div className={style.feedImageList} style={{ position: 'relative' }}>
-                <img
-                    src={feed.feedFileUrlList?.[currentIndex]?.fileUrl}
-                    alt="피드 이미지"
-                    style={{ width: '100%', height: 'auto' }}
-                />
+                <MediaViewer fileUrl={feed.feedFileUrlList[currentIndex]?.fileUrl} />
                 {/* 왼쪽 화살표 */}
                 {feed.feedFileUrlList.length > 1 && (
                     <button
@@ -127,7 +126,7 @@ const FeedCard = ({ feed, onCommentClick }) => {
             </div>
 
             {/* 댓글 */}
-            
+
             <div className={style.commentList}>
                 {/* 최대 3개만 보여주기 */}
                 {feed.commentList.map(comment => {
@@ -140,20 +139,47 @@ const FeedCard = ({ feed, onCommentClick }) => {
                     )
                 })}
             </div>
-
-            {/* 댓글 모두 보기 */}
-            {/* <div>
-                {
-                    feed.commentCount
-                        ? <div>
-                            댓글 {feed.commentCount}개 모두 보기
-                        </div>
-                        : <div>
-                            댓글 달기
-                        </div>
-                }
-            </div> */}
         </div >
+    );
+}
+
+const MediaViewer = ({ fileUrl }) => {
+
+    const videoRef = useRef(null);
+
+    // video 인지  
+    const isVideo = (url) => {
+        if (!url) return false;
+
+        const cleanUrl = url.split('?')[0];  // 쿼리 스트링 제거
+        return cleanUrl.endsWith('.mp4')
+            || cleanUrl.endsWith('.mov')
+            || cleanUrl.endsWith('.webm');
+    }
+
+    const isVideoFile = isVideo(fileUrl);
+
+    useEffect(() => {
+        if (isVideoFile && videoRef.current) {
+            videoRef.current.load(); // ✅ 명시적으로 src 다시 로드 (필요할 경우)
+        }
+    }, [fileUrl, isVideoFile]);
+
+    if (isVideoFile) {
+        return (
+            <video
+                ref={videoRef}
+                style={{ width: '100%', height: 'auto' }}
+                controls
+            >
+                <source src={fileUrl} type="video/mp4" />
+                브라우저가 video 태그를 지원하지 않습니다.
+            </video>
+        );
+    }
+
+    return (
+        <img src={fileUrl} alt="피드 이미지" style={{ width: '100%', height: 'auto' }} />
     );
 }
 
