@@ -1,8 +1,7 @@
-import { v7 as uuidv7 } from 'uuid';
+import { v7 as uuidv7 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { useState } from 'react';
 import style from "./Input.module.css";
+import { faTimes, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Text Input Component
@@ -25,15 +24,14 @@ const TextInput = ({
     onEnter,
     autoFocus = false,
 }) => {
+  const handleChange = (e) => {
+    onChange?.(e.target.value);
+  };
 
-    const handleChange = (e) => {
-        onChange?.(e.target.value);
-    };
-
-    const handleClear = () => {
-        onChange?.("");
-    };
-
+  const handleClear = () => {
+    onChange?.("");
+  };
+  
     const handleOnKeyDown = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -53,7 +51,7 @@ const TextInput = ({
                 onChange={handleChange}
                 onKeyDown={handleOnKeyDown}
                 maxLength={50}
-                className={style.inputStyle}
+                className={style.style}
                 autoFocus={autoFocus}
             />
             {value && closeBtnVisible && (
@@ -86,23 +84,23 @@ const TextInput = ({
  * @returns {JSX.Element} text input 컴퍼넌트
  */
 const TextInputWithLabel = ({
-    placeholder = "",
-    label = "label",
-    width = "100%",
-    value,
-    onChange,
-    closeBtnVisible = true,
+  placeholder = "",
+  label = "label",
+  width = "100%",
+  value,
+  onChange,
+  closeBtnVisible = true,
 }) => {
+  const id = uuidv7();
 
-    const id = uuidv7();
+  const handleChange = (e) => {
+    onChange?.(e.target.value);
+  };
 
-    const handleChange = (e) => {
-        onChange?.(e.target.value);
-    };
+  const handleClear = () => {
+    onChange?.("");
+  };
 
-    const handleClear = () => {
-        onChange?.("");
-    };
 
     return (
         <span className={style.container} style={{ width: width }}>
@@ -161,16 +159,15 @@ const TextArea = ({
     maxLength,
     closeBtnVisible = true,
 }) => {
+  const id = uuidv7();
 
-    const id = uuidv7();
+  const handleChange = (e) => {
+    onChange?.(e.target.value);
+  };
 
-    const handleChange = (e) => {
-        onChange?.(e.target.value);
-    };
-
-    const handleClear = () => {
-        onChange?.("");
-    };
+  const handleClear = () => {
+    onChange?.("");
+  };
 
     return (
         <span className={style.container} style={{ width: width, height: height }}>
@@ -218,55 +215,117 @@ const TextArea = ({
  * @returns {JSX.Element} textarea 컴퍼넌트
  */
 const TextAreaWithLabel = ({
-    placeholder = "",
-    width = "100%",
-    height = '100%',
-    label = "label",
-    value,
-    onChange,
-    closeBtnVisible = true,
+  placeholder = "",
+  width = "100%",
+  height = "100%",
+  label = "label",
+  value,
+  onChange,
+  closeBtnVisible = true,
 }) => {
+  const id = uuidv7();
+  const handleChange = (e) => {
+    onChange?.(e.target.value);
+  };
 
-    const id = uuidv7();
-    const handleChange = (e) => {
-        onChange?.(e.target.value);
-    };
+  const handleClear = () => {
+    onChange?.("");
+  };
 
-    const handleClear = () => {
-        onChange?.("");
-    };
+  return (
+    <span className={style.container} style={{ width: width, height: height }}>
+      <label htmlFor={id}>{label}</label>
+      <textarea
+        id={id}
+        placeholder={placeholder}
+        value={value}
+        onChange={handleChange}
+        style={{
+          padding: "0.7rem 0 0.7rem 0.7rem",
+          borderRadius: "8px",
+          border: "solid 1px",
+          width: "100%",
+        }}
+      />
+      {value && closeBtnVisible && (
+        <FontAwesomeIcon
+          icon={faTimes}
+          onClick={handleClear}
+          style={{
+            position: "absolute",
+            right: "0.5rem",
+            top: "2.2rem",
+            cursor: "pointer",
+            color: "#999",
+          }}
+        />
+      )}
+    </span>
+  );
+};
 
-    return (
-        <span className={style.container} style={{ width: width, height: height }}>
-            <label htmlFor={id}>{label}</label>
-            <textarea
-                id={id}
-                placeholder={placeholder}
-                value={value}
-                onChange={handleChange}
-                style={{
-                    padding: "0.7rem 0 0.7rem 0.7rem",
-                    borderRadius: "8px",
-                    border: "solid 1px",
-                    width: "100%",
-                    height: "100%",
-                }}
-            />
-            {value && closeBtnVisible && (
-                <FontAwesomeIcon
-                    icon={faTimes}
-                    onClick={handleClear}
-                    style={{
-                        position: "absolute",
-                        right: "0.5rem",
-                        top: "2.2rem",
-                        cursor: "pointer",
-                        color: "#999",
-                    }}
-                />
-            )}
-        </span>
-    )
-}
+/**
+ * Password Input With Label Component
+ * @component
+ * @param {String} placeholder placeholder
+ * @param {String} label label
+ * @param {String} width 가로 길이
+ * @param {String} value value
+ * @param {Function} onChange 값이 바뀔 때 이벤트
+ * @param {Boolean} showPasswordBtnVisible 닫기 버튼 여부
+ * @returns {JSX.Element} password input 컴퍼넌트
+ */
+const PasswordInputWithLabel = ({
+  placeholder = "영문, 숫자 포함 8~16자를 입력해주세요.",
+  label = "비밀번호",
+  width = "100%",
+  value,
+  onChange,
+  showPasswordBtnVisible = true,
+}) => {
+  const id = uuidv7();
+  const [visible, setVisible] = useState(false);
 
-export { TextInput, TextInputWithLabel, TextArea, TextAreaWithLabel }
+  const handleChange = (e) => {
+    onChange?.(e.target.value);
+  };
+
+  const toggleVisibility = () => {
+    setVisible((prev) => !prev);
+  };
+
+  return (
+    <span className={style.container} style={{ width: width }}>
+      <label htmlFor={id}>{label}</label>
+      <input
+        id={id}
+        type={visible ? "text" : "password"}
+        placeholder={placeholder}
+        value={value}
+        onChange={handleChange}
+        maxLength={50}
+        style={{
+          padding: "0.7rem 0 0.7rem 0.7rem",
+          borderRadius: "8px",
+          border: "solid 1px",
+          width: "100%",
+        }}
+      />
+      {value && showPasswordBtnVisible && (
+        <FontAwesomeIcon
+          icon={visible ? faEye : faEyeSlash}
+          onClick={toggleVisibility}
+          style={{
+            position: "absolute",
+            right: "0.5rem",
+            top: "2.3rem",
+            cursor: "pointer",
+            color: "#999",
+          }}
+        />
+      )}
+    </span>
+  );
+};
+
+export { TextInput, TextInputWithLabel, TextArea, TextAreaWithLabel, PasswordInputWithLabel };
