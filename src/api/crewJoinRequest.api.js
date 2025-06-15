@@ -40,30 +40,37 @@ const rejectCrewJoinRequest = async (crewId, requestId) => {
 }
 
 const requestCrewJoin = async (crewId, message) => {
-    try{
+    try {
         const response = await apiClient.post(`/crews/${crewId}/join-requests`, { requestMessage: message });
-        if(response.status !== 200){
-            throw new Error('크루 가입 요청 실패', response.data);
+        if (response.status === 200) {
+            console.log('크루 가입 요청 성공', response.data);
+            return response.data;
         }
-        console.log('크루 가입 요청 성공', response.data);
-        return response.data;
-    }
-    catch(error) {
-        throw error;
+    } catch (error) {
+        // 400 에러 메시지 처리
+        if (error.response && error.response.status === 400) {
+            alert(error.response.data);
+            return null;
+        }
+        throw error; // 그 외 에러만 throw
     }
 }
 
 const deleteCrewJoinRequest = async (crewId) => {
     try{
         const response = await apiClient.delete(`/crews/${crewId}/join-requests`);
-        if(response.status !== 200){
-            throw new Error('크루 가입 요청 삭제 실패', response.data);
+        if(response.status === 200){
+            console.log('크루 가입 요청 삭제 성공', response.data);
+            return response.data;
         }
-        console.log('크루 가입 요청 삭제 성공', response.data);
-        return response.data;
     }
     catch(error) {
-        throw error;
+        // 400 에러 메시지 처리
+        if (error.response && error.response.status === 400) {
+            alert(error.response.data);
+            return null;
+        }
+        throw error; // 그 외 에러만 throw
     }
 }
 

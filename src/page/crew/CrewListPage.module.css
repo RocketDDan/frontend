@@ -1,10 +1,12 @@
 .container {
     display: flex;
     flex-wrap: wrap;
-    gap: 25px;
-    max-width: 1200px;
-    margin: 20px auto 0 auto;
-} 
+    gap: 32px 24px;
+    justify-content: flex-start;   /* 카드들을 중앙 정렬 */
+    max-width: 1200px;         /* 최대 너비 제한 */
+    margin: 0 auto;            /* 좌우 중앙 정렬 */
+    padding-bottom: 40px;
+}
 
 .searchHeader {
     position: sticky;
@@ -17,6 +19,7 @@
     align-items: center;
     gap: 20px;
     justify-content: center; /* 가운데 정렬 */
+    margin-bottom: 10px;
 }
 
 .pageWrapper {

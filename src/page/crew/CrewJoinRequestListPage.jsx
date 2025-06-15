@@ -19,6 +19,8 @@ const CrewJoinRequestListPage = () => {
     const [open, setOpen] = useState(false); // 모달 열림 상태
     const [modalTitle, setModalTitle] = useState(""); // 모달 제목 상태
     const [modalDescription, setModalDescription] = useState(""); // 모달 설명 상태
+    const [useButton, setUseButton] = useState(true); // 모달 버튼 사용 여부 상태   
+    const [modalWidth, setModalWidth] = useState("400px"); // 모달 가로 크기 상태
     const [onConfirm, setOnConfirm] = useState(() => () => {}); // 모달 확인 버튼 클릭 핸들러 상태
 
     const [crewJoinRequestList, setCrewJoinRequestList] = useState([]); // 크루 가입 요청 목록 상태
@@ -43,19 +45,31 @@ const CrewJoinRequestListPage = () => {
     ];
 
     const onClickAcceptBtn = (requestId) => {
-        setOpen(true);
         setModalTitle("크루 가입 승인");
         setModalDescription("크루 가입 요청을 승인하시겠습니까?");
+        setUseButton(true); // 버튼 사용 여부 설정
+        setOpen(true);
         setOnConfirm(() => () => approveRequest(requestId)); // 이렇게!
     }
 
     const onClickDenyBtn = (requestId) => {
-        // 모달 열기
-        setOpen(true);
         // 모달 제목과 설명 설정
         setModalTitle("크루 가입 거절");
         setModalDescription("크루 가입 요청을 거절하시겠습니까?");
+        setUseButton(true); // 버튼 사용 여부 설정
+        // 모달 열기
+        setOpen(true);
         setOnConfirm(() => () => rejectRequest(requestId));
+    }
+
+    const onClickMessage = (e) => {
+        // 요청 메세지 클릭 시 이벤트
+        e.stopPropagation(); // 이벤트 전파 방지
+        setModalTitle("크루 가입 요청 메세지");
+        setModalDescription(e.target.innerText); // 메세지 내용 설정
+        setUseButton(false); // 버튼 사용 여부 설정
+        setModalWidth("500px"); // 모달 가로 크기 설정
+        setOpen(true); // 메세지 모달 열기
     }
 
     const approveRequest = (requestId) => {
@@ -124,7 +138,7 @@ const CrewJoinRequestListPage = () => {
             { crewJoinRequestList.length > 0 && crewJoinRequestList.map((request, idx) => (
                 <div className={styles.requestWrapper} key={idx}>
                     <CrewMemberInfo nickname={request.nickname} profilePath={request.profilePath} date={request.requestDate} />
-                    <span className={styles.messageWrapper}>{request.requestMessage}</span>
+                    <span className={styles.messageWrapper} onClick={onClickMessage}>{request.requestMessage}</span>
                     { status === "REQUEST" && (
                         <div className={styles.buttonWrapper}>
                             <FontAwesomeIcon 
@@ -156,7 +170,9 @@ const CrewJoinRequestListPage = () => {
                     title={modalTitle} 
                     description={modalDescription} 
                     onConfirm={onConfirm} 
-                    onClose={() => setOpen(false)}
+                    onClose={() => {setOpen(false); setModalWidth("400px")}} // 모달 닫기 시 높이 초기화
+                    useButton={useButton}
+                    width={modalWidth}
                 />
             )}
             <Pagenation page={page} isExistNextPage={isExistNextPage} setPage={setPage}/>

@@ -33,21 +33,17 @@ const createCrew = async (crew, profileFile) => {
         if (profileFile) {
             formData.append("profile", profileFile);
         }
-
+        console.log('profileFile', profileFile);
         const response = await apiClient.post('/crews', formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
         });
-
-        if (response.status !== 200) {
-            throw new Error('크루 생성 실패', response.data);
-        }
-
         console.log('크루 생성 성공', response.data);
         return response.data;
     } catch (error) {
-        throw error;
+        alert("크루 생성에 실패했습니다.");
+        console.error('크루 생성 실패', error);
     }
 
 };

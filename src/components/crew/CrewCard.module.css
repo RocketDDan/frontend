@@ -6,6 +6,7 @@
   width: 350px;
   margin: 0 0;
   transition: box-shadow 0.2s, transform 0.2s; /* 부드러운 효과 */
+  cursor: pointer;
 }
 
 .card:hover {
