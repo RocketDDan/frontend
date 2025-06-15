@@ -13,16 +13,18 @@ import { faTimes, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
  * @param {Function} onChange 값이 바뀔 때 이벤트
  * @param {Function} onEnter 엔터 시 이벤트
  * @param {Boolean} closeBtnVisible 닫기 버튼 여부
+ * @param {Boolean} disabled 입력 비활성화 여부
  * @returns {JSX.Element} text input 컴퍼넌트
  */
 const TextInput = ({
     width = "100%",
     placeholder = "",
     value = "",
-    onChange,
     closeBtnVisible = true,
-    onEnter,
     autoFocus = false,
+    disabled = false,
+    onChange,
+    onEnter,
 }) => {
   const handleChange = (e) => {
     onChange?.(e.target.value);
@@ -77,10 +79,10 @@ const TextInput = ({
  * @param {String} placeholder placeholder
  * @param {String} label label
  * @param {String} width 가로 길이
-
  * @param {String} value value
  * @param {Function} onChange 값이 바뀔 때 이벤트
  * @param {Boolean} closeBtnVisible 닫기 버튼 여부
+ * @param {Boolean} disabled 입력 비활성화 여부
  * @returns {JSX.Element} text input 컴퍼넌트
  */
 const TextInputWithLabel = ({
@@ -90,6 +92,7 @@ const TextInputWithLabel = ({
   value,
   onChange,
   closeBtnVisible = true,
+  disabled = false,
 }) => {
   const id = uuidv7();
 
