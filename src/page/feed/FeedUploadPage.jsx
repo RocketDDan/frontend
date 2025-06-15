@@ -7,6 +7,7 @@ import { ImageBlock } from "../../components/image/ImageBlock";
 import { v7 as uuid7 } from "uuid";
 import { uploadFeed } from "../../api/feed.api";
 import { useNavigate } from "react-router-dom";
+import KakaoMap from "../../components/map/KakaoMap";
 
 
 const FeedUploadPage = () => {
@@ -67,10 +68,8 @@ const FeedUploadPage = () => {
                 <TextAreaWithLabel label="내용" height="200px" value={content} onChange={handleContent} />
             </div>
             <div>
-                <span>주소</span>
-                <div>
-                    카카오 주소 어쩌구
-                </div>
+                <div style={{ textAlign: "start" }}>위도</div>
+                <KakaoMap />
             </div>
             <div>
                 <PrimaryButton width="100px" content="등록" onClick={handleSubmit} />
