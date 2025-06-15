@@ -1,7 +1,7 @@
 // css
 import style from './FeedListPage.module.css';
 // library
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 // api
 import { fetchFeedList } from "../../api/feed.api";
 // dto
@@ -16,17 +16,43 @@ import { useNavigate } from 'react-router-dom';
 
 const FeedListPage = () => {
 
-    const [feedList, setFeedList] = useState([]);
-    const [selectedFeed, setSelectedFeed] = useState(null);
+    const [feedList, setFeedList] = useState([]); // 피드 데이터
+    const [selectedFeed, setSelectedFeed] = useState(null); // 선택된 피드 (댓글창 열 피드)
+    const [page, setPage] = useState(1); // 페이지
+    const [isLoading, setIsLoading] = useState(false); // 로딩중인지 여부
+    const observerTarget = useRef(null); // 
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchFeedList({ page: 1, perPage: 20, scope: "ALL_EXCEPT_ME", order: "LATEST" })
-            .then(data => {
-                // console.log('피드 목록:', data);
-                setFeedList(data);
-            });
-    }, [feedList]);
+        const loadFeeds = async () => {
+            setIsLoading(true);
+            const data = await fetchFeedList({ page: page, perPage: 10, scope: "ME", order: "LATEST" });
+            setFeedList(prev => [...prev, ...data]);  // 누적!
+            setIsLoading(false);
+        };
+
+        loadFeeds();
+    }, [page]);
+
+    // 
+    const handleObserver = useCallback((entries) => {
+        const target = entries[0];
+        if (target.isIntersecting && !isLoading) {
+            setPage(prev => prev + 1);
+        }
+    }, [isLoading]);
+
+    //
+    useEffect(() => {
+        const observer = new IntersectionObserver(handleObserver, {
+            threshold: 0.5
+        });
+
+        if (observerTarget.current) observer.observe(observerTarget.current);
+        return () => observer.disconnect();
+    }, [handleObserver]);
+
+
 
     // 댓글창 열거나 닫기
     const handleCommentClick = (feed) => {
@@ -77,6 +103,8 @@ const FeedListPage = () => {
                         onCommentClick={() => handleCommentClick(feed)}
                     />
                 )}
+                {/* 관찰 타겟 */}
+                <div ref={observerTarget} style={{ height: '20px' }} />
             </div>
             {/* 댓글창 */}
             {
