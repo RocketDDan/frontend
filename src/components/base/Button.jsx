@@ -44,14 +44,16 @@ const SecondaryButton = ({ content = "버튼", width = '100%', onClick }) => {
  * @param {String} content 글자
  * @param {String} width 가로 길이
  * @param {Function} onClick 클릭 이벤트
+ * @param {Boolean} disabled 버튼 비활성화 여부
  * @returns {JSX.Element} button 컴포넌트
  */
-const SecondaryHoverButton = ({ content = "버튼", width = '100%', onClick }) => {
+const SecondaryHoverButton = ({ content = "버튼", width = '100%', onClick, disabled }) => {
     return (
         <button
             style={{ width: width }}
             className={`${ButtonStyle.container} ${CommonStyle.secondaryBg} ${CommonStyle.secondaryHoverBg}`}
             onClick={onClick}
+            disabled={disabled}
         >
             {content}
         </button>

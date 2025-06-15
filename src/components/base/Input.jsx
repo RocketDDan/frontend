@@ -147,6 +147,7 @@ const TextArea = ({
     height = '100%',
     value, 
     onChange,
+    maxLength,
     closeBtnVisible = true,
 }) => {
 
@@ -167,11 +168,13 @@ const TextArea = ({
                 placeholder={placeholder}
                 value={value}
                 onChange={handleChange}
+                maxLength={maxLength}
                 style={{
                     padding: "0.7rem 0 0.7rem 0.7rem",
                     borderRadius: "8px",
                     border: "solid 1px",
                     width: "100%",
+                    height: height, // 이 줄을 추가하세요!
                 }}
             />
             {value && closeBtnVisible && (

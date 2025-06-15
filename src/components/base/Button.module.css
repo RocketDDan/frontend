@@ -13,3 +13,10 @@
     border-radius: 15px;
 }
 
+.container:disabled {
+  background: #d3e6fd;
+  color: #aaa;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+

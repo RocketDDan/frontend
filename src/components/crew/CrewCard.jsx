@@ -1,15 +1,17 @@
 import styles from './CrewCard.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from 'react-router-dom';
 /**
  * 
  * @param {crew} sampleCrew crew.dto.js에서 정의된 크루 객체
  * @returns 
  */
 function CrewCard({crew}) {
+  const navigate = useNavigate();
   
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={() => navigate(`/crew/${crew.crewId}`)}>
       <img src={crew.profilePath} className={styles.image} />
 
       <div className={styles.content}>
