@@ -49,7 +49,7 @@ export const login = async (email, password) => {
   } catch (error) {
     if (error.status === 400) {
       alert(error.response.data);
-    } else {
+    } else if (error.status === 500) {
       alert("로그인에 실패했습니다. 다시 시도해주세요.");
     }
   }
