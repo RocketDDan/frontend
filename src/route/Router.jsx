@@ -30,7 +30,6 @@ import FeedUploadPage from "../page/feed/FeedUploadPage";
 import FeedUpdatePage from "../page/feed/FeedUpdatePage";
 
 // 러너 (runner)
-import RunnerListPage from "../page/runner/RunnerListPage"
 import RunnerProfilePage from "../page/runner/RunnerProfilePage";
 
 // 홈 (home)
@@ -78,7 +77,6 @@ const Router = () => {
             <Route path="/feed/:feedId/update" element={<FeedUpdatePage/>} />
 
             {/* 러너 */}
-            <Route path="/runner/list" element={<RunnerListPage/>} />
             <Route path="/runner/:memberId" element={<RunnerProfilePage/>}/>
 
             {/* 홈 */}
