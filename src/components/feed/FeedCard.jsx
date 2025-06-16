@@ -116,7 +116,12 @@ const FeedCard = ({ feed, onCommentClick }) => {
                     {/* 피드가 1개 이상이면 ...으로 보임 */}
                     {feed.feedFileUrlList.length > 1 && '.'.repeat(feed.feedFileUrlList.length)}
                 </div>
-                <div></div> {/* 빈 공간 */}
+                <div style={{ textAlign: "end" }}>
+                    <span>
+                        {/* onClick={} */}
+                        #위치
+                    </span>
+                </div> {/* 빈 공간 */}
             </div>
 
             {/* 피드 글 */}

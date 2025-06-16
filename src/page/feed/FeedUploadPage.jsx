@@ -14,8 +14,8 @@ const FeedUploadPage = () => {
 
     const [fileList, setFileList] = useState([]);
     const [content, setContent] = useState("");
-    const [lat, setLat] = useState(null);
-    const [lng, setLng] = useState(null);
+    const [lat, setLat] = useState(33.450701);
+    const [lng, setLng] = useState(126.570667);
 
     const navigate = useNavigate();
 
@@ -32,17 +32,21 @@ const FeedUploadPage = () => {
     const handleContent = (val) => {
         setContent(val);
     }
-    // 위치 수정
-    const handleLocation = (lat, lng) => {
-        setLat(lat);
-        setLng(lng);
-    }
+
     // 등록
     const handleSubmit = () => {
         uploadFeed(content, lat, lng, fileList.map(file => file.file))
             .then((data) => {
+                // 업로드 후 피드 목록으로 이동
                 navigate("/feed/list");
             })
+    }
+
+    // 위치 수정
+    const handleLatLng = (lat, lng) => {
+        setLat(lat);
+        setLng(lng);
+        console.log("lat: ", lat, " | lng: ", lng);
     }
 
     return (
@@ -69,7 +73,7 @@ const FeedUploadPage = () => {
             </div>
             <div>
                 <div style={{ textAlign: "start" }}>위도</div>
-                <KakaoMap />
+                <KakaoMap lat={lat} lng={lng} onLatLngChange={handleLatLng}/>
             </div>
             <div>
                 <PrimaryButton width="100px" content="등록" onClick={handleSubmit} />

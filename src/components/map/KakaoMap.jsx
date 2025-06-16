@@ -1,21 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SearchBar } from "../search_bar/SearchBar";
 
 
-const KakaoMap = () => {
+const KakaoMap = ({ lat = 33.450701, lng = 126.570667, onLatLngChange }) => {
 
-    const [lat, setLat] = useState(33.450701);
-    const [lng, setLng] = useState(126.570667);
     const [address, setAddress] = useState("");
     const [isMapLoaded, setIsMapLoaded] = useState(false);
-    let map = null;
-    let userMarker = null;
+    let mapRef = useRef(null);
+    let markerRef = useRef(null);
 
+    // 유저 위치 가져오기
     const handleUserLocation = () => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-                setLat(position.coords.latitude);
-                setLng(position.coords.longitude);
+                onLatLngChange?.(position.coords.latitude, position.coords.longitude);
                 console.log("현재 위치: ", lat, lng);
             },
             (error) => {
@@ -46,22 +44,24 @@ const KakaoMap = () => {
         document.head.appendChild(script);
     }
 
+    // 초기 렌더링에 사용자 위치 받아오고 카카오맵 로딩
     useEffect(() => {
         handleUserLocation();
         loadKakaoMapScript();
     }, []);
 
+    // 주소 핸들링
     const handleAddress = (val) => {
         setAddress(val);
     }
 
+    // 주소로 마커 옮기기 + lat, lng 변화
     const handleMarkerByAddress = () => {
         var geocoder = new window.kakao.maps.services.Geocoder(); // 주소-좌표 변환 객체
         geocoder.addressSearch(address, function (result, status) {
             // 정상적으로 검색이 완료됐으면 
             if (status === window.kakao.maps.services.Status.OK) {
-                setLat(result[0].y);
-                setLng(result[0].x)
+                onLatLngChange?.(result[0].y, result[0].x);
             }
         });
     }
@@ -75,24 +75,38 @@ const KakaoMap = () => {
             center: new window.kakao.maps.LatLng(lat, lng),
             level: 3,
         };
-        map = new window.kakao.maps.Map(container, options); // 지도
+        mapRef.current = new window.kakao.maps.Map(container, options);
 
-        userMarker = new window.kakao.maps.Marker({ // 마커
+        markerRef.current = new window.kakao.maps.Marker({ // 마커
             position: new window.kakao.maps.LatLng(lat, lng)
         });
-        userMarker.setMap(map);
-        userMarker.setDraggable(true); // 드래그 가능하도록
+        markerRef.current.setMap(mapRef.current);
+        markerRef.current.setDraggable(true); // 드래그 가능하도록
 
-        window.kakao.maps.event.addListener(userMarker, 'click', function () { // 클릭 이벤트
+        window.kakao.maps.event.addListener(markerRef.current, 'dragend', function () { // dragend 이벤트
+            const position = markerRef.current.getPosition();
+            const newLat = position.getLat();
+            const newLng = position.getLng();
+            // console.log("마커 이동 위치:", newLat, newLng);
+            onLatLngChange?.(newLat, newLng);
+        });
+
+        window.kakao.maps.event.addListener(markerRef.current, 'click', function () { // 클릭 이벤트
             console.log("클릭");
         });
-    }, [isMapLoaded, lat, lng]);
+    }, [isMapLoaded]);
 
+    // lat/lng 변경 시 마커만 이동
+    useEffect(() => {
+        if (!isMapLoaded || !markerRef.current) return;
+        const newPosition = new window.kakao.maps.LatLng(lat, lng);
+        markerRef.current.setPosition(newPosition);
+        mapRef.current.setCenter(newPosition);
+    }, [lat, lng, isMapLoaded]);
 
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                {/* <div style={{textAlign: "start"}}>위도</div> */}
                 <SearchBar
                     placeholder="주소 검색"
                     value={address}
