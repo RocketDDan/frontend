@@ -27,7 +27,7 @@ const FeedListPage = () => {
         const loadFeeds = async () => {
             setIsLoading(true);
             const data = await fetchFeedList({ page: page, perPage: 10, scope: "ME", order: "LATEST" });
-            setFeedList(prev => [...prev, ...data]);  // 누적!
+            setFeedList(prev => [...data, ...prev]);  // 누적!
             setIsLoading(false);
         };
 
