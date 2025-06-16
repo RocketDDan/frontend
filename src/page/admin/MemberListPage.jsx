@@ -43,7 +43,6 @@ const MemberListPage = () => {
                             setPage(1);
                         }}/>
                 </div>
-                <SecondaryButton width="160px" content="회원 등록" />
             </div>
             <TableView
                 headers={["번호", "이름", "이메일" , "크루이름", "역할"]}
