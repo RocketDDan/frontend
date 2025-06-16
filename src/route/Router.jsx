@@ -36,6 +36,7 @@ import RunnerListPage from "../page/runner/RunnerListPage";
 import HomePage from "../page/HomePage";
 import NotFoundPage from "../page/NotFoundPage";
 import CrewJoinRequestListPage from "../page/crew/CrewJoinRequestListPage";
+import MyRewardListPage from "../page/company/MyRewardListPage";
 
 const Router = () => {
     return (
@@ -47,6 +48,9 @@ const Router = () => {
             <Route path="/admin/member/list" element={<MemberListPage/>} />
             <Route path="/admin/member/:memberId/update" element={<MemberUpdatePage/>} />
             <Route path="/admin/reward/list" element={<RewardListPage/>} />
+
+            {/* 관리자 */}
+            <Route path="/company/reward/list" element={<MyRewardListPage/>}/>
 
             {/* 공지 */}
             <Route path="/announcement/list" element={<AnnouncementListPage/>} />
