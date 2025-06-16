@@ -52,7 +52,12 @@ const MyRewardListPage = () => {
         limit={limit}
         totalCount={totalCount}
         setPage={setPage}
-        onRowClick={(row) => navigate(`/company/reward/${row.feedId}/detail`)}
+        onRowClick={(row) =>
+          navigate(`/company/reward/${row.feedId}/detail`, {
+          state: { balance: row.chargeAmount },
+    })
+}
+
       />
 
       <div
