@@ -23,6 +23,8 @@ import AccountSettingPage from "../page/auth/AccountSettingPage";
 // 크루 (crew)
 import CrewProfilePage from "../page/crew/CrewProfilePage";
 import CrewListPage from "../page/crew/CrewListPage";
+import CrewCreatePage from "../page/crew/CrewCreatePage";
+import CrewUpdatePage from  "../page/crew/CrewUpdatePage";
 
 // 피드 (feed)
 import FeedListPage from "../page/feed/FeedListPage";
@@ -37,15 +39,11 @@ import HomePage from "../page/HomePage";
 import NotFoundPage from "../page/NotFoundPage";
 import CrewJoinRequestListPage from "../page/crew/CrewJoinRequestListPage";
 
-<<<<<<< HEAD
 // 회사 (company)
-=======
->>>>>>> ee0317f7a595ed457c4fa1de86dcb77b67ccedad
 import MyRewardListPage from "../page/company/MyRewardListPage";
 import RewardDetailPage from "../page/company/RewardDetailPage";
 
-import CrewCreatePage from "../page/crew/CrewCreatePage";
-import CrewUpdatePage from "../page/crew/CrewUpdatePage";
+
 
 const Router = () => {
     return (
