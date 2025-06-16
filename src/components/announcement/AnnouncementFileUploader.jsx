@@ -3,7 +3,7 @@ import styles from "./AnnouncementFileUploader.module.css";
 
 const AnnouncementFileUploader = ({
   maxFiles = 3,
-  accept = [".pdf", ".png", ".jpg"],
+  accept = [".pdf", ".png", ".jpg", ".jpeg"],
   onFilesChange,
   initialFiles = [],
   onRemoveInitialFile,
