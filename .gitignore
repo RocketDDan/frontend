@@ -3,6 +3,7 @@
 .env
 mkcert/
 example/
+/mkcert
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/react,visualstudiocode,macos,windows

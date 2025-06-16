@@ -17,26 +17,10 @@ const RunnerProfilePage = () => {
                 <div className={styles.infoSection}>
                     <span className={styles.nickname}>{member.nickname}</span>
                     <span className={styles.info}>{member.email}</span>
-                    <span className={styles.info}>소속크루 : {member.crewName}</span>
-                </div>
-                <div className={styles.buttonSection}>
-                    {!member.isFollowed && (
-                        <SecondaryHoverButton
-                            content="팔로우"
-                            width="120px"
-                            onClick={()=>console.log("팔로우")}
-                        />
-                    )
-                    }
-                    {member.isFollowed && (
-                        <SecondaryHoverButton
-                            content="팔로우 취소"
-                            width="120px"
-                            onClick={()=>console.log("팔로우 취소")}
-                        />
-                    )
-
-                    }
+                    <div>
+                        <div className={styles.label}>소속 크루</div>
+                        <span className={styles.info}>{member.crewName}</span>
+                    </div>
                 </div>
             </div>
             <div className={styles.memberFeeds}>

@@ -130,3 +130,10 @@
   margin-left: 2px;
   font-weight: 500;
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
