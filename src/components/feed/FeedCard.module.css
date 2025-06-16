@@ -1,7 +1,12 @@
 .container {
-    width: 300px;
+    /* width: 300px; */
+    flex: 1;
+    width: 468px;
     height: fit-content;
+    /* height: 600px; */
     /* border: 0.5px solid; border-radius: 10px; */
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #ddd;
 }
 
 /* 작성자 정보 행 */
@@ -14,23 +19,40 @@
 
 .writerRow>* {
     flex: 1;
+    cursor: pointer;
 }
 
 /* 피드 이미지 행 */
 .feedImageList {
     display: flex;
-    width: 100%;
-    height: fit-content;
+    width: 468px;
+    height: 585px;
+    border: 0.5px solid;
+    border-radius: 10px;
 }
 
 .feedImageList>* {
-    width: 100%;
-    height: 100%;
+    width: 468px;
+    height: 585px;
     object-fit: contain;
-    /* contain: 여백, cover: 꽉 채우기 */
+    /* contain: 여백; cover: 꽉 채우기 */
 }
 
-/* 아이콘(하트, 메시지, .....) 행 */
+.imageChangeBtn {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: auto;
+    cursor: pointer;
+}
+
+/* 아이콘(하트; 메시지; .....) 행 */
 .iconRow {
     display: flex;
     justify-content: space-between;
@@ -50,7 +72,7 @@
     gap: 1rem;
 }
 
-.heartMessage > * {
+.heartMessage>* {
     display: flex;
     align-items: center;
     gap: 0.3rem;

@@ -10,6 +10,7 @@ import InputStyle from "./Input.module.css";
  * @param {String} width 가로 길이
  * @param {String} placeholder placeholder
  * @param {String} value value
+ * @param {Boolean} autoFocus autoFocus (기본 포커싱)
  * @param {Function} onChange 값이 바뀔 때 이벤트
  * @param {Boolean} closeBtnVisible 닫기 버튼 여부
  * @param {Boolean} disabled 입력 비활성화 여부
@@ -22,6 +23,7 @@ const TextInput = ({
   onChange,
   closeBtnVisible = true,
   disabled = false,
+  autoFocus = false,
 }) => {
   const handleChange = (e) => {
     onChange?.(e.target.value);
@@ -39,13 +41,9 @@ const TextInput = ({
         value={value}
         onChange={handleChange}
         maxLength={50}
-        style={{
-          padding: "0.7rem 0 0.7rem 0.7rem",
-          borderRadius: "8px",
-          border: "solid 1px #999",
-          width: "100%",
-        }}
+        className={InputStyle.inputStyle}
         disabled={disabled}
+        autoFocus={autoFocus}
       />
       {value && closeBtnVisible && (
         <FontAwesomeIcon

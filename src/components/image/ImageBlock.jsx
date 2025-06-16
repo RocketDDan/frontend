@@ -17,7 +17,7 @@ const ImageBlock = ({ file, width = "100px", height = "100px" }) => {
             {file.type.startsWith("image/") ? (
                 <img src={preview} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", }} />
             ) : (
-                <video src={preview} controls style={{ width: "100%" }} />
+                <video src={preview} style={{ width: "100%", height: "100%", objectFit: "contain", }} />
             )}
         </div>
     )
