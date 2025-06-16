@@ -10,7 +10,7 @@ import {
 } from "../../components/base/Input";
 import { BasicRadio } from "../../components/base/Radio";
 import { ImageAddBlock } from "../../components/image/ImageAddBlock";
-import { LoginMemberProfileImage } from "../../components/profile/ProfileImage";
+import { LoginMemberProfileImage, ProfileImage } from "../../components/profile/ProfileImage";
 
 import { checkNicknameDuplicate, signUp } from "../../api/auth.api";
 
@@ -141,7 +141,7 @@ const SignupPage = () => {
           <h2>프로필 정보</h2>
         </div>
         <div className={styles.profileImageContainer}>
-          <LoginMemberProfileImage
+          <ProfileImage
             width="100px"
             height="100px"
             profileUrl={profileImageUrl}

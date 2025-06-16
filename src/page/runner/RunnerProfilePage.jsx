@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./RunnerProfilePage.module.css";
 import { sampleMember } from "../../dto/member.dto";
-import { CrewProfileImage } from "../../components/profile/ProfileImage";
+import { ProfileImage } from "../../components/profile/ProfileImage";
 import { SecondaryHoverButton } from "../../components/base/Button";
 
 const RunnerProfilePage = () => {
@@ -13,7 +13,7 @@ const RunnerProfilePage = () => {
     return(
         <div>
             <div className={styles.profileWrapper}>
-                <CrewProfileImage profileUrl={member.profilePath}/>
+                <ProfileImage profileUrl={member.profilePath} size="200px"/>
                 <div className={styles.infoSection}>
                     <span className={styles.nickname}>{member.nickname}</span>
                     <span className={styles.info}>{member.email}</span>

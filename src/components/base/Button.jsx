@@ -160,4 +160,4 @@ const SecondaryBigButton = ({ content = "버튼", width = "100%", onClick, activ
   );
 };
 
-export { PrimaryButton, SecondaryButton, SecondaryHoverButton, ThirdaryButton, PrimaryBigButton, SecondaryBigButton };
+export { PrimaryButton, SecondaryButton, CustomButton, SecondaryHoverButton, ThirdaryButton, PrimaryBigButton, SecondaryBigButton };

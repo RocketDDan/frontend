@@ -2,6 +2,7 @@ import { v7 as uuidv7 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "./Input.module.css";
 import { faTimes, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 /**
  * Text Input Component

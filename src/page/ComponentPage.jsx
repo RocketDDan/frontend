@@ -3,7 +3,6 @@ import { SearchBar } from "../components/search_bar/SearchBar";
 import { BasicCheckbox } from "../components/base/Checkbox";
 import { BasicRadio } from "../components/base/Radio";
 import { BasicSelect } from "../components/base/Select";
-import { ProfileImage } from "../components/profile/ProfileImage";
 import { PrimaryBigButton, PrimaryButton, SecondaryBigButton, SecondaryButton, ThirdaryButton, CustomButton } from "../components/base/Button";
 import { ProfileImage } from "../components/profile/ProfileImage";
 import { SquareFeed } from "../components/feed/SquareFeed";
