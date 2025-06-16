@@ -41,7 +41,7 @@ const AnnouncementUploadPage = () => {
                 },
             }
             );
-            alert("공지사항이 성공적으로 업로드되었습니다.");
+            alert("공지사항이 성공적으로 등록되었습니다.");
             navigate("/announcement/list");
 
         } catch (error) {

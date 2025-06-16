@@ -50,7 +50,7 @@ const AnnouncementUpdatePage = () => {
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      alert("수정 완료!");
+      alert("수정 완료했습니다.");
       navigate(`/announcement/${announcementId}/detail`);
     } catch (err) {
       console.error("수정 실패", err);
