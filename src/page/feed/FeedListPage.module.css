@@ -7,20 +7,18 @@
     /* 업로드 버튼을 위해 */
     /* position: relative; */
 }
-
+/* 피드 목록과 댓글창 */
 .container>* {
     height: 100%;
+    flex: 1;
+    max-width: 468px;
 }
 
-.container>* {
-    height: 100%;
-}
-
+/* 피드 목록 */
 .feedList {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    max-width: 468px;
     overflow-y: auto;
 }
 
@@ -29,9 +27,9 @@
 }
 
 .uploadBtn {
-    position: absolute;
-    right: 5vw;
-    top: 85vh;
+    position: fixed;
+    right: calc(20px + 3vh);
+    bottom: calc(102.5px + 3vh);
     width: 50px;
     height: 50px;
     border: 0 solid;
@@ -41,14 +39,18 @@
 }
 
 /* 모바일에서는 피드만 보이거나 댓글만 보이게 분기 (기존: 768px) */
-@media (max-width: 1080px) {
-    /* .feedList {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        max-width: 468px;
-        overflow-y: auto;
-    } */
+@media (max-width: 768px) {
+    .uploadBtn {
+        position: fixed;
+        right: 3vh;
+        bottom: 3vh;
+        width: 50px;
+        height: 50px;
+        border: 0 solid;
+        background-color: #7CB2FC;
+        border-radius: 50%;
+        cursor: pointer;
+    }
 
     .commentPanel {
         display: none;
