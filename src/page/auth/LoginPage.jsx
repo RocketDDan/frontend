@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./LoginPage.module.css";
 
@@ -14,6 +15,8 @@ import { login } from "../../api/auth.api";
 
 const LoginPage = () => {
   const kakaoLoginURL = `${process.env.REACT_APP_API_BASE_URL}/oauth2/authorization/kakao`;
+
+  const navigate = useNavigate();
 
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
@@ -53,7 +56,8 @@ const LoginPage = () => {
     setPasswordValue(value);
   };
   const handleSubmit = async () => {
-    login(emailValue, passwordValue);
+    await login(emailValue, passwordValue);
+    navigate("/auth/callback");
   };
   const handleKakaoLogin = () => {
     window.location.href = kakaoLoginURL;
