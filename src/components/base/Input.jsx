@@ -42,7 +42,7 @@ const TextInput = ({
         style={{
           padding: "0.7rem 0 0.7rem 0.7rem",
           borderRadius: "8px",
-          border: "solid 1px",
+          border: "solid 1px #999",
           width: "100%",
         }}
         disabled={disabled}
@@ -108,7 +108,7 @@ const TextInputWithLabel = ({
         style={{
           padding: "0.7rem 0 0.7rem 0.7rem",
           borderRadius: "8px",
-          border: "solid 1px",
+          border: "solid 1px #999",
           width: "100%",
         }}
         disabled={disabled}
@@ -172,7 +172,7 @@ const TextArea = ({
                 style={{
                     padding: "0.7rem 0 0.7rem 0.7rem",
                     borderRadius: "8px",
-                    border: "solid 1px",
+                    border: "solid 1px #999",
                     width: "100%",
                     height: height, // 이 줄을 추가하세요!
                 }}

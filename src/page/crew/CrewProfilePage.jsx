@@ -4,12 +4,11 @@ import styles from "./CrewProfilePage.module.css";
 import {sampleCrew} from "../../dto/crew.dto";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { fetchCrew } from "../../api/crew.api";
 import { useParams } from "react-router-dom";
 import { ThirdaryButton, SecondaryHoverButton } from "../../components/base/Button";
 import { CrewProfileImage } from "../../components/profile/ProfileImage";
 import { CheckModal } from "../../components/base/CheckModal";
-import { deleteCrew } from "../../api/crew.api";
+import { deleteCrew, fetchCrew } from "../../api/crew.api";
 import { resignCrewMember } from "../../api/crewMember.api";
 import {deleteCrewJoinRequest, requestCrewJoin} from "../../api/crewJoinRequest.api";
 import { TextArea } from "../../components/base/Input";
@@ -84,7 +83,12 @@ const CrewProfilePage = () => {
                         content="가입 요청 확인" 
                         width="120px" 
                         onClick={()=>{navigate(`/crew/${crewId}/join-request/list`)}}
-                        />
+                     />
+                    <SecondaryHoverButton
+                        content="크루 수정"
+                        width="100px"
+                        onClick={() => navigate(`/crew/${crewId}/update`)}
+                    />
                     <ThirdaryButton content="크루 삭제" width="100px" onClick={onClickDeleteBtn}/>
                 </>
             );

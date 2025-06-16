@@ -4,8 +4,8 @@
     gap: 32px 24px;
     justify-content: flex-start;   /* 카드들을 중앙 정렬 */
     max-width: 1200px;         /* 최대 너비 제한 */
-    margin: 0 auto;            /* 좌우 중앙 정렬 */
     padding-bottom: 40px;
+    margin-left: 100px;            /* 좌우 중앙 정렬 */
 }
 
 .searchHeader {
@@ -25,6 +25,7 @@
 .pageWrapper {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 100%;
 }

@@ -38,3 +38,7 @@
 .primaryCancel:hover {
     color: #ff0000; /* hover 시 색상 변경 */
 }
+
+.borderStyle{
+    border: 1px solid #999;
+}
