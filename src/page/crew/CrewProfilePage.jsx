@@ -12,12 +12,12 @@ import { deleteCrew, fetchCrew } from "../../api/crew.api";
 import { resignCrewMember } from "../../api/crewMember.api";
 import {deleteCrewJoinRequest, requestCrewJoin} from "../../api/crewJoinRequest.api";
 import { TextArea } from "../../components/base/Input";
-import commonStyle from "../../Common.module.css";
+import CrewMemberListModal from "../../components/crew/CrewMemberListModal";
 
 const CrewProfilePage = () => {
     const navigate = useNavigate();
     const { crewId } = useParams(); // 여기서 crewId를 받아옴
-    const [crew, setCrew] = useState(sampleCrew);
+    const [crew, setCrew] = useState(null);
     // 확인 모달
     const [modalTitle, setModalTitle] = useState("");
     const [modalDescription, setModalDescription] = useState("");
@@ -84,7 +84,7 @@ const CrewProfilePage = () => {
 
     const onClickIntroduce = () => {
         setModalTitle("크루 소개");
-        setModalDescription(crew.introduce);
+        setModalDescription(crew?.introduce);
         setUseButton(false); // 버튼 사용 안함
         setModalWidth("500px"); // 모달 너비 설정
         setModalOpen(true);
@@ -141,33 +141,38 @@ const CrewProfilePage = () => {
 
     return (
         <div>
-            <div className={styles.profileWrapper}>
-                <CrewProfileImage profileUrl={crew.profilePath}/>
-                <div className={styles.infoSection}>
-                    <span className={styles.crewName}>{crew.crewName}</span>
-                    <div onClick={() => setCrewMemberModalOpen(true)}>
-                        <div className={styles.label}>총 멤버</div>
-                        <div className={styles.memberCount}>
-                            <FontAwesomeIcon icon={faPersonRunning} /> {crew.totalMemberCnt}명
+            {!crew && (
+                <div className={styles.loading}>크루 정보를 불러오는 중입니다...</div>
+            )}
+            {crew && (
+                <div className={styles.profileWrapper}>
+                    <CrewProfileImage profileUrl={crew?.profilePath}/>
+                    <div className={styles.infoSection}>
+                        <span className={styles.crewName}>{crew?.crewName}</span>
+                        <div onClick={() => setCrewMemberModalOpen(true)}>
+                            <div className={styles.label}>총 멤버</div>
+                            <div className={styles.memberCount}>
+                                <FontAwesomeIcon icon={faPersonRunning} /> {crew?.totalMemberCnt}명
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <div className={styles.label}>소개</div>
-                        <div className={styles.introduce} onClick={onClickIntroduce}>{crew.introduce}</div>
-                    </div>
-                    <div>
-                        <div className={styles.label}>주소</div>
-                        <div className={styles.details}>
-                            <div className={styles.region}>{crew.crewRegion}</div>
-                            <div className={styles.address}>{crew.crewAddress}</div>
+                        <div>
+                            <div className={styles.label}>소개</div>
+                            <div className={styles.introduce} onClick={onClickIntroduce}>{crew?.introduce}</div>
                         </div>
-                    </div>
+                        <div>
+                            <div className={styles.label}>주소</div>
+                            <div className={styles.details}>
+                                <div className={styles.region}>{crew?.crewRegion}</div>
+                                <div className={styles.address}>{crew?.crewAddress}</div>
+                            </div>
+                        </div>
 
+                    </div>
+                    <div className={styles.buttonSection}>
+                        <div className={styles.buttonGroup}>{renderActionButtons()}</div>
+                    </div>
                 </div>
-                <div className={styles.buttonSection}>
-                    <div className={styles.buttonGroup}>{renderActionButtons()}</div>
-                </div>
-            </div>
+            )}
             <div className={styles.crewMemberFeeds}>
                 <span>크루원들의 피드 모아보기</span>
                 {/* 크루원들 피드 목록 조회 컴포넌트 추가 */}
@@ -201,6 +206,17 @@ const CrewProfilePage = () => {
                     }
                     onConfirm={() => handleRequestConfirm()}
                     onClose={() => setRequestModalOpen(false)}
+                />
+            )}
+            {crewMemberModalOpen && (
+                <CrewMemberListModal
+                    crewId={crewId}
+                    onClose={async () => {
+                        setCrewMemberModalOpen(false);
+                        const data = await fetchCrew(crewId);
+                        setCrew(data);
+                    }}
+                    isLeader={crew.leader}
                 />
             )}
         </div>

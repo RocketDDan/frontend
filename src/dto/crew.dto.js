@@ -30,8 +30,8 @@ const sampleCrewMember = {
     "nickname": "러닝러버",
     "email": "running@example.com",
     "profilePath": crewSampleImage,
-    "registerDate": "2024-03-20 14:30:00",
-    "leader": true
+    "registerDate": "2024-03-20",
+    "isLeader": true
 }
 
 const sampleCrewJoinRequest = {

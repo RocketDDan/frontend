@@ -12,8 +12,8 @@ function CrewCard({crew}) {
   
   return (
     <div className={styles.card} onClick={() => navigate(`/crew/${crew.crewId}`)}>
-      <img src={crew.profilePath} className={styles.image} />
-
+      {crew && (<img src={crew.profilePath} className={styles.image} />)}
+      {crew && (      
       <div className={styles.content}>
         <h2 className={styles.title}>{crew.crewName}</h2>
         <p className={styles.description}>
@@ -26,7 +26,7 @@ function CrewCard({crew}) {
             </div>
             <span className={styles.date}>{crew.createdAt} 창단</span>
         </div>
-      </div>
+      </div>)}
     </div>
   );
 }

@@ -47,6 +47,14 @@
   text-align: left;
 }
 
+.label {
+  font-size: 13px;
+  color: #999;
+  margin-bottom: 2px;
+  margin-left: 2px;
+  font-weight: 500;
+}
+
 .buttonSection {
   display: flex;
   flex-direction: column;

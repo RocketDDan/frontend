@@ -24,14 +24,14 @@ const forceRemoveCrewMember = async (crewId, crewMemberId) => {
         console.log('크루 멤버 강퇴 성공', response.data);
         return response.data;
     } catch (error) {
-        throw error;
+        alert(error.message || '크루 멤버 강퇴 실패');
     }
 };
 
 // 크루원 목록 조회 
 const fetchCrewMembers = async (crewId, params) => {
     try {
-        const response = await apiClient.get(`/crews/${crewId}/members`, { params });
+        const response = await apiClient.get(`/crews/${crewId}/members`, params);
         if (response.status !== 200) {
             throw new Error('크루원 목록 조회 실패', response.data);
         }
