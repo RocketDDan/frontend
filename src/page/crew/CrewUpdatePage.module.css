@@ -1,0 +1,74 @@
+.wrapper {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 32px;
+}
+
+.circleImage {
+    width: 220px;
+    height: 220px;
+    border: 1.5px solid #222;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    cursor: pointer;
+    overflow: hidden;
+    background: #fff;
+    transition: border-color 0.2s;
+}
+
+.circleImage:hover {
+    border-color: #90bfff;
+}
+
+.circleImgTag {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.imageIcon {
+    font-size: 48px;
+    color: #888;
+}
+
+.label {
+    display: block;
+    margin-bottom: 15px;
+    color: #666;
+    font-weight: 500;
+    text-align: left;
+}
+
+.mb16 {
+    margin-bottom: 16px;
+}
+
+.rowFlex {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.duplicateCheckButton {
+    margin-left: 8px;
+    min-width: 100px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+.errorText {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 4px;
+    margin-bottom: 0;
+    text-align: left;
+}

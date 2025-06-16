@@ -1,0 +1,124 @@
+.modalOverlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.12);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalContent {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px 32px 24px 32px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 70vh; /* 모달 최대 높이 제한 */
+    gap: 10px;
+}
+
+.leaderModal{
+    max-width: 600px;              /* 모달 너비 설정 */
+}
+
+.memberModal{
+    max-width: 400px;              /* 모달 너비 설정 */
+}
+
+.closeButton {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #888;
+}
+
+.memberList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 18px;
+    max-height: 45vh;         /* 목록 최대 높이 제한 */
+    overflow-y: auto;         /* 스크롤 가능 */
+    scrollbar-width: none;    /* Firefox: 기본적으로 스크롤바 숨김 */
+}
+
+.memberInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;                /* 이미지와 닉네임 간 간격 설정 */
+}
+
+.infoTextGroup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.noMembers{
+    font-size: 1.2rem;
+    color: #888;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Chrome, Edge, Safari: 스크롤바 숨김 */
+.nickname::-webkit-scrollbar,
+.memberList::-webkit-scrollbar {
+    display: none;
+}
+
+/* 마우스 올렸을 때만 스크롤바 보이게 */
+.nickname:hover,
+.memberList:hover {
+    scrollbar-width: thin;    /* Firefox: 얇은 스크롤바 */
+}
+.memberList:hover::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+    background: #eee;
+}
+.memberList:hover::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 4px;
+}
+
+.menageButtons {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.nickname {
+    max-width: 140px;              /* 원하는 최대 너비로 조정 */
+    overflow-x: auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    scrollbar-width: none;          /* Firefox: 스크롤바 숨김 */
+}
+
+.nickname:hover::-webkit-scrollbar {
+    display: block;
+    height: 6px;
+    background: #eee;
+}
+
+.nickname:hover::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 3px;
+}
+
+@media (max-width: 900px) {
+    .modalContent {
+        min-width: 90vw;
+        padding: 16px 4vw 16px 4vw;
+    }
+}

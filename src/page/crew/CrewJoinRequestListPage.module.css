@@ -4,7 +4,7 @@
 	align-items: center;
 	width: 100%;
 	gap: 30px;
-	margin: 0 auto;
+	margin: 20px auto;
 }
 
 .header{
@@ -53,36 +53,9 @@
 .messageWrapper {
 	width: 480px;      /* 원하는 최대 너비로 조정 */
 	white-space: nowrap;   /* 한 줄로 표시 */
-	overflow-x: auto;      /* 가로 스크롤 표시 */
-	text-overflow: ellipsis;
+	overflow: hidden;           /* 가로 스크롤 대신 넘치는 부분 숨김 */
+	text-overflow: ellipsis;    /* ...으로 표시 */
 	display: flex;           /* 추가 */
 	align-items: center;     /* 추가 */
-	scrollbar-width: thin;           /* Firefox */
-	scrollbar-color: transparent transparent; /* 기본은 투명 */
-	transition: scrollbar-color 0.2s;
-}
-
-/* 마우스 오버 시에만 스크롤바 색상 표시 (Firefox) */
-.messageWrapper:hover {
-	  scrollbar-color: #bbb #f5f5f5;
-}
-
-/* Chrome, Edge, Safari */
-.messageWrapper::-webkit-scrollbar {
-	height: 6px;
-	background: transparent;
-}
-
-.messageWrapper::-webkit-scrollbar-thumb {
-	background: transparent;
-	border-radius: 3px;
-	transition: background 0.2s;
-}
-
-.messageWrapper:hover::-webkit-scrollbar-thumb {
-	background: #bbb;
-}
-
-.messageWrapper::-webkit-scrollbar-track {
-	background: transparent;
+	cursor: pointer;
 }

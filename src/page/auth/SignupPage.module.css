@@ -1,0 +1,43 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    gap: 20px;
+}
+
+.subtitleContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.profileImageContainer {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.nicknameContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+}
+
+.error {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 4px;
+}

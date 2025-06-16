@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FeedProfileImage } from '../profile/ProfileImage';
 import style from './CommentPanel.module.css';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { TextInput } from '../base/Input';
-import { PrimaryButton, SecondaryButton } from '../base/Button';
-import { useEffect, useState } from 'react';
+import { PrimaryButton } from '../base/Button';
+import { useCallback, useEffect, useState } from 'react';
 import { deleteFeedComment, fetchFeedCommentList, postFeedComment } from '../../api/feedComment.api';
 import sampleFeed from '../../dto/feed.dto';
+import Swal from 'sweetalert2';
+import Comment from './Comment';
 
 
 /**
@@ -14,30 +15,65 @@ import sampleFeed from '../../dto/feed.dto';
  * @param {sampleFeed} feed 
  * @returns 
  */
-const CommentPanel = ({ feed, onClose }) => {
+const CommentPanel = ({ feed, onClose, writeComment, deleteComment }) => {
 
     const [inputValue, setInputValue] = useState("");
     const [commentList, setCommentList] = useState([]);
 
+    // 댓글 작성 값 변경
     const handleInputChange = (val) => {
         setInputValue(val);
     }
-
-    const handleSubmit = async () => {
-        // 댓글 작성 api 호출
-        await postFeedComment(feed.feedId, inputValue);
+    // 댓글 작성창 비우기
+    const handleInputClear = () => {
         setInputValue("");
     }
 
+    // 댓글 작성
+    const handleSubmit = async () => {
+        console.log("handleSubmit() :: 살행");
+        // 댓글 작성 api 호출
+        await postFeedComment(feed.feedId, inputValue);
+        writeComment?.(feed.feedId);
+        handleInputClear();
+        // react event queue 안정성 위해 defer 처리
+        setTimeout(() => {
+            fetchData();
+        }, 0);
+    }
+
     // 댓글 목록 가져오기
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         const data = await fetchFeedCommentList(feed.feedId);
         setCommentList(data);
-    };
+    }, [feed]);
 
+    // 댓글 삭제
     const handleCommentDelete = async (commentId) => {
-        await deleteFeedComment(feed.feedId, commentId);
-        fetchData();
+        const result = await Swal.fire({
+            title: '정말 삭제하시겠습니까?',
+            text: "삭제하면 복구할 수 없습니다.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소'
+        });
+
+        if (result.isConfirmed) {
+            await deleteFeedComment(feed.feedId, commentId);
+            deleteComment?.(feed.feedId);
+            fetchData();
+
+            await Swal.fire({
+                title: '삭제 완료!',
+                text: '댓글이 삭제되었습니다.',
+                icon: 'success',
+                timer: 700,
+                showConfirmButton: false
+            });
+        }
     }
 
     useEffect(() => {
@@ -60,34 +96,27 @@ const CommentPanel = ({ feed, onClose }) => {
                 </div>
                 <hr />
             </label>
+
             {/* 댓글 목록 */}
             <div className={style.commentList}>
-                {commentList.map(comment => (
-                    <div key={comment.commentId}>
-                        <div className={style.timeRow}>
-                            <span>{comment.createdAt}</span>
-                        </div>
-                        <div className={style.commentRow}>
-                            <span className={style.feedProfile}>
-                                <FeedProfileImage profileUrl={comment.writerProfileUrl} />
-                                <b>{comment.writerNickname}</b>
-                            </span>
-                            <span>{comment.content}</span>
-                            <span>{comment.mine
-                                ? <SecondaryButton content="삭제" onClick={() => { handleCommentDelete(comment.commentId) }} />
-                                : ""}
-                            </span>
-                        </div>
-                    </div>
-                ))}
+                {commentList.length
+                ? commentList.map(comment => (
+                    <Comment comment={comment} clickDelete={handleCommentDelete} key={comment.commentId} />
+                ))
+                : <span>댓글이 없습니다.</span>
+            }
             </div>
+
             {/* 댓글 작성 */}
-            <div className={style.write}>
+            <div className={style.writeRow}>
                 <TextInput
                     closeBtnVisible={true}
                     value={inputValue}
                     placeholder={"댓글 입력"}
-                    onChange={handleInputChange} />
+                    onChange={handleInputChange}
+                    onEnter={handleSubmit}
+                    autoFocus={false}
+                />
                 <PrimaryButton
                     width='30%'
                     content='입력'

@@ -27,6 +27,8 @@
   align-items: center;
   position: relative;
   animation: modalPopIn 0.28s cubic-bezier(.32,1.56,.64,1);
+  max-height: 500px;
+  height: auto;
 }
 
 @keyframes modalPopIn {
@@ -61,10 +63,22 @@
   font-size: 1.15rem;
   margin-bottom: 32px;
   text-align: center;
+  max-height: 250px;   /* 원하는 최대 높이로 조절 */
+  overflow-y: auto;    /* 세로 스크롤 표시 */
+  word-break: break-all;
+  white-space: pre-line;
 }
 
 .btnRowStyle {
   display: flex;
   gap: 36px;
   justify-content: center;
+}
+
+.btnStyle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px; /* 버튼 사이 간격 추가 */
+    margin-top: 32px;
 }
