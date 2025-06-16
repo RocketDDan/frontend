@@ -53,7 +53,6 @@ const MyRewardListPage = () => {
         totalCount={totalCount}
         setPage={setPage}
         onRowClick={(row) => navigate(`/company/reward/${row.feedId}/detail`)}
-
       />
 
       <div

@@ -1,0 +1,49 @@
+.container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.backBtn {
+  background-color: #fefdbf;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 6px 16px;
+  cursor: pointer;
+}
+
+.meta {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+.summaryCards {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.card {
+  flex: 1;
+  background: #f9f9f9;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.06);
+  text-align: center;
+}
+
+.graphSection {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.chartBox {
+  flex: 1;
+  min-width: 480px;
+}
