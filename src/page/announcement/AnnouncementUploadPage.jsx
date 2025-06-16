@@ -13,7 +13,7 @@ const AnnouncementUploadPage = () => {
     const [content, setContent] = useState("");
     const [attachedFiles, setAttachedFiles] = useState([]);
 
-        // 제목과 본문의 글자 수 제한 함수
+        // 제목 본문의 글자 수 제한 함수
         const handleSubmit = async () => {
         if (title.length > 100) {
             alert("제목은 100글자 이하로 입력해주세요.");
