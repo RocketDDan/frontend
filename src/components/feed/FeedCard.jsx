@@ -31,7 +31,10 @@ const FeedCard = ({ feed, onCommentClick }) => {
         setIsLiked(true);
         setLikeCount(likeCount + 1);
         fetchLikeFeed(feed.feedId)
-            .catch((err) => { setLikeCount(likeCount - 1); });
+            .catch((err) => { // ? [낙관적 렌더링] 좋아요 먼저 한 것 처럼 보이고 에러 시 롤백
+                setLikeCount((prev) => prev - 1); 
+                setIsLiked(false);
+            });
     };
 
     // 좋아요 취소
@@ -39,7 +42,10 @@ const FeedCard = ({ feed, onCommentClick }) => {
         setIsLiked(false);
         setLikeCount(likeCount - 1);
         fetchUnlikeFeed(feed.feedId)
-            .catch((err) => { setLikeCount(likeCount + 1); });;
+            .catch((err) => {  // ? [낙관적 렌더링] 좋아요 먼저 취소한 것 처럼 보이고 에러 시 롤백
+                setLikeCount((prev) => prev + 1); 
+                setIsLiked(true);
+            });
     };
 
     // 이전 사진/동영상 가져오기
