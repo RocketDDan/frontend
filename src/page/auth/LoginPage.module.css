@@ -29,3 +29,16 @@
   justify-content: center;
   gap: 8px;
 }
+
+.errorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+}
+
+.error {
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
