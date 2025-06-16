@@ -21,6 +21,7 @@ const TextInput = ({
   placeholder = "",
   value = "",
   onChange,
+  onEnter,
   closeBtnVisible = true,
   disabled = false,
   autoFocus = false,
@@ -33,6 +34,12 @@ const TextInput = ({
     onChange?.("");
   };
 
+  const handleEnter = (e) => {
+    if (e.key === "Enter") {
+      onEnter?.();
+    }
+  }
+
   return (
     <span className={InputStyle.container} style={{ width: width }}>
       <input
@@ -44,6 +51,7 @@ const TextInput = ({
         className={InputStyle.inputStyle}
         disabled={disabled}
         autoFocus={autoFocus}
+        onKeyDown={handleEnter}
       />
       {value && closeBtnVisible && (
         <FontAwesomeIcon
