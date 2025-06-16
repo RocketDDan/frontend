@@ -17,9 +17,12 @@ const AnnouncementListPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log(`${process.env.REACT_APP_API_BASE_URL}/announcements`);
         const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/announcements`, {
           params: { page, perPage: limit, keyword }
         });
+        console.log("응답:", res.data);
+
         setData(res.data.announcements);
         setTotalCount(res.data.totalCount);
       } catch (err) {
