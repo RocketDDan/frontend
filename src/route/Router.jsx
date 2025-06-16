@@ -57,7 +57,6 @@ const Router = () => {
             <Route path="/announcement/:announcementId/update" element={<AnnouncementUpdatePage/>} />
             <Route path="/announcement/:announcementId/detail" element={<AnnouncementDetailPage />} />
 
-
             {/* 멤버 인증/인가 */}
             <Route path="/auth/callback" element={<LoginCallback />} />
             <Route path="/logout/callback" element={<LogoutCallback />} />
