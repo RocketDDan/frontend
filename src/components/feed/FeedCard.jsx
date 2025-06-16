@@ -67,7 +67,7 @@ const FeedCard = ({ feed, onCommentClick }) => {
             </div>
 
             {/* 피드 이미지들 */}
-            <div className={style.feedImageList} style={{ position: 'relative' }}>
+            <div className={`${style.feedImageList} ${style.zoomable}`} style={{ position: 'relative' }}>
                 <MediaViewer fileUrl={feed.feedFileUrlList[currentIndex]?.fileUrl} />
                 {/* 왼쪽 화살표 */}
                 {feed.feedFileUrlList.length > 1 && (
