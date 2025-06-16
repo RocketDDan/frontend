@@ -3,6 +3,7 @@ import styles from  "./MemberListPage.module.css";
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { TableView } from "../../components/base/AnnouncementTable";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const RewardListPage = () => {
     const [keyword, setKeyword] = useState("");
@@ -14,6 +15,7 @@ const RewardListPage = () => {
     const [searchTrigger, setSearchTrigger] = useState(false);
     const [totalCount, setTotalCount] = useState(0);
     const limit = 6;
+    const navigate = useNavigate();
 
     // const handleSearch = () => {
     //     setPage(1);
@@ -97,6 +99,7 @@ const RewardListPage = () => {
                 limit={limit}
                 totalCount={totalCount}
                 setPage={setPage}
+                onRowClick={(row) => navigate(`/company/reward/${row.feedId}/detail`)}
             />
             <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px", fontWeight: "bold", width: "100%", maxWidth: "1200px", marginLeft: "auto", marginRight: "auto", paddingRight: "8px" }}>
                 <span>총 수익금 (충전 금액 기준) :&nbsp;</span>

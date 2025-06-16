@@ -3,6 +3,7 @@ import styles from  "./MyRewardListPage.module.css";
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { TableView } from "../../components/base/AnnouncementTable";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const MyRewardListPage = () => {
     const [page, setPage] = useState(1);
@@ -10,7 +11,7 @@ const MyRewardListPage = () => {
     const [totalCharge, setTotalCharge] = useState(0);
     const [totalCount, setTotalCount] = useState(0);
     const limit = 6;
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         
@@ -51,6 +52,8 @@ const MyRewardListPage = () => {
         limit={limit}
         totalCount={totalCount}
         setPage={setPage}
+        onRowClick={(row) => navigate(`/company/reward/${row.feedId}/detail`)}
+
       />
 
       <div
