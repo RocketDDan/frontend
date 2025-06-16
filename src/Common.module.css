@@ -8,6 +8,10 @@
     color: #222;
 }
 
+.primaryColor{
+    color: #7CB2FC;
+}
+
 .pinkBg {
     background-color: #FFBABA;
     color: #222;
@@ -37,4 +41,8 @@
 
 .primaryCancel:hover {
     color: #ff0000; /* hover 시 색상 변경 */
+}
+
+.borderStyle{
+    border: 1px solid #999;
 }

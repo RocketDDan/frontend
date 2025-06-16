@@ -7,6 +7,7 @@ import RegionSelector from "../../components/base/RegionSelector";
 import { BasicRadio } from "../../components/base/Radio";
 import { fetchCrewList } from "../../api/crew.api";
 import { SearchBar } from "../../components/search_bar/SearchBar";
+import { SecondaryHoverButton} from "../../components/base/Button";
 
 const CrewListPage = () => {
   const [crewList, setCrewList] = useState([]);
@@ -58,6 +59,11 @@ const CrewListPage = () => {
           name="order"
           value={"LATEST"}
           onChange={setOrder}
+        />
+        <SecondaryHoverButton
+          content="크루 생성"
+          width="100px"
+          onClick={() => navigate("/crew/create")}
         />
       </div>
       <div className={styles.container}>
