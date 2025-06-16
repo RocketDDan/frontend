@@ -10,8 +10,10 @@ import InputStyle from "./Input.module.css";
  * @param {String} width 가로 길이
  * @param {String} placeholder placeholder
  * @param {String} value value
+ * @param {Boolean} autoFocus autoFocus (기본 포커싱)
  * @param {Function} onChange 값이 바뀔 때 이벤트
  * @param {Boolean} closeBtnVisible 닫기 버튼 여부
+ * @param {Boolean} disabled 입력 비활성화 여부
  * @returns {JSX.Element} text input 컴퍼넌트
  */
 const TextInput = ({
@@ -20,6 +22,8 @@ const TextInput = ({
   value = "",
   onChange,
   closeBtnVisible = true,
+  disabled = false,
+  autoFocus = false,
 }) => {
   const handleChange = (e) => {
     onChange?.(e.target.value);
@@ -37,12 +41,9 @@ const TextInput = ({
         value={value}
         onChange={handleChange}
         maxLength={50}
-        style={{
-          padding: "0.7rem 0 0.7rem 0.7rem",
-          borderRadius: "8px",
-          border: "solid 1px",
-          width: "100%",
-        }}
+        className={InputStyle.inputStyle}
+        disabled={disabled}
+        autoFocus={autoFocus}
       />
       {value && closeBtnVisible && (
         <FontAwesomeIcon
@@ -67,10 +68,10 @@ const TextInput = ({
  * @param {String} placeholder placeholder
  * @param {String} label label
  * @param {String} width 가로 길이
-
  * @param {String} value value
  * @param {Function} onChange 값이 바뀔 때 이벤트
  * @param {Boolean} closeBtnVisible 닫기 버튼 여부
+ * @param {Boolean} disabled 입력 비활성화 여부
  * @returns {JSX.Element} text input 컴퍼넌트
  */
 const TextInputWithLabel = ({
@@ -80,6 +81,7 @@ const TextInputWithLabel = ({
   value,
   onChange,
   closeBtnVisible = true,
+  disabled = false,
 }) => {
   const id = uuidv7();
 
@@ -104,9 +106,10 @@ const TextInputWithLabel = ({
         style={{
           padding: "0.7rem 0 0.7rem 0.7rem",
           borderRadius: "8px",
-          border: "solid 1px",
+          border: "solid 1px #999",
           width: "100%",
         }}
+        disabled={disabled}
       />
       {value && closeBtnVisible && (
         <FontAwesomeIcon
@@ -143,6 +146,7 @@ const TextArea = ({
     height = '100%',
     value, 
     onChange,
+    maxLength,
     closeBtnVisible = true,
 }) => {
   const id = uuidv7();
@@ -155,36 +159,38 @@ const TextArea = ({
     onChange?.("");
   };
 
-  return (
-    <span className={InputStyle.container} style={{ width: width, height: height }}>
-      <textarea
-        id={id}
-        placeholder={placeholder}
-        value={value}
-        onChange={handleChange}
-        style={{
-          padding: "0.7rem 0 0.7rem 0.7rem",
-          borderRadius: "8px",
-          border: "solid 1px",
-          width: "100%",
-        }}
-      />
-      {value && closeBtnVisible && (
-        <FontAwesomeIcon
-          icon={faTimes}
-          onClick={handleClear}
-          style={{
-            position: "absolute",
-            right: "0.5rem",
-            top: "0.7rem",
-            cursor: "pointer",
-            color: "#999",
-          }}
-        />
-      )}
-    </span>
-  );
-};
+    return (
+        <span className={InputStyle.container} style={{ width: width, height: height }}>
+            <textarea
+                id={id}
+                placeholder={placeholder}
+                value={value}
+                onChange={handleChange}
+                maxLength={maxLength}
+                style={{
+                    padding: "0.7rem 0 0.7rem 0.7rem",
+                    borderRadius: "8px",
+                    border: "solid 1px #999",
+                    width: "100%",
+                    height: height, // 이 줄을 추가하세요!
+                }}
+            />
+            {value && closeBtnVisible && (
+                <FontAwesomeIcon
+                    icon={faTimes}
+                    onClick={handleClear}
+                    style={{
+                        position: "absolute",
+                        right: "0.5rem",
+                        top: "0.7rem",
+                        cursor: "pointer",
+                        color: "#999",
+                    }}
+                />
+            )}
+        </span>
+    )
+}
 
 /**
  * TextArea With Label Component

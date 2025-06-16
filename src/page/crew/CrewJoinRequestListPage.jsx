@@ -3,28 +3,31 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { fetchCrewJoinRequestList } from "../../api/crewJoinRequest.api";
 import { sampleCrewJoinRequest } from "../../dto/crew.dto";
-import CrewMemberInfo from "../../components/crew/CrewMemberInfo";
-import CrewHeader from "../../components/crew/CrewHeader";
-import CheckModal from "../../components/base/CheckModal";
+import {CrewMemberInfo} from "../../components/crew/CrewMemberInfo";
+import {CrewHeader} from "../../components/crew/CrewHeader";
+import {CheckModal} from "../../components/base/CheckModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { approveCrewJoinRequest, rejectCrewJoinRequest } from "../../api/crewJoinRequest.api"; // 크루 가입 요청 승인 API
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { BasicRadio } from "../../components/base/Radio"; // 라디오 버튼 컴포넌트
 import commonStyles from "../../Common.module.css"; // 공통 스타일
+import Pagenation from "../../components/base/Pagenation";
 
 const CrewJoinRequestListPage = () => {
     const { crewId } = useParams(); // 여기서 crewId를 받아옴
     const [open, setOpen] = useState(false); // 모달 열림 상태
     const [modalTitle, setModalTitle] = useState(""); // 모달 제목 상태
     const [modalDescription, setModalDescription] = useState(""); // 모달 설명 상태
+    const [useButton, setUseButton] = useState(true); // 모달 버튼 사용 여부 상태   
+    const [modalWidth, setModalWidth] = useState("400px"); // 모달 가로 크기 상태
     const [onConfirm, setOnConfirm] = useState(() => () => {}); // 모달 확인 버튼 클릭 핸들러 상태
 
-    const [crewJoinRequestList, setCrewJoinRequestList] = useState(Array(15).fill(sampleCrewJoinRequest)); // 크루 가입 요청 목록 상태
+    const [crewJoinRequestList, setCrewJoinRequestList] = useState([]); // 크루 가입 요청 목록 상태
     const [nickname, setNickname] = useState(""); // 닉네임 상태
     const [page, setPage] = useState(1); // 페이지 상태
-    const [perPage, setPerPage] = useState(10); // 페이지당 항목 수 상태
     const [status, setStatus] = useState("REQUEST"); // 상태 필터링 상태
+    const [isExistNextPage, setIsExistNextPage] = useState(false);
 
     // 가입 요청 상태 옵션 정의
     const statusOptions = [
@@ -42,19 +45,31 @@ const CrewJoinRequestListPage = () => {
     ];
 
     const onClickAcceptBtn = (requestId) => {
-        setOpen(true);
         setModalTitle("크루 가입 승인");
         setModalDescription("크루 가입 요청을 승인하시겠습니까?");
+        setUseButton(true); // 버튼 사용 여부 설정
+        setOpen(true);
         setOnConfirm(() => () => approveRequest(requestId)); // 이렇게!
     }
 
     const onClickDenyBtn = (requestId) => {
-        // 모달 열기
-        setOpen(true);
         // 모달 제목과 설명 설정
         setModalTitle("크루 가입 거절");
         setModalDescription("크루 가입 요청을 거절하시겠습니까?");
+        setUseButton(true); // 버튼 사용 여부 설정
+        // 모달 열기
+        setOpen(true);
         setOnConfirm(() => () => rejectRequest(requestId));
+    }
+
+    const onClickMessage = (e) => {
+        // 요청 메세지 클릭 시 이벤트
+        e.stopPropagation(); // 이벤트 전파 방지
+        setModalTitle("크루 가입 요청 메세지");
+        setModalDescription(e.target.innerText); // 메세지 내용 설정
+        setUseButton(false); // 버튼 사용 여부 설정
+        setModalWidth("500px"); // 모달 가로 크기 설정
+        setOpen(true); // 메세지 모달 열기
     }
 
     const approveRequest = (requestId) => {
@@ -79,26 +94,26 @@ const CrewJoinRequestListPage = () => {
         const params = {
             nickname: nickname,
             page: page,
-            perPage: perPage,
+            perPage: 7,
             order: "LATEST", // 정렬 기준은 최신순으로 고정
             status: status
         }
         // 크루 가입 요청 목록을 가져오는 API 호출
         fetchCrewJoinRequestList(crewId, params)
         .then(data => {
-            console.log("닉네임", nickname);
-            setCrewJoinRequestList(data);
+            setCrewJoinRequestList(data.crewJoinRequestList);
+            setIsExistNextPage(data.isExistNextPage);
         })
     }
 
     useEffect(() => {
+        console.log("crewId", crewId);
         handleSearchBar();
 
     }, [page, status, crewId])
 
     return (
         <div className={styles.pageWrapper}>
-            <h1>크루 가입 신청 현황</h1>
             <div className={styles.header}>
                 <div className={styles.searchHeader}>
                     <SearchBar 
@@ -123,7 +138,7 @@ const CrewJoinRequestListPage = () => {
             { crewJoinRequestList.length > 0 && crewJoinRequestList.map((request, idx) => (
                 <div className={styles.requestWrapper} key={idx}>
                     <CrewMemberInfo nickname={request.nickname} profilePath={request.profilePath} date={request.requestDate} />
-                    <span className={styles.messageWrapper}>{request.requestMessage}</span>
+                    <span className={styles.messageWrapper} onClick={onClickMessage}>{request.requestMessage}</span>
                     { status === "REQUEST" && (
                         <div className={styles.buttonWrapper}>
                             <FontAwesomeIcon 
@@ -155,9 +170,12 @@ const CrewJoinRequestListPage = () => {
                     title={modalTitle} 
                     description={modalDescription} 
                     onConfirm={onConfirm} 
-                    onClose={() => setOpen(false)}
+                    onClose={() => {setOpen(false); setModalWidth("400px")}} // 모달 닫기 시 높이 초기화
+                    useButton={useButton}
+                    width={modalWidth}
                 />
             )}
+            <Pagenation page={page} isExistNextPage={isExistNextPage} setPage={setPage}/>
         </div>
     );
 }

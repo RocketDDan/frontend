@@ -4,6 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { fetchRegionList, getAccessToken } from "../../api/region.api";
 
+/**
+ * 
+ * @param {String} region - 선택된 지역
+ * @param {Function} setRegion - 지역을 설정하는 함수 
+ * @returns 
+ */
 const RegionSelector = ({ region, setRegion}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [cities, setCities] = useState([]);      // 시/도 목록
@@ -23,9 +29,6 @@ const RegionSelector = ({ region, setRegion}) => {
           const defaultCity = result.find(city => city.cd === "11");
           if (defaultCity) setSelectedCity(defaultCity);
         })
-        .catch(err => {
-          console.error('시/도 목록 조회 실패:', err);
-        });
     }
 
     // 선택된 시/도에 따라 구/군 목록 불러오기
@@ -60,7 +63,7 @@ const RegionSelector = ({ region, setRegion}) => {
       {isOpen && (
         <div className={styles.modal}>
           <div className={styles.cityColumn}>
-            {cities.map(city => (
+            {cities && cities.map(city => (
               <div
                 key={city.cd}
                 className={`${styles.city} ${selectedCity && city.cd === selectedCity.cd ? styles.activeCity : ""}`}

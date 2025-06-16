@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./LoginPage.module.css";
 
@@ -10,17 +11,53 @@ import {
 
 import kakaoLogoImage from "../../assets/images/kakao_logo.png";
 
+import { login } from "../../api/auth.api";
+
 const LoginPage = () => {
   const kakaoLoginURL = `${process.env.REACT_APP_API_BASE_URL}/oauth2/authorization/kakao`;
 
+  const navigate = useNavigate();
+
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
+  const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const emailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const passwordValid = (password) =>
+    /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/.test(password);
+
+  useEffect(() => {
+    const isEmailValid = emailValid(emailValue);
+    const isPasswordValid = passwordValid(passwordValue);
+
+    setIsFormValid(isEmailValid && isPasswordValid);
+
+    const newErrors = {};
+    if (emailValue && !isEmailValid) {
+      newErrors.email = "유효한 이메일 주소를 입력해주세요.";
+    }
+    if (passwordValue && !isPasswordValid) {
+      newErrors.password =
+        "비밀번호는 영문, 숫자를 포함하여 8~16자여야 합니다.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      setErrors({});
+    }
+  }, [emailValue, passwordValue]);
 
   const handleEmailChange = (value) => {
     setEmailValue(value);
   };
   const handlePasswordChange = (value) => {
     setPasswordValue(value);
+  };
+  const handleSubmit = async () => {
+    await login(emailValue, passwordValue);
+    navigate("/auth/callback");
   };
   const handleKakaoLogin = () => {
     window.location.href = kakaoLoginURL;
@@ -43,31 +80,35 @@ const LoginPage = () => {
     <div className={styles.container}>
       <h1 className={styles.title}>로그인</h1>
       <div className={styles.form}>
-        <TextInputWithLabel
-          placeholder="이메일"
-          label="아이디(이메일)"
-          width="100%"
-          value={emailValue}
-          onChange={handleEmailChange}
-        />
+        <div className={styles.errorContainer}>
+          <TextInputWithLabel
+            placeholder="이메일"
+            label="아이디(이메일)"
+            width="100%"
+            value={emailValue}
+            onChange={handleEmailChange}
+          />
+          {errors.email && <div className={styles.error}>{errors.email}</div>}
+        </div>
 
-        <PasswordInputWithLabel
-          placeholder="비밀번호"
-          label="비밀번호"
-          width="100%"
-          value={passwordValue}
-          onChange={handlePasswordChange}
-        />
+        <div className={styles.errorContainer}>
+          <PasswordInputWithLabel
+            placeholder="영문, 숫자 포함 8~16자"
+            label="비밀번호"
+            width="100%"
+            value={passwordValue}
+            onChange={handlePasswordChange}
+          />
+          {errors.password && (
+            <div className={styles.error}>{errors.password}</div>
+          )}
+        </div>
 
         <div className={styles.buttonContainer}>
           <PrimaryButton
             content="로그인"
-            onClick={() => {
-              console.log(
-                "아이디, 비밀번호 기반 로그인 기능은 아직 구현되지 않았습니다."
-              );
-            }}
-            active={false}
+            onClick={handleSubmit}
+            active={isFormValid}
           />
           <CustomButton
             content={<KakaoLoginButtonText />}
