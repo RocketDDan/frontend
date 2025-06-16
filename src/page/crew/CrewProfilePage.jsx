@@ -12,17 +12,24 @@ import { deleteCrew, fetchCrew } from "../../api/crew.api";
 import { resignCrewMember } from "../../api/crewMember.api";
 import {deleteCrewJoinRequest, requestCrewJoin} from "../../api/crewJoinRequest.api";
 import { TextArea } from "../../components/base/Input";
+import commonStyle from "../../Common.module.css";
 
 const CrewProfilePage = () => {
     const navigate = useNavigate();
     const { crewId } = useParams(); // 여기서 crewId를 받아옴
     const [crew, setCrew] = useState(sampleCrew);
+    // 확인 모달
     const [modalTitle, setModalTitle] = useState("");
     const [modalDescription, setModalDescription] = useState("");
     const [handleModalConfirm, setHandleModalConfirm] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+    const [useButton, setUseButton] = useState(true); // 버튼 사용 여부
+    const [modalWidth, setModalWidth] = useState("400px"); // 모달 너비 설정
+    // 크루 가입 요청 모달
     const [requestModalOpen, setRequestModalOpen] = useState(false);
     const [requestMessage, setRequestMessage] = useState("");
+    // 크루원 모달
+    const [crewMemberModalOpen, setCrewMemberModalOpen] = useState(false);
 
     const onClickCancelBtn = async () => {
         await deleteCrewJoinRequest(crewId);
@@ -74,6 +81,14 @@ const CrewProfilePage = () => {
             setRequestModalOpen(false);
         }
     };
+
+    const onClickIntroduce = () => {
+        setModalTitle("크루 소개");
+        setModalDescription(crew.introduce);
+        setUseButton(false); // 버튼 사용 안함
+        setModalWidth("500px"); // 모달 너비 설정
+        setModalOpen(true);
+    }
 
     const renderActionButtons = () => {
         if (crew.leader) {
@@ -130,13 +145,24 @@ const CrewProfilePage = () => {
                 <CrewProfileImage profileUrl={crew.profilePath}/>
                 <div className={styles.infoSection}>
                     <span className={styles.crewName}>{crew.crewName}</span>
-                    <div className={styles.introduce}>{crew.introduce}</div>
-                    <div className={styles.details}>
-                        <div className={styles.region}>{crew.crewRegion}</div>
+                    <div onClick={() => setCrewMemberModalOpen(true)}>
+                        <div className={styles.label}>총 멤버</div>
                         <div className={styles.memberCount}>
                             <FontAwesomeIcon icon={faPersonRunning} /> {crew.totalMemberCnt}명
                         </div>
                     </div>
+                    <div>
+                        <div className={styles.label}>소개</div>
+                        <div className={styles.introduce} onClick={onClickIntroduce}>{crew.introduce}</div>
+                    </div>
+                    <div>
+                        <div className={styles.label}>주소</div>
+                        <div className={styles.details}>
+                            <div className={styles.region}>{crew.crewRegion}</div>
+                            <div className={styles.address}>{crew.crewAddress}</div>
+                        </div>
+                    </div>
+
                 </div>
                 <div className={styles.buttonSection}>
                     <div className={styles.buttonGroup}>{renderActionButtons()}</div>
@@ -151,7 +177,13 @@ const CrewProfilePage = () => {
                     title={modalTitle}
                     description={modalDescription}
                     onConfirm={handleModalConfirm}
-                    onClose={()=>{setModalOpen(false)}}/>
+                    useButton={useButton}
+                    width={modalWidth}
+                    onClose={()=>{
+                        setModalOpen(false);
+                        setModalWidth("400px"); // 모달 너비 초기화
+                        setUseButton(true); // 버튼 사용 여부 초기화
+                    }}/>
             )}
             {requestModalOpen && (
                 <CheckModal
