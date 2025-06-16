@@ -11,6 +11,7 @@ import RewardListPage from "../page/admin/RewardListPage";
 import AnnouncementListPage from "../page/announcement/AnnouncementListPage";
 import AnnouncementUploadPage from "../page/announcement/AnnouncementUploadPage";
 import AnnouncementUpdatePage from "../page/announcement/AnnouncementUpdatePage";
+import AnnouncementDetailPage from "../page/announcement/AnnouncementDetailPage";
 
 // 멤버 인증/인가 (auth)
 import SignupPage from "../page/auth/SignupPage";
@@ -32,6 +33,7 @@ import RunnerListPage from "../page/runner/RunnerListPage"
 // 홈 (home)
 import HomePage from "../page/HomePage"
 import NotFoundPage from "../page/NotFoundPage";
+import CrewJoinRequestListPage from "../page/crew/CrewJoinRequestListPage";
 
 const Router = () => {
     return (
@@ -48,6 +50,8 @@ const Router = () => {
             <Route path="/announcement/list" element={<AnnouncementListPage/>} />
             <Route path="/announcement/upload" element={<AnnouncementUploadPage/>} />
             <Route path="/announcement/:announcementId/update" element={<AnnouncementUpdatePage/>} />
+            <Route path="/announcement/:announcementId/detail" element={<AnnouncementDetailPage />} />
+
 
             {/* 멤버 인증/인가 */}
             <Route path="/signup" element={<SignupPage/>} />
@@ -57,6 +61,7 @@ const Router = () => {
             {/* 크루 */}
             <Route path="/crew/:crewId" element={<CrewProfilePage />} />
             <Route path="/crew/list" element={<CrewListPage/>} />
+            <Route path="/crew/:crewId/join-request/list" element={<CrewJoinRequestListPage/>} />
 
             {/* 피드 */}
             <Route path="/feed/list" element={<FeedListPage/>} />
