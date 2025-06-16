@@ -15,12 +15,13 @@ const RewardListPage = () => {
     const [totalCount, setTotalCount] = useState(0);
     const limit = 6;
 
-    const handleSearch = () => {
-        setPage(1);
-        setSearchTrigger(prev => !prev);
-    };
+    // const handleSearch = () => {
+    //     setPage(1);
+    //     setSearchTrigger(prev => !prev);
+    // };
 
     useEffect(() => {
+        
         const fetchData = async () => {
             try {
                 const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/admin/rewards`, {
@@ -80,12 +81,12 @@ const RewardListPage = () => {
                         ))}
                     </select>
 
-                    <button 
+                    {/* <button 
                         onClick={handleSearch} 
                         style={{ padding: "0 12px", height: "28px", fontSize: "14px", display: "flex", alignItems: "center", justifyContent: "center" }}
                     >
                         검색
-                    </button>
+                    </button> */}
                 </div>
             </div>
             <TableView
