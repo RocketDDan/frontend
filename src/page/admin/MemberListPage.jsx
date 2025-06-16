@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from  "./MemberListPage.module.css";
 import { SearchBar } from "../../components/search_bar/SearchBar";
-import { SecondaryButton } from "../../components/base/Button";
 import { TableView } from "../../components/base/AnnouncementTable";
 import axios from "axios";
 
