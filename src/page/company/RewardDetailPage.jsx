@@ -167,7 +167,9 @@ const RewardDetailPage = () => {
           <span>충전 금액: {chargeAmount.toLocaleString()}원</span>
         </div>
       </div>
-
+      <div className={styles.meta}>
+        <span>기준 : {startDate} ~ {endDate}</span>
+      </div>
       <div className={styles.summaryCards}>
         <div className={styles.card}>
           <p>총 클릭수</p>
