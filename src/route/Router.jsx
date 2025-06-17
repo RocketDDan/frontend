@@ -38,8 +38,6 @@ import RunnerProfilePage from "../page/runner/RunnerProfilePage";
 import HomePage from "../page/HomePage";
 import NotFoundPage from "../page/NotFoundPage";
 import CrewJoinRequestListPage from "../page/crew/CrewJoinRequestListPage";
-import CrewCreatePage from "../page/crew/CrewCreatePage";
-import CrewUpdatePage from "../page/crew/CrewUpdatePage";
 import KakaoPaySuccessPage from "../page/pay/KakaoPaySuccessPage";
 
 // 회사 (company)
