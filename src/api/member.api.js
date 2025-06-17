@@ -10,4 +10,13 @@ const fetchMemberInfo = async (memberId) => {
   return response.data;
 };
 
-export { fetchMemberInfo };
+const fetchMemberProfile = async (memberId) => {
+  const response = await apiClient.get(`/members/${memberId}/profile`);
+  if (response.status !== 200) {
+    throw new Error("회원 프로필 조회 실패", response.data);
+  }
+  console.log("회원 프로필 조회 성공", response.data);
+  return response.data;
+};
+
+export { fetchMemberInfo, fetchMemberProfile };

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./RunnerProfilePage.module.css";
 import { CrewProfileImage } from "../../components/profile/ProfileImage";
-import { fetchMemberInfo } from "../../api/member.api";
+import { fetchMemberProfile } from "../../api/member.api";
 
 const RunnerProfilePage = () => {
     const navigate = useNavigate();
@@ -11,7 +11,7 @@ const RunnerProfilePage = () => {
 
     useEffect(() => {
         console.log("RunnerProfilePage useEffect", memberId);
-        fetchMemberInfo(memberId)
+        fetchMemberProfile(memberId)
             .then(data => {
                 setMember(data);
             });
@@ -26,7 +26,7 @@ const RunnerProfilePage = () => {
             )}
             {member && (
                 <div className={styles.profileWrapper}>
-                    <CrewProfileImage profileUrl={member.profilePath}/>
+                    <CrewProfileImage profileUrl={member.profileImageUrl}/>
                     <div className={styles.infoSection}>
                         <span className={styles.nickname}>{member.nickname}</span>
                         <span className={styles.info}>{member.email}</span>
