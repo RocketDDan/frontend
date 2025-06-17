@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { use, useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from './CrewMemberListModal.module.css';
 import { sampleCrewMember } from '../../dto/crew.dto';
@@ -22,7 +22,6 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
     const observerTarget = useRef(null);
     const memberListRef = useRef(null);
     const perPage = 6;
-
     const columnsForMember = [
         { label: "크루원", width: "110px" },
         { label: "가입일", width: "130px" },

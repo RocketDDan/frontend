@@ -11,6 +11,8 @@
 @media (max-width: 768px) {
     .container {
         margin: 0 0.7rem;
+        padding-bottom: 0rem;
+        border-bottom: 1px solid #ccc;
     }
 }
 

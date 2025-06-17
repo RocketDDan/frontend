@@ -26,8 +26,8 @@ const FeedListPage = () => {
     useEffect(() => {
         const loadFeeds = async () => {
             setIsLoading(true);
-            const data = await fetchFeedList({ page: page, perPage: 10, scope: "ME", order: "LATEST" });
-            setFeedList(prev => [...prev, ...data]);  // 누적!
+            const data = await fetchFeedList({ page: page, perPage: 10, scope: "ALL_EXCEPT_ME", order: "LATEST" });
+            setFeedList(prev => [...data, ...prev]);  // 누적!
             setIsLoading(false);
         };
 
@@ -109,7 +109,7 @@ const FeedListPage = () => {
             {/* 댓글창 */}
             {
                 selectedFeed
-                    ? <div className={style.commentPanel}>
+                    ? <div>
                         <CommentPanel
                             feed={selectedFeed}
                             onClose={handleClosePanel}
@@ -118,9 +118,13 @@ const FeedListPage = () => {
                     </div>
                     : null
             }
-            <button className={style.uploadBtn} onClick={handlePlusBtn}>
-                <FontAwesomeIcon icon={faPlus} size="2xl" />
-            </button>
+            {
+                !selectedFeed 
+                ? <button className={style.uploadBtn} onClick={handlePlusBtn}>
+                    <FontAwesomeIcon icon={faPlus} size="2xl" />
+                </button>
+                : null
+            }
         </div>
     )
 }

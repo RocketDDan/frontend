@@ -1,7 +1,6 @@
 .container {
-    /* width: 300px; */
     flex: 1;
-    width: 468px;
+    max-width: 468px;
     height: fit-content;
     /* height: 600px; */
     /* border: 0.5px solid; border-radius: 10px; */
@@ -25,17 +24,29 @@
 /* 피드 이미지 행 */
 .feedImageList {
     display: flex;
-    width: 468px;
+    max-width: 468px;
     height: 585px;
     border: 0.5px solid;
     border-radius: 10px;
+    background-color: black;
 }
 
 .feedImageList>* {
-    width: 468px;
+    max-width: 468px;
     height: 585px;
     object-fit: contain;
     /* contain: 여백; cover: 꽉 채우기 */
+}
+
+.zoomable {
+    transition: transform 0.3s ease;
+    cursor: zoom-in;
+}
+
+.zoomable:active {
+    transform: scale(2);
+    /* 2배 확대 */
+    cursor: zoom-out;
 }
 
 .imageChangeBtn {

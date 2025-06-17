@@ -1,6 +1,6 @@
 import headerStyle from "./Header.module.css";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
@@ -21,8 +21,24 @@ const Header = () => {
 
   const toggleProfileMenu = () => setProfileOpen((prev) => !prev);
 
+  const menuRef = useRef(null);
+  const handleMenuLinkClick = () => setMenuOpen(false);
+  // 전역 클릭 감지 로직
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+        setProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <header className={headerStyle.container}>
+    <header className={headerStyle.container} ref={menuRef}>
       <div className={headerStyle.up}>
         <h1>
           <Link to="/">Runners Hi</Link>
@@ -54,21 +70,19 @@ const Header = () => {
 
         {/* 햄버거 버튼 */}
         <div className={headerStyle.hamburger} onClick={() => setMenuOpen(!menuOpen)}>
-          <div />
-          <div />
-          <div />
+          <div /><div /><div />
         </div>
       </div>
 
       {/* 메뉴 */}
       <div className={`${headerStyle.down} ${menuOpen ? headerStyle.open : ""}`}>
         <span>
-          <Link to="/feed/list" className={currentPath.startsWith("/feed") ? headerStyle.activeLink : ""}>
+          <Link to="/feed/list" className={currentPath.startsWith("/feed") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
             피드
           </Link>
         </span>
         <span>
-          <Link to="/crew/list" className={currentPath.startsWith("/crew") ? headerStyle.activeLink : ""}>
+          <Link to="/crew/list" className={currentPath.startsWith("/crew") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
             크루
           </Link>
         </span>
@@ -78,10 +92,27 @@ const Header = () => {
           </Link>
         </span>
         <span>
-          <Link to="/component" className={currentPath.startsWith("/component") ? headerStyle.activeLink : ""}>
+          <Link to="/component" className={currentPath.startsWith("/component") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
             컴포넌트 확인
           </Link>
         </span>
+
+        {!user && menuOpen && (
+          <span>
+            <Link to="/login" className={currentPath.startsWith("/login") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>로그인</Link>
+          </span>
+        )}
+        {user && menuOpen && (
+          <span>
+            <Link to="/account/setting" className={currentPath.startsWith("/account/setting") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>내 정보 수정</Link>
+          </span>
+        )}
+        {user &&menuOpen && (
+          <span>
+            <Link to={KAKAO_LOGOUT_URL} onClick={handleMenuLinkClick}>로그아웃</Link>
+          </span>
+        )}
+        <span></span>
       </div>
     </header>
   );

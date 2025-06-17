@@ -14,6 +14,7 @@ import { use } from 'react';
  * @param {Boolean} isLeader 크루 멤버가 크루장인지 여부
  * @returns 
  */
+
 const CrewMemberInfo = ({ memberId, profilePath, nickname, date, isLeader=false }) => {
     const navigate = useNavigate();
     return (

@@ -31,7 +31,10 @@ const FeedCard = ({ feed, onCommentClick }) => {
         setIsLiked(true);
         setLikeCount(likeCount + 1);
         fetchLikeFeed(feed.feedId)
-            .catch((err) => { setLikeCount(likeCount - 1); });
+            .catch((err) => { // ? [낙관적 렌더링] 좋아요 먼저 한 것 처럼 보이고 에러 시 롤백
+                setLikeCount((prev) => prev - 1); 
+                setIsLiked(false);
+            });
     };
 
     // 좋아요 취소
@@ -39,7 +42,10 @@ const FeedCard = ({ feed, onCommentClick }) => {
         setIsLiked(false);
         setLikeCount(likeCount - 1);
         fetchUnlikeFeed(feed.feedId)
-            .catch((err) => { setLikeCount(likeCount + 1); });;
+            .catch((err) => {  // ? [낙관적 렌더링] 좋아요 먼저 취소한 것 처럼 보이고 에러 시 롤백
+                setLikeCount((prev) => prev + 1); 
+                setIsLiked(true);
+            });
     };
 
     // 이전 사진/동영상 가져오기
@@ -67,7 +73,7 @@ const FeedCard = ({ feed, onCommentClick }) => {
             </div>
 
             {/* 피드 이미지들 */}
-            <div className={style.feedImageList} style={{ position: 'relative' }}>
+            <div className={`${style.feedImageList}`} style={{ position: 'relative' }}>
                 <MediaViewer fileUrl={feed.feedFileUrlList[currentIndex]?.fileUrl} />
                 {/* 왼쪽 화살표 */}
                 {feed.feedFileUrlList.length > 1 && (
@@ -172,6 +178,7 @@ const MediaViewer = ({ fileUrl }) => {
     if (isVideoFile) {
         return (
             <video
+                className={style.zoomable}
                 ref={videoRef}
                 style={{ width: '100%', height: 'auto' }}
                 controls
@@ -183,7 +190,11 @@ const MediaViewer = ({ fileUrl }) => {
     }
 
     return (
-        <img src={fileUrl} alt="피드 이미지" style={{ width: '100%', height: 'auto' }} />
+        <img 
+        src={fileUrl} 
+        alt="피드 이미지" 
+        className={style.zoomable}
+        style={{ width: '100%', height: 'auto' }} />
     );
 }
 
