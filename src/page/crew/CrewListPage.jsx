@@ -60,6 +60,7 @@ const CrewListPage = () => {
       setHasMore(data.length === perPage); // 더 받아올 데이터가 있는지 체크
     });
     // eslint-disable-next-line
+    console.log('crewList', crewList.length);
   }, [page, region, order]);
 
   // IntersectionObserver 콜백
@@ -76,7 +77,7 @@ const CrewListPage = () => {
   // 옵저버 등록
   useEffect(() => {
     const observer = new window.IntersectionObserver(handleObserver, {
-      threshold: 0.5,
+      threshold: 0.1,
     });
     if (observerTarget.current) observer.observe(observerTarget.current);
     return () => observer.disconnect();
@@ -107,7 +108,7 @@ const CrewListPage = () => {
       </div>
       <div className={styles.container}>
         {crewList.length > 0 &&
-          crewList.map((crew, index) => <CrewCard key={index} crew={crew} />)}
+          crewList.map((crew, index) => <CrewCard key={crew.crewName} crew={crew} />)}
         {crewList.length === 0 && (
           <div className={styles.noRequest}> 크루가 없습니다. </div>
         )}

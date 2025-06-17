@@ -26,7 +26,7 @@ const HomePage = () => {
             <div className={styles.crewListScrollWrapper}>
                 <div className={styles.crewListContainer}>
                     {[...crewList, ...crewList].map((crew, idx) => (
-                        <CrewCard key={idx + crew.id} crew={crew} />
+                        <CrewCard key={idx} crew={crew} />
                     ))}
                 </div>
             </div>
