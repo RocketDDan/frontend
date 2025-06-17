@@ -21,6 +21,7 @@ import {
 
 dayjs.extend(isSameOrBefore);
 
+// Chart.js 컴포넌트 등록
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -36,11 +37,13 @@ const RewardDetailPage = () => {
   const { feedId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  // 충전금액 꺼내오기
   const chargeAmount = location.state?.chargeAmount || 0;
 
   const [summary, setSummary] = useState(null);
   const [dailyData, setDailyData] = useState([]);
   const [hourlyData, setHourlyData] = useState([]);
+  // 초기 화면에는 기본적으로 최근 30일 가져오기
   const [startDate, setStartDate] = useState(dayjs().subtract(30, "day").format("YYYY-MM-DD"));
   const [endDate, setEndDate] = useState(dayjs().format("YYYY-MM-DD"));
   const [hourlyTargetDate, setHourlyTargetDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -55,12 +58,12 @@ const RewardDetailPage = () => {
       const allDates = [];
       let current = dayjs(startDate);
       const end = dayjs(endDate);
-
+      // 시작일부터 종료일까지 날짜 세주기
       while (current.isSameOrBefore(end)) {
         allDates.push(current.format("YYYY-MM-DD"));
         current = current.add(1, "day");
       }
-
+      // API 데이터 변환
       const dataMap = Object.fromEntries(res.data.map(d => [d.viewDate, d.views]));
       const filledData = allDates.map(date => ({ viewDate: date, views: dataMap[date] || 0 }));
       setDailyData(filledData);
@@ -101,18 +104,18 @@ const RewardDetailPage = () => {
   }, [feedId, startDate, endDate, hourlyTargetDate]);
 
   const lineData = {
-    labels: dailyData.map(d => d.viewDate),
+    labels: dailyData.map(d => d.viewDate), // x축 표시
     datasets: [
       {
         label: "일자별 클릭 수",
-        data: dailyData.map(d => d.views),
-        borderColor: "rgba(75,192,192,1)",
+        data: dailyData.map(d => d.views), // y축 표시
+        borderColor: "rgba(75,192,192,1)", 
         backgroundColor: "rgba(75,192,192,0.2)",
         tension: 0.3,
       },
     ],
   };
-
+  // display : false 하면! x,y 격자선 없애준다!
   const lineOptions = {
   scales: {
     x: {
@@ -121,8 +124,8 @@ const RewardDetailPage = () => {
     y: {
       grid: { display: false },
     },
-  },
-};
+    },
+  };
 
 
   const allHours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
