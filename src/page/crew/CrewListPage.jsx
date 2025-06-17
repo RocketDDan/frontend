@@ -8,6 +8,7 @@ import { BasicRadio } from "../../components/base/Radio";
 import { fetchCrewList, fetchMyCrew } from "../../api/crew.api";
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { SecondaryHoverButton } from "../../components/base/Button";
+import LoadingSpinner from "../../components/base/LoadingSpinner";
 
 const CrewListPage = () => {
   const [hasCrew, setHasCrew] = useState(false);
@@ -37,7 +38,7 @@ const CrewListPage = () => {
     setPage(1);
     fetchCrewList({
       crewName: name,
-      page: 1,
+      page,
       perPage,
       region,
       order,
@@ -56,11 +57,7 @@ const CrewListPage = () => {
       region,
       order,
     }).then((data) => {
-      if (page === 1) {
-        setCrewList(data);
-      } else {
-        setCrewList((prev) => [...prev, ...data]);
-      }
+      setCrewList((prev) => [...prev, ...data]);
       setIsLoading(false);
       setHasMore(data.length === perPage); // 더 받아올 데이터가 있는지 체크
     });
@@ -126,9 +123,9 @@ const CrewListPage = () => {
       </div>
       <div className={styles.container}>
         {crewList.length > 0 &&
-          crewList.map((crew, index) => <CrewCard key={crew.crewName} crew={crew} />)}
+          crewList.map((crew, index) => <CrewCard key={crew.crewId} crew={crew} />)}
         {crewList.length === 0 && (
-          <div className={styles.noRequest}> 크루가 없습니다. </div>
+          <LoadingSpinner/>
         )}
         {/* 관찰 타겟: 더 불러올 데이터가 있을 때만 렌더링 */}
         {hasMore && <div ref={observerTarget} style={{ height: "20px" }} />}
