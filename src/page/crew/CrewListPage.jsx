@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useAuthStore } from "../../store/authStore";
 import { useNavigate } from "react-router-dom";
 import CrewCard from "../../components/crew/CrewCard";
 import styles from "./CrewListPage.module.css";
 import RegionSelector from "../../components/base/RegionSelector";
 import { BasicRadio } from "../../components/base/Radio";
-import { fetchCrewList } from "../../api/crew.api";
+import { fetchCrewList, fetchMyCrew } from "../../api/crew.api";
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { SecondaryHoverButton } from "../../components/base/Button";
 
 const CrewListPage = () => {
+  const [hasCrew, setHasCrew] = useState(false);
   const [crewList, setCrewList] = useState([]);
   const [name, setName] = useState("");
   const [region, setRegion] = useState("");
@@ -16,9 +18,12 @@ const CrewListPage = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+
   const observerTarget = useRef(null);
   const navigate = useNavigate();
-
+  // user 정보
+  const user = useAuthStore((state) => state.user);
+  
   const perPage = 6;
 
   const orderOptions = [
@@ -83,6 +88,15 @@ const CrewListPage = () => {
     return () => observer.disconnect();
   }, [handleObserver]);
 
+  useEffect(() => {
+    if(user){
+      fetchMyCrew().then(data => {
+        setHasCrew(data !== null);
+        console.log(hasCrew);
+      })
+    }
+  }, [])
+
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.searchHeader}>
@@ -100,11 +114,13 @@ const CrewListPage = () => {
           value={order}
           onChange={setOrder}
         />
-        <SecondaryHoverButton
-          content="크루 생성"
-          width="100px"
-          onClick={() => navigate("/crew/create")}
-        />
+        {user && !hasCrew && (
+          <SecondaryHoverButton
+            content="크루 생성"
+            width="100px"
+            onClick={() => navigate("/crew/create")}
+          />
+        )}
       </div>
       <div className={styles.container}>
         {crewList.length > 0 &&
