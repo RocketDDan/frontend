@@ -99,7 +99,11 @@ const RewardListPage = () => {
                 limit={limit}
                 totalCount={totalCount}
                 setPage={setPage}
-                onRowClick={(row) => navigate(`/company/reward/${row.feedId}/detail`)}
+                onRowClick={(row) =>
+                    navigate(`/company/reward/${row.feedId}/detail`, {
+                    state: { chargeAmount: row.chargeAmount },
+                    })
+                }
             />
             <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px", fontWeight: "bold", width: "100%", maxWidth: "1200px", marginLeft: "auto", marginRight: "auto", paddingRight: "8px" }}>
                 <span>총 수익금 (충전 금액 기준) :&nbsp;</span>
@@ -109,5 +113,6 @@ const RewardListPage = () => {
         </div>
     )
 }
-
+ 
 export default RewardListPage;
+                      
