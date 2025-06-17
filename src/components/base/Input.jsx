@@ -305,7 +305,7 @@ const PasswordInputWithLabel = ({
         style={{
           padding: "0.7rem 0 0.7rem 0.7rem",
           borderRadius: "8px",
-          border: "solid 1px",
+          border: "solid 1px #999",
           width: "100%",
         }}
       />
