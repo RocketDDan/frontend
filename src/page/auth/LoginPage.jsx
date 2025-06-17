@@ -56,8 +56,10 @@ const LoginPage = () => {
     setPasswordValue(value);
   };
   const handleSubmit = async () => {
-    await login(emailValue, passwordValue);
-    navigate("/auth/callback");
+    try {
+      await login(emailValue, passwordValue);
+      navigate("/auth/callback");
+    } catch (error) {}
   };
   const handleKakaoLogin = () => {
     window.location.href = kakaoLoginURL;
