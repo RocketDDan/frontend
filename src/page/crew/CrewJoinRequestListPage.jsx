@@ -137,7 +137,12 @@ const CrewJoinRequestListPage = () => {
 
             { crewJoinRequestList.length > 0 && crewJoinRequestList.map((request, idx) => (
                 <div className={styles.requestWrapper} key={idx}>
-                    <CrewMemberInfo nickname={request.nickname} profilePath={request.profilePath} date={request.requestDate} />
+                    <CrewMemberInfo 
+                        memberId={request.memberId}
+                        nickname={request.nickname} 
+                        profilePath={request.profilePath} 
+                        date={request.requestDate} 
+                    />
                     <span className={styles.messageWrapper} onClick={onClickMessage}>{request.requestMessage}</span>
                     { status === "REQUEST" && (
                         <div className={styles.buttonWrapper}>
