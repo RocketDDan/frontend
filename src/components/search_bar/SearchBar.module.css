@@ -10,7 +10,7 @@
 input {
     padding: 0.7rem 0 0.7rem 2.2rem;
     border-radius: 10px;
-    border: solid 1px;
+    border: solid 1px #999;
     width: 100%;
 }
 
