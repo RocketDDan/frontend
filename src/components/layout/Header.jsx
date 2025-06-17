@@ -59,6 +59,7 @@ const Header = () => {
               </div>
               {profileOpen && (
                 <div className={headerStyle.dropdownMenu}>
+                  <Link to={`/runner/${user.memberId}`}>내 프로필</Link>
                   <Link to="/account/setting">내 정보 수정</Link>
                   <Link to={KAKAO_LOGOUT_URL}>로그아웃</Link>
                 </div>
@@ -86,12 +87,7 @@ const Header = () => {
           </Link>
         </span>
         <span>
-          <Link to="/runner/list" className={currentPath.startsWith("/runner") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
-            러너
-          </Link>
-        </span>
-        <span>
-          <Link to="/announcement/list" className={currentPath.startsWith("/announcement") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
+          <Link to="/announcement/list" className={currentPath.startsWith("/announcement") ? headerStyle.activeLink : ""}>
             공지
           </Link>
         </span>

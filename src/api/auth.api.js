@@ -51,6 +51,8 @@ export const login = async (email, password) => {
       alert(error.response.data);
     } else if (error.status === 500) {
       alert("로그인에 실패했습니다. 다시 시도해주세요.");
+      console.error("로그인 실패:", error);
     }
+    throw error;
   }
 };

@@ -23,6 +23,8 @@ import AccountSettingPage from "../page/auth/AccountSettingPage";
 // 크루 (crew)
 import CrewProfilePage from "../page/crew/CrewProfilePage";
 import CrewListPage from "../page/crew/CrewListPage";
+import CrewCreatePage from "../page/crew/CrewCreatePage";
+import CrewUpdatePage from  "../page/crew/CrewUpdatePage";
 
 // 피드 (feed)
 import FeedListPage from "../page/feed/FeedListPage";
@@ -40,6 +42,11 @@ import CrewCreatePage from "../page/crew/CrewCreatePage";
 import CrewUpdatePage from "../page/crew/CrewUpdatePage";
 import KakaoPaySuccessPage from "../page/pay/KakaoPaySuccessPage";
 
+// 회사 (company)
+import MyRewardListPage from "../page/company/MyRewardListPage";
+import RewardDetailPage from "../page/company/RewardDetailPage";
+
+
 const Router = () => {
     return (
         <Routes>
@@ -50,6 +57,10 @@ const Router = () => {
             <Route path="/admin/member/list" element={<MemberListPage/>} />
             <Route path="/admin/member/:memberId/update" element={<MemberUpdatePage/>} />
             <Route path="/admin/reward/list" element={<RewardListPage/>} />
+
+            {/* 회사 */}
+            <Route path="/company/reward/list" element={<MyRewardListPage/>}/>
+            <Route path="/company/reward/:feedId/detail" element={<RewardDetailPage />} />
 
             {/* 공지 */}
             <Route path="/announcement/list" element={<AnnouncementListPage/>} />

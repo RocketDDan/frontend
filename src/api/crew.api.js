@@ -42,8 +42,7 @@ const createCrew = async (crew, profileFile) => {
         console.log('크루 생성 성공', response.data);
         return response.data;
     } catch (error) {
-        alert("크루 생성에 실패했습니다.");
-        console.error('크루 생성 실패', error);
+        throw error;
     }
 
 };
@@ -117,5 +116,28 @@ const checkDuplicateCrewName = async (crewName) => {
     }
 };
 
+/**
+ * 지역 기반 크루 랜덤 추천
+ * @param {Object} params - { perPage?: number, region?: string }
+ * @returns {Promise<Array>} 추천 크루 리스트
+ */
+const fetchRecommendedCrews = async (params = {}) => {
+    try {
+        const response = await apiClient.get('/crews/recommend', { params });
+        console.log('추천 크루 조회 성공', response.data);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
 
-export {fetchCrew, fetchCrewList, createCrew, updateCrew, deleteCrew, fetchMyCrew, checkDuplicateCrewName};
+export {
+    fetchCrew,
+    fetchCrewList,
+    createCrew,
+    updateCrew,
+    deleteCrew,
+    fetchMyCrew,
+    checkDuplicateCrewName,
+    fetchRecommendedCrews // 추가
+};

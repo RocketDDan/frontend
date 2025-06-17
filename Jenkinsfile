@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     options {
-        skipDefaultCheckout(false) // ✅ 필수: 기본 checkout 활성화
+        skipDefaultCheckout(false)
     }
     
     tools {
@@ -16,6 +16,7 @@ pipeline {
         DIST_DIR              = 'build'
         REGION                = 'ap-northeast-2'
         CLOUDFRONT_DISTRIBUTION_ID = 'E3ER1HUS82QK0A' 
+        NODE_OPTIONS = '--max-old-space-size=2048'
     }
 
     stages {
@@ -27,12 +28,12 @@ pipeline {
                 '''
             }
         }
-
+    
         stage('Build React') {
             steps {
                 sh '''
                 echo "🔨 Building React App"
-                CI=false npm run build
+                CI=false GENERATE_SOURCEMAP=false npm run build
                 '''
             }
         }

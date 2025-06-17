@@ -25,9 +25,26 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
     response => response,
     error => {
-        // 예: 공통 에러 처리
+        if (error.response?.status === 400) {
+            console.error("Bad request, please check your input.");
+            alert(error.response.data);
+        }
         if (error.response?.status === 401) {
             console.warn("Unauthorized, redirecting to login.");
+            window.history.go("/login");
+        }
+        if (error.response?.status === 403) {
+            console.warn("Forbidden, you do not have permission to access this resource.");
+            alert("접근 권한이 없습니다.");
+            window.history.back(); // 이전 페이지로 이동
+        }
+        if (error.response?.status === 404) {
+            console.warn("Resource not found.");
+            window.location.href = "/404"; // 또는 "/not-found"
+        }
+        if (error.response?.status >= 500) {
+            console.error("Server error, please try again later.");
+            alert("서버 오류가 발생했습니다. 나중에 다시 시도해주세요.");
         }
         return Promise.reject(error);
     }

@@ -28,6 +28,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    min-height: 100vh; /* 추가: 화면 전체 높이 이상으로 늘어나게 */
 }
 
 .noRequest {

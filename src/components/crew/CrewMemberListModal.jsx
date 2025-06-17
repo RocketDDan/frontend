@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { use, useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from './CrewMemberListModal.module.css';
 import { sampleCrewMember } from '../../dto/crew.dto';
@@ -11,33 +11,33 @@ import { CheckModal } from "../base/CheckModal";
 
 const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
     const [nickname, setNickname] = useState("");
-    const [crewMemberList, setCrewMemberList] = useState([]); // 초기값으로 10개의 더미 데이터 사용
+    const [crewMemberList, setCrewMemberList] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [handleModal, setHandleModal] = useState(() => () => {});
-    const navigate = useNavigate();
     const [page, setPage] = useState(1);
-    const perPage = 7;
+    const [isLoading, setIsLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
+    const observerTarget = useRef(null);
+    const memberListRef = useRef(null);
+    const perPage = 6;
     const columnsForMember = [
         { label: "크루원", width: "110px" },
         { label: "가입일", width: "130px" },
     ];
-
     const columnsForLeader = [...columnsForMember, { label: "관리", width: "160px" }];
 
     const onClickPass = (crewMemberId) => {
         setTitle("크루장 변경");
         setContent("크루장을 변경하시겠습니까?");
         setHandleModal(() => () => {
-            // 크루장 변경 모달 확인 버튼 클릭 시 실행되는 함수
             setModalOpen(false);
             changeCrewLeader(crewId, crewMemberId)
             .then(() => {
-                onClose(); // 모달 닫기
+                onClose();
             })
         });
-
         setModalOpen(true);
     };
 
@@ -45,17 +45,27 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
         setTitle("크루원 강퇴");
         setContent("정말로 크루원을 강퇴하시겠습니까?");
         setHandleModal(() => () => {
-            // 크루원 강퇴 모달 확인 버튼 클릭 시 실행되는 함수
             setModalOpen(false);
             forceRemoveCrewMember(crewId, crewMemberId)
             .then(() => {
-                handleSearchBar(); // 강퇴 후 멤버 목록 갱신
+                setPage(1); // 강퇴 후 첫 페이지로 초기화
+                setCrewMemberList([]);
+                setHasMore(true);
             });
         });
         setModalOpen(true);
     };
 
+    // 검색/필터 변경 시 새로고침
     const handleSearchBar = () => {
+        setPage(1);
+        setCrewMemberList([]);
+        setHasMore(true);
+    };
+
+    // page 변경 시 데이터 누적
+    useEffect(() => {
+        setIsLoading(true);
         const params = {
             nickname: nickname,
             page: page,
@@ -63,21 +73,43 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
         };
         fetchCrewMembers(crewId, { params })
             .then(data => {
-                setCrewMemberList(data);
+                if (page === 1) {
+                    setCrewMemberList(data);
+                } else {
+                    setCrewMemberList(prev => [...prev, ...data]);
+                }
+                setIsLoading(false);
+                setHasMore(data.length === perPage);
             });
-    };
+        // eslint-disable-next-line
+    }, [page, crewId]);
+
+    // IntersectionObserver 콜백
+    const handleObserver = useCallback(
+        (entries) => {
+            const target = entries[0];
+            if (target.isIntersecting && !isLoading && hasMore) {
+                setPage(prev => prev + 1);
+            }
+        },
+        [isLoading, hasMore]
+    );
 
     useEffect(() => {
-        // 컴포넌트가 마운트될 때 크루원 목록을 가져옵니다.
-        handleSearchBar();
-    },[]);
+        const observer = new window.IntersectionObserver(handleObserver, {
+            threshold: 0.1,
+            root: memberListRef.current, // 내부 스크롤 컨테이너를 root로 지정
+        });
+        if (observerTarget.current) observer.observe(observerTarget.current);
+        return () => observer.disconnect();
+    }, [handleObserver, memberListRef]);
 
     return (
         <div className={styles.modalOverlay}>
             <div className={`${styles.modalContent} ${isLeader ? styles.leaderModal : styles.memberModal}`}>
                 <button className={styles.closeButton} onClick={onClose}>×</button>
                 <CrewHeader columns={isLeader ? columnsForLeader : columnsForMember} />
-                <div className={styles.memberList}>
+                <div className={styles.memberList} ref={memberListRef}>
                     {crewMemberList === null || crewMemberList?.length === 0 && (
                         <div className={styles.noMembers}>
                             현재 크루원이 없습니다. 크루원을 초대해보세요!
@@ -86,6 +118,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                     {crewMemberList && crewMemberList.map((member, idx) => (
                         <div key={idx} className={styles.memberInfo}>
                             <CrewMemberInfo
+                                memberId={member?.memberId}
                                 profilePath={member?.profilePath}
                                 nickname={member?.nickname}
                                 date={member?.registerDate}
@@ -107,6 +140,8 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                             )}
                         </div>
                     ))}
+                    {/* 무한 스크롤 타겟 */}
+                    {hasMore && <div ref={observerTarget} style={{ height: "20px" }} />}
                 </div>
                 <SearchBar
                     width={300}
