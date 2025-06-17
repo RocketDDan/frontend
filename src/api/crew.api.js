@@ -42,8 +42,7 @@ const createCrew = async (crew, profileFile) => {
         console.log('크루 생성 성공', response.data);
         return response.data;
     } catch (error) {
-        alert("크루 생성에 실패했습니다.");
-        console.error('크루 생성 실패', error);
+        throw error;
     }
 
 };

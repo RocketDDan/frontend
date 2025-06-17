@@ -23,16 +23,21 @@ const CrewCreatePage = () => {
     const navigate = useNavigate();
 
     const onClickDuplicateCheck = () => {
-        checkDuplicateCrewName(crewName)
-            .then((response) => {
-                if (response.data) {
-                    alert("이미 사용 중인 크루명입니다.");
-                    setIsDuplicateChecked(false);
-                } else {
-                    alert("사용 가능한 크루명입니다.");
-                    setIsDuplicateChecked(true);
-                }
-            });
+        try{
+            checkDuplicateCrewName(crewName)
+                .then((response) => {
+                    if (response.data) {
+                        alert("이미 사용 중인 크루명입니다.");
+                        setIsDuplicateChecked(false);
+                    } else {
+                        alert("사용 가능한 크루명입니다.");
+                        setIsDuplicateChecked(true);
+                    }
+                });
+        }catch(error){
+            
+        }
+
     };
 
     // 원형 이미지 클릭 시 파일 선택창 열기
@@ -64,17 +69,22 @@ const CrewCreatePage = () => {
     };
 
     const onClickSubmit = async () => {
-        const crew = {
-            crewName,
-            crewIntroduce: introduction,
-            crewRegion: region,
-            crewAddress: address,
-        };
-        console.log("크루 정보:", crew);
-        console.log("크루 이미지 파일:", crewImageFileRef.current);
-        // ref에서 파일 꺼내서 전달
-        const crewId = await createCrew(crew, crewImageFileRef.current);
-        navigate(`/crew/${crewId}`);
+        try{
+            const crew = {
+                crewName,
+                crewIntroduce: introduction,
+                crewRegion: region,
+                crewAddress: address,
+            };
+            console.log("크루 정보:", crew);
+            console.log("크루 이미지 파일:", crewImageFileRef.current);
+            // ref에서 파일 꺼내서 전달
+            const crewId = await createCrew(crew, crewImageFileRef.current);
+            navigate(`/crew/${crewId}`);
+        }
+        catch(error){
+        }
+
     };
 
     useEffect(() => {
