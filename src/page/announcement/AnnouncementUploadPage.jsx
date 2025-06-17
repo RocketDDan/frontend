@@ -6,6 +6,7 @@ import 'react-quill-new/dist/quill.snow.css';
 import ReactQuill from "react-quill-new";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../../api/apiClient"
 
 const AnnouncementUploadPage = () => {
     const navigate = useNavigate(); 
@@ -32,22 +33,20 @@ const AnnouncementUploadPage = () => {
         });
 
         try {
-            await axios.post(
-            `${process.env.REACT_APP_API_BASE_URL}/announcements`,
-            formData,
-            {
+            await apiClient.post(
+                "/announcements",
+                formData,
+                {
                 headers: {
-                "Content-Type": "multipart/form-data",
+                    "Content-Type": "multipart/form-data",
                 },
-            }
+                }
             );
             alert("공지사항이 성공적으로 등록되었습니다.");
             navigate("/announcement/list");
-
-        } catch (error) {
-            console.error("공지사항 업로드 실패:", error);
-            alert("업로드에 실패했습니다.");
-        }
+            } catch (error) {
+            console.error("공지 등록 실패:", error);
+            }
     };
     
     return (

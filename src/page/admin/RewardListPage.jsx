@@ -4,6 +4,7 @@ import { SearchBar } from "../../components/search_bar/SearchBar";
 import { TableView } from "../../components/base/AnnouncementTable";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../../api/apiClient";
 
 const RewardListPage = () => {
     const [keyword, setKeyword] = useState("");
@@ -17,16 +18,12 @@ const RewardListPage = () => {
     const limit = 6;
     const navigate = useNavigate();
 
-    // const handleSearch = () => {
-    //     setPage(1);
-    //     setSearchTrigger(prev => !prev);
-    // };
 
     useEffect(() => {
         
         const fetchData = async () => {
             try {
-                const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/admin/rewards`, {
+                const res = await apiClient.get(`/admin/rewards`, {
                     params: {
                         page,
                         perPage: limit,
@@ -82,13 +79,6 @@ const RewardListPage = () => {
                             </option>
                         ))}
                     </select>
-
-                    {/* <button 
-                        onClick={handleSearch} 
-                        style={{ padding: "0 12px", height: "28px", fontSize: "14px", display: "flex", alignItems: "center", justifyContent: "center" }}
-                    >
-                        검색
-                    </button> */}
                 </div>
             </div>
             <TableView

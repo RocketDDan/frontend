@@ -4,6 +4,7 @@ import { SearchBar } from "../../components/search_bar/SearchBar";
 import { TableView } from "../../components/base/AnnouncementTable";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../../api/apiClient";
 
 const MyRewardListPage = () => {
     const [page, setPage] = useState(1);
@@ -17,7 +18,7 @@ const MyRewardListPage = () => {
         
         const fetchData = async () => {
             try {
-                const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/admin/my-wallet`, {
+                const res = await apiClient.get(`/admin/my-wallet`, {
                     params: {
                         page,
                         perPage: limit,

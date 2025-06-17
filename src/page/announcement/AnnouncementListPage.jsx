@@ -5,6 +5,7 @@ import { SearchBar } from "../../components/search_bar/SearchBar";
 import { SecondaryButton } from "../../components/base/Button";
 import { TableView } from "../../components/base/AnnouncementTable";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../../api/apiClient"
 
 const AnnouncementListPage = () => {
   const navigate = useNavigate();
@@ -18,9 +19,18 @@ const AnnouncementListPage = () => {
     const fetchData = async () => {
       try {
         console.log(`${process.env.REACT_APP_API_BASE_URL}/announcements`);
-        const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/announcements`, {
-          params: { page, perPage: limit, keyword }
+        // const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/announcements`, {
+        //   params: { page, perPage: limit, keyword }
+        // });
+        const res = await apiClient.get("/announcements", {
+          params: {
+            page,
+            perPage: limit,
+            keyword
+          }
         });
+
+        //const res = await apiClient.get(`/announcements`);
         console.log("응답:", res.data);
 
         setData(res.data.announcements);
