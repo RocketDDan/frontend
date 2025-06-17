@@ -95,6 +95,8 @@ const CrewListPage = () => {
         console.log(hasCrew);
       })
     }
+
+    console.log('hasCrew', hasCrew);
   }, [])
 
   return (
