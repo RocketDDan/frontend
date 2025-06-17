@@ -36,7 +36,7 @@ const RewardDetailPage = () => {
   const { feedId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const balance = location.state?.balance || 0;
+  const chargeAmount = location.state?.chargeAmount || 0;
 
   const [summary, setSummary] = useState(null);
   const [dailyData, setDailyData] = useState([]);
@@ -147,10 +147,9 @@ const RewardDetailPage = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <SecondaryButton content="목록" width="120px" onClick={() => navigate(-1)} />
-        {/* <button onClick={() => navigate(-1)} className={styles.backBtn}>목록</button> */}
         <h2>피드 ID #{feedId}</h2>
         <div className={styles.meta}>
-          <span>잔액: {balance.toLocaleString()}원</span>
+          <span>충전 금액: {chargeAmount.toLocaleString()}원</span>
         </div>
       </div>
 
