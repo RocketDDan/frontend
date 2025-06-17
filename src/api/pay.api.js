@@ -2,7 +2,7 @@ import apiClient from './apiClient';
 
 const sendKakaoPayApprove = async (pgToken, partnerOrderId) => {
     try {
-        const response = await apiClient.post("http://localhost:8080/pay/kakao/success", {
+        const response = await apiClient.post("/pay/kakao/success", {
             pgToken,
             partnerOrderId,
         });
