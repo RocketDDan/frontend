@@ -98,7 +98,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
 
     useEffect(() => {
         const observer = new window.IntersectionObserver(handleObserver, {
-            threshold: 0.5,
+            threshold: 0.1,
             root: memberListRef.current, // 내부 스크롤 컨테이너를 root로 지정
         });
         if (observerTarget.current) observer.observe(observerTarget.current);
