@@ -18,6 +18,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import apiClient from "../../api/apiClient";
 
 dayjs.extend(isSameOrBefore);
 
@@ -50,8 +51,8 @@ const RewardDetailPage = () => {
 
   const fetchDailyData = async () => {
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/admin/feeds/${feedId}/views/daily`,
+      const res = await apiClient.get(
+        `/admin/feeds/${feedId}/views/daily`,
         { params: { startDate, endDate } }
       );
 
@@ -74,11 +75,12 @@ const RewardDetailPage = () => {
 
   const fetchHourlyData = async () => {
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}/admin/feeds/${feedId}/views/hourly`,
+      const res = await apiClient.get(
+        `/admin/feeds/${feedId}/views/hourly`,
         { params: { targetDate: hourlyTargetDate } }
       );
       setHourlyData(res.data);
+      console.log(res.data);
     } catch (err) {
       console.error("시간대별 클릭 수 조회 실패", err);
     }
@@ -87,11 +89,12 @@ const RewardDetailPage = () => {
   useEffect(() => {
     const fetchAll = async () => {
       try {
-        const summaryRes = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/admin/feeds/${feedId}/views/summary`,
+        const summaryRes = await apiClient.get(
+          `/admin/feeds/${feedId}/views/summary`,
           { params: { startDate, endDate } }
         );
         setSummary(summaryRes.data);
+        console.log(summaryRes.data);
 
         await fetchDailyData();
         await fetchHourlyData();

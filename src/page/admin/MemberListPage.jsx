@@ -3,6 +3,7 @@ import styles from  "./MemberListPage.module.css";
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { TableView } from "../../components/base/AnnouncementTable";
 import axios from "axios";
+import apiClient from "../../api/apiClient";
 
 const MemberListPage = () => {
     const [keyword, setKeyword] = useState("");
@@ -14,13 +15,14 @@ const MemberListPage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/admin/members`, {
+                const res = await apiClient.get(`/admin/members`, {
                     params: {
                         page,
                         perPage: limit,
                         keyword,
                     },
                 });
+                console.log(res.data.members);
                 setData(res.data.members);
                 setTotalCount(res.data.totalCount);
             } catch (err) {

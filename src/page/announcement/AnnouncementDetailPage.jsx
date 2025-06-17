@@ -5,19 +5,23 @@ import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import styles from "./AnnouncementDetailPage.module.css";
 import { SecondaryButton } from "../../components/base/Button";
+import apiClient from "../../api/apiClient";
+import { useAuthStore } from "../../store/authStore";
 
 const AnnouncementDetailPage = () => {
   const { announcementId } = useParams();
   const navigate = useNavigate();
   const [detail, setDetail] = useState(null);
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     const fetchDetail = async () => {
       try {
-        const res = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/announcements/${announcementId}`
+        const res = await apiClient.get(
+          `/announcements/${announcementId}`
         );
         setDetail(res.data);
+        console.log(res.data);
       } catch (err) {
         console.error("공지 불러오기 실패:", err);
       }
@@ -30,8 +34,8 @@ const AnnouncementDetailPage = () => {
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
 
     try {
-      await axios.delete(
-        `${process.env.REACT_APP_API_BASE_URL}/announcements/${announcementId}`
+      await apiClient.delete(
+        `/announcements/${announcementId}`
       );
       alert("삭제가 완료되었습니다.");
       navigate("/announcement/list");
@@ -93,24 +97,30 @@ const AnnouncementDetailPage = () => {
       </div>
 
       <div className={styles.buttonGroup}>
-        <SecondaryButton
-          content="목록으로"
-          width="120px"
-          onClick={() => navigate("/announcement/list")}
-        />
-        <SecondaryButton
-          content="수정"
-          width="120px"
-          onClick={() =>
-            navigate(`/announcement/${announcementId}/update`)
-          }
-        />
-        <SecondaryButton
-          content="삭제"
-          width="120px"
-          onClick={handleDelete}
-        />
-      </div>
+  <SecondaryButton
+    content="목록으로"
+    width="120px"
+    onClick={() => navigate("/announcement/list")}
+  />
+
+  {(user?.role === "ADMIN" || user?.memberId === detail.createdBy) && (
+    <>
+      <SecondaryButton
+        content="수정"
+        width="120px"
+        onClick={() =>
+          navigate(`/announcement/${announcementId}/update`)
+        }
+      />
+      <SecondaryButton
+        content="삭제"
+        width="120px"
+        onClick={handleDelete}
+      />
+    </>
+  )}
+</div>
+
     </div>
   );
 };

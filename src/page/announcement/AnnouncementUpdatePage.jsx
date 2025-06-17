@@ -6,6 +6,7 @@ import "react-quill-new/dist/quill.snow.css";
 import styles from "./AnnouncementUpdatePage.module.css";
 import { SecondaryButton } from "../../components/base/Button";
 import AnnouncementFileUploader from "../../components/announcement/AnnouncementFileUploader";
+import apiClient from "../../api/apiClient";
 
 const AnnouncementUpdatePage = () => {
   const { announcementId } = useParams();
@@ -15,9 +16,17 @@ const AnnouncementUpdatePage = () => {
   const [existingFiles, setExistingFiles] = useState([]);
   const [newFiles, setNewFiles] = useState([]);
 
+  const urlToFile = async (url, filename) => {
+  const response = await fetch(`${url}?not-from-cache-please`);
+  const blob = await response.blob();
+  const contentType = blob.type || "application/octet-stream"; 
+  return new File([blob], filename, { type: contentType });
+};
+
+
   useEffect(() => {
     const fetchDetail = async () => {
-      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/announcements/${announcementId}`);
+      const res = await apiClient.get(`/announcements/${announcementId}`);
       setTitle(res.data.title);
       setContent(res.data.content);
       setExistingFiles(
@@ -39,24 +48,35 @@ const AnnouncementUpdatePage = () => {
   };
 
   const handleUpdate = async () => {
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
-    newFiles.forEach((file) => formData.append("files", file));
+  const formData = new FormData();
+  formData.append("title", title);
+  formData.append("content", content);
 
-    try {
-      await axios.put(
-        `${process.env.REACT_APP_API_BASE_URL}/announcements/${announcementId}`,
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-      alert("수정 완료했습니다.");
-      navigate(`/announcement/${announcementId}/detail`);
-    } catch (err) {
-      console.error("수정 실패", err);
-      alert("수정에 실패했습니다.");
-    }
-  };
+  // 기존 파일을 File 객체로 변환
+  const existingFilePromises = existingFiles.map((file) =>
+    urlToFile(file.url, file.name)
+  );
+  const convertedExistingFiles = await Promise.all(existingFilePromises);
+
+  // 기존 파일 + 새 파일 합쳐서 전송
+  [...convertedExistingFiles, ...newFiles].forEach((file) =>
+    formData.append("files", file)
+  );
+
+  try {
+    await apiClient.put(
+      `/announcements/${announcementId}`,
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } }
+    );
+    alert("수정 완료했습니다.");
+    navigate(`/announcement/${announcementId}/detail`);
+  } catch (err) {
+    console.error("수정 실패", err);
+    alert("수정에 실패했습니다.");
+  }
+};
+
 
   return (
     <div className={styles.container}>
