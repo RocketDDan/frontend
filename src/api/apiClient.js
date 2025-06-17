@@ -25,13 +25,44 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
     response => response,
     error => {
+        const originalRequest = error.config;
         if (error.response?.status === 400) {
             console.error("Bad request, please check your input.");
             alert(error.response.data);
         }
         if (error.response?.status === 401) {
-            console.warn("Unauthorized, redirecting to login.");
-            window.history.go("/login");
+            if(error.response.data === "⚠️ 만료된 엑세스 토큰입니다.") {
+                console.log("만료된 엑세스 토큰입니다.");
+                return apiClient.post("/auth/token/reissue")
+                    .then(() => {
+                        console.log("엑세스 토큰 재발급 성공");
+                        return apiClient(originalRequest);
+                    })
+                    .catch(() => {
+                        alert("로그아웃 되었습니다. 다시 로그인해주세요.");
+                        return apiClient.get('/auth/logout')
+                            .then(() => {})
+                            .catch((error) => {
+                                console.error("로그아웃 요청 실패:", error);
+                                window.location.href = "/logout/callback";
+                            });
+                    });
+            } else if(error.response.data === "⚠️ 만료된 리프레시 토큰입니다.") {
+                console.log("만료된 리프레시 토큰입니다.");
+                alert("로그아웃 되었습니다. 다시 로그인해주세요.");
+                return apiClient.get('/auth/logout')
+                    .then(() => {})
+                    .catch((error) => {
+                        console.error("로그아웃 요청 실패:", error);
+                        window.location.href = "/logout/callback";
+                    });
+            } else if(error.response.data === "⚠️ 만료된 회원가입용 인증 토큰입니다.") {
+                alert("소셜 로그인을 다시 수행하고, 회원가입을 시도해주세요.");
+                window.location.href = "/login";
+            } else {
+                console.warn("Unauthorized, redirecting to login.");
+                window.location.href = "/login";
+            }
         }
         if (error.response?.status === 403) {
             console.warn("Forbidden, you do not have permission to access this resource.");
