@@ -83,7 +83,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                 setHasMore(data.length === perPage);
             });
         // eslint-disable-next-line
-    }, [page, nickname, crewId]);
+    }, [page, crewId]);
 
     // IntersectionObserver 콜백
     const handleObserver = useCallback(
@@ -119,6 +119,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                     {crewMemberList && crewMemberList.map((member, idx) => (
                         <div key={idx} className={styles.memberInfo}>
                             <CrewMemberInfo
+                                memberId={member?.memberId}
                                 profilePath={member?.profilePath}
                                 nickname={member?.nickname}
                                 date={member?.registerDate}
