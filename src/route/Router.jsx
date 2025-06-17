@@ -38,6 +38,7 @@ import NotFoundPage from "../page/NotFoundPage";
 import CrewJoinRequestListPage from "../page/crew/CrewJoinRequestListPage";
 import CrewCreatePage from "../page/crew/CrewCreatePage";
 import CrewUpdatePage from "../page/crew/CrewUpdatePage";
+import KakaoPaySuccessPage from "../page/pay/KakaoPaySuccessPage";
 
 const Router = () => {
     return (
@@ -80,6 +81,9 @@ const Router = () => {
 
             {/* 홈 */}
             <Route path="/" element={<HomePage/>} />
+
+            {/* 페이 */}
+            <Route path="/pay/kakao/success" element={<KakaoPaySuccessPage/>} />
 
             {/* 나머지 경로 */}
             <Route path="*" element={<NotFoundPage />} />

@@ -5,9 +5,10 @@ import { TextAreaWithLabel } from '../../components/base/Input';
 import { ImageAddBlock } from "../../components/image/ImageAddBlock";
 import { ImageBlock } from "../../components/image/ImageBlock";
 import { v7 as uuid7 } from "uuid";
-import { uploadFeed } from "../../api/feed.api";
+import { uploadFeed, uploadFeedByCompany } from "../../api/feed.api";
 import { useNavigate } from "react-router-dom";
 import KakaoMap from "../../components/map/KakaoMap";
+import Swal from "sweetalert2";
 
 
 const FeedUploadPage = () => {
@@ -35,11 +36,41 @@ const FeedUploadPage = () => {
 
     // 등록
     const handleSubmit = () => {
-        uploadFeed(content, lat, lng, fileList.map(file => file.file))
+        // 일반 피드
+        // uploadFeed(content, lat, lng, fileList.map(file => file.file))
+        //     .then((data) => {
+        //         // 업로드 후 피드 목록으로 이동
+        //         navigate("/feed/list");
+        //     })
+        // .catch((err) => {
+        //     console.error('업로드 실패:', err);
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: '업로드 실패',
+        //         text: '잠시 후 다시 시도해 주세요.',
+        //         timer: 1500,
+        //         showConfirmButton: false
+        //     });
+        // });
+
+        // 홍보 피드 업로드
+        const amount = 10000; // 기업 회원이면 amount 꼭 쓰게 하기.
+        uploadFeedByCompany(content, lat, lng, fileList.map(file => file.file), amount)
             .then((data) => {
                 // 업로드 후 피드 목록으로 이동
-                navigate("/feed/list");
+                localStorage.setItem("partner_order_id", data.partner_order_id)
+                window.location.href = data.next_redirect_pc_url;
             })
+            .catch((err) => {
+                console.error('업로드 실패:', err);
+                Swal.fire({
+                    icon: 'error',
+                    title: '업로드 실패',
+                    text: '잠시 후 다시 시도해 주세요.',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            });
     }
 
     // 위치 수정
@@ -73,7 +104,7 @@ const FeedUploadPage = () => {
             </div>
             <div>
                 <div style={{ textAlign: "start" }}>위도</div>
-                <KakaoMap lat={lat} lng={lng} onLatLngChange={handleLatLng}/>
+                <KakaoMap lat={lat} lng={lng} onLatLngChange={handleLatLng} />
             </div>
             <div>
                 <PrimaryButton width="100px" content="등록" onClick={handleSubmit} />
