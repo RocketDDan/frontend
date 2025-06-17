@@ -73,7 +73,7 @@ const FeedCard = ({ feed, onCommentClick }) => {
             </div>
 
             {/* 피드 이미지들 */}
-            <div className={`${style.feedImageList} ${style.zoomable}`} style={{ position: 'relative' }}>
+            <div className={`${style.feedImageList}`} style={{ position: 'relative' }}>
                 <MediaViewer fileUrl={feed.feedFileUrlList[currentIndex]?.fileUrl} />
                 {/* 왼쪽 화살표 */}
                 {feed.feedFileUrlList.length > 1 && (
@@ -178,6 +178,7 @@ const MediaViewer = ({ fileUrl }) => {
     if (isVideoFile) {
         return (
             <video
+                className={style.zoomable}
                 ref={videoRef}
                 style={{ width: '100%', height: 'auto' }}
                 controls
@@ -189,7 +190,11 @@ const MediaViewer = ({ fileUrl }) => {
     }
 
     return (
-        <img src={fileUrl} alt="피드 이미지" style={{ width: '100%', height: 'auto' }} />
+        <img 
+        src={fileUrl} 
+        alt="피드 이미지" 
+        className={style.zoomable}
+        style={{ width: '100%', height: 'auto' }} />
     );
 }
 
