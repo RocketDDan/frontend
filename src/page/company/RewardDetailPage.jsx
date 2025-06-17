@@ -113,6 +113,18 @@ const RewardDetailPage = () => {
     ],
   };
 
+  const lineOptions = {
+  scales: {
+    x: {
+      grid: { display: false },
+    },
+    y: {
+      grid: { display: false },
+    },
+  },
+};
+
+
   const allHours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
   const hourlyMap = Object.fromEntries(hourlyData.map(d => [d.viewHour.padStart(2, "0"), d.views]));
   const hourlyViews = allHours.map(hour => hourlyMap[hour] || 0);
@@ -167,15 +179,15 @@ const RewardDetailPage = () => {
       <div className={styles.graphSection}>
         <div className={styles.chartBox}>
           <h3>일자별 클릭 수</h3>
-          <Line data={lineData} />
+          <Line data={lineData} options={lineOptions} />
         </div>
          <div className={styles.dateFilter}>
         <label>
-          시작일:
+          시작일
           <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
         </label>
         <label>
-          종료일:
+          종료일
           <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
         </label>
       </div>
@@ -186,7 +198,7 @@ const RewardDetailPage = () => {
         </div>
         <div className={styles.dateFilter}>
         <label>
-          시간대별 클릭 분포 일자:
+          날짜 선택
           <input type="date" value={hourlyTargetDate} onChange={(e) => setHourlyTargetDate(e.target.value)} />
         </label>
       </div>

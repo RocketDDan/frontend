@@ -80,3 +80,78 @@
   font-weight: 600;
   color: #333;
 }
+
+.dateFilter {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dateFilter label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: 500;
+}
+
+.dateFilter label input {
+  margin-top: 4px; 
+}
+
+.dateFilter label input[type="date"] {
+  padding: 6px 12px;
+  padding-right: 36px; 
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  text-align: center;
+  appearance: none;
+  background-color: white;
+  position: relative;
+  width: 160px;
+  box-sizing: border-box;
+}
+
+.dateFilter label input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  filter: invert(0.3);
+}
+
+.dateFilter label input[type="date"]::-moz-placeholder {
+  text-align: center;
+}
+
+.summaryCards {
+  display: flex;
+  gap: 1rem;
+  margin-top: 20px;
+}
+
+.card {
+  flex: 1;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  text-align: center; /* 👉 숫자랑 텍스트 중앙 정렬 */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.card p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.card h3 {
+  margin: 8px 0 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+
+
