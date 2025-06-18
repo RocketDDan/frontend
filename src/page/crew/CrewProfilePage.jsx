@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CrewProfilePage.module.css";
-import {sampleCrew} from "../../dto/crew.dto";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useParams } from "react-router-dom";
 import { ThirdaryButton, SecondaryHoverButton } from "../../components/base/Button";
-import { CrewProfileImage, ProfileImage } from "../../components/profile/ProfileImage";
-import { CheckModal } from "../../components/base/CheckModal";
+import { ProfileImage } from "../../components/profile/ProfileImage";
 import { deleteCrew, fetchCrew } from "../../api/crew.api";
 import { resignCrewMember } from "../../api/crewMember.api";
 import {deleteCrewJoinRequest, requestCrewJoin} from "../../api/crewJoinRequest.api";
-import { TextArea } from "../../components/base/Input";
 import CrewMemberListModal from "../../components/crew/CrewMemberListModal";
 import Swal from "sweetalert2";
 
