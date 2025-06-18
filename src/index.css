@@ -48,6 +48,7 @@ code {
 
 label {
   margin-bottom: 10px;
+  text-align: start;
 }
 
 /* 모바일 대응 */
