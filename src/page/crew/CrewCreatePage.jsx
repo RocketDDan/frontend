@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { TextArea, TextInput } from "../../components/base/Input";
 import RegionSelector from "../../components/base/RegionSelector";
 import styles from "./CrewCreatePage.module.css";
-import { SecondaryHoverButton } from "../../components/base/Button";
+import { Button } from "../../components/base/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { checkDuplicateCrewName, createCrew } from "../../api/crew.api";
@@ -131,10 +131,9 @@ const CrewCreatePage = () => {
                         value={crewName}
                         onChange={handleCrewNameChange}
                     />
-                    <SecondaryHoverButton
+                    <Button
                         content="중복확인"
                         width="110px"
-                        className={styles.duplicateCheckButton}
                         onClick={onClickDuplicateCheck}
                     />
                 </div>
@@ -175,12 +174,12 @@ const CrewCreatePage = () => {
                     <p className={styles.errorText}>필수 입력 항목입니다.</p>
                 )}
             </div>
-            <SecondaryHoverButton
+            <Button
                 content="크루 생성"
                 width="100%"
                 onClick={onClickSubmit}
                 disabled={!isFormValid}
-                className={styles.button}
+                bg="secondaryBg"
             />
         </div>
     );

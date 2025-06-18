@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import style from "./AnnouncementListPage.module.css";
 import { SearchBar } from "../../components/search_bar/SearchBar";
-import { SecondaryButton } from "../../components/base/Button";
+import { Button } from "../../components/base/Button";
 import { Table } from "../../components/base/Table";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../api/apiClient"
@@ -60,10 +60,11 @@ const AnnouncementListPage = () => {
 					width="15rem"
 					onEnter={() => console.log("엔터")}
 				/>
-				<SecondaryButton
+				<Button
 					width="7rem"
 					content="새 공지 등록"
 					onClick={() => navigate("/announcement/upload")}
+					bg = "primaryBg"
 				/>
 			</div>
 			{/* 중간 */}

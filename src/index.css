@@ -23,12 +23,20 @@ code {
   -ms-overflow-style: none;
 }
 
+.router-container::-webkit-scrollbar {
+  display: none;
+}
+
 .feed-router-container {
   flex: 1;
   overflow-y: auto;
   padding: 0.5rem 3rem;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+.feed-router-container::-webkit-scrollbar {
+  display: none;
 }
 
 .scrollX {
@@ -53,20 +61,8 @@ label {
   }
 }
 
-.router-container::-webkit-scrollbar {
-  display: none;
-  /* Chrome, Safari */
-}
-
-/* Hover */
-
-tr:hover {
-  background-color: #f5f7fa;
-  transition: background-color 0.2s ease;
-}
-
-thead tr:hover {
-  background-color: inherit;
+.primaryColor {
+  color: #7CB2FC;
 }
 
 .primaryBg {
@@ -79,8 +75,10 @@ thead tr:hover {
   color: #222 !important;
 }
 
-.primaryColor {
-  color: #7CB2FC;
+.secondaryHoverBg:hover {
+  background: #7CB2FC;
+  /* primaryBg와 동일 */
+  color: #fff;
 }
 
 .pinkBg {
@@ -90,13 +88,6 @@ thead tr:hover {
 
 .pinkBg:hover {
   background: #e75480;
-  /* deepPinkBg와 동일하게 */
-  color: #fff;
-}
-
-.secondaryHoverBg:hover {
-  background: #7CB2FC;
-  /* primaryBg와 동일 */
   color: #fff;
 }
 
@@ -106,17 +97,14 @@ thead tr:hover {
 
 .primaryCheck:hover {
   color: #3a8afb;
-  /* hover 시 색상 변경 */
 }
 
 .primaryCancel {
   color: #FFBABA;
-  /* deepPinkBg와 동일 */
 }
 
 .primaryCancel:hover {
   color: #ff0000;
-  /* hover 시 색상 변경 */
 }
 
 .borderStyle {
@@ -154,4 +142,14 @@ thead tr:hover {
 
 .textLightColor {
   color: #575757;
+}
+
+/* 테이블 */
+tr:hover {
+  background-color: #f5f7fa;
+  transition: background-color 0.2s ease;
+}
+
+thead tr:hover {
+  background-color: inherit;
 }

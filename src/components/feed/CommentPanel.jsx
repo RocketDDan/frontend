@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import style from './CommentPanel.module.css';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { TextInput } from '../base/Input';
-import { PrimaryButton } from '../base/Button';
+import { Button } from '../base/Button';
 import { useCallback, useEffect, useState } from 'react';
 import { deleteFeedComment, fetchFeedCommentList, postFeedComment } from '../../api/feedComment.api';
 import sampleFeed from '../../dto/feed.dto';
@@ -117,10 +117,11 @@ const CommentPanel = ({ feed, onClose, writeComment, deleteComment }) => {
                     onEnter={handleSubmit}
                     autoFocus={false}
                 />
-                <PrimaryButton
+                <Button
                     width='30%'
                     content='입력'
-                    onClick={handleSubmit} />
+                    onClick={handleSubmit} 
+                    />
             </div>
         </div>
     ) : null;

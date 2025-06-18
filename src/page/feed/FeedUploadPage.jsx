@@ -1,6 +1,6 @@
 import { useState } from "react";
 import style from "./FeedUploadPage.module.css";
-import { PrimaryButton } from '../../components/base/Button'
+import { Button } from '../../components/base/Button'
 import { TextArea } from '../../components/base/Input';
 import { ImageAddBlock } from "../../components/image/ImageAddBlock";
 import { ImageBlock } from "../../components/image/ImageBlock";
@@ -152,7 +152,7 @@ const FeedUploadPage = () => {
             </div>
 
             <div>
-                <PrimaryButton width="100px" content="등록" onClick={handleSubmit} />
+                <Button width="100px" content="등록" onClick={handleSubmit} />
             </div>
 
             {

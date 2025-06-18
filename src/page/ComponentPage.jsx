@@ -4,7 +4,7 @@ import { BasicCheckbox } from "../components/base/Checkbox";
 import { BasicRadio } from "../components/base/Radio";
 import { BasicSelect } from "../components/base/Select";
 import { ProfileImage } from "../components/profile/ProfileImage";
-import { PrimaryBigButton, PrimaryButton, SecondaryBigButton, SecondaryButton, ThirdaryButton, CustomButton } from "../components/base/Button";
+import { Button } from "../components/base/Button";
 import { SquareFeed } from "../components/feed/SquareFeed";
 
 import MetamongImage from "../assets/images/metamong.jpeg"
@@ -159,134 +159,12 @@ const HomePage = () => {
                     <div style={{ flex: '1' }}>
                         <h4>Primary Button</h4>
                         <p>width: 90px</p>
-                        <PrimaryButton
+                        <Button
                             width="90px"
-                            onClick={() => { console.log("click") }} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Secondary Button</h4>
-                        <p>width: 120px</p>
-                        <SecondaryButton
-                            width="120px"
-                            onClick={() => { console.log("click") }} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Primary Big Button</h4>
-                        <p>width: 120px</p>
-                        <PrimaryBigButton
-                            width="120px"
-                            onClick={() => { console.log("click") }} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Secondary Big Button</h4>
-                        <p>width: 150px</p>
-                        <SecondaryBigButton
-                            width="150px"
-                            onClick={() => { console.log("click") }} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Thirdary Button</h4>
-                        <p>width: 90px</p>
-                        <ThirdaryButton
-                            width="90px"
-                            onClick={() => { console.log("click") }} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Custom Button</h4>
-                        <p>width: 90px</p>
-                        <CustomButton
-                            width="90px"
-                            onClick={() => { console.log("click") }} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Disabled Button</h4>
-                        <p>width: 90px</p>
-                        <CustomButton
-                            width="90px"
-                            active={false}
                             onClick={() => { console.log("click") }} />
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
-
-                {/* 테이블 */}
-                {/* <h2>table 태그</h2>
-                <div style={{ display: 'flex', justifyContent: 'start', gap: '5rem' }}>
-                    <div style={{ flex: '1' }}>
-                        <h4>테이블</h4>
-                        <p>헤더: 선 있음</p>
-                        <p>바디: 선 있음 (마지막 행: 선 있음)</p>
-                        <BasicTable
-                            headerLine={true}
-                            bodyLine={true}
-                            headers={['컬럼1', '컬럼2', '컬럼3', '컬럼4']}
-                            keys={['key1', 'key2', 'key3', 'key4']}
-                            data={[
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                            ]}
-                        />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>테이블</h4>
-                        <p>헤더: 선 있음</p>
-                        <p>바디: 선 있음 (마지막 행: 선 없음)</p>
-                        <BasicTable
-                            headerLine={true}
-                            bodyLine={true}
-                            bodyLastLine={false}
-                            headers={['컬럼1', '컬럼2', '컬럼3', '컬럼4']}
-                            keys={['key1', 'key2', 'key3', 'key4']}
-                            data={[
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                            ]}
-                        />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>테이블</h4>
-                        <p>헤더: 선 있음</p>
-                        <p>바디: 선 없음</p>
-                        <BasicTable
-                            headerLine={true}
-                            bodyLine={false}
-                            headers={['컬럼1', '컬럼2', '컬럼3', '컬럼4']}
-                            keys={['key1', 'key2', 'key3', 'key4']}
-                            data={[
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                            ]}
-                        />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>테이블</h4>
-                        <p>헤더: 선 없음</p>
-                        <p>바디: 선 없음</p>
-                        <BasicTable
-                            headerLine={false}
-                            bodyLine={false}
-                            headers={['컬럼1', '컬럼2', '컬럼3', '컬럼4']}
-                            keys={['key1', 'key2', 'key3', 'key4']}
-                            data={[
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                            ]}
-                        />
-                    </div>
-                </div>
-                <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} /> */}
 
                 {/* 피드 */}
                 <h2>피드 태그</h2>

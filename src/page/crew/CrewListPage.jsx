@@ -6,7 +6,7 @@ import styles from "./CrewListPage.module.css";
 import RegionSelector from "../../components/base/RegionSelector";
 import { fetchCrewList, fetchMyCrew } from "../../api/crew.api";
 import { SearchBar } from "../../components/search_bar/SearchBar";
-import { SecondaryHoverButton } from "../../components/base/Button";
+import { Button } from "../../components/base/Button";
 import LoadingSpinner from "../../components/base/LoadingSpinner";
 import { BasicSelect } from "../../components/base/Select";
 
@@ -149,10 +149,11 @@ const CrewListPage = () => {
 
         {user && !hasCrew && (
 		<div>
-			<SecondaryHoverButton
+			<Button
 				content="크루 생성"
 				width="100px"
 				onClick={() => navigate("/crew/create")}
+        bg="secondaryBg"
 			/>
 		</div>)}
       </div>

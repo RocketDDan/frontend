@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import styles from './CrewMemberListModal.module.css';
 import { CrewHeader } from './CrewHeader';
 import { CrewMemberInfo } from './CrewMemberInfo';
-import { SecondaryHoverButton, ThirdaryButton } from '../base/Button';
+import { SecondaryHoverButton, Button } from '../base/Button';
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { fetchCrewMembers, forceRemoveCrewMember, changeCrewLeader } from '../../api/crewMember.api';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

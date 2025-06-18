@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import styles from "./SignupPage.module.css";
 
-import { PrimaryButton } from "../../components/base/Button";
+import { Button } from "../../components/base/Button";
 import { TextInput, } from "../../components/base/Input";
 import { BasicRadio } from "../../components/base/Radio";
 import { ImageAddBlock } from "../../components/image/ImageAddBlock";
@@ -167,7 +167,7 @@ const SignupPage = () => {
 							<div className={styles.error}>{errors.nicknameCheck}</div>
 						)}
 					</div>
-					<PrimaryButton
+					<Button
 						content="중복 확인"
 						width="20%"
 						onClick={handleNicknameCheck}
@@ -245,7 +245,7 @@ const SignupPage = () => {
 					/>
 					{errors.phone && <div className={styles.error}>{errors.phone}</div>}
 				</div>
-				<PrimaryButton
+				<Button
 					content="회원가입"
 					onClick={handleSubmit}
 					active={isFormValid}

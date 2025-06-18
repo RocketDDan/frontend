@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "./LoginPage.module.css";
 
-import { PrimaryButton, CustomButton } from "../../components/base/Button";
+import { Button, CustomButton } from "../../components/base/Button";
 import { TextInput } from "../../components/base/Input";
 
 import kakaoLogoImage from "../../assets/images/kakao_logo.png";
@@ -113,7 +113,7 @@ const LoginPage = () => {
 				</div>
 
 				<div className={styles.buttonContainer}>
-					<PrimaryButton
+					<Button
 						content="로그인"
 						onClick={handleSubmit}
 						active={isFormValid}
