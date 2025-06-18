@@ -35,7 +35,7 @@
 }
 
 .nickname {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   font-weight: bold;
   margin-bottom : 15px;
 }
@@ -45,6 +45,19 @@
   word-break: keep-all;
   line-height: 1.5;
   text-align: left;
+}
+
+.crewGroup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  cursor: pointer;
+}
+
+.crewName {
+  font-size: 1.5rem;
+  font-weight: 500;
 }
 
 .label {

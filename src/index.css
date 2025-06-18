@@ -46,4 +46,69 @@ tr:hover {
 
 thead tr:hover {
   background-color: inherit;
+
+.primaryBg {
+    background: #7CB2FC;
+    color: #fff;
+}
+
+.secondaryBg {
+    background: #e9f1ff;
+    color: #222 !important;
+}
+
+.primaryColor{
+    color: #7CB2FC;
+}
+
+.pinkBg {
+    background-color: #FFBABA;
+    color: #222 !important;
+}
+
+.pinkBg:hover {
+  background: #e75480; /* deepPinkBg와 동일하게 */
+  color: #fff;
+}
+
+.secondaryHoverBg:hover {
+    background: #7CB2FC; /* primaryBg와 동일 */
+    color: #fff;
+}
+
+.primaryCheck{
+    color: #7CB2FC;
+}
+
+.primaryCheck:hover {
+    color: #3a8afb; /* hover 시 색상 변경 */
+}
+
+.primaryCancel {
+    color: #FFBABA; /* deepPinkBg와 동일 */
+}
+
+.primaryCancel:hover {
+    color: #ff0000; /* hover 시 색상 변경 */
+}
+
+.borderStyle{
+    border: 1px solid #999;
+}
+
+.crownColor {
+    color: #FF7723;
+}
+
+.titleColor {
+    color: #5164ED;
+}
+
+.noData {
+    color: #999;
+    margin-top: 1rem;
+}
+
+.textLightColor {
+  color: #575757;
 }

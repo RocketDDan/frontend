@@ -1,5 +1,4 @@
 import ButtonStyle from "./Button.module.css";
-import CommonStyle from "../../Common.module.css";
 
 /**
  * Primary 버튼 컴포넌트
@@ -14,7 +13,7 @@ const PrimaryButton = ({ content = "버튼", width = "100%", onClick, active = t
   return (
     <button
       style={{ width: width }}
-      className={`${ButtonStyle.container} ${CommonStyle.primaryBg}`}
+      className={`${ButtonStyle.container} primaryBg`}
       onClick={onClick}
       disabled={!active}
     >
@@ -36,7 +35,7 @@ const SecondaryButton = ({ content = "버튼", width = "100%", onClick, active =
   return (
     <button
       style={{ width: width }}
-      className={`${ButtonStyle.container} ${CommonStyle.secondaryBg}`}
+      className={`${ButtonStyle.container} secondaryBg`}
       onClick={onClick}
       disabled={!active}
     >
@@ -89,7 +88,7 @@ const SecondaryHoverButton = ({ content = "버튼", width = '100%', onClick, dis
     return (
         <button
             style={{ width: width }}
-            className={`${ButtonStyle.container} ${CommonStyle.secondaryBg} ${CommonStyle.secondaryHoverBg}`}
+            className={`${ButtonStyle.container} secondaryBg secondaryHoverBg`}
             onClick={onClick}
             disabled={disabled}
         >
@@ -109,7 +108,7 @@ const SecondaryHoverButton = ({ content = "버튼", width = '100%', onClick, dis
 const ThirdaryButton = ({ content = "버튼", width = '100%', onClick }) => {
     return (
         <button style={{ width: width }}
-            className={`${ButtonStyle.container} ${CommonStyle.pinkBg} ${CommonStyle.pinkHoverBg}`}
+            className={`${ButtonStyle.container} pinkBg pinkHoverBg`}
             onClick={onClick}>
             {content}
         </button>
@@ -129,7 +128,7 @@ const PrimaryBigButton = ({ content = "버튼", width = "100%", onClick, active 
   return (
     <button
       style={{ width: width }}
-      className={`${ButtonStyle.container} ${ButtonStyle.big} ${CommonStyle.primaryBg}`}
+      className={`${ButtonStyle.container} ${ButtonStyle.big} primaryBg`}
       onClick={onClick}
       disabled={!active}
     >
@@ -151,7 +150,7 @@ const SecondaryBigButton = ({ content = "버튼", width = "100%", onClick, activ
   return (
     <button
       style={{ width: width }}
-      className={`${ButtonStyle.container} ${ButtonStyle.big} ${CommonStyle.secondaryBg}`}
+      className={`${ButtonStyle.container} ${ButtonStyle.big} secondaryBg`}
       onClick={onClick}
       disabled={!active}
     >
