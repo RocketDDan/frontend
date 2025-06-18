@@ -58,10 +58,11 @@ const AnnouncementListPage = () => {
 					value={keyword}
 					onChange={handleChange}
 					width="15rem"
+					height="100%"
 					onEnter={() => console.log("엔터")}
 				/>
 				<Button
-					width="7rem"
+					width="8rem"
 					content="새 공지 등록"
 					onClick={() => navigate("/announcement/upload")}
 					bg = "primaryBg"

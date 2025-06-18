@@ -8,6 +8,7 @@ import { faTimes, faSearch } from "@fortawesome/free-solid-svg-icons";
  * @param {String} placeholder placeholder
  * @param {String} value value
  * @param {String} width 가로 길이
+ * @param {String} height 높이
  * @param {Function} onChange 변화 이벤트
  * @param {Function} onEnter 엔터 이벤트
  * @param {Boolean} closeBtnVisible 닫기 버튼 여부
@@ -17,6 +18,7 @@ const SearchBar = ({
     placeholder = "",
     value,
     width = "100%",
+    height = "100%",
     onChange,
     onEnter,
     closeBtnVisible = true,
@@ -38,8 +40,8 @@ const SearchBar = ({
     }
 
     return (
-        <label className={searchBarStyle.container} style={{ width }}>
-            <FontAwesomeIcon icon={faSearch} className={searchBarStyle.searchBtn} />
+        <div className={searchBarStyle.container} style={{ width, height }}>
+            <FontAwesomeIcon icon={faSearch} className={searchBarStyle.searchBtn}/>
             <input
                 type="text"
                 placeholder={placeholder}
@@ -47,7 +49,7 @@ const SearchBar = ({
                 onChange={handleChange}
                 onKeyDown={handleEnter}
                 maxLength={50}
-                style={{ width: "100%" }}
+                style={{ width: "100%", height: "100%" }}
             />
             {value && closeBtnVisible && (
                 <FontAwesomeIcon
@@ -56,7 +58,7 @@ const SearchBar = ({
                     className={searchBarStyle.closeBtn}
                 />
             )}
-        </label>
+        </div>
     )
 };
 

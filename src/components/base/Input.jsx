@@ -1,7 +1,7 @@
 import { v7 as uuidv7 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faEyeSlash, faEye, } from "@fortawesome/free-solid-svg-icons";
-import InputStyle from "./Input.module.css";
+import style from "./Input.module.css";
 import { useState } from "react";
 
 /**
@@ -50,14 +50,14 @@ const TextInput = ({
 	};
 
 	return (
-		<span className={InputStyle.container} style={{ width: width }}>
+		<span className={style.container} style={{ width: width }}>
 			<input
 				type={visible ? "text" : "password"}
 				placeholder={placeholder}
 				value={value}
 				onChange={handleChange}
 				maxLength={50}
-				className={InputStyle.inputStyle}
+				className={style.style}
 				disabled={disabled}
 				autoFocus={autoFocus}
 				onKeyDown={handleEnter}
@@ -67,14 +67,14 @@ const TextInput = ({
 				<FontAwesomeIcon
 					icon={faTimes}
 					onClick={handleClear}
-					className={`${InputStyle.iconBtn} ${InputStyle.iconClear}`}
+					className={`${style.iconBtn} ${style.iconClear}`}
 				/>
 			}
 			{value && eyeVisible &&
 				<FontAwesomeIcon
 					icon={eyeVisible ? faEye : faEyeSlash}
 					onClick={toggleVisibility}
-					className={`${InputStyle.iconBtn} ${InputStyle.iconEye}`}
+					className={`${style.iconBtn} ${style.iconEye}`}
 				/>
 			}
 		</span>
@@ -120,21 +120,21 @@ const TextArea = ({
 	}
 
 	return (
-		<span className={InputStyle.container} style={{ width: width, height: height }}>
+		<span className={style.container} style={{ width: width, height: height }}>
 			<textarea
 				id={id}
 				placeholder={placeholder}
 				value={value}
 				onChange={handleChange}
 				maxLength={maxLength}
-				className={InputStyle.textareaStyle}
+				className={style.textareaStyle}
 				onKeyDown={handleEnter}
 			/>
 			{value && closeBtnVisible && (
 				<FontAwesomeIcon
 					icon={faTimes}
 					onClick={handleClear}
-					className={`${InputStyle.iconBtn} ${InputStyle.iconClear}`}
+					className={`${style.iconBtn} ${style.iconClear}`}
 				/>
 			)}
 		</span>
