@@ -6,6 +6,7 @@ import { SecondaryButton } from "../../components/base/Button";
 import { TableView } from "../../components/base/AnnouncementTable";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../api/apiClient"
+import { useAuthStore } from "../../store/authStore";
 
 const AnnouncementListPage = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const AnnouncementListPage = () => {
   const [data, setData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const limit = 6;
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,11 +61,14 @@ const AnnouncementListPage = () => {
           onEnter={() => console.log("엔터")}
         />
       </div>
-      <SecondaryButton
-        width="160px"
-        content="새 공지사항 등록"
-        onClick={() => navigate("/announcement/upload")}
-      />
+      {user && (
+        <SecondaryButton
+          width="160px"
+          content="새 공지사항 등록"
+          onClick={() => navigate("/announcement/upload")}
+        />
+      )}
+
     </div>
 
       <TableView
@@ -74,7 +79,13 @@ const AnnouncementListPage = () => {
         limit={limit}
         totalCount={totalCount}
         setPage={setPage}
-        onRowClick={(row) => navigate(`/announcement/${row.announcementId}/detail`)}
+        onRowClick={(row) => {
+          if (!user) {
+            alert("로그인 후 이용해주세요.");
+            return;
+          }
+          navigate(`/announcement/${row.announcementId}/detail`);
+        }}
       />
     </div>
   );
