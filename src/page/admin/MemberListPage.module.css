@@ -1,16 +1,39 @@
 .container {
   width: 100%;
-  padding: 0 24px;
-  box-sizing: border-box;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 1000px;
 }
 
 .topBar {
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  max-width: 1200px; 
-  margin: 0 auto 24px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.roleAndCount {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.radioGroup {
+  display: flex;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.totalCount {
+  font-size: 14px;
+  font-weight: 500;
 }
 
 

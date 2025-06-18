@@ -6,6 +6,7 @@ const sampleFeed = {
     writerProfileUrl: "",
     mine: false, // Boolean
     like: false, // Boolean
+    type: "", // 일반/홍보 피드 여부 (PERSONAL, ADVERTISE)
     viewCount: 0, // 조회수
     likeCount: 0, // 좋아요 수
     commentCount: 0,

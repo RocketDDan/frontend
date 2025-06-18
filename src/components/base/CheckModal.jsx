@@ -1,4 +1,4 @@
-import { SecondaryHoverButton, ThirdaryButton } from "./Button";
+import { SecondaryHoverButton, Button } from "./Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import styles from "./CheckModal.module.css";
@@ -15,31 +15,31 @@ import styles from "./CheckModal.module.css";
  * @returns 
  */
 const CheckModal = ({
-  title,
-  description,
-  onConfirm,
-  onClose,
-  useButton = true, // 버튼 사용 여부
-  width = "400px",  // 기본값 추가
+    title,
+    description,
+    onConfirm,
+    onClose,
+    useButton = true, // 버튼 사용 여부
+    width = "400px",  // 기본값 추가
 }) => {
     return (
         <div className={styles.modalBackground}>
-        <div
-            className={styles.modalWrapper}
-            style={{ width }}
-        >
-            <FontAwesomeIcon icon={faXmark} onClick={onClose} className={styles.closeBtn}/>
-            <div className={styles.titleStyle}>{title}</div>
-            <div className={styles.descStyle}>{description}</div>
-            {useButton && (
-                <div className={styles.btnStyle}>
-                    <SecondaryHoverButton content="확인" width="70px" onClick={onConfirm}/>
-                    <ThirdaryButton content="취소" width="70px" onClick={onClose}/>
-                </div>
-            )}
+            <div
+                className={styles.modalWrapper}
+                style={{ width }}
+            >
+                <FontAwesomeIcon icon={faXmark} onClick={onClose} className={styles.closeBtn} />
+                <div className={styles.titleStyle}>{title}</div>
+                <div className={styles.descStyle}>{description}</div>
+                {useButton && (
+                    <div className={styles.btnStyle}>
+                        <Button content="확인" width="70px" onClick={onConfirm} bg="secondaryBg"/>
+                        <Button content="취소" width="70px" onClick={onClose} bg="pinkBg" />
+                    </div>
+                )}
+            </div>
         </div>
-        </div>
-    );    
+    );
 };
 
-export {CheckModal};
+export { CheckModal };

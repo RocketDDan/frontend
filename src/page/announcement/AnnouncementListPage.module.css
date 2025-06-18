@@ -1,52 +1,17 @@
 .container {
   width: 100%;
-  max-width: 1200px;
-  padding: 0 24px;
-  box-sizing: border-box;
-  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 1000px;
+  margin: auto;
 }
 
 .topBar {
   display: flex;
   flex-wrap: wrap; /* 작은 화면에서 줄바꿈 */
   justify-content: space-between;
-  align-items: center;
-  gap: 12px;
   width: 100%;
-}
-
-.searchWrapper {
-  width: 100%;
-  max-width: 300px;
-}
-
-@media (max-width: 768px) {
-  .tableWrapper {
-    overflow-x: auto;
-    width: 100%;
-  }
-
-  table {
-    min-width: 600px; /* 화면이 작아질 때 표가 깨지지 않도록 설정 */
-    font-size: 13px;
-  }
-
-  th, td {
-    padding: 12px 8px;
-  }
-
-  .wideColumn {
-    min-width: 250px;
-    max-width: 500px;
-  }
-
-  .topBar {
-    flex-direction: column; /* 모바일에서는 세로로 배치 */
-    align-items: flex-start;
-  }
-
-  .paginationWrapper {
-    flex-direction: column;
-    align-items: center;
-  }
+  margin: 0 auto 24px;
 }

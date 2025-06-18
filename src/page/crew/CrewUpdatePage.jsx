@@ -3,7 +3,7 @@ import styles from './CrewUpdatePage.module.css';
 import { useEffect, useState, useRef } from 'react';
 import { fetchCrew, updateCrew } from "../../api/crew.api";
 import { TextArea, TextInput } from '../../components/base/Input';
-import { SecondaryHoverButton } from '../../components/base/Button';
+import { Button, SecondaryHoverButton } from '../../components/base/Button';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
@@ -105,7 +105,6 @@ const CrewUpdatePage = () => {
 
     return (
         <div className={styles.wrapper}>
-            <h2 className={styles.title}>크루 수정</h2>
             <div style={{ margin: "32px 0" }}>
                 <label className={styles.label}>이미지</label>
                 <div
@@ -139,11 +138,12 @@ const CrewUpdatePage = () => {
                         value={crewName}
                         onChange={handleCrewNameChange}
                     />
-                    <SecondaryHoverButton
+                    <Button
                         content="중복확인"
-                        width="100px"
+                        width="110px"
                         className={styles.duplicateCheckButton}
                         onClick={onClickDuplicateCheck}
+                        bg="secondaryBg"
                     />
                 </div>
                 {!(crewName?.length > 0) && (
@@ -156,7 +156,9 @@ const CrewUpdatePage = () => {
             <div className={styles.mb16}>
                 <label className={styles.label}>활동 지역 (50자 이내)</label>
                 <div className={styles.rowFlex}>
-                    <RegionSelector region={region} setRegion={setRegion} />
+                    <div className={styles.modalWrapper}>
+                        <RegionSelector region={region} setRegion={setRegion} />
+                    </div>
                     <TextInput
                         width="100%"
                         placeholder="상세 주소"
@@ -182,12 +184,12 @@ const CrewUpdatePage = () => {
                     <p className={styles.errorText}>필수 입력 항목입니다.</p>
                 )}
             </div>
-            <SecondaryHoverButton
+            <Button
                 content="크루 수정"
                 width="100%" 
                 onClick={onClickSubmit}
                 disabled={!isFormValid}
-                className={styles.button}
+                bg="secondaryBg"
             />
         </div>
     );

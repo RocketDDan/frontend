@@ -3,32 +3,24 @@
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
+	max-width: 1000px;
+	height: 95%;
 	gap: 30px;
 	margin: 20px auto;
 }
 
-.header{
-	display: flex;
-	flex-direction: column;
-	position: sticky;
-	top: 0;
-	z-index: 100;
-	background: #fff;
-	gap: 10px;
-}
-
-.searchHeader{
+.searchHeader {
 	display: flex;
 	align-items: center;
-	gap: 10px;
-	justify-content: space-between; /* 가운데 정렬 */
-	margin: 0 0 10px 50px;
+	gap: 16px;
+	width: 100%;
+	flex-wrap: wrap;
+	margin-bottom: 16px;
+	height: fit-content;
 }
 
-.radioWrapper {
-	display: flex;
-	align-items: center;
-	gap: 10px;
+.crewHeader {
+	height: fit-content;
 }
 
 .noRequests {
@@ -52,10 +44,48 @@
 
 .messageWrapper {
 	width: 480px;      /* 원하는 최대 너비로 조정 */
-	white-space: nowrap;   /* 한 줄로 표시 */
-	overflow: hidden;           /* 가로 스크롤 대신 넘치는 부분 숨김 */
-	text-overflow: ellipsis;    /* ...으로 표시 */
-	display: flex;           /* 추가 */
-	align-items: center;     /* 추가 */
+	text-align: left;
 	cursor: pointer;
+}
+
+@media (max-width: 700px) {
+    .searchHeader {
+        display: flex;
+        align-items: center;
+        justify-content: stretch;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .searchHeader > *:first-child {
+        flex: 3 1 0;  /* 검색창이 더 넓게 */
+        min-width: 0;
+    }
+    .searchHeader > *:nth-child(2) {
+        flex: 1 1 0;  /* 셀렉터가 더 좁게 */
+        min-width: 0;
+    }
+
+	.requestWrapper {
+		flex-direction: column;
+		gap: 8px;
+		width: 100%;
+		padding: 0 12px;
+	}
+
+	.messageWrapper {
+		width: 100%;
+		max-width: 100%;
+		font-size: 0.98rem;
+	}
+
+	.buttonWrapper {
+		gap: 8px;
+		margin-top: 4px;
+	}
+
+	.crewHeader {
+		display: none !important;
+	}
+
 }
