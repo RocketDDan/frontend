@@ -22,7 +22,6 @@ const CrewProfilePage = () => {
     const [handleModalConfirm, setHandleModalConfirm] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [useButton, setUseButton] = useState(true); // 버튼 사용 여부
-    const [modalWidth, setModalWidth] = useState("400px"); // 모달 너비 설정
     // 크루 가입 요청 모달
     const [requestModalOpen, setRequestModalOpen] = useState(false);
     const [requestMessage, setRequestMessage] = useState("");
@@ -84,7 +83,6 @@ const CrewProfilePage = () => {
         setModalTitle("크루 소개");
         setModalDescription(crew?.introduce);
         setUseButton(false); // 버튼 사용 안함
-        setModalWidth("500px"); // 모달 너비 설정
         setModalOpen(true);
     }
 
@@ -206,7 +204,6 @@ const CrewProfilePage = () => {
                     handleModalConfirm();
                 }
                 setModalOpen(false);
-                setModalWidth("400px");
                 setUseButton(true);
             })}
             {requestModalOpen && Swal.fire({

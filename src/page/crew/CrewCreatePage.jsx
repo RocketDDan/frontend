@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextArea, TextInput } from "../../components/base/Input";
-import { CrewProfileImage } from "../../components/profile/ProfileImage";
 import RegionSelector from "../../components/base/RegionSelector";
 import styles from "./CrewCreatePage.module.css";
 import { SecondaryHoverButton } from "../../components/base/Button";
@@ -12,18 +11,17 @@ import { checkDuplicateCrewName, createCrew } from "../../api/crew.api";
 const CrewCreatePage = () => {
     const [crewName, setCrewName] = useState("");
     const [crewImage, setCrewImage] = useState(null);
-    const [crewImageFile, setCrewImageFile] = useState(null);
     const [region, setRegion] = useState("");
     const [address, setAddress] = useState("");
     const [introduction, setIntroduction] = useState("");
     const [isDuplicateChecked, setIsDuplicateChecked] = useState(false);
     const [isFormValid, setIsFormValid] = useState(false);
     const fileInputRef = useRef(null);
-    const crewImageFileRef = useRef(null); // 추가
+    const crewImageFileRef = useRef(null);
     const navigate = useNavigate();
 
     const onClickDuplicateCheck = () => {
-        try{
+        try {
             checkDuplicateCrewName(crewName)
                 .then((response) => {
                     if (response.data) {
@@ -34,8 +32,8 @@ const CrewCreatePage = () => {
                         setIsDuplicateChecked(true);
                     }
                 });
-        }catch(error){
-            
+        } catch (error) {
+
         }
 
     };
@@ -49,10 +47,10 @@ const CrewCreatePage = () => {
 
     // 파일 선택 시 미리보기
     const handleImageChange = (e) => {
+        console.log("파일 변경");
         const file = e.target.files[0];
         if (file) {
             crewImageFileRef.current = file; // ref에 저장
-            setCrewImageFile(file); // (미리보기용)
             const reader = new FileReader();
             reader.onloadend = () => {
                 setCrewImage(reader.result);
@@ -69,7 +67,7 @@ const CrewCreatePage = () => {
     };
 
     const onClickSubmit = async () => {
-        try{
+        try {
             const crew = {
                 crewName,
                 crewIntroduce: introduction,
@@ -82,7 +80,7 @@ const CrewCreatePage = () => {
             const crewId = await createCrew(crew, crewImageFileRef.current);
             navigate(`/crew/${crewId}`);
         }
-        catch(error){
+        catch (error) {
         }
 
     };
@@ -96,7 +94,7 @@ const CrewCreatePage = () => {
             isDuplicateChecked
         );
     }
-    , [crewName, region, address, introduction, isDuplicateChecked]);
+        , [crewName, region, address, introduction, isDuplicateChecked]);
 
     return (
         <div className={styles.wrapper}>
@@ -113,7 +111,7 @@ const CrewCreatePage = () => {
                             className={styles.circleImgTag}
                         />
                     ) : (
-                        <FontAwesomeIcon icon={faCamera} className={styles.imageIcon}/>
+                        <FontAwesomeIcon icon={faCamera} className={styles.imageIcon} />
                     )}
                     <input
                         ref={fileInputRef}
@@ -158,9 +156,10 @@ const CrewCreatePage = () => {
                         onChange={setAddress}
                     />
                 </div>
-                {!(region.length > 0) || !(address.length > 0) && (
-                    <p className={styles.errorText}>필수 입력 항목입니다.</p>
-                )}
+                {(region.length === 0 || address.length === 0)
+                    && (
+                        <p className={styles.errorText}>필수 입력 항목입니다.</p>
+                    )}
             </div>
             <div className={styles.mb16}>
                 <label className={styles.label}>소개글 (255자 이내)</label>
@@ -178,7 +177,7 @@ const CrewCreatePage = () => {
             </div>
             <SecondaryHoverButton
                 content="크루 생성"
-                width="100%" 
+                width="100%"
                 onClick={onClickSubmit}
                 disabled={!isFormValid}
                 className={styles.button}

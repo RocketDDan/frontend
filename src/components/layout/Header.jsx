@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 
-import { LoginMemberProfileImage } from "../profile/ProfileImage";
+import { ProfileImage } from "../profile/ProfileImage";
 
 const Header = () => {
 	const KAKAO_LOGOUT_REDIRECT_URL = `${process.env.REACT_APP_API_BASE_URL}/auth/logout`;
@@ -51,7 +51,7 @@ const Header = () => {
 					{user && (
 						<div className={headerStyle.profileWrapper}>
 							<div className={headerStyle.profileContainer} onClick={toggleProfileMenu}>
-								<LoginMemberProfileImage profileUrl={user.profileImageUrl} />
+								<ProfileImage profileUrl={user.profileImageUrl} size="40px"/>
 								<span>
 									<span className={headerStyle.nickname}>{user.nickname}&nbsp;</span>
 									<span className={headerStyle.nim}>님</span>
@@ -138,7 +138,7 @@ const Header = () => {
 					</Link>
 				</span>}
 
-				{user && user.role == 'ADMIN' && <span>
+				{user && user.role === 'ADMIN' && <span>
 					<Link
 						to="/admin/member/list"
 						className={currentPath.startsWith("/admin/member") && headerStyle.activeLink}
@@ -147,7 +147,7 @@ const Header = () => {
 					</Link>
 				</span>}
 
-				{user && user.role == 'ADMIN' && <span>
+				{user && user.role === 'ADMIN' && <span>
 					<Link
 						to="/admin/reward/list"
 						className={currentPath.startsWith("/admin/reward") && headerStyle.activeLink}
@@ -156,7 +156,7 @@ const Header = () => {
 					</Link>
 				</span>}
 
-				{user && user.role == 'COMPANY' && <span>
+				{user && user.role === 'COMPANY' && <span>
 					<Link
 						to="/company/reward/list"
 						className={currentPath.startsWith("/company/reward") && headerStyle.activeLink}
