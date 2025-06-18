@@ -135,7 +135,7 @@ const CrewProfilePage = () => {
             return (
                 <Button
                     content="가입 요청"
-                    width="100px"
+                    width="100%"
                     className={styles.actionBtn}
                     onClick={onClickRequestBtn}
                     bg="secondaryBg"

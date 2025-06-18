@@ -138,7 +138,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                 <div className={styles.memberList} ref={memberListRef}>
                     {crewMemberList === null || crewMemberList?.length === 0 && (
                     <div className={styles.noMembers}>
-                        현재 크루원이 없습니다. 크루원을 초대해보세요!
+                        현재 크루원이 없습니다. 
                     </div>
                     )}
                     {crewMemberList && crewMemberList.map((member, idx) => (
