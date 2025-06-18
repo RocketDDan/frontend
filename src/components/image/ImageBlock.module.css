@@ -1,11 +1,28 @@
+/* 개선된 ImageBox */
 .imageBox {
     width: 80px;
     height: 80px;
-    background-color: white;
-    border: 1px solid;
-    border-radius: 10px;
+    background-color: #f9f9f9;
+    border: 1.5px dashed #ccc;
+    border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.imageBox:hover {
+    border-color: #5164ED;
+    background-color: #f0f4ff;
+    transform: scale(1.03);
+}
+
+.imageBox img,
+.imageBox video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
 }

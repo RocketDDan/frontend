@@ -25,7 +25,6 @@ const FeedCard = ({ feed, onCommentClick }) => {
     const [likeCount, setLikeCount] = useState(feed.likeCount); // 좋아요 수
     const [currentIndex, setCurrentIndex] = useState(0); // 현재 이미지 인덱스
     const [isMapOpen, setIsMapOpen] = useState(false);
-    const mapRef = useRef(null);
     const navigate = useNavigate();
 
     const handleLike = () => {
