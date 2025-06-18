@@ -84,7 +84,7 @@ const CommentPanel = ({ feed, onClose, writeComment, deleteComment }) => {
     if (!feed) return null;
 
     return feed ? (
-        <div className={style.container}>
+        <div className={`${style.container} ${!feed ? style.hide : ''}`}>
             {/* 헤더 */}
             <label>
                 <div className={style.up}>
@@ -94,7 +94,6 @@ const CommentPanel = ({ feed, onClose, writeComment, deleteComment }) => {
                         <FontAwesomeIcon icon={faClose} onClick={onClose} />
                     </span>
                 </div>
-                <hr />
             </label>
 
             {/* 댓글 목록 */}

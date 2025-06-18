@@ -1,43 +1,139 @@
 .container {
     display: flex;
     flex-direction: column;
-    max-width: 468px;
+    max-width: 500px;
     height: 100%;
-    border: 0.5px solid;
-    border-radius: 10px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
     padding: 1rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 }
 
+/* 헤더 영역 */
 .up {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* margin: 0 1rem 0 1rem; */
-}
-
-.up>* {
-    flex: 1;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
 }
 
 .closeBtn {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     cursor: pointer;
+    color: #888;
+    transition: color 0.2s;
 }
 
+.closeBtn:hover {
+    color: #333;
+}
+
+/* 댓글 리스트 */
 .commentList {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: 0.5rem 0;
-}
-.commentPanel {
-    flex: 1;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    overflow-y: auto;
 }
 
-/* 댓글 쓰는 칸 */
+/* 댓글이 없을 때 메시지 */
+.commentList span {
+    color: #888;
+    text-align: center;
+    font-size: 0.95rem;
+    padding: 2rem 0;
+}
+
+/* 댓글 작성 영역 */
 .writeRow {
     display: flex;
+    align-items: center;
     gap: 0.5rem;
+    border-top: 1px solid #eee;
+    padding-top: 0.75rem;
+}
+
+.writeRow input[type="text"] {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.writeRow input[type="text"]:focus {
+    border-color: #5164ED;
+}
+
+.writeRow button {
+    height: 100%;
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+    background-color: #5164ED;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.writeRow button:hover {
+    background-color: #3b4dc1;
+}
+
+/* 기본 컨테이너 스타일 */
+.container {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    max-width: 468px;
+    height: 100%;
+    background: #ffffff;
+    border-left: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+    border-radius: 12px 12px 0 0;
+    padding: 1rem;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(100%);
+    animation: slideUp 0.4s ease-out forwards;
+    z-index: 999;
+}
+
+/* 슬라이드 업 애니메이션 */
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+/* 슬라이드 다운 애니메이션 (접힐 때) */
+.container.hide {
+    animation: slideDown 0.3s ease-in forwards;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
 }
