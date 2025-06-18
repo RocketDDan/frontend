@@ -21,8 +21,10 @@ code {
   overflow-y: auto;
   margin: 0.5rem 3rem;
   /* 스크롤 숨기기 */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
 }
 
 
@@ -34,7 +36,8 @@ code {
 }
 
 .router-container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
+  display: none;
+  /* Chrome, Safari */
 }
 
 /* Hover */
@@ -46,67 +49,73 @@ tr:hover {
 
 thead tr:hover {
   background-color: inherit;
+}
 
 .primaryBg {
-    background: #7CB2FC;
-    color: #fff;
+  background: #7CB2FC;
+  color: #fff;
 }
 
 .secondaryBg {
-    background: #e9f1ff;
-    color: #222 !important;
+  background: #e9f1ff;
+  color: #222 !important;
 }
 
-.primaryColor{
-    color: #7CB2FC;
+.primaryColor {
+  color: #7CB2FC;
 }
 
 .pinkBg {
-    background-color: #FFBABA;
-    color: #222 !important;
+  background-color: #FFBABA;
+  color: #222 !important;
 }
 
 .pinkBg:hover {
-  background: #e75480; /* deepPinkBg와 동일하게 */
+  background: #e75480;
+  /* deepPinkBg와 동일하게 */
   color: #fff;
 }
 
 .secondaryHoverBg:hover {
-    background: #7CB2FC; /* primaryBg와 동일 */
-    color: #fff;
+  background: #7CB2FC;
+  /* primaryBg와 동일 */
+  color: #fff;
 }
 
-.primaryCheck{
-    color: #7CB2FC;
+.primaryCheck {
+  color: #7CB2FC;
 }
 
 .primaryCheck:hover {
-    color: #3a8afb; /* hover 시 색상 변경 */
+  color: #3a8afb;
+  /* hover 시 색상 변경 */
 }
 
 .primaryCancel {
-    color: #FFBABA; /* deepPinkBg와 동일 */
+  color: #FFBABA;
+  /* deepPinkBg와 동일 */
 }
 
 .primaryCancel:hover {
-    color: #ff0000; /* hover 시 색상 변경 */
+  color: #ff0000;
+  /* hover 시 색상 변경 */
 }
 
-.borderStyle{
-    border: 1px solid #999;
+.borderStyle {
+  border: 1px solid #999;
 }
 
 .crownColor {
-    color: #FF7723;
+  color: #FF7723;
 }
 
 .titleColor {
-    color: #5164ED;
+  color: #5164ED;
 }
 
 .noData {
-    color: #999;
-    margin-top: 1rem;
+  color: #999;
+  margin-top: 1rem;
 }
 
 .textLightColor {
