@@ -1,12 +1,28 @@
 .container {
-    width: 600px;
-    margin: auto;
+    max-width: 500px;
+    width: 100%;
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
+    justify-content: start;
+    gap: 1.5rem;
 }
+
 .imageList {
+    width: 100%;
     display: flex;
-    gap: 5px;
+    gap: 0.2rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin; /* (선택사항) Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+.imageList::-webkit-scrollbar {
+    height: 6px;
+}
+
+.imageList::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
 }

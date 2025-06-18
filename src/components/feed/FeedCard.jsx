@@ -32,7 +32,7 @@ const FeedCard = ({ feed, onCommentClick }) => {
         setLikeCount(likeCount + 1);
         fetchLikeFeed(feed.feedId)
             .catch((err) => { // ? [낙관적 렌더링] 좋아요 먼저 한 것 처럼 보이고 에러 시 롤백
-                setLikeCount((prev) => prev - 1); 
+                setLikeCount((prev) => prev - 1);
                 setIsLiked(false);
             });
     };
@@ -43,7 +43,7 @@ const FeedCard = ({ feed, onCommentClick }) => {
         setLikeCount(likeCount - 1);
         fetchUnlikeFeed(feed.feedId)
             .catch((err) => {  // ? [낙관적 렌더링] 좋아요 먼저 취소한 것 처럼 보이고 에러 시 롤백
-                setLikeCount((prev) => prev + 1); 
+                setLikeCount((prev) => prev + 1);
                 setIsLiked(true);
             });
     };
@@ -107,14 +107,14 @@ const FeedCard = ({ feed, onCommentClick }) => {
                         <span style={{ cursor: 'pointer' }}>
                             {
                                 isLiked
-                                    ? <FontAwesomeIcon icon={faSolidHeart} style={{ color: 'red' }} onClick={handleUnlike} />
-                                    : <FontAwesomeIcon icon={faRegularHeart} onClick={handleLike} />
+                                    ? <FontAwesomeIcon icon={faSolidHeart} size='lg' style={{ color: 'red' }} onClick={handleUnlike} />
+                                    : <FontAwesomeIcon icon={faRegularHeart} size='lg' onClick={handleLike} />
                             }
                         </span>
                         <span>{likeCount}</span>
                     </span>
                     <span style={{ cursor: 'pointer' }} onClick={onCommentClick}>
-                        <FontAwesomeIcon icon={faMessage} style={{ marginTop: '2px', }} />
+                        <FontAwesomeIcon icon={faMessage} size='lg' style={{ marginTop: '2px', }} />
                         <span>{feed.commentCount}</span>
                     </span>
                 </div>
@@ -123,10 +123,13 @@ const FeedCard = ({ feed, onCommentClick }) => {
                     {feed.feedFileUrlList.length > 1 && '.'.repeat(feed.feedFileUrlList.length)}
                 </div>
                 <div style={{ textAlign: "end" }}>
-                    <span>
-                        {/* onClick={} */}
-                        #위치
-                    </span>
+                    {
+                        feed.lat && feed.lng && (
+                            <span>
+                                #위치
+                            </span>
+                        )
+                    }
                 </div> {/* 빈 공간 */}
             </div>
 
@@ -178,7 +181,6 @@ const MediaViewer = ({ fileUrl }) => {
     if (isVideoFile) {
         return (
             <video
-                className={style.zoomable}
                 ref={videoRef}
                 style={{ width: '100%', height: 'auto' }}
                 controls
@@ -190,11 +192,11 @@ const MediaViewer = ({ fileUrl }) => {
     }
 
     return (
-        <img 
-        src={fileUrl} 
-        alt="피드 이미지" 
-        className={style.zoomable}
-        style={{ width: '100%', height: 'auto' }} />
+        <img
+            src={fileUrl}
+            alt="피드 이미지"
+            // className={style.zoomable}
+            style={{ width: '100%', height: 'auto' }} />
     );
 }
 

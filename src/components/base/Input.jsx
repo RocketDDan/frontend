@@ -1,7 +1,7 @@
 import { v7 as uuidv7 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InputStyle from "./Input.module.css";
 
 /**
@@ -149,13 +149,13 @@ const TextInputWithLabel = ({
  * @returns {JSX.Element} textarea 컴퍼넌트
  */
 const TextArea = ({
-    placeholder = "",
-    width = "100%",
-    height = '100%',
-    value, 
-    onChange,
-    maxLength,
-    closeBtnVisible = true,
+  placeholder = "",
+  width = "100%",
+  height = '100%',
+  value,
+  onChange,
+  maxLength,
+  closeBtnVisible = true,
 }) => {
   const id = uuidv7();
 
@@ -167,37 +167,37 @@ const TextArea = ({
     onChange?.("");
   };
 
-    return (
-        <span className={InputStyle.container} style={{ width: width, height: height }}>
-            <textarea
-                id={id}
-                placeholder={placeholder}
-                value={value}
-                onChange={handleChange}
-                maxLength={maxLength}
-                style={{
-                    padding: "0.7rem 0 0.7rem 0.7rem",
-                    borderRadius: "8px",
-                    border: "solid 1px #999",
-                    width: "100%",
-                    height: height, // 이 줄을 추가하세요!
-                }}
-            />
-            {value && closeBtnVisible && (
-                <FontAwesomeIcon
-                    icon={faTimes}
-                    onClick={handleClear}
-                    style={{
-                        position: "absolute",
-                        right: "0.5rem",
-                        top: "0.7rem",
-                        cursor: "pointer",
-                        color: "#999",
-                    }}
-                />
-            )}
-        </span>
-    )
+  return (
+    <span className={InputStyle.container} style={{ width: width, height: height }}>
+      <textarea
+        id={id}
+        placeholder={placeholder}
+        value={value}
+        onChange={handleChange}
+        maxLength={maxLength}
+        style={{
+          padding: "0.7rem 0 0.7rem 0.7rem",
+          borderRadius: "8px",
+          border: "solid 1px #999",
+          width: "100%",
+          height: height, // 이 줄을 추가하세요!
+        }}
+      />
+      {value && closeBtnVisible && (
+        <FontAwesomeIcon
+          icon={faTimes}
+          onClick={handleClear}
+          style={{
+            position: "absolute",
+            right: "0.5rem",
+            top: "0.7rem",
+            cursor: "pointer",
+            color: "#999",
+          }}
+        />
+      )}
+    </span>
+  )
 }
 
 /**
@@ -215,13 +215,18 @@ const TextArea = ({
 const TextAreaWithLabel = ({
   placeholder = "",
   width = "100%",
-  height = "100%",
+  maxHeight = "100%",
+  maxLength = 100,
   label = "label",
   value,
   onChange,
   closeBtnVisible = true,
+  required=true,
 }) => {
+
   const id = uuidv7();
+  const textareaRef = useRef(null);
+
   const handleChange = (e) => {
     onChange?.(e.target.value);
   };
@@ -230,20 +235,40 @@ const TextAreaWithLabel = ({
     onChange?.("");
   };
 
+  const autoResize = (e) => {
+    e.style.height = "auto"; // 먼저 초기화
+    e.style.height = `${e.scrollHeight}px`;
+  };
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      autoResize(textareaRef.current);
+    }
+  }, [value]);
+
   return (
-    <span className={InputStyle.container} style={{ width: width, height: height }}>
+    <span
+      className={InputStyle.container}
+      style={{ width, maxHeight }}
+    >
       <label htmlFor={id}>{label}</label>
       <textarea
+        ref={textareaRef}
         id={id}
         placeholder={placeholder}
         value={value}
         onChange={handleChange}
+        maxLength={maxLength}
         style={{
           padding: "0.7rem 0 0.7rem 0.7rem",
           borderRadius: "8px",
           border: "solid 1px",
           width: "100%",
+          height: "100%",
+          overflow: "hidden", // 스크롤 안보이게
+          resize: "none", // 수동 리사이즈 막기
         }}
+        required={required}
       />
       {value && closeBtnVisible && (
         <FontAwesomeIcon

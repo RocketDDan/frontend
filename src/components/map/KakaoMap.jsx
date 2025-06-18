@@ -2,7 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import { SearchBar } from "../search_bar/SearchBar";
 
 
-const KakaoMap = ({ lat = 33.450701, lng = 126.570667, onLatLngChange }) => {
+const KakaoMap = ({
+    width = "400px",
+    height = "500px",
+    lat = 33.450701,
+    lng = 126.570667,
+    onLatLngChange,
+    draggable = true,
+    canSearchAddress = true,
+    rounded = true,
+    onMarkerClick
+}) => {
 
     const [address, setAddress] = useState("");
     const [isMapLoaded, setIsMapLoaded] = useState(false);
@@ -83,20 +93,23 @@ const KakaoMap = ({ lat = 33.450701, lng = 126.570667, onLatLngChange }) => {
         markerRef.current.setMap(mapRef.current);
         markerRef.current.setDraggable(true); // 드래그 가능하도록
 
-        window.kakao.maps.event.addListener(markerRef.current, 'dragend', function () { // dragend 이벤트
-            const position = markerRef.current.getPosition();
-            const newLat = position.getLat();
-            const newLng = position.getLng();
-            // console.log("마커 이동 위치:", newLat, newLng);
-            onLatLngChange?.(newLat, newLng);
-        });
+        if (draggable) {
+            window.kakao.maps.event.addListener(markerRef.current, 'dragend', function () { // dragend 이벤트
+                const position = markerRef.current.getPosition();
+                const newLat = position.getLat();
+                const newLng = position.getLng();
+                // console.log("마커 이동 위치:", newLat, newLng);
+                onLatLngChange?.(newLat, newLng);
+            });
+        }
 
         window.kakao.maps.event.addListener(markerRef.current, 'click', function () { // 클릭 이벤트
             console.log("클릭");
+            onMarkerClick?.();
         });
     }, [isMapLoaded]);
 
-    // lat/lng 변경 시 마커만 이동
+    // lat, lng 변경 시 마커만 이동
     useEffect(() => {
         if (!isMapLoaded || !markerRef.current) return;
         const newPosition = new window.kakao.maps.LatLng(lat, lng);
@@ -106,21 +119,18 @@ const KakaoMap = ({ lat = 33.450701, lng = 126.570667, onLatLngChange }) => {
 
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <SearchBar
-                    placeholder="주소 검색"
-                    value={address}
-                    width="100%"
-                    onChange={handleAddress}
-                    onEnter={handleMarkerByAddress}
-                    closeBtnVisible={true} />
-            </div>
-            <div
-                id="map"
-                style={{
-                    width: "100%",
-                    height: "400px",
-                }}></div>
+            {canSearchAddress &&
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                    <SearchBar
+                        placeholder="주소 검색"
+                        value={address}
+                        width="100%"
+                        onChange={handleAddress}
+                        onEnter={handleMarkerByAddress}
+                        closeBtnVisible={true} />
+                </div>
+            }
+            <div id="map" style={{ width, height, borderRadius: rounded ? "5%" : "0" }}></div>
         </div>
     );
 }

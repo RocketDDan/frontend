@@ -87,7 +87,7 @@ const FeedListPage = () => {
             }
         })
     }
-    
+
     const handlePlusBtn = () => {
         navigate("/feed/upload");
     }
@@ -119,11 +119,11 @@ const FeedListPage = () => {
                     : null
             }
             {
-                !selectedFeed 
-                ? <button className={style.uploadBtn} onClick={handlePlusBtn}>
-                    <FontAwesomeIcon icon={faPlus} size="2xl" />
-                </button>
-                : null
+                !selectedFeed
+                    ? <button className={style.uploadBtn} onClick={handlePlusBtn}>
+                        <FontAwesomeIcon style={{ color: "white" }} icon={faPlus} size="2xl" />
+                    </button>
+                    : null
             }
         </div>
     )

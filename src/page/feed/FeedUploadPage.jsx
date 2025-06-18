@@ -36,6 +36,7 @@ const FeedUploadPage = () => {
         }));
         setFileList(prev => [...prev, ...filesWithId]);
     };
+
     // 글 
     const handleContent = (val) => {
         setContent(val);
@@ -44,6 +45,17 @@ const FeedUploadPage = () => {
     // 등록
     const handleSubmit = () => {
         console.log(user);
+        if (user == null) {
+            Swal.fire({
+                icon: 'error',
+                title: '로그인이 만료되었습니다.',
+                text: '다시 로그인 해주세요.',
+                confirmButtonText: '확인',
+            }).then(() => {
+                navigate("/login");
+            });
+            return;
+        }
         if (user.role === 'USER') {
             uploadPersonalFeed();
         } else if (user.role === 'COMPANY') {
@@ -98,7 +110,6 @@ const FeedUploadPage = () => {
 
     return (
         <div className={style.container}>
-            <h1>피드 업로드</h1>
             <div>
                 <div style={{ textAlign: "start", marginBottom: "5px", }}>사진 선택</div>
 
@@ -115,20 +126,37 @@ const FeedUploadPage = () => {
                     <ImageAddBlock handleFile={handleFile} />
                 </div>
             </div>
+
             <div>
-                <TextAreaWithLabel label="내용" height="200px" value={content} onChange={handleContent} />
+                <div style={{ textAlign: "start" }}>위치 검색</div>
+                <KakaoMap
+                    lat={lat}
+                    lng={lng}
+                    width="100%"
+                    height="300px"
+                    rounded={true}
+                    onLatLngChange={handleLatLng} />
             </div>
+
             <div>
-                <div style={{ textAlign: "start" }}>위도</div>
-                <KakaoMap lat={lat} lng={lng} onLatLngChange={handleLatLng} />
+                <TextAreaWithLabel
+                    label="내용"
+                    width="100%"
+                    maxHeight="100px"
+                    maxLength={1000}
+                    value={content}
+                    closeBtnVisible={false}
+                    onChange={handleContent} />
             </div>
+
             <div>
                 <PrimaryButton width="100px" content="등록" onClick={handleSubmit} />
             </div>
+
             {
-                user.role == 'COMPANY' &&
+                user && user.role == 'COMPANY' &&
                 <div>
-                    결제 금액: <input type="number" onChange={handleAmount}/>원
+                    결제 금액: <input type="number" onChange={handleAmount} />원
                 </div>
             }
         </div>
