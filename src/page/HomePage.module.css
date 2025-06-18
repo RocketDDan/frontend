@@ -25,8 +25,7 @@
 }
 
 .crewListContainer:hover {
-    animation-duration: 60s; /* 호버 시 2배 느리게 */
-    animation-play-state: running;
+    animation-play-state: paused; /* 마우스 올리면 멈춤 */
 }
 
 @media (max-width: 800px) {

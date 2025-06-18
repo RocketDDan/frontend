@@ -164,7 +164,7 @@ const CrewListPage = () => {
         {isFetch && crewList.length === 0 && <LoadingSpinner />}
 		{!isFetch && crewList.length === 0 && <span className="noData">크루가 존재하지 않습니다.</span>}
         {/* 관찰 타겟: 더 불러올 데이터가 있을 때만 렌더링 */}
-        {hasMore && <div ref={observerTarget} style={{ height: "20px" }} />}
+        {hasMore && <div ref={observerTarget} style={{ height: "1px" }} />}
       </div>
     </div>
   );
