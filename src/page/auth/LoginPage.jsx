@@ -83,14 +83,15 @@ const LoginPage = () => {
 				<div className={styles.errorContainer}>
 					<label>
 						아이디(이메일)
-						{errors.email && <div className={styles.error}>{errors.email}</div>}
 					</label>
 					<TextInput
 						placeholder="이메일"
 						width="100%"
 						value={emailValue}
 						onChange={handleEmailChange}
+						closeBtnVisible={true}
 					/>
+					{errors.email && <div className={styles.error}>{errors.email}</div>}
 				</div>
 
 				<div className={styles.errorContainer}>
@@ -101,6 +102,7 @@ const LoginPage = () => {
 						placeholder="영문, 숫자 포함 8~16자"
 						width="100%"
 						value={passwordValue}
+						closeBtnVisible={false}
 						eyeVisible={true}
 						onChange={handlePasswordChange}
 						onEnter={handleSubmit}

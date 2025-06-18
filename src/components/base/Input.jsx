@@ -1,7 +1,8 @@
 import { v7 as uuidv7 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faTimes, faEyeSlash, faEye, } from "@fortawesome/free-solid-svg-icons";
 import InputStyle from "./Input.module.css";
+import { useState } from "react";
 
 /**
  * Text Input Component
@@ -24,9 +25,12 @@ const TextInput = ({
 	onEnter,
 	disabled = false,
 	autoFocus = false,
-	closeBtnVisible = true,
+	closeBtnVisible = false,
 	eyeVisible = false,
-}) => {
+}) => { 
+	
+	const [visible, setVisible] = useState(!eyeVisible);
+
 	const handleChange = (e) => {
 		onChange?.(e.target.value);
 	};
@@ -41,10 +45,14 @@ const TextInput = ({
 		}
 	}
 
+	const toggleVisibility = () => {
+		setVisible((prev) => !prev);
+	  };
+
 	return (
 		<span className={InputStyle.container} style={{ width: width }}>
 			<input
-				type="text"
+				type={visible ? "text" : "password"}
 				placeholder={placeholder}
 				value={value}
 				onChange={handleChange}
@@ -71,7 +79,7 @@ const TextInput = ({
 			{value && eyeVisible &&
 				<FontAwesomeIcon
 					icon={eyeVisible ? faEye : faEyeSlash}
-					onClick={handleClear}
+					onClick={toggleVisibility}
 					style={{
 						position: "absolute",
 						right: "0.5rem",
