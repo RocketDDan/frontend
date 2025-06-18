@@ -27,8 +27,8 @@ const TextInput = ({
 	autoFocus = false,
 	closeBtnVisible = false,
 	eyeVisible = false,
-}) => { 
-	
+}) => {
+
 	const [visible, setVisible] = useState(!eyeVisible);
 
 	const handleChange = (e) => {
@@ -47,7 +47,7 @@ const TextInput = ({
 
 	const toggleVisibility = () => {
 		setVisible((prev) => !prev);
-	  };
+	};
 
 	return (
 		<span className={InputStyle.container} style={{ width: width }}>
@@ -67,26 +67,14 @@ const TextInput = ({
 				<FontAwesomeIcon
 					icon={faTimes}
 					onClick={handleClear}
-					style={{
-						position: "absolute",
-						right: "0.5rem",
-						top: "0.7rem",
-						cursor: "pointer",
-						color: "#999",
-					}}
+					className={`${InputStyle.iconBtn} ${InputStyle.iconClear}`}
 				/>
 			}
 			{value && eyeVisible &&
 				<FontAwesomeIcon
 					icon={eyeVisible ? faEye : faEyeSlash}
 					onClick={toggleVisibility}
-					style={{
-						position: "absolute",
-						right: "0.5rem",
-						top: "0.7rem",
-						cursor: "pointer",
-						color: "#999",
-					}}
+					className={`${InputStyle.iconBtn} ${InputStyle.iconEye}`}
 				/>
 			}
 		</span>
@@ -139,26 +127,14 @@ const TextArea = ({
 				value={value}
 				onChange={handleChange}
 				maxLength={maxLength}
-				style={{
-					padding: "0.7rem 0 0.7rem 0.7rem",
-					borderRadius: "8px",
-					border: "solid 1px #999",
-					width: "100%",
-					height: height, // 이 줄을 추가하세요!
-				}}
+				className={InputStyle.textareaStyle}
 				onKeyDown={handleEnter}
 			/>
 			{value && closeBtnVisible && (
 				<FontAwesomeIcon
 					icon={faTimes}
 					onClick={handleClear}
-					style={{
-						position: "absolute",
-						right: "0.5rem",
-						top: "0.7rem",
-						cursor: "pointer",
-						color: "#999",
-					}}
+					className={`${InputStyle.iconBtn} ${InputStyle.iconClear}`}
 				/>
 			)}
 		</span>
