@@ -24,8 +24,7 @@ const LoginPage = () => {
 	const [isFormValid, setIsFormValid] = useState(false);
 
 	const emailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-	const passwordValid = (password) =>
-		/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/.test(password);
+	const passwordValid = (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!#?])[A-Za-z\d@!#?]{8,16}$/.test(password);
 
 	useEffect(() => {
 		const isEmailValid = emailValid(emailValue);
@@ -52,15 +51,18 @@ const LoginPage = () => {
 	const handleEmailChange = (value) => {
 		setEmailValue(value);
 	};
+
 	const handlePasswordChange = (value) => {
 		setPasswordValue(value);
 	};
+
 	const handleSubmit = async () => {
 		try {
 			await login(emailValue, passwordValue);
 			navigate("/auth/callback");
 		} catch (error) { }
 	};
+
 	const handleKakaoLogin = () => {
 		window.location.href = kakaoLoginURL;
 	};
@@ -86,6 +88,7 @@ const LoginPage = () => {
 						width="100%"
 						value={passwordValue}
 						onChange={handlePasswordChange}
+						onEnter={handleSubmit}
 					/>
 					{errors.password && (
 						<div className={styles.error}>{errors.password}</div>
