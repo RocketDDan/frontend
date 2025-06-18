@@ -97,7 +97,8 @@ const Header = () => {
 				<span>
 					<Link
 						to="/announcement/list"
-						className={currentPath.startsWith("/announcement") && headerStyle.activeLink}>
+						className={currentPath.startsWith("/announcement") && headerStyle.activeLink}
+						onClick={handleMenuLinkClick}>
 						공지
 					</Link>
 				</span>
@@ -110,33 +111,6 @@ const Header = () => {
 						컴포넌트 확인
 					</Link>
 				</span> */}
-
-				{!user && menuOpen && <span>
-					<Link
-						to="/login"
-						className={currentPath.startsWith("/login") && headerStyle.activeLink}
-						onClick={handleMenuLinkClick}>
-						로그인
-					</Link>
-				</span>}
-
-				{user && menuOpen && <span>
-					<Link
-						// to="/account/setting"
-						to={`/runner/${user.memberId}`}
-						className={currentPath.startsWith("/account/setting") && headerStyle.activeLink}
-						onClick={handleMenuLinkClick}>
-						내 정보 수정
-					</Link>
-				</span>}
-
-				{user && menuOpen && <span>
-					<Link
-						to={KAKAO_LOGOUT_URL}
-						onClick={handleMenuLinkClick}>
-						로그아웃
-					</Link>
-				</span>}
 
 				{user && user.role === 'ADMIN' && <span>
 					<Link
@@ -162,6 +136,33 @@ const Header = () => {
 						className={currentPath.startsWith("/company/reward") && headerStyle.activeLink}
 						onClick={handleMenuLinkClick}>
 						지출 관리
+					</Link>
+				</span>}
+
+				{!user && menuOpen && <span>
+					<Link
+						to="/login"
+						className={currentPath.startsWith("/login") && headerStyle.activeLink}
+						onClick={handleMenuLinkClick}>
+						로그인
+					</Link>
+				</span>}
+
+				{user && menuOpen && <span>
+					<Link
+						// to="/account/setting"
+						to={`/runner/${user.memberId}`}
+						className={currentPath.startsWith("/account/setting") && headerStyle.activeLink}
+						onClick={handleMenuLinkClick}>
+						내 정보 수정
+					</Link>
+				</span>}
+
+				{user && menuOpen && <span>
+					<Link
+						to={KAKAO_LOGOUT_URL}
+						onClick={handleMenuLinkClick}>
+						로그아웃
 					</Link>
 				</span>}
 
