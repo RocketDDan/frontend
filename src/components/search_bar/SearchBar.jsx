@@ -38,7 +38,7 @@ const SearchBar = ({
     }
 
     return (
-        <label className={searchBarStyle.container} style={{ width: width }}>
+        <label className={searchBarStyle.container} style={{ width }}>
             <FontAwesomeIcon icon={faSearch} className={searchBarStyle.searchBtn} />
             <input
                 type="text"
@@ -47,6 +47,7 @@ const SearchBar = ({
                 onChange={handleChange}
                 onKeyDown={handleEnter}
                 maxLength={50}
+                style={{ width: "100%" }}
             />
             {value && closeBtnVisible && (
                 <FontAwesomeIcon
