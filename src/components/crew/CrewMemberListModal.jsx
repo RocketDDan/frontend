@@ -1,12 +1,14 @@
 import React, { use, useEffect, useState, useRef, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
 import styles from './CrewMemberListModal.module.css';
-import { sampleCrewMember } from '../../dto/crew.dto';
 import { CrewHeader } from './CrewHeader';
 import { CrewMemberInfo } from './CrewMemberInfo';
 import { SecondaryHoverButton, ThirdaryButton } from '../base/Button';
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { fetchCrewMembers, forceRemoveCrewMember, changeCrewLeader } from '../../api/crewMember.api';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faWebAwesome } from "@fortawesome/free-brands-svg-icons";
+
 import Swal from "sweetalert2";
 
 const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
@@ -22,7 +24,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
         { label: "크루원", width: "110px" },
         { label: "가입일", width: "130px" },
     ];
-    const columnsForLeader = [...columnsForMember, { label: "관리", width: "160px" }];
+    const columnsForLeader = [...columnsForMember, { label: "관리", width: "100px" }];
 
     const onClickPass = (crewMemberId) => {
         Swal.fire({
@@ -110,9 +112,25 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
         return () => observer.disconnect();
     }, [handleObserver, memberListRef]);
 
+    const handleOverlayClick = (e) => {
+        if (e.target === e.currentTarget) {
+            onClose();
+        }
+    };
+
     return (
-        <div className={styles.modalOverlay}>
+        <div className={styles.modalOverlay} onClick={handleOverlayClick}>
             <div className={`${styles.modalContent} ${isLeader ? styles.leaderModal : styles.memberModal}`}>
+                <div className={styles.searchBar}>
+                    <SearchBar
+                        width={"100%"}
+                        placeholder="닉네임을 입력해주세요."
+                        value={nickname}
+                        onChange={setNickname}
+                        onEnter={handleSearchBar}
+                    />
+                </div>
+
                 <button className={styles.closeButton} onClick={onClose}>×</button>
                 <div className={styles.crewHeader}>
                     <CrewHeader columns={isLeader ? columnsForLeader : columnsForMember} />
@@ -134,16 +152,15 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                         />
                         {isLeader && !member?.leader && (
                         <div className={styles.menageButtons}>
-                            <SecondaryHoverButton
-                                content="크루장 변경"
-                                width="110px"
+                            <FontAwesomeIcon 
+                                icon={faWebAwesome} 
                                 onClick={()=>onClickPass(member.crewMemberId)}
-                            />
-                            <ThirdaryButton
-                                content="강퇴"
-                                width="70px"
+                                className="crownLightColor"
+                                style={{fontSize: "20px"}}/>
+                            <FontAwesomeIcon 
+                                icon={faTrash} 
                                 onClick={()=>onClickForceResign(member.crewMemberId)}
-                            />
+                                style={{fontSize: "20px", color: "grey"}}/>
                         </div>
                         )}
                     </div>
@@ -151,13 +168,6 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                     {/* 무한 스크롤 타겟 */}
                     {hasMore && <div ref={observerTarget} style={{ height: "20px" }} />}
                 </div>
-                <SearchBar
-                    width={300}
-                    placeholder="닉네임을 입력해주세요."
-                    value={nickname}
-                    onChange={setNickname}
-                    onEnter={handleSearchBar}
-                />
             </div>
         </div>
     );
