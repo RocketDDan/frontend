@@ -7,28 +7,13 @@
 	margin: 20px auto;
 }
 
-.header{
-	display: flex;
-	flex-direction: column;
-	position: sticky;
-	top: 0;
-	z-index: 100;
-	background: #fff;
-	gap: 10px;
-}
-
-.searchHeader{
+.searchHeader {
 	display: flex;
 	align-items: center;
-	gap: 10px;
-	justify-content: space-between; /* 가운데 정렬 */
-	margin: 0 0 10px 50px;
-}
-
-.radioWrapper {
-	display: flex;
-	align-items: center;
-	gap: 10px;
+	gap: 16px;
+	width: 100%;
+	flex-wrap: wrap;
+	margin-bottom: 16px;
 }
 
 .noRequests {
@@ -58,4 +43,50 @@
 	display: flex;           /* 추가 */
 	align-items: center;     /* 추가 */
 	cursor: pointer;
+}
+
+@media (max-width: 700px) {
+    .searchHeader {
+        display: flex;
+        align-items: center;
+        justify-content: stretch;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .searchHeader > *:first-child {
+        flex: 3 1 0;  /* 검색창이 더 넓게 */
+        min-width: 0;
+    }
+    .searchHeader > *:nth-child(2) {
+        flex: 1 1 0;  /* 셀렉터가 더 좁게 */
+        min-width: 0;
+    }
+
+	.requestWrapper {
+		flex-direction: column;
+		gap: 8px;
+		width: 100%;
+		padding: 0 12px;
+	}
+
+	.messageWrapper {
+		width: 100%;
+		max-width: 100%;
+		white-space: normal;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		word-break: break-all;
+		font-size: 0.98rem;
+	}
+
+	.buttonWrapper {
+		gap: 8px;
+		margin-top: 4px;
+	}
+
+	.crewHeader {
+		display: none !important;
+	}
+
 }

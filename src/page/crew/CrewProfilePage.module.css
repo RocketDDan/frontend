@@ -1,65 +1,76 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.flexContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline; /* 위쪽 기준 정렬로 변경 */
+  margin-bottom: 8px;
+}
+
+.label {
+  width: 50px;
+  font-size: 13px;
+  color: #999;
+  font-weight: 500;
+}
+
 .profileWrapper {
+  height: 200px;
+  width: 100%; /* 이 줄 추가 */
+  min-width: 300px; /* 필요시 추가 */
+  padding-top: 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 40px;
-  margin-top: 20px;
-  min-height: 200px;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
-.crewMemberFeeds {
-  margin-top: 20px;
-  border-bottom: #ccc solid 1px;
-  font-size: 1.3rem;
-  padding: 20px;  
-  text-align: left;
-}
-
-.profileWrapper, .crewMemberFeeds{
-  max-width: 1000px;      /* profileWrapper와 동일하게 */
-  min-width: 750px;       /* profileWrapper와 동일하게 */
-  margin-left: auto;      /* 가운데 정렬 */
-  margin-right: auto;     /* 가운데 정렬 */
-  width: 100%;
+.profileDiv {
+  width: 200px;
 }
 
 .infoSection {
-  flex: 1 1 0;
-  min-width: 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 16px;
-  text-align: left;
+  justify-content: space-between;
+  text-align: start;
+  gap: 0.6rem;
+}
+
+.region {
+  font-size: 1.2rem;
+  width: 15rem;
+  text-align: start;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.region, .introduce {
+  display: inline-block; /* 정렬 맞춤 */
+  line-height: 1.4;
+  word-break: break-word;
 }
 
 .crewName {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   font-weight: bold;
-  margin-bottom : 15px;
 }
 
 .memberCount{
   cursor: pointer;
+  font-size: 1.2rem;
 }
 
-.memberCount,
-.region,
 .introduce {
-  font-size: 23px;
-  word-break: keep-all;
-  line-height: 1.5;
-  text-align: left;
-  color: #333;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.introduce{
   cursor: pointer;
-  width: 600px;
+  width: 15rem;
+  max-width: 250px;
+  word-break: break-word;
+  line-height: 1.4;
 }
 
 .buttonSection {
@@ -74,8 +85,13 @@
 
 .buttonGroup {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.bottomButtonGroup{
+  display: flex;
+  gap: 1rem;
 }
 
 .details {
@@ -86,19 +102,12 @@
   color: #666;
 }
 
-.address {
-  font-size: 15px;
-  color: #333;
-  word-break: keep-all;
-  line-height: 1.5;
+.crewMemberFeeds {
+  margin-top: 20px;
+  border-bottom: #ccc solid 1px;
+  font-size: 1.3rem;
+  padding: 20px;  
   text-align: left;
-}
-
-.crewName,
-.address {
-  overflow-x: auto;
-  scrollbar-width: none;         /* Firefox: 스크롤바 숨김 */
-  white-space: nowrap;           /* 긴 텍스트 한 줄 처리 (특히 crewName에 필요) */
 }
 
 /* Chrome, Edge, Safari: 스크롤바 숨김 */
@@ -112,24 +121,19 @@
 .address:hover {
   scrollbar-width: thin;         /* Firefox: 얇은 스크롤바 */
 }
+
+
 .crewName:hover::-webkit-scrollbar,
 .address:hover::-webkit-scrollbar {
   display: block;
   height: 6px;                   /* 원하는 두께 */
   background: #eee;
 }
+
 .crewName:hover::-webkit-scrollbar-thumb,
 .address:hover::-webkit-scrollbar-thumb {
   background: #bbb;
   border-radius: 3px;
-}
-
-.label {
-  font-size: 13px;
-  color: #999;
-  margin-bottom: 2px;
-  margin-left: 2px;
-  font-weight: 500;
 }
 
 .loading {
@@ -139,6 +143,29 @@
   height: 100%;
 }
 
-.address{
-  width: 400px;
+/* 전역 CSS 또는 CrewProfilePage.module.css에 추가 */
+.swal2-popup, .custom-swal-width {
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 768px) {
+  .profileWrapper {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 16px;
+  }
+
+  .buttonSection {
+    align-items: center;
+    margin-left: 0;
+  }
+
+  .introduce {
+    max-height: 200px;
+  }
+
+  .details {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

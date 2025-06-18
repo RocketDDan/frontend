@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { approveCrewJoinRequest, rejectCrewJoinRequest } from "../../api/crewJoinRequest.api"; // 크루 가입 요청 승인 API
 import { SearchBar } from "../../components/search_bar/SearchBar";
-import { BasicRadio } from "../../components/base/Radio"; // 라디오 버튼 컴포넌트
+import { BasicSelect} from "../../components/base/Select"
 import commonStyles from "../../Common.module.css"; // 공통 스타일
 import Pagenation from "../../components/base/Pagenation";
 
@@ -31,9 +31,9 @@ const CrewJoinRequestListPage = () => {
 
     // 가입 요청 상태 옵션 정의
     const statusOptions = [
-        { value: "REQUEST", name: "요청 대기" },
-        { value: "ACCEPT", name: "승인" },
-        { value: "DENY", name: "거절" },
+        { value: "REQUEST", label: "요청" },
+        { value: "ACCEPT", label: "승인" },
+        { value: "DENY", label: "거절" },
     ];
 
     // 리스트 헤더의 컬럼 정의
@@ -114,7 +114,6 @@ const CrewJoinRequestListPage = () => {
 
     return (
         <div className={styles.pageWrapper}>
-            <div className={styles.header}>
                 <div className={styles.searchHeader}>
                     <SearchBar 
                         width={300}
@@ -123,8 +122,9 @@ const CrewJoinRequestListPage = () => {
                         onChange={setNickname}
                         onEnter={handleSearchBar}
                     />
-                    <div className={styles.radioWrapper}>
-                        <BasicRadio
+                    <div>
+                        <BasicSelect
+                            width="100%"
                             options={statusOptions}
                             name="status"
                             value={"REQUEST"}
@@ -132,8 +132,9 @@ const CrewJoinRequestListPage = () => {
                         />
                     </div>
                 </div>
-                <CrewHeader columns={columns}/>
-            </div>
+                <div className={styles.crewHeader}>
+                    <CrewHeader columns={columns}/>
+                </div>
 
             { crewJoinRequestList.length > 0 && crewJoinRequestList.map((request, idx) => (
                 <div className={styles.requestWrapper} key={idx}>

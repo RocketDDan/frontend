@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import commonStyles from '../Common.module.css';
 import { fetchRecommendedCrews } from '../api/crew.api';
 import CrewCard from '../components/crew/CrewCard';
+import LoadingSpinner from "../components/base/LoadingSpinner"
 
 const HomePage = () => {
 
@@ -23,13 +24,20 @@ const HomePage = () => {
                 <RegionSelector region={region} setRegion={setRegion}/>
                 <h2 className={commonStyles.titleColor}>근처 크루에 참여하세요!</h2>
             </div>
-            <div className={styles.crewListScrollWrapper}>
-                <div className={styles.crewListContainer}>
-                    {[...crewList, ...crewList].map((crew, idx) => (
-                        <CrewCard key={idx} crew={crew} />
-                    ))}
+            {crewList.length === 0 && (
+                <LoadingSpinner/>
+            )
+            }
+            {crewList.length > 0 && (
+                <div className={styles.crewListScrollWrapper}>
+                    <div className={styles.crewListContainer}>
+                        {[...crewList, ...crewList].map((crew, idx) => (
+                            <CrewCard key={idx} crew={crew} />
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
+
         </div>
     )
 }

@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 import CrewCard from "../../components/crew/CrewCard";
 import styles from "./CrewListPage.module.css";
 import RegionSelector from "../../components/base/RegionSelector";
-import { BasicRadio } from "../../components/base/Radio";
 import { fetchCrewList, fetchMyCrew } from "../../api/crew.api";
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { SecondaryHoverButton } from "../../components/base/Button";
+import LoadingSpinner from "../../components/base/LoadingSpinner";
+import { BasicSelect } from "../../components/base/Select";
 
 const CrewListPage = () => {
   const [hasCrew, setHasCrew] = useState(false);
@@ -23,18 +24,19 @@ const CrewListPage = () => {
   const navigate = useNavigate();
   // user 정보
   const user = useAuthStore((state) => state.user);
-  
+
   const perPage = 6;
 
   const orderOptions = [
-    { value: "LATEST", name: "최신순" },
-    { value: "OLDEST", name: "오래된순" },
-    { value: "MEMBER_CNT", name: "크루원수" },
+    { value: "LATEST", label: "최신순" },
+    { value: "OLDEST", label: "오래된순" },
+    { value: "MEMBER_CNT", label: "크루원수" },
   ];
 
-  // 검색/필터 변경 시 새로고침
-  const handleSearchBar = () => {
+  // 검색/필터 변경 시 새로고침 및 page 초기화
+  useEffect(() => {
     setPage(1);
+    setIsLoading(true);
     fetchCrewList({
       crewName: name,
       page: 1,
@@ -43,11 +45,14 @@ const CrewListPage = () => {
       order,
     }).then((data) => {
       setCrewList(data);
+      setIsLoading(false);
+      setHasMore(data.length === perPage);
     });
-  };
+  }, [order, region]);
 
-  // page 변경 시 데이터 누적
+  // page 변경 시 데이터 누적 (page 1은 위에서 처리함)
   useEffect(() => {
+    if (page === 1) return; // page 1은 위에서 처리함
     setIsLoading(true);
     fetchCrewList({
       crewName: name,
@@ -56,17 +61,11 @@ const CrewListPage = () => {
       region,
       order,
     }).then((data) => {
-      if (page === 1) {
-        setCrewList(data);
-      } else {
-        setCrewList((prev) => [...prev, ...data]);
-      }
+      setCrewList((prev) => [...prev, ...data]);
       setIsLoading(false);
-      setHasMore(data.length === perPage); // 더 받아올 데이터가 있는지 체크
+      setHasMore(data.length === perPage);
     });
-    // eslint-disable-next-line
-    console.log('crewList', crewList.length);
-  }, [page, region, order]);
+  }, [page]);
 
   // IntersectionObserver 콜백
   const handleObserver = useCallback(
@@ -89,32 +88,48 @@ const CrewListPage = () => {
   }, [handleObserver]);
 
   useEffect(() => {
-    if(user){
-      fetchMyCrew().then(data => {
+    if (user) {
+      fetchMyCrew().then((data) => {
         setHasCrew(data !== null);
         console.log(hasCrew);
-      })
-    }
+      });
+    }    
 
-    console.log('hasCrew', hasCrew);
-  }, [])
+    console.log("hasCrew", hasCrew);
+  }, []);
+
+  const handleSearchBar = () => {
+    setPage(1);
+    fetchCrewList({
+      crewName: name,
+      page,
+      perPage,
+      region,
+      order,
+    }).then((data) => {
+      setCrewList(data);
+    });
+  };
 
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.searchHeader}>
-        <RegionSelector region={region} setRegion={setRegion} />
+        <div className={styles.selectGroup}>
+          <RegionSelector region={region} setRegion={setRegion} />
+          <BasicSelect
+            options={orderOptions}
+            value={order}
+            onChange={setOrder}
+            width="7rem"
+          />
+        </div>
+
         <SearchBar
           width={500}
           placeholder="크루명을 입력해주세요."
           value={name}
           onChange={setName}
           onEnter={handleSearchBar}
-        />
-        <BasicRadio
-          options={orderOptions}
-          name="order"
-          value={order}
-          onChange={setOrder}
         />
         {user && !hasCrew && (
           <SecondaryHoverButton
@@ -126,10 +141,10 @@ const CrewListPage = () => {
       </div>
       <div className={styles.container}>
         {crewList.length > 0 &&
-          crewList.map((crew, index) => <CrewCard key={crew.crewName} crew={crew} />)}
-        {crewList.length === 0 && (
-          <div className={styles.noRequest}> 크루가 없습니다. </div>
-        )}
+          crewList.map((crew, index) => (
+            <CrewCard key={crew.crewId} crew={crew} />
+          ))}
+        {crewList.length === 0 && <LoadingSpinner />}
         {/* 관찰 타겟: 더 불러올 데이터가 있을 때만 렌더링 */}
         {hasMore && <div ref={observerTarget} style={{ height: "20px" }} />}
       </div>

@@ -9,10 +9,7 @@
 }
 
 .searchHeader {
-    position: sticky;
     width: 100%;
-    top: 0;
-    z-index: 100;
     background: #fff;
     padding: 10px 0 16px 0;
     display: flex;
@@ -20,6 +17,12 @@
     gap: 20px;
     justify-content: center; /* 가운데 정렬 */
     margin-bottom: 10px;
+}
+
+.selectGroup {
+  display: flex;
+  gap: 16px; /* 원하는 만큼 간격 조정 */
+  align-items: center;
 }
 
 .pageWrapper {
@@ -37,3 +40,45 @@
 	font-size: 1.1rem;
 	margin: 40px 0;
 }
+
+@media (max-width: 768px) {
+  .searchHeader {
+    display: flex;
+    padding: 10px 0 16px 0;
+    background: #fff;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px;
+    max-width: 100%;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .searchHeader > * {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .container {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0;
+    padding: 0 16px;
+  }
+}
+
+/* Prevent horizontal scrolling on small screens */
+:global(body), :global(html) {
+  overflow-x: hidden;
+}
+
+.pageWrapper {
+  /* overflow-x: hidden; */
+}
+
+/* Ensure all elements use border-box and don't overflow */
+:global(*) {
+  box-sizing: border-box;
+}
+
