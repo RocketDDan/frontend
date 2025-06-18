@@ -1,4 +1,6 @@
 // 이미지
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import BaseProfileImage from '../../assets/images/base_profile.png';
 // 스타일
 import ProfileImageStyle from './ProfileImage.module.css';
@@ -27,8 +29,15 @@ const ProfileImage = ({ profileUrl, size = "30px", onClick }) => {
               }}
               onClick={handleClick}>
               {profileUrl
-                  ? <img src={profileUrl} alt="피드 프로필 이미지" width={'100%'} />
-                  : <img src={BaseProfileImage} alt="피드 프로필 이미지" width={'95%'} />}
+                  ? <img
+                      src={profileUrl}
+                      alt="피드 프로필 이미지"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  : <FontAwesomeIcon 
+				  		icon={faUser} 
+						style={{fontSize: `${parseFloat(size) * 0.9}px`, color: "#999"}}/>
+              }
           </div>
       </div>
   )

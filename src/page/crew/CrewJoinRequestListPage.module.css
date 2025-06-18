@@ -3,6 +3,8 @@
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
+	max-width: 1000px;
+	height: 95%;
 	gap: 30px;
 	margin: 20px auto;
 }
@@ -14,6 +16,11 @@
 	width: 100%;
 	flex-wrap: wrap;
 	margin-bottom: 16px;
+	height: fit-content;
+}
+
+.crewHeader {
+	height: fit-content;
 }
 
 .noRequests {
@@ -37,11 +44,7 @@
 
 .messageWrapper {
 	width: 480px;      /* 원하는 최대 너비로 조정 */
-	white-space: nowrap;   /* 한 줄로 표시 */
-	overflow: hidden;           /* 가로 스크롤 대신 넘치는 부분 숨김 */
-	text-overflow: ellipsis;    /* ...으로 표시 */
-	display: flex;           /* 추가 */
-	align-items: center;     /* 추가 */
+	text-align: left;
 	cursor: pointer;
 }
 
@@ -73,10 +76,6 @@
 	.messageWrapper {
 		width: 100%;
 		max-width: 100%;
-		white-space: normal;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		word-break: break-all;
 		font-size: 0.98rem;
 	}
 

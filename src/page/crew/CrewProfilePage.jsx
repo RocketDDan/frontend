@@ -179,7 +179,7 @@ const CrewProfilePage = () => {
 
                         <div className={styles.flexContainer}>
                             <div className={styles.label}>주소</div>
-                            <div className={styles.region}>
+                            <div className={`${styles.region} textLightColor`}>
                                 <span>{crew?.crewRegion}</span>&nbsp;
                                 <span>{crew?.crewAddress}</span>
                             </div>

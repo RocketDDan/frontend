@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { CrewMemberProfileImage } from '../profile/ProfileImage';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWebAwesome } from "@fortawesome/free-brands-svg-icons";
-import commonStyles from '../../Common.module.css';
-import { use } from 'react';
 
 /**
  * 
@@ -21,7 +19,7 @@ const CrewMemberInfo = ({ memberId, profilePath, nickname, date, isLeader=false 
         <div className={styles.memberInfo}>
             <div className={styles.profile} onClick={() => {navigate(`/runner/${memberId}`)}}>
                 {isLeader && (
-                    <FontAwesomeIcon icon={faWebAwesome} className={`${styles.crown} ${commonStyles.crownColor}`}/>
+                    <FontAwesomeIcon icon={faWebAwesome} className={`${styles.crown} crownColor`}/>
                 )}
                 <CrewMemberProfileImage profileUrl={profilePath} />
             </div>
