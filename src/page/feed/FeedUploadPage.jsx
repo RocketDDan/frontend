@@ -1,7 +1,7 @@
 import { useState } from "react";
 import style from "./FeedUploadPage.module.css";
 import { PrimaryButton } from '../../components/base/Button'
-import { TextAreaWithLabel } from '../../components/base/Input';
+import { TextArea } from '../../components/base/Input';
 import { ImageAddBlock } from "../../components/image/ImageAddBlock";
 import { ImageBlock } from "../../components/image/ImageBlock";
 import { v7 as uuid7 } from "uuid";
@@ -139,8 +139,10 @@ const FeedUploadPage = () => {
             </div>
 
             <div>
-                <TextAreaWithLabel
-                    label="내용"
+                <label htmlFor="">
+                    내용
+                </label>
+                <TextArea
                     width="100%"
                     maxHeight="100px"
                     maxLength={1000}
@@ -154,7 +156,7 @@ const FeedUploadPage = () => {
             </div>
 
             {
-                user && user.role == 'COMPANY' &&
+                user && user.role === 'COMPANY' &&
                 <div>
                     결제 금액: <input type="number" onChange={handleAmount} />원
                 </div>

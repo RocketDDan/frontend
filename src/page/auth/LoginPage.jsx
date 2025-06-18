@@ -4,10 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css";
 
 import { PrimaryButton, CustomButton } from "../../components/base/Button";
-import {
-	TextInputWithLabel,
-	PasswordInputWithLabel,
-} from "../../components/base/Input";
+import { TextInput } from "../../components/base/Input";
 
 import kakaoLogoImage from "../../assets/images/kakao_logo.png";
 
@@ -84,22 +81,27 @@ const LoginPage = () => {
 			<div style={{ height: "1rem" }}></div>
 			<div className={styles.form}>
 				<div className={styles.errorContainer}>
-					<TextInputWithLabel
+					<label>
+						아이디(이메일)
+						{errors.email && <div className={styles.error}>{errors.email}</div>}
+					</label>
+					<TextInput
 						placeholder="이메일"
-						label="아이디(이메일)"
 						width="100%"
 						value={emailValue}
 						onChange={handleEmailChange}
 					/>
-					{errors.email && <div className={styles.error}>{errors.email}</div>}
 				</div>
 
 				<div className={styles.errorContainer}>
-					<PasswordInputWithLabel
+					<label>
+						비밀번호
+					</label>
+					<TextInput
 						placeholder="영문, 숫자 포함 8~16자"
-						label="비밀번호"
 						width="100%"
 						value={passwordValue}
+						eyeVisible={true}
 						onChange={handlePasswordChange}
 						onEnter={handleSubmit}
 					/>

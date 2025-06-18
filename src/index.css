@@ -38,6 +38,10 @@ code {
   white-space: nowrap;
 }
 
+label {
+  margin-bottom: 10px;
+}
+
 /* 모바일 대응 */
 @media (max-width: 768px) {
   .router-container {

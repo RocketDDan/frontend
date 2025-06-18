@@ -1,4 +1,4 @@
-import { TextAreaWithLabel, TextArea, TextInput, TextInputWithLabel, PasswordInputWithLabel } from "../components/base/Input";
+import { TextArea, TextInput } from "../components/base/Input";
 import { SearchBar } from "../components/search_bar/SearchBar";
 import { BasicCheckbox } from "../components/base/Checkbox";
 import { BasicRadio } from "../components/base/Radio";
@@ -15,31 +15,31 @@ import Pagenation from "../components/base/Pagenation";
 
 const HomePage = () => {
     const [value1, setValue1] = useState(); // text input
-    const [value2, setValue2] = useState(); // text input with label
+    // const [value2, setValue2] = useState(); // text input with label
     const [value3, setValue3] = useState(); // textarea 
-    const [value4, setValue4] = useState(); // textarea with label
+    // const [value4, setValue4] = useState(); // textarea with label
     const [value5, setValue5] = useState(); // searchbar
     const [value6, setValue6] = useState("value2"); // radio
     const [value7, setValue7] = useState();
-    const [value8, setValue8] = useState(); // password input with label
+    // const [value8, setValue8] = useState(); // password input with label
     const [modalOpen, setModalOpen] = useState(false);
 
     const handleInput1 = (val) => {
         setValue1(val);
         console.log("change: ", val)
     }
-    const handleInput2 = (val) => {
-        setValue2(val);
-        console.log("change: ", val)
-    }
+    // const handleInput2 = (val) => {
+    //     setValue2(val);
+    //     console.log("change: ", val)
+    // }
     const handleInput3 = (val) => {
         setValue3(val);
         console.log("change: ", val)
     }
-    const handleInput4 = (val) => {
-        setValue4(val);
-        console.log("change: ", val)
-    }
+    // const handleInput4 = (val) => {
+    //     setValue4(val);
+    //     console.log("change: ", val)
+    // }
     const handleInput5 = (val) => {
         setValue5(val);
         console.log("change: ", val)
@@ -52,10 +52,10 @@ const HomePage = () => {
         setValue7(val);
         console.log("change: ", val)
     }
-    const handleInput8 = (val) => {
-        setValue8(val);
-        console.log("change: ", val)
-    }
+    // const handleInput8 = (val) => {
+    //     setValue8(val);
+    //     console.log("change: ", val)
+    // }
 
 
     return (
@@ -77,40 +77,14 @@ const HomePage = () => {
                             placeholder={"placeholder"}
                             onChange={handleInput1} />
                     </div>
+                    
                     <div style={{ flex: '1' }}>
-                        <h4>Text Input With Label</h4>
-                        <TextInputWithLabel
-                            label={"라벨"}
-                            width={"100%"}
-                            value={value2}
-                            placeholder={"placeholder"}
-                            onChange={handleInput2} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Text Area With Label</h4>
+                        <h4>Text Area</h4>
                         <TextArea
                             width={"100%"}
                             value={value3}
                             placeholder={"placeholder"}
                             onChange={handleInput3} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Text Area With Label</h4>
-                        <TextAreaWithLabel
-                            label={"라벨"}
-                            width={"100%"}
-                            value={value4}
-                            placeholder={"placeholder"}
-                            onChange={handleInput4} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Password Input With Label</h4>
-                        <PasswordInputWithLabel
-                            label={"라벨"}
-                            width={"100%"}
-                            value={value8}
-                            placeholder={"placeholder"}
-                            onChange={handleInput8} />
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
