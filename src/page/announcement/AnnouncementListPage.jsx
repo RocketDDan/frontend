@@ -51,20 +51,21 @@ const AnnouncementListPage = () => {
     <div className={styles.container}>
       <h1>공지 사항</h1>
       <div className={styles.topBar}>
-        <div style={{ width: "300px" }}>
-          <SearchBar
-            placeholder="검색하기"
-            value={keyword}
-            onChange={handleChange}
-            onEnter={() => console.log("엔터")}
-          />
-        </div>
-        <SecondaryButton
-          width="160px"
-          content="새 공지사항 등록"
-          onClick={() => navigate("/announcement/upload")}
+      <div className={styles.searchWrapper}>
+        <SearchBar
+          placeholder="검색하기"
+          value={keyword}
+          onChange={handleChange}
+          onEnter={() => console.log("엔터")}
         />
       </div>
+      <SecondaryButton
+        width="160px"
+        content="새 공지사항 등록"
+        onClick={() => navigate("/announcement/upload")}
+      />
+    </div>
+
       <TableView
         headers={["번호", "제목", "작성자", "작성날짜"]}
         keys={["title", "crewName", "createdAt"]}
