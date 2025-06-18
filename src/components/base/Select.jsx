@@ -13,7 +13,12 @@ import selectStyle from './Select.module.css'
  * @param {String} width 가로 길이
  * @returns {JSX.Element} select 컴퍼넌트
  */
-const BasicSelect = ({ value, onChange, options = [], width = "100%" }) => {
+const BasicSelect = ({ 
+    value, 
+    onChange, 
+    options = [], 
+    width = "100%" 
+}) => {
 
     const [inValue, setInValue] = useState(value || "");
 
@@ -21,6 +26,7 @@ const BasicSelect = ({ value, onChange, options = [], width = "100%" }) => {
         setInValue(val);
         onChange?.(val);
     }
+    
     return (
         <select className={selectStyle.container}
             onChange={e => handleSelect(e.target.value)}

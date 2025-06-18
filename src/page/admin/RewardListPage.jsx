@@ -1,10 +1,12 @@
+import style from "./RewardListPage.module.css";
+
+import apiClient from "../../api/apiClient";
 import { useState, useEffect } from "react";
-import styles from  "./MemberListPage.module.css";
+import { useNavigate } from "react-router-dom";
+
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { TableView } from "../../components/base/AnnouncementTable";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import apiClient from "../../api/apiClient";
+import { BasicSelect } from "../../components/base/Select"
 
 const RewardListPage = () => {
     const [keyword, setKeyword] = useState("");
@@ -20,7 +22,7 @@ const RewardListPage = () => {
 
 
     useEffect(() => {
-        
+
         const fetchData = async () => {
             try {
                 const res = await apiClient.get(`/admin/rewards`, {
@@ -41,7 +43,7 @@ const RewardListPage = () => {
 
                 const total = updatedData.reduce((sum, item) => sum + (item.chargeAmount || 0), 0);
                 setTotalCharge(total);
-                
+
             } catch (err) {
                 console.error("피드 광고 데이터 요청 실패", err);
             }
@@ -50,59 +52,63 @@ const RewardListPage = () => {
     }, [page, keyword, month, day]);
 
     return (
-        <div className={styles.container}>
-            <h1>피드 광고 관리</h1>
-            <div className={styles.topBar}>
-                <div style={{ width: '300px' }}>
-                    <SearchBar 
-                        placeholder="이름 검색하기"
-                        onChange={(val) => {
-                            setKeyword(val);
-                            setPage(1);
-                        }}/>
-                </div>
-                <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-                    <select onChange={(e) => setMonth(e.target.value)} value={month}>
-                        <option value="">월 선택</option>
-                        {[...Array(12)].map((_, i) => (
-                            <option key={i + 1} value={String(i + 1).padStart(2, "0")}>
-                                {i + 1}월
-                            </option>
-                        ))}
-                    </select>
+        <div className={style.container}>
 
-                    <select onChange={(e) => setDay(e.target.value)} value={day}>
-                        <option value="">일 선택</option>
-                        {[...Array(31)].map((_, i) => (
-                            <option key={i + 1} value={String(i + 1).padStart(2, "0")}>
-                                {i + 1}일
-                            </option>
-                        ))}
-                    </select>
-                </div>
+            <h1>기업 피드 관리</h1>
+
+            <div className={style.topBar}>
+                <SearchBar
+                    placeholder="이름 검색하기"
+                    onChange={(val) => {
+                        setKeyword(val);
+                        setPage(1);
+                    }}
+                    width="12rem"
+                />
+                <BasicSelect
+                    options={
+                        [{ value: "", label: "전체" },
+                        ...[...Array(12)].map((_, i) => {
+                            return { value: String(i + 1).padStart(2, "0"), label: (i + 1) + "월" }
+                        })]
+                    }
+                    onChange={setMonth}
+                    value={month}
+                    width="5rem"
+                />
+                <BasicSelect
+                    options={
+                        [{ value: "", label: "전체" },
+                        ...[...Array(31)].map((_, i) => {
+                            return { value: String(i + 1).padStart(2, "0"), label: (i + 1) + "일" }
+                        })]
+                    }
+                    onChange={setDay}
+                    value={day}
+                    width="5rem"
+                />
             </div>
-            <TableView
-                headers={["번호", "이름", "피드ID" , "잔액", "충전", "업로드 날짜"]}
-                keys={["nickname", "feedId", "balance", "chargeAmount", "createdAt"]}
-                data={data}
-                page={page}
-                limit={limit}
-                totalCount={totalCount}
-                setPage={setPage}
-                onRowClick={(row) =>
-                    navigate(`/company/reward/${row.feedId}/detail`, {
-                    state: { chargeAmount: row.chargeAmount },
-                    })
-                }
-            />
+
             <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px", fontWeight: "bold", width: "100%", maxWidth: "1200px", marginLeft: "auto", marginRight: "auto", paddingRight: "8px" }}>
                 <span>총 수익금 (충전 금액 기준) :&nbsp;</span>
                 <span style={{ color: "red" }}>{totalCharge.toLocaleString()}원</span>
             </div>
 
+            <TableView
+                headers={["번호", "이름", "피드ID", "잔액", "충전", "업로드 날짜"]}
+                keys={["nickname", "feedId", "balance", "chargeAmount", "createdAt"]}
+                data={data}
+                page={page}
+                height="fit-content"
+                limit={limit}
+                onRowClick={(row) =>
+                    navigate(`/company/reward/${row.feedId}/detail`, {
+                        state: { chargeAmount: row.chargeAmount },
+                    })
+                }
+            />
         </div>
     )
 }
- 
+
 export default RewardListPage;
-                      

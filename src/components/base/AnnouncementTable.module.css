@@ -1,59 +1,48 @@
-.tableWrapper {
+.outerWrapper {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
-  overflow-x: auto;
+  height: 100%;
 }
 
 table {
-  min-width: 1200px;
+  width: 100%;
   border-collapse: collapse;
   font-size: 15px;
   color: #000;
   text-align: center;
+  min-width: max-content;
 }
 
-th,
-td {
-  padding: 16px 12px;
+tr>* {
+  padding: 1rem 0.75rem;
   border-bottom: 1px solid #e0e0e0;
   white-space: nowrap;
 }
 
 .wideColumn {
-  min-width: 300px;
-  max-width: 600px;
-  text-align: left;
-  text-align: center;
-}
-
-.th {
-  padding: 16px 12px;
-  font-weight: 600;
-  text-align: center;
-}
-
-tr:hover {
-  background-color: #f5f7fa;
-  transition: background-color 0.2s ease;
-}
-
-thead tr:hover {
-  background-color: inherit;
+  flex: 4;
+  text-align: start;
 }
 
 .role {
   color: #5164ED;
 }
 
-.paginationWrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+.createdAt {
+  font-size: 1rem;
 }
 
-.outerWrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+@media (max-width: 768px){
+  .wideColumn {
+    flex: 4;
+    text-align: start;
+  }
+
+  .createdAt {
+    font-size: 0.7rem;
+    white-space: inherit;
+    /* text-overflow: ellipsis; */
+  }
 }

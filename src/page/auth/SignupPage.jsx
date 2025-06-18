@@ -34,8 +34,7 @@ const SignupPage = () => {
   const [isFormValid, setIsFormValid] = useState(false);
 
   const nicknameValid = (nickname) => /^[a-zA-Z0-9가-힣]{2,20}$/.test(nickname);
-  const passwordValid = (password) =>
-    /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/.test(password);
+  const passwordValid = (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@!#?])[A-Za-z\d@!#?]{8,16}$/.test(password);
   const passwordConfirmValid = (password, passwordConfirm) =>
     password === passwordConfirm;
   const phoneValid = (phone) => /^\d{10,11}$/.test(phone);
@@ -51,10 +50,10 @@ const SignupPage = () => {
 
     setIsFormValid(
       isNicknameValid &&
-        isPasswordValid &&
-        isPasswordConfirmValid &&
-        isPhoneValid &&
-        isNicknameChecked
+      isPasswordValid &&
+      isPasswordConfirmValid &&
+      isPhoneValid &&
+      isNicknameChecked
     );
 
     const newErrors = {};
