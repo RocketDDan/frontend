@@ -90,7 +90,7 @@ const MemberListPage = () => {
             />
         
             <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px", fontWeight: "bold", width: "100%", maxWidth: "1200px", marginLeft: "auto", marginRight: "auto", paddingRight: "8px" }}>
-                <span>총 회원수 :&nbsp;</span>
+                <span>회원수 :&nbsp;</span>
                 <span style={{ color: "red" }}>{totalCount}명</span>
             </div>
         </div>
