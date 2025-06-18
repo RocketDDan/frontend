@@ -89,7 +89,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                 setIsLoading(false);
                 setHasMore(data.length === perPage);
             });
-        // eslint-disable-next-line
+        // eslint-disable-next-lines
     }, [page, crewId]);
 
     // IntersectionObserver 콜백
@@ -131,7 +131,6 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                     />
                 </div>
 
-                <button className={styles.closeButton} onClick={onClose}>×</button>
                 <div className={styles.crewHeader}>
                     <CrewHeader columns={isLeader ? columnsForLeader : columnsForMember} />
                 </div>

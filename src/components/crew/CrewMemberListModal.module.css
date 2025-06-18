@@ -33,17 +33,6 @@
     width: 250px;
 }
 
-.closeButton {
-    position: absolute;
-    top: 18px;
-    right: 12px;
-    background: none;
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-    color: #888;
-}
-
 .memberList {
     display: flex;
     flex-direction: column;
@@ -121,11 +110,6 @@
 }
 
 @media (max-width: 900px) {
-    .modalContent {
-        min-width: 90vw;
-        padding: 16px 4vw 16px 4vw;
-    }
-
     .crewHeader {
         display: none;
     }  
@@ -138,5 +122,18 @@
     .menageButtons > *{
         font-size: 0.8rem;
         padding: 4px 8px;
+    }
+
+    .noButton {
+        min-width: none !important; 
+    }
+
+    .leaderModal{
+        min-width: 90vw;
+        padding: 16px 4vw 16px 4vw;
+    }
+
+    .memberModal{
+        padding: 16px 4vw 16px 4vw;
     }
 }
