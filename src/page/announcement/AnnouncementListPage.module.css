@@ -5,6 +5,7 @@
   flex-direction: column;
   gap: 1rem;
   max-width: 1000px;
+  margin: auto;
 }
 
 .topBar {
@@ -14,11 +15,4 @@
   width: 100%;
   /* max-width: 1200px;  */
   margin: 0 auto 24px;
-}
-
-.scrollX {
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;  
-  white-space: nowrap;
 }

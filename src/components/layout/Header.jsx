@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 
-import { LoginMemberProfileImage } from "../profile/ProfileImage";
+import { ProfileImage } from "../profile/ProfileImage";
 
 const Header = () => {
 	const KAKAO_LOGOUT_REDIRECT_URL = `${process.env.REACT_APP_API_BASE_URL}/auth/logout`;
@@ -51,7 +51,7 @@ const Header = () => {
 					{user && (
 						<div className={headerStyle.profileWrapper}>
 							<div className={headerStyle.profileContainer} onClick={toggleProfileMenu}>
-								<LoginMemberProfileImage profileUrl={user.profileImageUrl} />
+								<ProfileImage profileUrl={user.profileImageUrl} size="40px"/>
 								<span>
 									<span className={headerStyle.nickname}>{user.nickname}&nbsp;</span>
 									<span className={headerStyle.nim}>님</span>
@@ -97,7 +97,8 @@ const Header = () => {
 				<span>
 					<Link
 						to="/announcement/list"
-						className={currentPath.startsWith("/announcement") && headerStyle.activeLink}>
+						className={currentPath.startsWith("/announcement") && headerStyle.activeLink}
+						onClick={handleMenuLinkClick}>
 						공지
 					</Link>
 				</span>
@@ -110,6 +111,33 @@ const Header = () => {
 						컴포넌트 확인
 					</Link>
 				</span> */}
+
+				{user && user.role === 'ADMIN' && <span>
+					<Link
+						to="/admin/member/list"
+						className={currentPath.startsWith("/admin/member") && headerStyle.activeLink}
+						onClick={handleMenuLinkClick}>
+						회원 관리
+					</Link>
+				</span>}
+
+				{user && user.role === 'ADMIN' && <span>
+					<Link
+						to="/admin/reward/list"
+						className={currentPath.startsWith("/admin/reward") && headerStyle.activeLink}
+						onClick={handleMenuLinkClick}>
+						수익 관리
+					</Link>
+				</span>}
+
+				{user && user.role === 'COMPANY' && <span>
+					<Link
+						to="/company/reward/list"
+						className={currentPath.startsWith("/company/reward") && headerStyle.activeLink}
+						onClick={handleMenuLinkClick}>
+						지출 관리
+					</Link>
+				</span>}
 
 				{!user && menuOpen && <span>
 					<Link
@@ -135,33 +163,6 @@ const Header = () => {
 						to={KAKAO_LOGOUT_URL}
 						onClick={handleMenuLinkClick}>
 						로그아웃
-					</Link>
-				</span>}
-
-				{user && user.role == 'ADMIN' && <span>
-					<Link
-						to="/admin/member/list"
-						className={currentPath.startsWith("/admin/member") && headerStyle.activeLink}
-						onClick={handleMenuLinkClick}>
-						회원 관리
-					</Link>
-				</span>}
-
-				{user && user.role == 'ADMIN' && <span>
-					<Link
-						to="/admin/reward/list"
-						className={currentPath.startsWith("/admin/reward") && headerStyle.activeLink}
-						onClick={handleMenuLinkClick}>
-						수익 관리
-					</Link>
-				</span>}
-
-				{user && user.role == 'COMPANY' && <span>
-					<Link
-						to="/company/reward/list"
-						className={currentPath.startsWith("/company/reward") && headerStyle.activeLink}
-						onClick={handleMenuLinkClick}>
-						지출 관리
 					</Link>
 				</span>}
 

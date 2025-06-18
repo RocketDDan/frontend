@@ -4,13 +4,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styles from "./SignupPage.module.css";
 
 import { PrimaryButton } from "../../components/base/Button";
-import {
-  TextInputWithLabel,
-  PasswordInputWithLabel,
-} from "../../components/base/Input";
+import { TextInputWithLabel, PasswordInputWithLabel, } from "../../components/base/Input";
 import { BasicRadio } from "../../components/base/Radio";
 import { ImageAddBlock } from "../../components/image/ImageAddBlock";
-import { LoginMemberProfileImage } from "../../components/profile/ProfileImage";
+import { ProfileImage } from "../../components/profile/ProfileImage";
 
 import { checkNicknameDuplicate, signUp } from "../../api/auth.api";
 
@@ -140,9 +137,8 @@ const SignupPage = () => {
           <h2>프로필 정보</h2>
         </div>
         <div className={styles.profileImageContainer}>
-          <LoginMemberProfileImage
-            width="100px"
-            height="100px"
+          <ProfileImage
+            size="100px"
             profileUrl={profileImageUrl}
           />
           <div style={{ position: "absolute", bottom: 0, right: 0 }}>

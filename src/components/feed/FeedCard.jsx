@@ -67,7 +67,10 @@ const FeedCard = ({ feed, onCommentClick }) => {
         <div className={style.container} key={feed.feedId}>
             {/* 작성자 정보 */}
             <div className={style.writerRow}>
-                <ProfileImage profileUrl={feed.writerProfileUrl} size="30px" onClick={handleClickProfile} />
+                <ProfileImage 
+                profileUrl={feed.writerProfileUrl} 
+                size="40px" 
+                onClick={handleClickProfile} />
                 <span onClick={handleClickProfile}>{feed.writerNickname}</span>
                 <div style={{ display: 'flex', justifyContent: 'end', paddingRight: '5px' }}>⋯</div>
             </div>

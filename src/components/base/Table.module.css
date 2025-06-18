@@ -1,13 +1,40 @@
-/* .row {
-    padding: 0.5rem;
-    height: 2.5rem;
-}
-
-.borderButtom {
-    border-bottom: 1px solid #ddd;
-}
-
 table {
-    text-align: center;
-    border-collapse: collapse;
-}  */
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  color: #000;
+  text-align: center;
+  /* min-width: max-content; */
+}
+
+tr>* {
+  padding: 1rem 0.75rem;
+  border-bottom: 1px solid #e0e0e0;
+  white-space: nowrap;
+}
+
+.wideColumn {
+  flex: 4;
+  text-align: start;
+}
+
+.role {
+  color: #5164ED;
+}
+
+.createdAt {
+  font-size: 1rem;
+}
+
+@media (max-width: 768px){
+  .wideColumn {
+    flex: 4;
+    text-align: start;
+  }
+
+  .createdAt {
+    font-size: 0.7rem;
+    white-space: inherit;
+    /* text-overflow: ellipsis; */
+  }
+}

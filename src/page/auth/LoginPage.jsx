@@ -12,6 +12,7 @@ import {
 import kakaoLogoImage from "../../assets/images/kakao_logo.png";
 
 import { login } from "../../api/auth.api";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
 	const kakaoLoginURL = `${process.env.REACT_APP_API_BASE_URL}/oauth2/authorization/kakao`;
@@ -57,6 +58,16 @@ const LoginPage = () => {
 	};
 
 	const handleSubmit = async () => {
+		if (!isFormValid) {
+			Swal.fire({
+				icon: "error",
+				title: "비밀번호 입력 오류",
+				text: "비밀번호를 확인해주세요.",
+				timer: 700,
+				showConfirmButton: false
+			});
+			return;
+		}
 		try {
 			await login(emailValue, passwordValue);
 			navigate("/auth/callback");
@@ -69,6 +80,8 @@ const LoginPage = () => {
 
 	return (
 		<div className={styles.container}>
+			<h1>Runners Hi</h1>
+			<div style={{ height: "1rem" }}></div>
 			<div className={styles.form}>
 				<div className={styles.errorContainer}>
 					<TextInputWithLabel

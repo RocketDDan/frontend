@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import style from "./AnnouncementListPage.module.css";
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { SecondaryButton } from "../../components/base/Button";
-import { TableView } from "../../components/base/AnnouncementTable";
+import { Table } from "../../components/base/Table";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../api/apiClient"
 import Pagination from "../../components/announcement/Pagination";
@@ -67,8 +67,8 @@ const AnnouncementListPage = () => {
 				/>
 			</div>
 			{/* 중간 */}
-			<div style={{ flex: 1 }} className={style.scrollX}>
-				<TableView
+			<div style={{ flex: 1 }}>
+				<Table
 					headers={["번호", "제목", "작성자", "작성날짜"]}
 					keys={["title", "crewName", "createdAt"]}
 					data={data}
