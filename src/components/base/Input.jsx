@@ -90,6 +90,7 @@ const TextInputWithLabel = ({
   onChange,
   closeBtnVisible = true,
   disabled = false,
+  onEnter,
 }) => {
   const id = uuidv7();
 
@@ -100,6 +101,12 @@ const TextInputWithLabel = ({
   const handleClear = () => {
     onChange?.("");
   };
+
+  const handleEnter = (e) => {
+    if (e.key === "Enter") {
+      onEnter?.();
+    }
+  }
 
   return (
     <span className={InputStyle.container} style={{ width: width }}>
@@ -117,6 +124,7 @@ const TextInputWithLabel = ({
           border: "solid 1px #999",
           width: "100%",
         }}
+        onKeyDown={handleEnter}
         disabled={disabled}
       />
       {value && closeBtnVisible && (
@@ -156,6 +164,7 @@ const TextArea = ({
   onChange,
   maxLength,
   closeBtnVisible = true,
+  onEnter,
 }) => {
   const id = uuidv7();
 
@@ -166,6 +175,12 @@ const TextArea = ({
   const handleClear = () => {
     onChange?.("");
   };
+
+  const handleEnter = (e) => {
+    if (e.key === "Enter") {
+      onEnter?.();
+    }
+  }
 
   return (
     <span className={InputStyle.container} style={{ width: width, height: height }}>
@@ -182,6 +197,7 @@ const TextArea = ({
           width: "100%",
           height: height, // 이 줄을 추가하세요!
         }}
+        onKeyDown={handleEnter}
       />
       {value && closeBtnVisible && (
         <FontAwesomeIcon
@@ -222,6 +238,7 @@ const TextAreaWithLabel = ({
   onChange,
   closeBtnVisible = true,
   required=true,
+  onEnter,
 }) => {
 
   const id = uuidv7();
@@ -239,6 +256,12 @@ const TextAreaWithLabel = ({
     e.style.height = "auto"; // 먼저 초기화
     e.style.height = `${e.scrollHeight}px`;
   };
+
+  const handleEnter = (e) => {
+    if (e.key === "Enter") {
+      onEnter?.();
+    }
+  }
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -268,6 +291,7 @@ const TextAreaWithLabel = ({
           overflow: "hidden", // 스크롤 안보이게
           resize: "none", // 수동 리사이즈 막기
         }}
+        onKeyDown={handleEnter}
         required={required}
       />
       {value && closeBtnVisible && (
@@ -305,6 +329,7 @@ const PasswordInputWithLabel = ({
   value,
   onChange,
   showPasswordBtnVisible = true,
+  onEnter,
 }) => {
   const id = uuidv7();
   const [visible, setVisible] = useState(false);
@@ -316,6 +341,12 @@ const PasswordInputWithLabel = ({
   const toggleVisibility = () => {
     setVisible((prev) => !prev);
   };
+
+  const handleEnter = (e) => {
+    if (e.key === "Enter") {
+      onEnter?.();
+    }
+  }
 
   return (
     <span className={InputStyle.container} style={{ width: width }}>
@@ -333,6 +364,7 @@ const PasswordInputWithLabel = ({
           border: "solid 1px #999",
           width: "100%",
         }}
+        onKeyDown={handleEnter}
       />
       {value && showPasswordBtnVisible && (
         <FontAwesomeIcon
