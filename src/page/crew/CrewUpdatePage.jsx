@@ -105,7 +105,6 @@ const CrewUpdatePage = () => {
 
     return (
         <div className={styles.wrapper}>
-            <h2 className={styles.title}>크루 수정</h2>
             <div style={{ margin: "32px 0" }}>
                 <label className={styles.label}>이미지</label>
                 <div
@@ -141,7 +140,7 @@ const CrewUpdatePage = () => {
                     />
                     <SecondaryHoverButton
                         content="중복확인"
-                        width="100px"
+                        width="110px"
                         className={styles.duplicateCheckButton}
                         onClick={onClickDuplicateCheck}
                     />
@@ -156,7 +155,9 @@ const CrewUpdatePage = () => {
             <div className={styles.mb16}>
                 <label className={styles.label}>활동 지역 (50자 이내)</label>
                 <div className={styles.rowFlex}>
-                    <RegionSelector region={region} setRegion={setRegion} />
+                    <div className={styles.modalWrapper}>
+                        <RegionSelector region={region} setRegion={setRegion} />
+                    </div>
                     <TextInput
                         width="100%"
                         placeholder="상세 주소"

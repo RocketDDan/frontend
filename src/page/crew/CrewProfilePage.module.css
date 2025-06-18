@@ -1,12 +1,17 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+}
 
 .flexContainer {
   display: flex;
-  justify-content: start;
-  width: fit-content;
+  justify-content: flex-start;
+  align-items: baseline; /* 위쪽 기준 정렬로 변경 */
+  margin-bottom: 8px;
 }
 
 .label {
-  width: 4rem;
+  width: 50px;
   font-size: 13px;
   color: #999;
   font-weight: 500;
@@ -20,7 +25,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* gap: 2rem; */
+  gap: 2rem;
 }
 
 .profileDiv {
@@ -29,17 +34,25 @@
 
 .infoSection {
   flex: 1;
-  height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-align: start;
+  gap: 0.6rem;
 }
 
 .region {
   font-size: 1.2rem;
   width: 15rem;
   text-align: start;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.region, .introduce {
+  display: inline-block; /* 정렬 맞춤 */
+  line-height: 1.4;
+  word-break: break-word;
 }
 
 .crewName {
@@ -52,10 +65,12 @@
   font-size: 1.2rem;
 }
 
-
 .introduce {
   cursor: pointer;
   width: 15rem;
+  max-width: 250px;
+  word-break: break-word;
+  line-height: 1.4;
 }
 
 .buttonSection {
@@ -70,7 +85,12 @@
 
 .buttonGroup {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.bottomButtonGroup{
+  display: flex;
   gap: 1rem;
 }
 
@@ -123,27 +143,26 @@
   height: 100%;
 }
 
-
+/* 전역 CSS 또는 CrewProfilePage.module.css에 추가 */
+.swal2-popup, .custom-swal-width {
+  box-sizing: border-box !important;
+}
 
 @media (max-width: 768px) {
   .profileWrapper {
     flex-direction: column;
     align-items: center;
     padding: 0 16px;
-    min-width: 0;
   }
 
   .buttonSection {
     align-items: center;
     margin-left: 0;
-    margin-top: 16px;
   }
 
   .introduce {
-    width: 100%;
     max-height: 200px;
   }
-
 
   .details {
     flex-direction: column;

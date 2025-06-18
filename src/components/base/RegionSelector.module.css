@@ -68,11 +68,12 @@
   grid-template-columns: repeat(3, 1fr);  /* 세 칼럼 고정 */
   gap: 12px;                               /* 간격 통일 */
   padding: 12px;
-  background: white;
+  background: #f9f9f9; /* 기존 white → 살짝 회색 */
   height: 320px;
   overflow-y: auto;
   width: 245px;
   flex-shrink: 0;
+  border-radius: 10px;
   grid-auto-rows: 40px;
 }
 
@@ -90,3 +91,15 @@
   font-weight: bold;
   background: #f3f6ff;
 }
+
+@media screen and (max-width: 420px) {
+  .modal {
+    width: calc(100vw - 40px);
+    left: -10px; /* 왼쪽으로 당김 */
+  }
+
+  .districtGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+

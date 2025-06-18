@@ -97,15 +97,18 @@ const CrewProfilePage = () => {
                 <>
                     <SecondaryHoverButton 
                         content="가입 요청 확인" 
-                        width="120px" 
+                        width="100%" 
                         onClick={()=>{navigate(`/crew/${crewId}/join-request/list`)}}
                      />
-                    <SecondaryHoverButton
-                        content="크루 수정"
-                        width="100px"
-                        onClick={() => navigate(`/crew/${crewId}/update`)}
-                    />
-                    <ThirdaryButton content="크루 삭제" width="100px" onClick={onClickDeleteBtn}/>
+                     <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
+                        <SecondaryHoverButton
+                            content="크루 수정"
+                            width="100%"
+                            onClick={() => navigate(`/crew/${crewId}/update`)}
+                        />
+                        <ThirdaryButton content="크루 삭제" width="100%" onClick={onClickDeleteBtn}/>
+                     </div>
+
                 </>
             );
         } else if (crew.member) {
@@ -141,7 +144,7 @@ const CrewProfilePage = () => {
     }, [crewId]);
 
     return (
-        <div style={{width: "100%"}}>
+        <div className={styles.pageWrapper}>
             {!crew && (
                 <div className={styles.loading}>
                     크루 정보를 불러오는 중입니다...
@@ -189,10 +192,11 @@ const CrewProfilePage = () => {
                 </div>
             )}
 
-            <div className={styles.crewMemberFeeds}>
-                <span>크루원들의 피드 모아보기</span>
+            {/* <div className={styles.crewMemberFeeds}> */}
+                {/* <span>크루원들의 피드 모아보기</span> */}
                 {/* 크루원들 피드 목록 조회 컴포넌트 추가 */}
-            </div>
+            {/* </div> */}
+            
             {modalOpen && Swal.fire({
                 title: modalTitle,
                 html: modalDescription,
@@ -208,15 +212,25 @@ const CrewProfilePage = () => {
                 setModalWidth("400px");
                 setUseButton(true);
             })}
-
             {requestModalOpen && Swal.fire({
                 title: "크루 가입 요청",
                 html: `
-                    &lt;textarea id="swal-input" class="swal2-textarea" placeholder="가입 요청 메시지를 입력하세요.(최대 1000자)" maxlength="1000" style="width: 400px; height: 200px;"&gt;${requestMessage}&lt;/textarea&gt;
+                    <textarea id="swal-input" class="swal2-textarea"
+                        placeholder="가입 요청 메시지를 입력하세요.(최대 400자)"
+                        maxlength="400"
+                        style="width: 100%; max-width: 100%; min-width: 0; height: 200px; box-sizing: border-box; display: block; margin: 0 auto;"
+                    >${requestMessage}</textarea>
                 `,
                 showCancelButton: true,
                 confirmButtonText: '요청',
                 cancelButtonText: '취소',
+                customClass: { popup: 'custom-swal-width' },
+                willOpen: () => {
+                    // popup에 box-sizing: border-box 적용 (중복 방지)
+                    const popup = document.querySelector('.swal2-popup');
+                    if (popup) popup.style.boxSizing = 'border-box';
+                }
+                ,
                 preConfirm: () => {
                     const input = document.getElementById('swal-input');
                     if (input) {
@@ -227,6 +241,7 @@ const CrewProfilePage = () => {
             }).then(() => {
                 setRequestModalOpen(false);
             })}
+
             {crewMemberModalOpen && (
                 <CrewMemberListModal
                     crewId={crewId}
