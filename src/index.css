@@ -124,6 +124,22 @@ thead tr:hover {
   color: #FF7723;
 }
 
+.crownLightColor {
+  color: #faa46f;
+}
+
+.crownLightColor:hover{
+  color: #FF7723;
+}
+
+.grey{
+  color: rgb(176, 176, 176);
+}
+
+.gery:hover{
+  color: grey;
+}
+
 .titleColor {
   color: #5164ED;
 }

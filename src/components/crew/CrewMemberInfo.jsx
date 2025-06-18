@@ -25,9 +25,12 @@ const CrewMemberInfo = ({ memberId, profilePath, nickname, date, isLeader=false 
             </div>
 
             <div className={styles.infoTextGroup} onClick={() => {navigate(`/runner/${memberId}`)}}>
-                <div className={styles.nickname} style={isLeader ? { marginTop: "5px" } : undefined}>{nickname}</div>
+                <div className={styles.nickname} style={isLeader ? { marginTop: "5px" } : undefined}>
+                    {nickname}
+                </div>
             </div>
             <div className={styles.date} style={isLeader ? { marginTop: "5px" } : undefined}>{date}</div>
+
         </div>
     );
 }
