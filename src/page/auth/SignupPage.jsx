@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import styles from "./SignupPage.module.css";
+import style from "./SignupPage.module.css";
 
 import { Button } from "../../components/base/Button";
 import { TextInput, } from "../../components/base/Input";
@@ -15,6 +15,7 @@ const SignupPage = () => {
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
 	const navigate = useNavigate();
+	const imageAddRef = useRef(null);
 
 	const [signUpFormData, setSignupFormData] = useState({
 		nickname: decodeURIComponent(queryParams.get("nickname") || ""),
@@ -130,27 +131,26 @@ const SignupPage = () => {
 	};
 
 	return (
-		<div className={styles.container}>
-			<h1 className={styles.title}>회원가입</h1>
-			<div className={styles.form}>
-				<div className={styles.subtitleContainer}>
-					<h2>프로필 정보</h2>
-				</div>
-				<div className={styles.profileImageContainer}>
+		<div className={style.container}>
+			<h1 className={style.title}>회원가입</h1>
+			<div className={style.form}>
+				<div className={style.profileImageContainer}>
 					<ProfileImage
 						size="100px"
 						profileUrl={profileImageUrl}
+						onClick={() => { imageAddRef.current.click() }}
 					/>
-					<div style={{ position: "absolute", bottom: 0, right: 0 }}>
-						<ImageAddBlock
-							handleFile={handleImageChange}
-							width="40px"
-							height="40px"
+					<div style={{ display: "none" }}>
+						<input
+							ref={imageAddRef}
+							type="file"
+							accept="image/*,video/*"
+							multiple
+							onChange={handleImageChange}
+							style={{ display: 'none' }}
 						/>
 					</div>
-				</div>
-				<div className={styles.nicknameContainer}>
-					<div className={styles.errorContainer}>
+					<div className={style.errorContainer}>
 						<label htmlFor="">
 							닉네임
 						</label>
@@ -161,26 +161,27 @@ const SignupPage = () => {
 							onChange={(value) => handleChange("nickname", value)}
 						/>
 						{errors.nickname && (
-							<div className={styles.error}>{errors.nickname}</div>
+							<div className={style.error}>{errors.nickname}</div>
 						)}
 						{errors.nicknameCheck && (
-							<div className={styles.error}>{errors.nicknameCheck}</div>
+							<div className={style.error}>{errors.nicknameCheck}</div>
 						)}
 					</div>
 					<Button
 						content="중복 확인"
-						width="20%"
+						width="12rem"
 						onClick={handleNicknameCheck}
 						active={signUpFormData.nickname}
 					/>
 				</div>
 			</div>
-			<div className={styles.form}>
-				<div className={styles.subtitleContainer}>
+
+			<div className={style.form}>
+				<div className={style.subtitleContainer}>
 					<h2>계정 정보</h2>
 				</div>
 				<div>
-					<div className={styles.subtitleContainer}>
+					<div className={style.subtitleContainer}>
 						<span>기업회원 여부</span>
 					</div>
 					<BasicRadio
@@ -193,17 +194,20 @@ const SignupPage = () => {
 						onChange={(value) => handleChange("isCompany", value)}
 					/>
 				</div>
-				<label htmlFor="">
-					아이디(이메일)
-				</label>
-				<TextInput
-					placeholder="이메일"
-					width="100%"
-					value={signUpFormData.email}
-					disabled={true}
-				/>
 
-				<div className={styles.errorContainer}>
+				<div className={style.errorContainer}>
+					<label htmlFor="" className={style.labelLeft}>
+						아이디(이메일)
+					</label>
+					<TextInput
+						placeholder="이메일"
+						width="100%"
+						value={signUpFormData.email}
+						disabled={true}
+					/>
+				</div>
+
+				<div className={style.errorContainer}>
 					<label htmlFor="">
 						비밀번호
 					</label>
@@ -215,10 +219,10 @@ const SignupPage = () => {
 						onChange={(value) => handleChange("password", value)}
 					/>
 					{errors.password && (
-						<div className={styles.error}>{errors.password}</div>
+						<div className={style.error}>{errors.password}</div>
 					)}
 				</div>
-				<div className={styles.errorContainer}>
+				<div className={style.errorContainer}>
 					<label htmlFor="">
 						비밀번호 확인
 					</label>
@@ -230,10 +234,10 @@ const SignupPage = () => {
 						onChange={(value) => handleChange("passwordConfirm", value)}
 					/>
 					{errors.passwordConfirm && (
-						<div className={styles.error}>{errors.passwordConfirm}</div>
+						<div className={style.error}>{errors.passwordConfirm}</div>
 					)}
 				</div>
-				<div className={styles.errorContainer}>
+				<div className={style.errorContainer}>
 					<label htmlFor="">
 						휴대폰 번호
 					</label>
@@ -243,7 +247,7 @@ const SignupPage = () => {
 						value={signUpFormData.phone}
 						onChange={(value) => handleChange("phone", value)}
 					/>
-					{errors.phone && <div className={styles.error}>{errors.phone}</div>}
+					{errors.phone && <div className={style.error}>{errors.phone}</div>}
 				</div>
 				<Button
 					content="회원가입"

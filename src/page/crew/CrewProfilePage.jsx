@@ -4,7 +4,7 @@ import styles from "./CrewProfilePage.module.css";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useParams } from "react-router-dom";
-import { Button, SecondaryHoverButton } from "../../components/base/Button";
+import { Button } from "../../components/base/Button";
 import { ProfileImage } from "../../components/profile/ProfileImage";
 import { deleteCrew, fetchCrew } from "../../api/crew.api";
 import { resignCrewMember } from "../../api/crewMember.api";

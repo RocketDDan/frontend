@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import styles from './CrewMemberListModal.module.css';
 import { CrewHeader } from './CrewHeader';
 import { CrewMemberInfo } from './CrewMemberInfo';
-import { SecondaryHoverButton, Button } from '../base/Button';
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { fetchCrewMembers, forceRemoveCrewMember, changeCrewLeader } from '../../api/crewMember.api';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -90,7 +89,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                 setHasMore(data.length === perPage);
             });
         // eslint-disable-next-lines
-    }, [page, crewId]);
+    }, [page, crewId, nickname]);
 
     // IntersectionObserver 콜백
     const handleObserver = useCallback(
@@ -135,34 +134,35 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                     <CrewHeader columns={isLeader ? columnsForLeader : columnsForMember} />
                 </div>
                 <div className={styles.memberList} ref={memberListRef}>
-                    {crewMemberList === null || crewMemberList?.length === 0 && (
-                    <div className={styles.noMembers}>
-                        현재 크루원이 없습니다. 
-                    </div>
-                    )}
-                    {crewMemberList && crewMemberList.map((member, idx) => (
-                    <div key={idx} className={styles.memberInfo}>
-                        <CrewMemberInfo
-                            memberId={member?.memberId}
-                            profilePath={member?.profilePath}
-                            nickname={member?.nickname}
-                            date={member?.registerDate}
-                            isLeader={member?.leader}
-                        />
-                        {isLeader && !member?.leader && (
-                        <div className={styles.menageButtons}>
-                            <FontAwesomeIcon 
-                                icon={faWebAwesome} 
-                                onClick={()=>onClickPass(member.crewMemberId)}
-                                className="crownLightColor"
-                                style={{fontSize: "20px"}}/>
-                            <FontAwesomeIcon 
-                                icon={faTrash} 
-                                onClick={()=>onClickForceResign(member.crewMemberId)}
-                                style={{fontSize: "20px", color: "grey"}}/>
-                        </div>
+                    {(crewMemberList === null || crewMemberList?.length === 0)
+                        && (
+                            <div className={styles.noMembers}>
+                                현재 크루원이 없습니다.
+                            </div>
                         )}
-                    </div>
+                    {crewMemberList && crewMemberList.map((member, idx) => (
+                        <div key={idx} className={styles.memberInfo}>
+                            <CrewMemberInfo
+                                memberId={member?.memberId}
+                                profilePath={member?.profilePath}
+                                nickname={member?.nickname}
+                                date={member?.registerDate}
+                                isLeader={member?.leader}
+                            />
+                            {isLeader && !member?.leader && (
+                                <div className={styles.menageButtons}>
+                                    <FontAwesomeIcon
+                                        icon={faWebAwesome}
+                                        onClick={() => onClickPass(member.crewMemberId)}
+                                        className="crownLightColor"
+                                        style={{ fontSize: "20px" }} />
+                                    <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={() => onClickForceResign(member.crewMemberId)}
+                                        style={{ fontSize: "20px", color: "grey" }} />
+                                </div>
+                            )}
+                        </div>
                     ))}
                     {/* 무한 스크롤 타겟 */}
                     {hasMore && <div ref={observerTarget} style={{ height: "20px" }} />}
