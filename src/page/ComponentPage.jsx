@@ -3,14 +3,14 @@ import { SearchBar } from "../components/search_bar/SearchBar";
 import { BasicCheckbox } from "../components/base/Checkbox";
 import { BasicRadio } from "../components/base/Radio";
 import { BasicSelect } from "../components/base/Select";
-import { FeedProfileImage, CrewProfileImage, MemberProfileImage, CrewMemberProfileImage } from "../components/profile/ProfileImage";
+import { ProfileImage } from "../components/profile/ProfileImage";
 import { PrimaryBigButton, PrimaryButton, SecondaryBigButton, SecondaryButton, ThirdaryButton, CustomButton } from "../components/base/Button";
 import { SquareFeed } from "../components/feed/SquareFeed";
 
 import MetamongImage from "../assets/images/metamong.jpeg"
 import { useState } from "react";
-import {CheckModal} from "../components/base/CheckModal";
-import {CrewMemberInfo} from "../components/crew/CrewMemberInfo";
+import { CheckModal } from "../components/base/CheckModal";
+import { CrewMemberInfo } from "../components/crew/CrewMemberInfo";
 import Pagenation from "../components/base/Pagenation";
 
 const HomePage = () => {
@@ -174,19 +174,7 @@ const HomePage = () => {
                 <div style={{ display: 'flex', justifyContent: 'start', gap: '5rem' }}>
                     <div style={{ flex: '1' }}>
                         <h4>Feed Profile Image</h4>
-                        <FeedProfileImage />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Crew Profile Image</h4>
-                        <CrewProfileImage />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Member Profile Image</h4>
-                        <MemberProfileImage />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Crew Member Profile Image</h4>
-                        <CrewMemberProfileImage />
+                        <ProfileImage size="30px" />
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
@@ -197,52 +185,52 @@ const HomePage = () => {
                     <div style={{ flex: '1' }}>
                         <h4>Primary Button</h4>
                         <p>width: 90px</p>
-                        <PrimaryButton 
-                        width="90px" 
-                        onClick={() => { console.log("click") }} />
+                        <PrimaryButton
+                            width="90px"
+                            onClick={() => { console.log("click") }} />
                     </div>
                     <div style={{ flex: '1' }}>
                         <h4>Secondary Button</h4>
                         <p>width: 120px</p>
-                        <SecondaryButton 
-                        width="120px" 
-                        onClick={() => { console.log("click") }} />
+                        <SecondaryButton
+                            width="120px"
+                            onClick={() => { console.log("click") }} />
                     </div>
                     <div style={{ flex: '1' }}>
                         <h4>Primary Big Button</h4>
                         <p>width: 120px</p>
-                        <PrimaryBigButton 
-                        width="120px" 
-                        onClick={() => { console.log("click") }} />
+                        <PrimaryBigButton
+                            width="120px"
+                            onClick={() => { console.log("click") }} />
                     </div>
                     <div style={{ flex: '1' }}>
                         <h4>Secondary Big Button</h4>
                         <p>width: 150px</p>
-                        <SecondaryBigButton 
-                        width="150px" 
-                        onClick={() => { console.log("click") }} />
+                        <SecondaryBigButton
+                            width="150px"
+                            onClick={() => { console.log("click") }} />
                     </div>
                     <div style={{ flex: '1' }}>
                         <h4>Thirdary Button</h4>
                         <p>width: 90px</p>
-                        <ThirdaryButton 
-                        width="90px" 
-                        onClick={() => { console.log("click") }} />
+                        <ThirdaryButton
+                            width="90px"
+                            onClick={() => { console.log("click") }} />
                     </div>
                     <div style={{ flex: '1' }}>
                         <h4>Custom Button</h4>
                         <p>width: 90px</p>
-                        <CustomButton 
-                        width="90px" 
-                        onClick={() => { console.log("click") }} />
+                        <CustomButton
+                            width="90px"
+                            onClick={() => { console.log("click") }} />
                     </div>
                     <div style={{ flex: '1' }}>
                         <h4>Disabled Button</h4>
                         <p>width: 90px</p>
-                        <CustomButton 
-                        width="90px" 
-                        active={false}
-                        onClick={() => { console.log("click") }} />
+                        <CustomButton
+                            width="90px"
+                            active={false}
+                            onClick={() => { console.log("click") }} />
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
@@ -334,16 +322,16 @@ const HomePage = () => {
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
 
-                {/* 확인 모달창 */} 
+                {/* 확인 모달창 */}
                 <h2>확인 모달창</h2>
                 <div>
                     <button onClick={() => setModalOpen(true)}> 모달 열기 </button>
-                    {modalOpen &&(
-                        <CheckModal 
-                        title="제목" 
-                        description="하시겠습니까?" 
-                        onConfirm={()=>setModalOpen(false)}
-                        onClose={()=>setModalOpen(false)}/>
+                    {modalOpen && (
+                        <CheckModal
+                            title="제목"
+                            description="하시겠습니까?"
+                            onConfirm={() => setModalOpen(false)}
+                            onClose={() => setModalOpen(false)} />
                     )}
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
@@ -351,7 +339,7 @@ const HomePage = () => {
                 {/* 멤버 프로필 목록용 카드*/}
                 <h2>크루 멤버 정보</h2>
                 <div>
-                    <CrewMemberInfo profilePath={MetamongImage} nickname="닉네임" date="2025-06-14 11:11:11"/>
+                    <CrewMemberInfo profilePath={MetamongImage} nickname="닉네임" date="2025-06-14 11:11:11" />
                 </div>
 
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
@@ -359,7 +347,7 @@ const HomePage = () => {
                 {/* 페이지네이션 버튼 */}
                 <h2>페이지네이션 버튼</h2>
                 <div>
-                    <Pagenation page={1} isExistNextPage={false} setPage={() => console.log('nextPage')}/>
+                    <Pagenation page={1} isExistNextPage={false} setPage={() => console.log('nextPage')} />
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
 

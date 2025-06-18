@@ -1,7 +1,5 @@
-import React, { use, useEffect, useState, useRef, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import styles from './CrewMemberListModal.module.css';
-import { sampleCrewMember } from '../../dto/crew.dto';
 import { CrewHeader } from './CrewHeader';
 import { CrewMemberInfo } from './CrewMemberInfo';
 import { SecondaryHoverButton, ThirdaryButton } from '../base/Button';
@@ -118,35 +116,36 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                     <CrewHeader columns={isLeader ? columnsForLeader : columnsForMember} />
                 </div>
                 <div className={styles.memberList} ref={memberListRef}>
-                    {crewMemberList === null || crewMemberList?.length === 0 && (
-                    <div className={styles.noMembers}>
-                        현재 크루원이 없습니다. 크루원을 초대해보세요!
-                    </div>
-                    )}
-                    {crewMemberList && crewMemberList.map((member, idx) => (
-                    <div key={idx} className={styles.memberInfo}>
-                        <CrewMemberInfo
-                            memberId={member?.memberId}
-                            profilePath={member?.profilePath}
-                            nickname={member?.nickname}
-                            date={member?.registerDate}
-                            isLeader={member?.leader}
-                        />
-                        {isLeader && !member?.leader && (
-                        <div className={styles.menageButtons}>
-                            <SecondaryHoverButton
-                                content="크루장 변경"
-                                width="110px"
-                                onClick={()=>onClickPass(member.crewMemberId)}
-                            />
-                            <ThirdaryButton
-                                content="강퇴"
-                                width="70px"
-                                onClick={()=>onClickForceResign(member.crewMemberId)}
-                            />
-                        </div>
+                    {(crewMemberList === null || crewMemberList?.length === 0)
+                        && (
+                            <div className={styles.noMembers}>
+                                현재 크루원이 없습니다. 크루원을 초대해보세요!
+                            </div>
                         )}
-                    </div>
+                    {crewMemberList && crewMemberList.map((member, idx) => (
+                        <div key={idx} className={styles.memberInfo}>
+                            <CrewMemberInfo
+                                memberId={member?.memberId}
+                                profilePath={member?.profilePath}
+                                nickname={member?.nickname}
+                                date={member?.registerDate}
+                                isLeader={member?.leader}
+                            />
+                            {isLeader && !member?.leader && (
+                                <div className={styles.menageButtons}>
+                                    <SecondaryHoverButton
+                                        content="크루장 변경"
+                                        width="110px"
+                                        onClick={() => onClickPass(member.crewMemberId)}
+                                    />
+                                    <ThirdaryButton
+                                        content="강퇴"
+                                        width="70px"
+                                        onClick={() => onClickForceResign(member.crewMemberId)}
+                                    />
+                                </div>
+                            )}
+                        </div>
                     ))}
                     {/* 무한 스크롤 타겟 */}
                     {hasMore && <div ref={observerTarget} style={{ height: "20px" }} />}
