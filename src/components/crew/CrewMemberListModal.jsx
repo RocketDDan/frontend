@@ -89,7 +89,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                 setIsLoading(false);
                 setHasMore(data.length === perPage);
             });
-        // eslint-disable-next-line
+        // eslint-disable-next-lines
     }, [page, crewId]);
 
     // IntersectionObserver 콜백
@@ -131,14 +131,13 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                     />
                 </div>
 
-                <button className={styles.closeButton} onClick={onClose}>×</button>
                 <div className={styles.crewHeader}>
                     <CrewHeader columns={isLeader ? columnsForLeader : columnsForMember} />
                 </div>
                 <div className={styles.memberList} ref={memberListRef}>
                     {crewMemberList === null || crewMemberList?.length === 0 && (
                     <div className={styles.noMembers}>
-                        현재 크루원이 없습니다. 크루원을 초대해보세요!
+                        현재 크루원이 없습니다. 
                     </div>
                     )}
                     {crewMemberList && crewMemberList.map((member, idx) => (
