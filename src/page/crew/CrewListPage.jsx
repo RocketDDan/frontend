@@ -19,6 +19,7 @@ const CrewListPage = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [isFetch, setIsFetch] = useState(true);
 
   const observerTarget = useRef(null);
   const navigate = useNavigate();
@@ -28,25 +29,35 @@ const CrewListPage = () => {
   const perPage = 6;
 
   const orderOptions = [
-    { value: "LATEST", label: "최신순" },
-    { value: "OLDEST", label: "오래된순" },
-    { value: "MEMBER_CNT", label: "크루원수" },
+	{ value: "LATEST", label: "최신순" },
+	{ value: "OLDEST", label: "오래된순" },
+	{ value: "MEMBER_CNT", label: "크루원수" },
   ];
+
+  const afterFetchCrewList = (data) => {
+	if(!data || data.length === 0){
+		setIsFetch(false);
+	}
+	else{
+		setIsFetch(true);
+	}
+  }
 
   // 검색/필터 변경 시 새로고침 및 page 초기화
   useEffect(() => {
     setPage(1);
     setIsLoading(true);
     fetchCrewList({
-      crewName: name,
-      page: 1,
-      perPage,
-      region,
-      order,
+		crewName: name,
+		page: 1,
+		perPage,
+		region,
+		order,
     }).then((data) => {
-      setCrewList(data);
-      setIsLoading(false);
-      setHasMore(data.length === perPage);
+		setCrewList(data);
+		setIsLoading(false);
+		setHasMore(data.length === perPage);
+		afterFetchCrewList(data);
     });
   }, [order, region]);
 
@@ -55,25 +66,26 @@ const CrewListPage = () => {
     if (page === 1) return; // page 1은 위에서 처리함
     setIsLoading(true);
     fetchCrewList({
-      crewName: name,
-      page,
-      perPage,
-      region,
-      order,
+		crewName: name,
+		page,
+		perPage,
+		region,
+		order,
     }).then((data) => {
-      setCrewList((prev) => [...prev, ...data]);
-      setIsLoading(false);
-      setHasMore(data.length === perPage);
+		setCrewList((prev) => [...prev, ...data]);
+		setIsLoading(false);
+		setHasMore(data.length === perPage);
+		afterFetchCrewList(data);
     });
   }, [page]);
 
   // IntersectionObserver 콜백
   const handleObserver = useCallback(
     (entries) => {
-      const target = entries[0];
-      if (target.isIntersecting && !isLoading && hasMore) {
-        setPage((prev) => prev + 1);
-      }
+		const target = entries[0];
+		if (target.isIntersecting && !isLoading && hasMore) {
+			setPage((prev) => prev + 1);
+		}
     },
     [isLoading, hasMore]
   );
@@ -81,7 +93,7 @@ const CrewListPage = () => {
   // 옵저버 등록
   useEffect(() => {
     const observer = new window.IntersectionObserver(handleObserver, {
-      threshold: 0.1,
+    	threshold: 0.1,
     });
     if (observerTarget.current) observer.observe(observerTarget.current);
     return () => observer.disconnect();
@@ -90,8 +102,8 @@ const CrewListPage = () => {
   useEffect(() => {
     if (user) {
       fetchMyCrew().then((data) => {
-        setHasCrew(data !== null);
-        console.log(hasCrew);
+			setHasCrew(data !== null);
+			console.log(hasCrew);
       });
     }    
 
@@ -101,50 +113,56 @@ const CrewListPage = () => {
   const handleSearchBar = () => {
     setPage(1);
     fetchCrewList({
-      crewName: name,
-      page,
-      perPage,
-      region,
-      order,
+		crewName: name,
+		page,
+		perPage,
+		region,
+		order,
     }).then((data) => {
-      setCrewList(data);
+    	setCrewList(data);
+		afterFetchCrewList(data);
     });
   };
 
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.searchHeader}>
+		<div className={styles.searchBar}>
+			<SearchBar  
+			width="100%"
+			placeholder="크루명을 입력해주세요."
+			value={name}
+			onChange={setName}
+			onEnter={handleSearchBar}
+        	/>
+		</div>
+
         <div className={styles.selectGroup}>
           <RegionSelector region={region} setRegion={setRegion} />
           <BasicSelect
-            options={orderOptions}
-            value={order}
-            onChange={setOrder}
-            width="7rem"
+			options={orderOptions}
+			value={order}
+			onChange={setOrder}
+			width="7rem"
           />
         </div>
 
-        <SearchBar
-          width={500}
-          placeholder="크루명을 입력해주세요."
-          value={name}
-          onChange={setName}
-          onEnter={handleSearchBar}
-        />
         {user && !hasCrew && (
-          <SecondaryHoverButton
-            content="크루 생성"
-            width="100px"
-            onClick={() => navigate("/crew/create")}
-          />
-        )}
+		<div>
+			<SecondaryHoverButton
+				content="크루 생성"
+				width="100px"
+				onClick={() => navigate("/crew/create")}
+			/>
+		</div>)}
       </div>
       <div className={styles.container}>
         {crewList.length > 0 &&
-          crewList.map((crew, index) => (
-            <CrewCard key={crew.crewId} crew={crew} />
-          ))}
-        {crewList.length === 0 && <LoadingSpinner />}
+        	crewList.map((crew, index) => (
+            	<CrewCard key={crew.crewId} crew={crew} />
+        	))}
+        {isFetch && crewList.length === 0 && <LoadingSpinner />}
+		{!isFetch && crewList.length === 0 && <span className="noData">크루가 존재하지 않습니다.</span>}
         {/* 관찰 타겟: 더 불러올 데이터가 있을 때만 렌더링 */}
         {hasMore && <div ref={observerTarget} style={{ height: "20px" }} />}
       </div>

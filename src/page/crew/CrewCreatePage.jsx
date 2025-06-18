@@ -100,7 +100,6 @@ const CrewCreatePage = () => {
 
     return (
         <div className={styles.wrapper}>
-            <h2 className={styles.title}>크루 정보</h2>
             <div style={{ margin: "32px 0" }}>
                 <label className={styles.label}>이미지</label>
                 <div
@@ -136,7 +135,7 @@ const CrewCreatePage = () => {
                     />
                     <SecondaryHoverButton
                         content="중복확인"
-                        width="100px"
+                        width="110px"
                         className={styles.duplicateCheckButton}
                         onClick={onClickDuplicateCheck}
                     />

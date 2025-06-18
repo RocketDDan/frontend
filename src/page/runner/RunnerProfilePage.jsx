@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./RunnerProfilePage.module.css";
-import { CrewProfileImage } from "../../components/profile/ProfileImage";
+import { ProfileImage } from "../../components/profile/ProfileImage";
 import { fetchMemberProfile } from "../../api/member.api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCrown } from "@fortawesome/free-solid-svg-icons";
 
 const RunnerProfilePage = () => {
     const navigate = useNavigate();
@@ -26,15 +28,24 @@ const RunnerProfilePage = () => {
             )}
             {member && (
                 <div className={styles.profileWrapper}>
-                    <CrewProfileImage profileUrl={member.profileImageUrl}/>
+
+                    <ProfileImage profileUrl={member.profileImageUrl} size="200px"/>
+
                     <div className={styles.infoSection}>
                         <span className={styles.nickname}>{member.nickname}</span>
-                        <span className={styles.info}>{member.email}</span>
-                        <div>
+                        <div className={styles.crewGroup} onClick={navigate(`/crew/${member.crewId}`)}>
                             <div className={styles.label}>소속 크루</div>
-                            <span className={styles.info}>{member.crewName}</span>
+
+                            <span className={styles.crewName}>                            
+                                {member.leader && (
+                                <FontAwesomeIcon icon={faCrown} className="crownColor" />
+                                )}
+                                &nbsp;
+                                {member.crewName}
+                            </span>
                         </div>
                     </div>
+
                 </div>
             )}
             <div className={styles.memberFeeds}>
