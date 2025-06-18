@@ -1,6 +1,6 @@
 import styles from './CrewMemberInfo.module.css'; 
 import { useNavigate } from 'react-router-dom';
-import { CrewMemberProfileImage } from '../profile/ProfileImage';
+import { ProfileImage } from '../profile/ProfileImage';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWebAwesome } from "@fortawesome/free-brands-svg-icons";
 
@@ -21,13 +21,13 @@ const CrewMemberInfo = ({ memberId, profilePath, nickname, date, isLeader=false 
                 {isLeader && (
                     <FontAwesomeIcon icon={faWebAwesome} className={`${styles.crown} crownColor`}/>
                 )}
-                <CrewMemberProfileImage profileUrl={profilePath} />
+                <ProfileImage profileUrl={profilePath} size={"40px"}/>
             </div>
 
             <div className={styles.infoTextGroup} onClick={() => {navigate(`/runner/${memberId}`)}}>
-                <div className={styles.nickname}>{nickname}</div>
+                <div className={styles.nickname} style={isLeader ? { marginTop: "5px" } : undefined}>{nickname}</div>
             </div>
-            <div className={styles.date}>{date}</div>
+            <div className={styles.date} style={isLeader ? { marginTop: "5px" } : undefined}>{date}</div>
         </div>
     );
 }
