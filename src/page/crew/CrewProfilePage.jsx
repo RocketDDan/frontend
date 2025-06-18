@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CrewProfilePage.module.css";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,7 @@ import { resignCrewMember } from "../../api/crewMember.api";
 import { deleteCrewJoinRequest, requestCrewJoin } from "../../api/crewJoinRequest.api";
 import CrewMemberListModal from "../../components/crew/CrewMemberListModal";
 import Swal from "sweetalert2";
+import { fetchFeedList } from "../../api/feed.api";
 
 const CrewProfilePage = () => {
     const navigate = useNavigate();
@@ -150,6 +151,30 @@ const CrewProfilePage = () => {
         });
     }, [crewId]);
 
+    // TODO: 피드 모아보기 개발중
+    const [feedList, setFeedList] = useState([]); // 피드 데이터
+    const [page, setPage] = useState(1); // 페이지
+    const [isLoading, setIsLoading] = useState(false); // 로딩중인지 여부
+    const observerTarget = useRef(null); // 
+    const handleObserver = useCallback((entries) => {
+        const target = entries[0];
+        if (target.isIntersecting && !isLoading) {
+            setPage(prev => prev + 1);
+        }
+    }, [isLoading]);
+
+    useEffect(() => {
+        const loadFeeds = async () => {
+            setIsLoading(true);
+            const data = await fetchFeedList({ page: page, perPage: 10, scope: "CREW", order: "LATEST", crewId: crewId });
+            console.log("data: ", data);
+            setFeedList(prev => [...data, ...prev]);  // 누적!
+            setIsLoading(false);
+        };
+        loadFeeds();
+    }, [page]);
+
+
     return (
         <div className={styles.pageWrapper}>
             {!crew && (
@@ -158,43 +183,61 @@ const CrewProfilePage = () => {
                 </div>
             )}
             {crew && (
-                <div className={styles.profileWrapper}>
+                <div>
+                    <div className={styles.profileWrapper}>
 
-                    <div className={styles.profileDiv}>
-                        <ProfileImage profileUrl={crew?.profilePath} size="200px" />
+                        <div className={styles.profileDiv}>
+                            <ProfileImage profileUrl={crew?.profilePath} size="200px" />
+                        </div>
+
+                        <div className={styles.infoSection}>
+                            <span className={styles.crewName}>
+                                {crew?.crewName}
+                            </span>
+
+                            <div className={styles.flexContainer} onClick={() => setCrewMemberModalOpen(true)}>
+                                <div className={styles.label}>멤버</div>
+                                <div style={{ cursor: "pointer" }}>
+                                    <FontAwesomeIcon icon={faPersonRunning} />
+                                    <span>&nbsp;{crew?.totalMemberCnt}명</span>
+                                </div>
+                            </div>
+
+                            <div className={styles.flexContainer}>
+                                <div className={styles.label}>소개</div>
+                                <div className={styles.introduce} onClick={onClickIntroduce}>
+                                    {crew?.introduce.length > 30 ? crew.introduce.substring(0, 30) + '...' : crew.introduce}
+                                </div>
+                            </div>
+
+                            <div className={styles.flexContainer}>
+                                <div className={styles.label}>주소</div>
+                                <div className={`${styles.region} textLightColor`}>
+                                    <span>{crew?.crewRegion}</span>&nbsp;
+                                    <span>{crew?.crewAddress}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={styles.buttonSection}>
+                            <div className={styles.buttonGroup}>{renderActionButtons()}</div>
+                        </div>
                     </div>
 
-                    <div className={styles.infoSection}>
-                        <span className={styles.crewName}>
-                            {crew?.crewName}
-                        </span>
-
-                        <div className={styles.flexContainer} onClick={() => setCrewMemberModalOpen(true)}>
-                            <div className={styles.label}>멤버</div>
-                            <div style={{ cursor: "pointer" }}>
-                                <FontAwesomeIcon icon={faPersonRunning} />
-                                <span>&nbsp;{crew?.totalMemberCnt}명</span>
-                            </div>
+                    <div style={{ width: "100%", textAlign:"start" }}>
+                        <h3>피드 모아보기</h3>
+                        <hr />
+                        <div className={styles.feedListContainer}>
+                            {
+                                // feedList.map(feed => {
+                                [...Array(100)].map((_, i) => {
+                                    return <div className={styles.squareBox}>
+                                        {/* {feed.feedId} */}
+                                        {i + 1}
+                                    </div>
+                                })
+                            }
                         </div>
-
-                        <div className={styles.flexContainer}>
-                            <div className={styles.label}>소개</div>
-                            <div className={styles.introduce} onClick={onClickIntroduce}>
-                                {crew?.introduce.length > 30 ? crew.introduce.substring(0, 30) + '...' : crew.introduce}
-                            </div>
-                        </div>
-
-                        <div className={styles.flexContainer}>
-                            <div className={styles.label}>주소</div>
-                            <div className={`${styles.region} textLightColor`}>
-                                <span>{crew?.crewRegion}</span>&nbsp;
-                                <span>{crew?.crewAddress}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={styles.buttonSection}>
-                        <div className={styles.buttonGroup}>{renderActionButtons()}</div>
                     </div>
                 </div>
             )}

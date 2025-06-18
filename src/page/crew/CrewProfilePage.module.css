@@ -170,3 +170,24 @@
     align-items: flex-start;
   }
 }
+
+
+/* 피드 모아보기 */
+.feedListContainer {
+  display: flex;
+  flex-wrap: wrap;           /* 줄바꿈 허용 */
+  gap: 8px;                  /* 요소 간 여백 */
+  justify-content: flex-start;
+}
+
+.squareBox {
+  width: 120px;
+  height: 120px;
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
