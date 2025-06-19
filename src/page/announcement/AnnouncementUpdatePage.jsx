@@ -19,8 +19,10 @@ const AnnouncementUpdatePage = () => {
   const response = await fetch(`${url}?not-from-cache-please`);
   const blob = await response.blob();
   const contentType = blob.type || "application/octet-stream"; 
-  return new File([blob], filename, { type: contentType });
+  const cleanName = filename.split("/").pop().replace(/^release\/announcement\/\d+\//, ""); 
+  return new File([blob], cleanName, { type: contentType });
 };
+
 
 
   useEffect(() => {
@@ -58,9 +60,9 @@ const AnnouncementUpdatePage = () => {
   return urlToFile(file.url, cleanName);
   });
 
-  console.log("File 객체로 변환한 것:", existingFilePromises); 
+ 
   const convertedExistingFiles = await Promise.all(existingFilePromises);
-  console.log("convertedExistingFiles:", convertedExistingFiles); 
+
 
   
 
