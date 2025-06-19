@@ -57,6 +57,9 @@ const AnnouncementUpdatePage = () => {
   );
   const convertedExistingFiles = await Promise.all(existingFilePromises);
 
+  
+  console.log(existingFilePromises);
+
   // 기존 파일 + 새 파일 합쳐서 전송
   [...convertedExistingFiles, ...newFiles].forEach((file) =>
     formData.append("files", file)
