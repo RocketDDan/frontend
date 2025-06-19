@@ -12,6 +12,7 @@ import { fetchLikeFeed, fetchUnlikeFeed } from '../../api/likeFeed.api';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import KakaoMap from '../map/KakaoMap';
+import MediaViewer from '../image/MediaViewer';
 
 /**
  * 피드 카드
@@ -115,22 +116,22 @@ const FeedCard = ({ feed, onCommentClick }) => {
                     </span>
                 </div>
                 <div>{feed.feedFileUrlList.length > 1 && '.'.repeat(feed.feedFileUrlList.length)}</div>
-                <div style={{ textAlign: "end" }}>
+                <div style={{ display: "flex", justifyContent: "end", gap: "0.5rem" }}>
                     {feed.lat && feed.lng && (
-                        <span className={style.tag} onClick={openLocationModal} style={{ backgroundColor: '#ffe3e3', cursor: 'pointer' }}>
+                        <span className={`${style.tag} pinkBg`} onClick={openLocationModal}>
                             #위치
                         </span>
                     )}
                     {feed.type === 'ADVERTISE' && (
-                        <span className={style.tag} style={{ backgroundColor: '#ffe3e3', color: '#d63031' }}>
+                        <span className={`${style.tag} secondaryBg`}>
                             #홍보
                         </span>
                     )}
-                    {feed.type === 'PERSONAL' && (
-                        <span className={style.tag} style={{ backgroundColor: '#e3f2fd', color: '#2980b9' }}>
+                    {/* {feed.type === 'PERSONAL' && (
+                        <span className={style.tag}>
                             #일반
                         </span>
-                    )}
+                    )} */}
                 </div>
             </div>
 
@@ -141,14 +142,14 @@ const FeedCard = ({ feed, onCommentClick }) => {
             </div>
 
             {/* 댓글 */}
-            <div className={style.commentList}>
+            {/* <div className={style.commentList}>
                 {feed.commentList.map(comment => (
                     <div key={comment.commentId}>
                         <span style={{ fontWeight: "bold" }}>{comment.writerNickname}</span>
                         <span>{comment.content}</span>
                     </div>
                 ))}
-            </div>
+            </div> */}
 
             {/* 위치 모달 */}
             {isMapOpen && (
@@ -174,35 +175,6 @@ const FeedCard = ({ feed, onCommentClick }) => {
             )}
         </div>
     );
-};
-
-const MediaViewer = ({ fileUrl }) => {
-    const videoRef = useRef(null);
-
-    const isVideo = (url) => {
-        if (!url) return false;
-        const cleanUrl = url.split('?')[0];
-        return cleanUrl.endsWith('.mp4') || cleanUrl.endsWith('.mov') || cleanUrl.endsWith('.webm');
-    };
-
-    const isVideoFile = isVideo(fileUrl);
-
-    useEffect(() => {
-        if (isVideoFile && videoRef.current) {
-            videoRef.current.load();
-        }
-    }, [fileUrl, isVideoFile]);
-
-    if (isVideoFile) {
-        return (
-            <video ref={videoRef} style={{ width: '100%', height: 'auto' }} controls>
-                <source src={fileUrl} type="video/mp4" />
-                브라우저가 video 태그를 지원하지 않습니다.
-            </video>
-        );
-    }
-
-    return <img src={fileUrl} alt="피드 이미지" style={{ width: '100%', height: 'auto' }} />;
 };
 
 export default FeedCard;
