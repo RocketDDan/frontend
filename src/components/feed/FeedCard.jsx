@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import KakaoMap from '../map/KakaoMap';
 import MediaViewer from '../image/MediaViewer';
+import useCheckLogin from '../../util/RequiredLogin';
 
 /**
  * 피드 카드
@@ -51,7 +52,13 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
         };
     }, [feed, onAdVisible]);
 
-    const handleLike = () => {
+    const checkLoginUser = useCheckLogin();
+
+    const handleLike = async () => {
+        const isLogin = await checkLoginUser();
+        if (!isLogin) return;
+
+        // 로그인된 사용자만 실행할 코드
         setIsLiked(true);
         setLikeCount(likeCount + 1);
         fetchLikeFeed(feed.feedId)
@@ -61,7 +68,9 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
             });
     };
 
-    const handleUnlike = () => {
+    const handleUnlike = async () => {
+        const isLogin = await checkLoginUser();
+        if (!isLogin) return;
         setIsLiked(false);
         setLikeCount(likeCount - 1);
         fetchUnlikeFeed(feed.feedId)

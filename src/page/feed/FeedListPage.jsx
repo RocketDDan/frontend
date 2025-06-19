@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { logAdFeedView } from '../../api/feedViewLog.api';
+import useCheckLogin from '../../util/RequiredLogin';
 
 
 const FeedListPage = () => {
@@ -93,7 +94,12 @@ const FeedListPage = () => {
         })
     }
 
-    const handlePlusBtn = () => {
+    const checkLoginUser = useCheckLogin();
+    
+    // 피드 업로드 버튼
+    const handlePlusBtn = async() => {
+        const isLogin = await checkLoginUser();
+        if (!isLogin) return;
         navigate("/feed/upload");
     }
 
