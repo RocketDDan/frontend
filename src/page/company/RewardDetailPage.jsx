@@ -125,6 +125,7 @@ const RewardDetailPage = () => {
 			},
 			y: {
 				grid: { display: false },
+				min: 0,
 			},
 		},
 	};
