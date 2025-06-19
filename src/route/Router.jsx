@@ -89,7 +89,7 @@ const Router = () => {
             <Route path="/runner/:memberId" element={<RunnerProfilePage/>}/>
 
             {/* 홈 */}
-            <Route path="/" element={<HomePage/>} />
+            <Route path="/" element={<FeedListPage/>} />
 
             {/* 페이 */}
             <Route path="/pay/kakao/success" element={<KakaoPaySuccessPage/>} />
