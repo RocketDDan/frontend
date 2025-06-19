@@ -25,7 +25,9 @@ const LoginCallback = () => {
             isLeader: myCrewInfo.leader,
           });
         }
-        navigate("/");
+        const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
+        localStorage.removeItem("redirectAfterLogin");
+        navigate(redirectPath);
       } catch (error) {
         navigate("/login");
       }
