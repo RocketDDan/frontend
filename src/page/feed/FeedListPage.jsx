@@ -12,6 +12,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { logAdFeedView } from '../../api/feedViewLog.api';
 import useCheckLogin from '../../util/RequiredLogin';
+import { useAuthStore } from '../../store/authStore';
 
 
 const FeedListPage = () => {
@@ -22,6 +23,27 @@ const FeedListPage = () => {
     const [isLoading, setIsLoading] = useState(false); // 로딩중인지 여부
     const observerTarget = useRef(null); // 
     const navigate = useNavigate();
+    const user = useAuthStore(state => state.user);
+    const checkLoginUser = useCheckLogin();
+
+    // 이전 위치에서 돌아왔을 때 스크롤이 아래에 있을 수 있어 초기 상태로?
+    // useEffect(() => {
+    //     window.scrollTo(0, 0);
+    // }, []);
+
+    // 로그인 상태 바뀔 때 피드 초기화
+    useEffect(() => {
+        setFeedList([]);
+        setPage(1);
+    }, [user]);
+
+    // 선택된 피드가 바뀌면 해당 위치로 스크롤 이동
+    useEffect(() => {
+        if (selectedFeed) {
+            const el = document.getElementById(`feed-${selectedFeed.feedId}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, [selectedFeed]);
 
     useEffect(() => {
         const loadFeeds = async () => {
@@ -30,7 +52,6 @@ const FeedListPage = () => {
             setFeedList(prev => [...data, ...prev]);  // 누적!
             setIsLoading(false);
         };
-
         loadFeeds();
     }, [page]);
 
@@ -43,12 +64,11 @@ const FeedListPage = () => {
     }, [isLoading]);
 
     const handleAdFeedVisible = useCallback((feedId) => {
-        console.log(`홍보 피드 노출 감지: ${feedId}`);
-        // Redis 로깅을 위한 API 호출
+        // console.log(`홍보 피드 노출 감지: ${feedId}`);
         logAdFeedView(feedId);
     }, []);
 
-    //
+    // 무한 스크롤
     useEffect(() => {
         const observer = new IntersectionObserver(handleObserver, {
             threshold: 0.5
@@ -57,8 +77,6 @@ const FeedListPage = () => {
         if (observerTarget.current) observer.observe(observerTarget.current);
         return () => observer.disconnect();
     }, [handleObserver]);
-
-
 
     // 댓글창 열거나 닫기
     const handleCommentClick = (feed) => {
@@ -94,10 +112,8 @@ const FeedListPage = () => {
         })
     }
 
-    const checkLoginUser = useCheckLogin();
-    
     // 피드 업로드 버튼
-    const handlePlusBtn = async() => {
+    const handlePlusBtn = async () => {
         const isLogin = await checkLoginUser();
         if (!isLogin) return;
         navigate("/feed/upload");

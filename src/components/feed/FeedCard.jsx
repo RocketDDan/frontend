@@ -101,7 +101,7 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
     };
 
     return (
-        <div className={style.container} key={feed.feedId}>
+        <div id={`feed-${feed.feedId}`} className={style.container} key={feed.feedId}>
             {/* 홍보피드이면 관찰 대상 div 추가 */}
             {feed.type === 'ADVERTISE' && (
                 <div ref={adRef} style={{ height: '1px' }} />
