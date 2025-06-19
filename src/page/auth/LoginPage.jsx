@@ -38,7 +38,7 @@ const LoginPage = () => {
 		}
 		if (passwordValue && !isPasswordValid) {
 			newErrors.password =
-				"비밀번호는 영문, 숫자를 포함하여 8~16자여야 합니다.";
+				"비밀번호는 영문 대소문자, 숫자, 특수문자(@!#?) 포함 8~16자여야 합니다.";
 		}
 
 		if (Object.keys(newErrors).length > 0) {
