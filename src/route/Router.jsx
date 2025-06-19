@@ -35,7 +35,6 @@ import FeedUpdatePage from "../page/feed/FeedUpdatePage";
 import RunnerProfilePage from "../page/runner/RunnerProfilePage";
 
 // 홈 (home)
-import HomePage from "../page/HomePage";
 import NotFoundPage from "../page/NotFoundPage";
 import CrewJoinRequestListPage from "../page/crew/CrewJoinRequestListPage";
 import KakaoPaySuccessPage from "../page/pay/KakaoPaySuccessPage";
@@ -89,7 +88,7 @@ const Router = () => {
             <Route path="/runner/:memberId" element={<RunnerProfilePage/>}/>
 
             {/* 홈 */}
-            <Route path="/" element={<HomePage/>} />
+            <Route path="/" element={<FeedListPage/>} />
 
             {/* 페이 */}
             <Route path="/pay/kakao/success" element={<KakaoPaySuccessPage/>} />
