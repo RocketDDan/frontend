@@ -60,7 +60,7 @@ const SignupPage = () => {
 				"닉네임은 한글, 영어, 숫자만 포함한 2~20자여야 합니다.";
 		}
 		if (!isPasswordValid) {
-			newErrors.password = "비밀번호는 영어와 숫자를 포함한 8~16자여야 합니다.";
+			newErrors.password = "비밀번호는 영문 대소문자, 숫자, 특수문자(@!#?) 포함 8~16자여야 합니다.";
 		}
 		if (!isPasswordConfirmValid) {
 			newErrors.passwordConfirm = "비밀번호가 일치하지 않습니다.";
