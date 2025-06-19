@@ -23,21 +23,23 @@ const BasicRadio = ({ options = [], name, value, onChange }) => {
 
     return (
 
-        options.map(opt => {
-            return (
-                <label className={style.container} key={opt.value}>
-                    <input
-                        type="radio"
-                        name={name}
-                        value={opt.value}
-                        checked={opt.value === inValue}
-                        onChange={(e) => { handleChange(e.target.value) }}
-                        className={style.radio}
-                    />
-                    <span className={style.labelText}>{opt.name}</span>
-                </label>
-            )
-        })
+        <div className={style.radioGroupRow}>
+            {options.map(opt => {
+                return (
+                    <label className={style.container} key={opt.value}>
+                        <input
+                            type="radio"
+                            name={name}
+                            value={opt.value}
+                            checked={opt.value === inValue}
+                            onChange={(e) => { handleChange(e.target.value) }}
+                            className={style.radio}
+                        />
+                        <span className={style.labelText}>{opt.name}</span>
+                    </label>
+                )
+            })}
+        </div>
 
     );
 };

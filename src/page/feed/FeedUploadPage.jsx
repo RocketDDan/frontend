@@ -128,7 +128,7 @@ const FeedUploadPage = () => {
             </div>
 
             <div>
-                <div style={{ textAlign: "start" }}>위치 검색</div>
+                <div style={{ textAlign: "start", marginBottom: "5px",}}>위치 검색</div>
                 <KakaoMap
                     lat={lat}
                     lng={lng}
@@ -139,9 +139,7 @@ const FeedUploadPage = () => {
             </div>
 
             <div>
-                <label htmlFor="">
-                    내용
-                </label>
+                <div style={{ textAlign: "start", marginBottom: "5px",}}>내용</div>
                 <TextArea
                     width="100%"
                     maxHeight="100px"

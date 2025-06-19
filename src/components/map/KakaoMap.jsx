@@ -3,6 +3,7 @@ import { SearchBar } from "../search_bar/SearchBar";
 
 
 const KakaoMap = ({
+    zoom=3,
     width = "400px",
     height = "500px",
     lat = 33.450701,
@@ -83,7 +84,7 @@ const KakaoMap = ({
         const container = document.getElementById("map");
         const options = {
             center: new window.kakao.maps.LatLng(lat, lng),
-            level: 3,
+            level: zoom,
         };
         mapRef.current = new window.kakao.maps.Map(container, options);
 
@@ -91,8 +92,8 @@ const KakaoMap = ({
             position: new window.kakao.maps.LatLng(lat, lng)
         });
         markerRef.current.setMap(mapRef.current);
-        markerRef.current.setDraggable(true); // 드래그 가능하도록
 
+        markerRef.current.setDraggable(draggable); // 드래그 가능
         if (draggable) {
             window.kakao.maps.event.addListener(markerRef.current, 'dragend', function () { // dragend 이벤트
                 const position = markerRef.current.getPosition();
@@ -118,7 +119,7 @@ const KakaoMap = ({
     }, [lat, lng, isMapLoaded]);
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        <div style={{ width, height, display: "flex", flexDirection: "column", gap: "1rem" }}>
             {canSearchAddress &&
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                     <SearchBar
@@ -130,7 +131,7 @@ const KakaoMap = ({
                         closeBtnVisible={true} />
                 </div>
             }
-            <div id="map" style={{ width, height, borderRadius: rounded ? "5%" : "0" }}></div>
+            <div id="map" style={{ width: "100%", height: "100%", borderRadius: rounded ? "5%" : "0" }}></div>
         </div>
     );
 }

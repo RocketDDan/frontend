@@ -6,31 +6,33 @@ import { Table } from "../../components/base/Table";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../api/apiClient"
 import Pagination from "../../components/announcement/Pagination";
+import { useAuthStore } from "../../store/authStore";
+import { BasicSelect } from "../../components/base/Select"; 
 
 const AnnouncementListPage = () => {
 	const navigate = useNavigate();
 	const [keyword, setKeyword] = useState("");
 	const [page, setPage] = useState(1);
 	const [data, setData] = useState([]);
+	const [order, setOrder] = useState("LATEST");
 	const [totalCount, setTotalCount] = useState(0);
 	const limit = 6;
+	const user = useAuthStore((state) => state.user);
+	const userCrew = useAuthStore((state) => state.userCrew);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				console.log(`${process.env.REACT_APP_API_BASE_URL}/announcements`);
-				// const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/announcements`, {
-				//   params: { page, perPage: limit, keyword }
-				// });
 				const res = await apiClient.get("/announcements", {
 					params: {
 						page,
 						perPage: limit,
-						keyword
+						keyword,
+						order,
 					}
 				});
 
-				//const res = await apiClient.get(`/announcements`);
 				console.log("응답:", res.data);
 
 				setData(res.data.announcements);
@@ -40,7 +42,7 @@ const AnnouncementListPage = () => {
 			}
 		};
 		fetchData();
-	}, [page, keyword]);
+	}, [page, keyword, order]);
 
 	const handleChange = (val) => {
 		setKeyword(val);
@@ -61,12 +63,29 @@ const AnnouncementListPage = () => {
 					height="100%"
 					onEnter={() => console.log("엔터")}
 				/>
-				<Button
-					width="8rem"
-					content="새 공지 등록"
-					onClick={() => navigate("/announcement/upload")}
-					bg = "primaryBg"
-				/>
+				
+					<BasicSelect
+						value={order}
+						onChange={(val) => {
+						setOrder(val);
+						setPage(1);
+						}}
+						options={[
+						{ value: "LATEST", label: "최신순" },
+						{ value: "OLDEST", label: "오래된순" },
+						]}
+						width="160px"
+					/>
+				{(user?.role === "ADMIN" || userCrew?.isLeader) && (
+					<Button
+						width="8rem"
+						content="새 공지 등록"
+						onClick={() => navigate("/announcement/upload")}
+						bg="primaryBg"
+					/>
+				)}
+
+
 			</div>
 			{/* 중간 */}
 			<div style={{ flex: 1 }}>
