@@ -23,6 +23,7 @@
 
 /* 피드 이미지 행 */
 .feedImageList {
+    position: relative;
     display: flex;
     max-width: 468px;
     height: 585px;
@@ -177,6 +178,30 @@
     padding: 4px 10px;
     border-radius: 20px;
     font-weight: 500;
-    margin-left: 6px;
     transition: all 0.3s ease;
+    white-space: nowrap;
+    width: fit-content;  
+    cursor: pointer;
+    color: #2980b9;
+}
+
+.advertiseTag {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: #ffe3e3;
+    color: #d63031;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 2;
+
+    /* ✅ 아래가 핵심 */
+    display: inline-block;
+    white-space: nowrap;
+    width: auto;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
