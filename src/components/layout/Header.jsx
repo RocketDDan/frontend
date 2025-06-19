@@ -20,7 +20,7 @@ const Header = () => {
 
 	const toggleProfileMenu = () => setProfileOpen((prev) => !prev);
 
-	const handleMenuLinkClick = () => setMenuOpen(false);
+	const handleMenuLinkClick = handleMenuLinkClick;
 
 	const menuRef = useRef(null);
 	useEffect(() => {
@@ -71,17 +71,17 @@ const Header = () => {
 
 			<div className={`${headerStyle.down} ${menuOpen ? headerStyle.open : ""}`}>
 				<span>
-					<Link to="/feed/list" className={currentPath.startsWith("/feed") ? headerStyle.activeLink : ""} onClick={() => setMenuOpen(false)}>
+					<Link to="/feed/list" className={currentPath.startsWith("/feed") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
 						피드
 					</Link>
 				</span>
 				<span>
-					<Link to="/crew/list" className={currentPath.startsWith("/crew") ? headerStyle.activeLink : ""} onClick={() => setMenuOpen(false)}>
+					<Link to="/crew/list" className={currentPath.startsWith("/crew") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
 						크루
 					</Link>
 				</span>
 				<span>
-					<Link to="/announcement/list" className={currentPath.startsWith("/announcement") ? headerStyle.activeLink : ""} onClick={() => setMenuOpen(false)}>
+					<Link to="/announcement/list" className={currentPath.startsWith("/announcement") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
 						공지
 					</Link>
 				</span>
@@ -89,12 +89,12 @@ const Header = () => {
 				{user?.role === 'ADMIN' && (
 					<>
 						<span>
-							<Link to="/admin/member/list" className={currentPath.startsWith("/admin/member") ? headerStyle.activeLink : ""} onClick={() => setMenuOpen(false)}>
+							<Link to="/admin/member/list" className={currentPath.startsWith("/admin/member") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
 								회원 관리
 							</Link>
 						</span>
 						<span>
-							<Link to="/admin/reward/list" className={currentPath.startsWith("/admin/reward") ? headerStyle.activeLink : ""} onClick={() => setMenuOpen(false)}>
+							<Link to="/admin/reward/list" className={currentPath.startsWith("/admin/reward") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
 								수익 관리
 							</Link>
 						</span>
@@ -103,7 +103,7 @@ const Header = () => {
 
 				{user?.role === 'COMPANY' && (
 					<span>
-						<Link to="/company/reward/list" className={currentPath.startsWith("/company/reward") ? headerStyle.activeLink : ""} onClick={() => setMenuOpen(false)}>
+						<Link to="/company/reward/list" className={currentPath.startsWith("/company/reward") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
 							지출 관리
 						</Link>
 					</span>
@@ -111,7 +111,7 @@ const Header = () => {
 
 				{!user && menuOpen && (
 					<span>
-						<Link to="/login" className={currentPath.startsWith("/login") ? headerStyle.activeLink : ""} onClick={() => setMenuOpen(false)}>
+						<Link to="/login" className={currentPath.startsWith("/login") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
 							로그인
 						</Link>
 					</span>
@@ -130,20 +130,20 @@ const Header = () => {
 
 				{user && menuOpen && (
 					<span>
-						<Link to={`/runner/${user.memberId}`} className={currentPath.startsWith("/account/setting") ? headerStyle.activeLink : ""} onClick={() => setMenuOpen(false)}>
-							내 정보 수정
+						<Link to={`/runner/${user.memberId}`} className={currentPath.startsWith("/account/setting") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
+							내 프로필
 						</Link>
 					</span>
 				)}
 
-				{user && menuOpen && <span>
-					<Link
-						to={KAKAO_LOGOUT_URL}
-						onClick={handleMenuLinkClick}>
-						로그아웃
-					</Link>
-				</span>}
-
+				{user && menuOpen &&
+					<span>
+						<Link
+							to={KAKAO_LOGOUT_URL}
+							onClick={handleMenuLinkClick}>
+							로그아웃
+						</Link>
+					</span>}
 				<span></span>
 			</div>
 		</header>
