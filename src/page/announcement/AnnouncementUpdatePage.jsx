@@ -52,14 +52,16 @@ const AnnouncementUpdatePage = () => {
   formData.append("content", content);
 
   // 기존 파일을 File 객체로 변환
-  const existingFilePromises = existingFiles.map((file) =>
-    urlToFile(file.url, file.name)
-  );
-  console.log("File객체로 변환한 것" +existingFilePromises);
-  const convertedExistingFiles = await Promise.all(existingFilePromises);
-  console.log("convertedExistingFiles" + convertedExistingFiles);
+  const existingFilePromises = existingFiles.map((file) => {
+  const fullName = decodeURIComponent(file.name);
+  const cleanName = fullName.includes("/") ? fullName.split("/").pop() : fullName;
+  return urlToFile(file.url, cleanName);
+  });
 
-      
+  console.log("File 객체로 변환한 것:", existingFilePromises); 
+  const convertedExistingFiles = await Promise.all(existingFilePromises);
+  console.log("convertedExistingFiles:", convertedExistingFiles); 
+
   
 
   // 기존 파일 + 새 파일 합쳐서 전송
