@@ -20,7 +20,9 @@ const Header = () => {
 
 	const toggleProfileMenu = () => setProfileOpen((prev) => !prev);
 
-	const handleMenuLinkClick = handleMenuLinkClick;
+	const handleMenuLinkClick = () => {
+		setMenuOpen(false);
+	}
 
 	const menuRef = useRef(null);
 	useEffect(() => {
