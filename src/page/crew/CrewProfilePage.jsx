@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import RequiredLogin from "../../util/RequiredLogin";
+import useCheckLogin from "../../util/RequiredLogin";
 import { useNavigate } from "react-router-dom";
 import styles from "./CrewProfilePage.module.css";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
@@ -17,6 +17,7 @@ import { useAuthStore } from "../../store/authStore";
 
 const CrewProfilePage = () => {
     const navigate = useNavigate();
+    const checkLoginUser = useCheckLogin();
     const { crewId } = useParams(); // 여기서 crewId를 받아옴
     const [crew, setCrew] = useState(null);
     // 확인 모달
@@ -42,10 +43,10 @@ const CrewProfilePage = () => {
 
     }
 
-    const onClickRequestBtn = () => {
-        if(!RequiredLogin(user)){
-            setRequestModalOpen(true);
-        }
+    const onClickRequestBtn = async () => {
+        const isLogin = await checkLoginUser();
+        if (!isLogin) return;
+        setRequestModalOpen(true);
     };
 
     const handleDeleteConfirm = async () => {
@@ -181,6 +182,56 @@ const CrewProfilePage = () => {
         loadFeeds();
     }, [page]);
 
+    useEffect(() => {
+      if (modalOpen) {
+        Swal.fire({
+          title: modalTitle,
+          html: modalDescription,
+          showCancelButton: useButton,
+          confirmButtonText: '확인',
+          cancelButtonText: '취소',
+          customClass: { popup: 'custom-swal-width' },
+        }).then(result => {
+          if (result.isConfirmed && handleModalConfirm) {
+            handleModalConfirm();
+          }
+          setModalOpen(false);
+          setUseButton(true);
+        });
+      }
+    }, [modalOpen]);
+
+    useEffect(() => {
+      if (requestModalOpen) {
+        Swal.fire({
+          title: "크루 가입 요청",
+          html: `
+            <textarea id="swal-input" class="swal2-textarea"
+              placeholder="가입 요청 메시지를 입력하세요.(최대 400자)"
+              maxlength="400"
+              style="width: 100%; max-width: 100%; min-width: 0; height: 200px; box-sizing: border-box; display: block; margin: 0 auto;"
+            >${requestMessage}</textarea>
+          `,
+          showCancelButton: true,
+          confirmButtonText: '요청',
+          cancelButtonText: '취소',
+          customClass: { popup: 'custom-swal-width' },
+          willOpen: () => {
+            const popup = document.querySelector('.swal2-popup');
+            if (popup) popup.style.boxSizing = 'border-box';
+          },
+          preConfirm: () => {
+            const input = document.getElementById('swal-input');
+            if (input) {
+              setRequestMessage(input.value);
+              return handleRequestConfirm();
+            }
+          }
+        }).then(() => {
+          setRequestModalOpen(false);
+        });
+      }
+    }, [requestModalOpen]);
 
     return (
         <div className={styles.pageWrapper}>
@@ -253,50 +304,6 @@ const CrewProfilePage = () => {
             {/* <span>크루원들의 피드 모아보기</span> */}
             {/* 크루원들 피드 목록 조회 컴포넌트 추가 */}
             {/* </div> */}
-
-            {modalOpen && Swal.fire({
-                title: modalTitle,
-                html: modalDescription,
-                showCancelButton: useButton,
-                confirmButtonText: '확인',
-                cancelButtonText: '취소',
-                customClass: { popup: 'custom-swal-width' },
-            }).then(result => {
-                if (result.isConfirmed && handleModalConfirm) {
-                    handleModalConfirm();
-                }
-                setModalOpen(false);
-                setUseButton(true);
-            })}
-            {requestModalOpen && Swal.fire({
-                title: "크루 가입 요청",
-                html: `
-                    <textarea id="swal-input" class="swal2-textarea"
-                        placeholder="가입 요청 메시지를 입력하세요.(최대 400자)"
-                        maxlength="400"
-                        style="width: 100%; max-width: 100%; min-width: 0; height: 200px; box-sizing: border-box; display: block; margin: 0 auto;"
-                    >${requestMessage}</textarea>
-                `,
-                showCancelButton: true,
-                confirmButtonText: '요청',
-                cancelButtonText: '취소',
-                customClass: { popup: 'custom-swal-width' },
-                willOpen: () => {
-                    // popup에 box-sizing: border-box 적용 (중복 방지)
-                    const popup = document.querySelector('.swal2-popup');
-                    if (popup) popup.style.boxSizing = 'border-box';
-                }
-                ,
-                preConfirm: () => {
-                    const input = document.getElementById('swal-input');
-                    if (input) {
-                        setRequestMessage(input.value);
-                        return handleRequestConfirm();
-                    }
-                }
-            }).then(() => {
-                setRequestModalOpen(false);
-            })}
 
             {crewMemberModalOpen && (
                 <CrewMemberListModal
