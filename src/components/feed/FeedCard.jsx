@@ -112,7 +112,9 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
                     profileUrl={feed.writerProfileUrl}
                     size="40px"
                     onClick={handleClickProfile} />
-                <span onClick={handleClickProfile}>{feed.writerNickname}</span>
+                <span onClick={handleClickProfile}>
+                    {feed.writerNickname}
+                </span>
                 <div style={{ display: 'flex', justifyContent: 'end', paddingRight: '5px' }}>⋯</div>
             </div>
 
@@ -173,8 +175,8 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
 
             {/* 피드 글 */}
             <div className={style.feedContent}>
-                <span style={{ fontWeight: "bold" }}>{feed.writerNickname}</span>
-                <span>{feed.content}</span>
+                <span className={style.writer}>{feed.writerNickname}</span>
+                <span className={style.content}>{feed.content}</span>
             </div>
 
             {/* 댓글 */}

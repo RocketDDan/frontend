@@ -176,7 +176,7 @@
     font-weight: 500;
     transition: all 0.3s ease;
     white-space: nowrap;
-    width: fit-content;  
+    width: fit-content;
     cursor: pointer;
     color: #2980b9;
 }
@@ -200,4 +200,30 @@
     max-width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.feedContent {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+    font-size: 14px;
+    text-align: start;
+    align-items: flex-start;
+    /* ✅ 닉네임과 내용 위 정렬 */
+}
+
+.writer {
+    font-weight: bold;
+    max-width: 5rem;
+    flex-shrink: 0;
+    /* ✅ 줄어들지 않도록 고정 */
+    word-break: break-all;
+    /* 닉네임이 길어도 줄바꿈 허용 */
+}
+
+.content {
+    flex: 1;
+    /* ✅ 남은 영역 차지 */
+    word-break: break-word;
+    /* ✅ 긴 단어 줄바꿈 */
 }
