@@ -16,6 +16,7 @@ const AnnouncementListPage = () => {
 	const [totalCount, setTotalCount] = useState(0);
 	const limit = 6;
 	const user = useAuthStore((state) => state.user);
+	const userCrew = useAuthStore((state) => state.userCrew);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -63,7 +64,7 @@ const AnnouncementListPage = () => {
 					height="100%"
 					onEnter={() => console.log("엔터")}
 				/>
-				{user && (
+				{(user?.role === "ADMIN" || userCrew?.isLeader) && (
 					<Button
 						width="8rem"
 						content="새 공지 등록"
@@ -71,6 +72,7 @@ const AnnouncementListPage = () => {
 						bg="primaryBg"
 					/>
 				)}
+
 
 			</div>
 			{/* 중간 */}
