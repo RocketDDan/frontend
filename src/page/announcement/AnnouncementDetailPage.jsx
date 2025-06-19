@@ -12,7 +12,6 @@ const AnnouncementDetailPage = () => {
 	const navigate = useNavigate();
 	const [detail, setDetail] = useState(null);
 	const user = useAuthStore((state) => state.user);
-
 	useEffect(() => {
 		const fetchDetail = async () => {
 			try {
@@ -43,8 +42,10 @@ const AnnouncementDetailPage = () => {
 			alert("삭제에 실패했습니다.");
 		}
 	};
-
+	
 	if (!detail) return <div>로딩 중...</div>;
+	const imageFiles =
+  		detail.attachPaths?.filter((_, idx) => detail.attachIsImageList?.[idx]) || [];
 
 	return (
 		<div className={styles.container}>
@@ -57,6 +58,30 @@ const AnnouncementDetailPage = () => {
 				<p>
 					<strong>작성일:</strong> {detail.createdAt}
 				</p>
+			</div>
+
+			{/* 이미지 미리보기 */}
+			{imageFiles.length > 0 && (
+				<div className={styles.imagePreviewSection}>
+				<label className={styles.label}>이미지 미리보기</label>
+				<div className={styles.imageList}>
+					{imageFiles.map((img, idx) => (
+					<img
+						key={idx}
+						src={img}
+						alt={`preview-${idx}`}
+						className={styles.previewImage}
+					/>
+					))}
+				</div>
+				</div>
+			)}
+
+			<div className={styles.section}>
+				<label className={styles.label}>본문</label>
+				<div className={styles.quillWrapper}>
+					<ReactQuill value={detail.content} readOnly={true} theme="bubble" />
+				</div>
 			</div>
 
 			<div className={styles.section}>
@@ -88,13 +113,6 @@ const AnnouncementDetailPage = () => {
 				)}
 			</div>
 
-			<div className={styles.section}>
-				<label className={styles.label}>본문</label>
-				<div className={styles.quillWrapper}>
-					<ReactQuill value={detail.content} readOnly={true} theme="bubble" />
-				</div>
-			</div>
-
 			<div className={styles.buttonGroup}>
 				<Button
 					content="목록으로"
@@ -122,7 +140,6 @@ const AnnouncementDetailPage = () => {
 					</>
 				)}
 			</div>
-
 		</div>
 	);
 };
