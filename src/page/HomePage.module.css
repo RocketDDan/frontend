@@ -10,7 +10,7 @@
     overflow: hidden;
     position: relative;
     /* 높이는 카드 높이에 맞게 조정 */
-    padding: 24px 0; /* 위아래 여백 추가 */
+    padding: 12px 0 24px 0; /* 위아래 여백 추가 */
 }
 
 .crewListContainer {
