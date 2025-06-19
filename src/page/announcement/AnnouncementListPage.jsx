@@ -63,7 +63,7 @@ const AnnouncementListPage = () => {
 					height="100%"
 					onEnter={() => console.log("엔터")}
 				/>
-				{!user && (
+				{user && (
 					<Button
 						width="8rem"
 						content="새 공지 등록"
