@@ -71,7 +71,7 @@ const CrewJoinRequestListPage = () => {
         e.stopPropagation();
         Swal.fire({
             title: "크루 가입 요청 메세지",
-            text: e.target.innerText,
+            text: e.target.innerText.replace(/\n/g, "<br />"),
             icon: "info",
             confirmButtonText: "확인",
             width: 500
