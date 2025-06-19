@@ -55,10 +55,12 @@ const AnnouncementUpdatePage = () => {
   const existingFilePromises = existingFiles.map((file) =>
     urlToFile(file.url, file.name)
   );
+  console.log("File객체로 변환한 것" +existingFilePromises);
   const convertedExistingFiles = await Promise.all(existingFilePromises);
+  console.log("convertedExistingFiles" + convertedExistingFiles);
 
+      
   
-  console.log(existingFilePromises);
 
   // 기존 파일 + 새 파일 합쳐서 전송
   [...convertedExistingFiles, ...newFiles].forEach((file) =>
