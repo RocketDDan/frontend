@@ -20,13 +20,36 @@ import MediaViewer from '../image/MediaViewer';
  * @param {Function} onCommentClick
  * @returns 
  */
-const FeedCard = ({ feed, onCommentClick }) => {
+const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
 
     const [isLiked, setIsLiked] = useState(feed.like); // 유저가 좋아하는지 여부
     const [likeCount, setLikeCount] = useState(feed.likeCount); // 좋아요 수
     const [currentIndex, setCurrentIndex] = useState(0); // 현재 이미지 인덱스
     const [isMapOpen, setIsMapOpen] = useState(false);
     const navigate = useNavigate();
+
+    const adRef = useRef(null);
+
+    useEffect(() => {
+        if (feed.type !== 'ADVERTISE' || !adRef.current || !onAdVisible) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    onAdVisible(feed.feedId);
+                }
+            },
+            {
+                threshold: 1.0 // ✅ 요소의 100%가 보여야 트리거
+            }
+        );
+
+        observer.observe(adRef.current);
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [feed, onAdVisible]);
 
     const handleLike = () => {
         setIsLiked(true);
@@ -70,6 +93,10 @@ const FeedCard = ({ feed, onCommentClick }) => {
 
     return (
         <div className={style.container} key={feed.feedId}>
+            {/* 홍보피드이면 관찰 대상 div 추가 */}
+            {feed.type === 'ADVERTISE' && (
+                <div ref={adRef} style={{ height: '1px' }} />
+            )}
             {/* 작성자 정보 */}
             <div className={style.writerRow}>
                 <ProfileImage

@@ -4,14 +4,13 @@ import style from './FeedListPage.module.css';
 import { useState, useEffect, useCallback, useRef } from "react";
 // api
 import { fetchFeedList } from "../../api/feed.api";
-// dto
-import SampleFeed from "../../dto/feed.dto";
 // Component
 import FeedCard from "../../components/feed/FeedCard";
 import CommentPanel from '../../components/feed/CommentPanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { logAdFeedView } from '../../api/feedViewLog.api';
 
 
 const FeedListPage = () => {
@@ -41,6 +40,12 @@ const FeedListPage = () => {
             setPage(prev => prev + 1);
         }
     }, [isLoading]);
+
+    const handleAdFeedVisible = useCallback((feedId) => {
+        console.log(`홍보 피드 노출 감지: ${feedId}`);
+        // Redis 로깅을 위한 API 호출
+        logAdFeedView(feedId);
+    }, []);
 
     //
     useEffect(() => {
@@ -101,6 +106,7 @@ const FeedListPage = () => {
                         feed={feed}
                         key={feed.feedId}
                         onCommentClick={() => handleCommentClick(feed)}
+                        onAdVisible={handleAdFeedVisible}
                     />
                 )}
                 {/* 관찰 타겟 */}
