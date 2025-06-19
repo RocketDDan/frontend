@@ -34,6 +34,12 @@
 	margin: 40px 0;
 }
 
+.crewJoinRequestList {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
 .requestWrapper{
 	display: flex;
 	align-items: center;

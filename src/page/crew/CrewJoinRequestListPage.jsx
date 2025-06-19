@@ -176,10 +176,10 @@ const CrewJoinRequestListPage = () => {
                         </div>
                         )}
                         { status === "ACCEPT" && (
-                            <span>승인</span>
+                            <span style={{color: "#7CB2FC"}}>승인</span>
                         )}
                         { status === "DENY" && (
-                            <span>거절</span>
+                            <span style={{color: "#FF7723"}}>거절</span>
                         )}
                     </div>
                 </div>
