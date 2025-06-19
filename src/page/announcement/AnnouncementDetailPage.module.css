@@ -1,16 +1,19 @@
+/* 전체 컨테이너 */
 .container {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 32px;
   font-family: 'Noto Sans KR', sans-serif;
 }
 
+/* 제목 */
 .heading {
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 16px;
 }
 
+/* 작성자 정보 */
 .meta {
   display: flex;
   gap: 12px;
@@ -25,19 +28,21 @@
   border-radius: 8px;
 }
 
+/* 섹션 구간 */
 .section {
   margin-bottom: 24px;
 }
 
+/* 라벨 */
 .label {
   font-weight: 600;
   font-size: 15px;
   margin-bottom: 8px;
   display: block;
-  text-align: left; 
+  text-align: left;
 }
 
-
+/* 첨부파일 */
 .attachSection {
   margin-top: 12px;
 }
@@ -57,8 +62,15 @@
   color: #007bff;
   font-size: 14px;
   text-decoration: underline;
+  display: inline-block;
+  text-align: left;
 }
 
+.fileIcon {
+  margin-right: 6px;
+}
+
+/* 버튼 영역 */
 .buttonGroup {
   display: flex;
   justify-content: center;
@@ -70,7 +82,7 @@
 .updateBtn,
 .deleteBtn {
   background-color: #7CB2FC;
-  color: white; 
+  color: white;
   border: none;
   border-radius: 8px;
   padding: 10px 20px;
@@ -85,6 +97,7 @@
   background-color: #3a8afb;
 }
 
+/* 본문 내용 */
 .quillWrapper {
   background-color: white;
   border-radius: 10px;
@@ -93,28 +106,52 @@
   min-height: 200px;
   font-size: 15px;
   line-height: 1.6;
-  text-align: left;       
+  text-align: left;
 }
 
 .quillWrapper .ql-editor {
-  text-align: left;         
-}
-
-.fileList {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 4px;
-  text-align: left; 
-}
-
-.downloadLink {
   text-align: left;
-  display: inline-block;
 }
 
-.fileIcon {
-  margin-right: 6px;
+/* 본문 안 이미지 */
+.quillWrapper img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 12px auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+/* 이미지 미리보기 */
+.imagePreviewSection {
+  margin-bottom: 32px;
+}
 
+.imageList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
+.previewImage {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: contain;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* 모바일도 동일한 레이아웃 유지 */
+@media (max-width: 768px) {
+  .imageList {
+    flex-direction: column;
+  }
+
+  .previewImage {
+    width: 100%;
+    max-width: 100%;
+  }
+}
