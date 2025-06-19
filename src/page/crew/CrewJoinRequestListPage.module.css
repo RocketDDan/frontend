@@ -19,6 +19,10 @@
 	height: fit-content;
 }
 
+.selector {
+	width: 7rem;
+}
+
 .crewHeader {
 	height: fit-content;
 }
@@ -40,12 +44,18 @@
 	display: flex;
 	align-items: center;
 	gap: 10px;
+	font-size: 1.5rem;
 }
 
 .messageWrapper {
 	width: 480px;      /* 원하는 최대 너비로 조정 */
 	text-align: left;
 	cursor: pointer;
+}
+
+.messageAndButtonWrapper {
+	display: flex;
+	gap: 20px;
 }
 
 @media (max-width: 700px) {
@@ -57,8 +67,11 @@
         width: 100%;
     }
 
+	.selector {
+		width: 4rem;
+	}
     .searchHeader > *:first-child {
-        flex: 3 1 0;  /* 검색창이 더 넓게 */
+        flex: 2 1 0;  /* 검색창이 더 넓게 */
         min-width: 0;
     }
     .searchHeader > *:nth-child(2) {
@@ -68,24 +81,25 @@
 
 	.requestWrapper {
 		flex-direction: column;
-		gap: 8px;
+		align-items: flex-start;
+		gap: 10px;
 		width: 100%;
 		padding: 0 12px;
+		margin-bottom: 20px;
 	}
 
 	.messageWrapper {
 		width: 100%;
-		max-width: 100%;
+		width: 250px;
 		font-size: 0.98rem;
 	}
 
 	.buttonWrapper {
-		gap: 8px;
+		gap: 20px;
 		margin-top: 4px;
 	}
 
 	.crewHeader {
 		display: none !important;
 	}
-
 }

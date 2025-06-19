@@ -20,7 +20,7 @@ const CrewJoinRequestListPage = () => {
     const [nickname, setNickname] = useState(""); // 닉네임 상태
     const [page, setPage] = useState(1); // 페이지 상태
     const [status, setStatus] = useState("REQUEST"); // 상태 필터링 상태
-    const perPage = 6;
+    const perPage = 5;
 
     // 가입 요청 상태 옵션 정의
     const statusOptions = [
@@ -118,19 +118,22 @@ const CrewJoinRequestListPage = () => {
     return (
         <div className={styles.pageWrapper}>
             <div className={styles.searchHeader}>
-                <SearchBar 
-                    width={"15rem"}
-                    placeholder="닉네임을 입력해주세요."
-                    value={nickname}
-                    onChange={setNickname}
-                    onEnter={handleSearchBar}
-                />
-                <div>
+                <div className={styles.searchBar}>
+                    <SearchBar 
+                        width={"100%"}
+                        placeholder="닉네임을 입력해주세요."
+                        value={nickname}
+                        onChange={setNickname}
+                        onEnter={handleSearchBar}
+                    />
+                </div>
+
+                <div className={styles.selector}>
                     <BasicSelect
-                        width={"5rem"}
+                        width={"100%"}
                         options={statusOptions}
                         name="status"
-                        value={"REQUEST"}
+                        value={status}
                         onChange={setStatus}
                     />
                 </div>
@@ -140,24 +143,25 @@ const CrewJoinRequestListPage = () => {
                 <CrewHeader columns={columns}/>
             </div>
 
-            <div style={{flex: 1}}>
+            <div style={{flex: 1}} className={styles.crewJoinRequestList}>
                 { crewJoinRequestList.length > 0 && crewJoinRequestList.map((request, idx) => (
                 <div className={styles.requestWrapper} key={idx}>
                     <CrewMemberInfo 
                         memberId={request.memberId}
                         nickname={request.nickname} 
                         profilePath={request.profilePath} 
-                        date={request.requestDate} 
+                        date={request.requestDate.slice(0, 10)} 
                     />
-                    <span
-                        className={styles.messageWrapper}
-                        onClick={onClickMessage}
-                    >
-                        {request.requestMessage.length > 35
-                            ? request.requestMessage.slice(0, 35) + "..."
-                            : request.requestMessage}
-                    </span>
-                    { status === "REQUEST" && (
+                    <div className={styles.messageAndButtonWrapper}>
+                        <span
+                            className={styles.messageWrapper}
+                            onClick={onClickMessage}
+                        >
+                            {request.requestMessage.length > 35
+                                ? request.requestMessage.slice(0, 35) + "..."
+                                : request.requestMessage}
+                        </span>
+                        { status === "REQUEST" && (
                         <div className={styles.buttonWrapper}>
                             <FontAwesomeIcon 
                                 icon={faCheck} 
@@ -170,23 +174,23 @@ const CrewJoinRequestListPage = () => {
                                 onClick={() => onClickDenyBtn(request.crewJoinRequestId)}
                             />
                         </div>
-                    )}
-                    { status === "ACCEPT" && (
-                        <span>승인</span>
-                    )}
-                    { status === "DENY" && (
-                        <span>거절</span>
-                    )}
+                        )}
+                        { status === "ACCEPT" && (
+                            <span>승인</span>
+                        )}
+                        { status === "DENY" && (
+                            <span>거절</span>
+                        )}
+                    </div>
                 </div>
                 )) }
+                { crewJoinRequestList.length === 0 && (
+                    <div className={styles.noRequests}>이력이 없습니다.</div>
+                )}
             </div>
 
 
             <Pagination page={page} total={total} limit={perPage} onPageChange={setPage}/>
-
-            { crewJoinRequestList.length === 0 && (
-                <div className={styles.noRequests}>가입 신청이 없습니다.</div>
-            )}
         </div>
     );
 }

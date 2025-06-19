@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import RequiredLogin from "../../util/RequiredLogin";
 import { useNavigate } from "react-router-dom";
 import styles from "./CrewProfilePage.module.css";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +13,7 @@ import { deleteCrewJoinRequest, requestCrewJoin } from "../../api/crewJoinReques
 import CrewMemberListModal from "../../components/crew/CrewMemberListModal";
 import Swal from "sweetalert2";
 import { fetchFeedList } from "../../api/feed.api";
+import { useAuthStore } from "../../store/authStore";
 
 const CrewProfilePage = () => {
     const navigate = useNavigate();
@@ -29,6 +31,9 @@ const CrewProfilePage = () => {
     // 크루원 모달
     const [crewMemberModalOpen, setCrewMemberModalOpen] = useState(false);
 
+    const user = useAuthStore((state) => state.user);
+
+
     const onClickCancelBtn = async () => {
         await deleteCrewJoinRequest(crewId);
         alert("크루 가입 요청이 취소되었습니다.");
@@ -38,7 +43,9 @@ const CrewProfilePage = () => {
     }
 
     const onClickRequestBtn = () => {
-        setRequestModalOpen(true);
+        if(!RequiredLogin(user)){
+            setRequestModalOpen(true);
+        }
     };
 
     const handleDeleteConfirm = async () => {
