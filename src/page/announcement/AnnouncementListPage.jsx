@@ -6,6 +6,7 @@ import { Table } from "../../components/base/Table";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../api/apiClient"
 import Pagination from "../../components/announcement/Pagination";
+import { useAuthStore } from "../../store/authStore";
 
 const AnnouncementListPage = () => {
 	const navigate = useNavigate();
@@ -14,6 +15,7 @@ const AnnouncementListPage = () => {
 	const [data, setData] = useState([]);
 	const [totalCount, setTotalCount] = useState(0);
 	const limit = 6;
+	const user = useAuthStore((state) => state.user);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -61,12 +63,15 @@ const AnnouncementListPage = () => {
 					height="100%"
 					onEnter={() => console.log("엔터")}
 				/>
-				<Button
-					width="8rem"
-					content="새 공지 등록"
-					onClick={() => navigate("/announcement/upload")}
-					bg = "primaryBg"
-				/>
+				{!user && (
+					<Button
+						width="8rem"
+						content="새 공지 등록"
+						onClick={() => navigate("/announcement/upload")}
+						bg="primaryBg"
+					/>
+				)}
+
 			</div>
 			{/* 중간 */}
 			<div style={{ flex: 1 }}>
