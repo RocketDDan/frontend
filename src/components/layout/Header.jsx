@@ -1,16 +1,19 @@
 import headerStyle from "./Header.module.css";
 
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
-
 import { ProfileImage } from "../profile/ProfileImage";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Header = () => {
 	const KAKAO_LOGOUT_REDIRECT_URL = `${process.env.REACT_APP_API_BASE_URL}/auth/logout`;
 	const KAKAO_LOGOUT_URL = `https://kauth.kakao.com/oauth/logout?client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&logout_redirect_uri=${KAKAO_LOGOUT_REDIRECT_URL}`;
-
 	const location = useLocation();
+	const navigate = useNavigate();
+
+	const shouldShowBackButton = !["/", "/feed/list", "/crew/list", "/announcement/list"].includes(location.pathname);
 	const currentPath = location.pathname;
 
 	const [menuOpen, setMenuOpen] = useState(false);
@@ -42,7 +45,19 @@ const Header = () => {
 		<header className={headerStyle.container} ref={menuRef}>
 			<div className={headerStyle.up}>
 				<h1 className={headerStyle.logo}>
-					<Link to="/">Runners Hi</Link>
+					{shouldShowBackButton && (
+						<FontAwesomeIcon
+							icon={faArrowLeft}
+							onClick={() => navigate(-1)}
+							className={headerStyle.backIcon}
+						/>
+					)}
+					{
+						!shouldShowBackButton
+						&& (
+							<Link to="/">Runners Hi</Link>
+						)
+					}
 				</h1>
 
 				<nav className={headerStyle.desktopNav}>
