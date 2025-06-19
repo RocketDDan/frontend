@@ -53,4 +53,4 @@ const uploadFeedByCompany = async (content, lat, lng, fileList, amount) => {
     }
 }
 
-export { fetchFeedList, uploadFeed, uploadFeedByCompany }
+export { fetchFeedList, uploadFeed, uploadFeedByCompany, }
