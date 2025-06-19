@@ -4,7 +4,6 @@ import ComponentPage from "../page/ComponentPage";
 
 // 관리자 (admin)
 import MemberListPage from "../page/admin/MemberListPage"
-import MemberUpdatePage from "../page/admin/MemberUpdatePage"
 import RewardListPage from "../page/admin/RewardListPage";
 
 // 공지 (announcement)
@@ -53,7 +52,6 @@ const Router = () => {
 
             {/* 관리자 */}
             <Route path="/admin/member/list" element={<MemberListPage/>} />
-            <Route path="/admin/member/:memberId/update" element={<MemberUpdatePage/>} />
             <Route path="/admin/reward/list" element={<RewardListPage/>} />
 
             {/* 회사 */}
