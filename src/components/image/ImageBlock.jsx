@@ -1,4 +1,5 @@
 import { useState } from "react";
+import style from "./ImageBlock.module.css";
 
 const ImageBlock = ({ file, width = "100px", height = "100px" }) => {
     const [preview, setPreview] = useState("");
@@ -12,7 +13,7 @@ const ImageBlock = ({ file, width = "100px", height = "100px" }) => {
     }, [file]);
 
     return (
-        <div style={{ width: width, height: height, backgroundColor: "white", border: "1px solid", borderRadius: "10px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div className={style.imageBox}>
             {/* 이미지인지 동영상인지 확인 */}
             {file.type.startsWith("image/") ? (
                 <img src={preview} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", }} />

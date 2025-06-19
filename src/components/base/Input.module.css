@@ -2,13 +2,52 @@
     text-align: start;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
     position: relative;
 }
 
-.inputStyle {
-    padding: 0.7rem 0 0.7rem 0.7rem;
+.inputStyle,
+.textareaStyle {
+    padding: 0.8rem 1rem;
     border-radius: 8px;
-    border: solid 0.9px;
+    border: 1px solid #ccc;
     width: 100%;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: #fff;
+}
+
+.inputStyle:focus,
+.textareaStyle:focus {
+    border-color: #5164ED;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(81, 100, 237, 0.2);
+}
+
+.textareaStyle {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.5;
+}
+
+.iconBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #999;
+    font-size: 1.1rem;
+    transition: color 0.2s ease;
+}
+
+.iconBtn:hover {
+    color: #333;
+}
+
+.iconClear {
+    right: 0.8rem;
+}
+
+.iconEye {
+    right: 0.8rem;
 }

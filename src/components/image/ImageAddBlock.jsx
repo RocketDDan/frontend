@@ -1,6 +1,7 @@
 import { faImage } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef } from "react";
+import style from "./ImageBlock.module.css";
 
 const ImageAddBlock = ({ width = "100px", height = "100px", handleFile }) => {
 
@@ -10,16 +11,7 @@ const ImageAddBlock = ({ width = "100px", height = "100px", handleFile }) => {
         inputRef.current.click();
     }
     return (
-        <div style={{
-            width: width,
-            height: height,
-            backgroundColor: "white",
-            border: "1px solid",
-            borderRadius: "10px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-        }}
+        <div className={style.imageBox}
             onClick={handleClick}>
 
             <FontAwesomeIcon

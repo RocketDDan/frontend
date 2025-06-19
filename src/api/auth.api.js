@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import apiClient from "./apiClient";
 
 export const fetchUserInfo = async () => {
@@ -48,11 +49,17 @@ export const login = async (email, password) => {
     });
   } catch (error) {
     if (error.status === 400) {
-      alert(error.response.data);
+      console.error("로그인 실패 (400): ", error.response.data);
     } else if (error.status === 500) {
-      alert("로그인에 실패했습니다. 다시 시도해주세요.");
-      console.error("로그인 실패:", error);
+      console.error("로그인 실패 (500):", error);
     }
+    Swal.fire({
+      icon: "error",
+      title: "로그인 실패",
+      text: "다시 시도해주세요.",
+      timer: 1500,
+      showConfirmButton: false
+    });
     throw error;
   }
 };

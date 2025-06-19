@@ -2,7 +2,18 @@ import { useEffect, useRef, useState } from "react";
 import { SearchBar } from "../search_bar/SearchBar";
 
 
-const KakaoMap = ({ lat = 33.450701, lng = 126.570667, onLatLngChange }) => {
+const KakaoMap = ({
+    zoom=3,
+    width = "400px",
+    height = "500px",
+    lat = 33.450701,
+    lng = 126.570667,
+    onLatLngChange,
+    draggable = true,
+    canSearchAddress = true,
+    rounded = true,
+    onMarkerClick
+}) => {
 
     const [address, setAddress] = useState("");
     const [isMapLoaded, setIsMapLoaded] = useState(false);
@@ -73,7 +84,7 @@ const KakaoMap = ({ lat = 33.450701, lng = 126.570667, onLatLngChange }) => {
         const container = document.getElementById("map");
         const options = {
             center: new window.kakao.maps.LatLng(lat, lng),
-            level: 3,
+            level: zoom,
         };
         mapRef.current = new window.kakao.maps.Map(container, options);
 
@@ -81,22 +92,25 @@ const KakaoMap = ({ lat = 33.450701, lng = 126.570667, onLatLngChange }) => {
             position: new window.kakao.maps.LatLng(lat, lng)
         });
         markerRef.current.setMap(mapRef.current);
-        markerRef.current.setDraggable(true); // 드래그 가능하도록
 
-        window.kakao.maps.event.addListener(markerRef.current, 'dragend', function () { // dragend 이벤트
-            const position = markerRef.current.getPosition();
-            const newLat = position.getLat();
-            const newLng = position.getLng();
-            // console.log("마커 이동 위치:", newLat, newLng);
-            onLatLngChange?.(newLat, newLng);
-        });
+        markerRef.current.setDraggable(draggable); // 드래그 가능
+        if (draggable) {
+            window.kakao.maps.event.addListener(markerRef.current, 'dragend', function () { // dragend 이벤트
+                const position = markerRef.current.getPosition();
+                const newLat = position.getLat();
+                const newLng = position.getLng();
+                // console.log("마커 이동 위치:", newLat, newLng);
+                onLatLngChange?.(newLat, newLng);
+            });
+        }
 
         window.kakao.maps.event.addListener(markerRef.current, 'click', function () { // 클릭 이벤트
             console.log("클릭");
+            onMarkerClick?.();
         });
     }, [isMapLoaded]);
 
-    // lat/lng 변경 시 마커만 이동
+    // lat, lng 변경 시 마커만 이동
     useEffect(() => {
         if (!isMapLoaded || !markerRef.current) return;
         const newPosition = new window.kakao.maps.LatLng(lat, lng);
@@ -105,22 +119,19 @@ const KakaoMap = ({ lat = 33.450701, lng = 126.570667, onLatLngChange }) => {
     }, [lat, lng, isMapLoaded]);
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <SearchBar
-                    placeholder="주소 검색"
-                    value={address}
-                    width="100%"
-                    onChange={handleAddress}
-                    onEnter={handleMarkerByAddress}
-                    closeBtnVisible={true} />
-            </div>
-            <div
-                id="map"
-                style={{
-                    width: "100%",
-                    height: "400px",
-                }}></div>
+        <div style={{ width, height, display: "flex", flexDirection: "column", gap: "1rem" }}>
+            {canSearchAddress &&
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                    <SearchBar
+                        placeholder="주소 검색"
+                        value={address}
+                        width="100%"
+                        onChange={handleAddress}
+                        onEnter={handleMarkerByAddress}
+                        closeBtnVisible={true} />
+                </div>
+            }
+            <div id="map" style={{ width: "100%", height: "100%", borderRadius: rounded ? "5%" : "0" }}></div>
         </div>
     );
 }

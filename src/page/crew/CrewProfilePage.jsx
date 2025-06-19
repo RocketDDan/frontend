@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./CrewProfilePage.module.css";
-import {sampleCrew} from "../../dto/crew.dto";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useParams } from "react-router-dom";
-import { ThirdaryButton, SecondaryHoverButton } from "../../components/base/Button";
-import { CrewProfileImage } from "../../components/profile/ProfileImage";
-import { CheckModal } from "../../components/base/CheckModal";
+import { Button } from "../../components/base/Button";
+import { ProfileImage } from "../../components/profile/ProfileImage";
 import { deleteCrew, fetchCrew } from "../../api/crew.api";
 import { resignCrewMember } from "../../api/crewMember.api";
-import {deleteCrewJoinRequest, requestCrewJoin} from "../../api/crewJoinRequest.api";
-import { TextArea } from "../../components/base/Input";
+import { deleteCrewJoinRequest, requestCrewJoin } from "../../api/crewJoinRequest.api";
 import CrewMemberListModal from "../../components/crew/CrewMemberListModal";
+import Swal from "sweetalert2";
+import { fetchFeedList } from "../../api/feed.api";
 
 const CrewProfilePage = () => {
     const navigate = useNavigate();
@@ -24,7 +23,6 @@ const CrewProfilePage = () => {
     const [handleModalConfirm, setHandleModalConfirm] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [useButton, setUseButton] = useState(true); // 버튼 사용 여부
-    const [modalWidth, setModalWidth] = useState("400px"); // 모달 너비 설정
     // 크루 가입 요청 모달
     const [requestModalOpen, setRequestModalOpen] = useState(false);
     const [requestMessage, setRequestMessage] = useState("");
@@ -36,7 +34,7 @@ const CrewProfilePage = () => {
         alert("크루 가입 요청이 취소되었습니다.");
         const data = await fetchCrew(crewId);
         setCrew(data);
-        
+
     }
 
     const onClickRequestBtn = () => {
@@ -86,7 +84,6 @@ const CrewProfilePage = () => {
         setModalTitle("크루 소개");
         setModalDescription(crew?.introduce);
         setUseButton(false); // 버튼 사용 안함
-        setModalWidth("500px"); // 모달 너비 설정
         setModalOpen(true);
     }
 
@@ -94,40 +91,55 @@ const CrewProfilePage = () => {
         if (crew.leader) {
             return (
                 <>
-                    <SecondaryHoverButton 
-                        content="가입 요청 확인" 
-                        width="120px" 
-                        onClick={()=>{navigate(`/crew/${crewId}/join-request/list`)}}
-                     />
-                    <SecondaryHoverButton
-                        content="크루 수정"
-                        width="100px"
-                        onClick={() => navigate(`/crew/${crewId}/update`)}
+                    <Button
+                        content="가입 요청 확인"
+                        width="100%"
+                        onClick={() => { navigate(`/crew/${crewId}/join-request/list`) }}
+                        bg="secondaryBg"
                     />
-                    <ThirdaryButton content="크루 삭제" width="100px" onClick={onClickDeleteBtn}/>
+                    <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
+                        <Button
+                            content="크루 수정"
+                            width="100%"
+                            onClick={() => navigate(`/crew/${crewId}/update`)}
+                            bg="secondaryBg"
+                        />
+                        <Button
+                            content="크루 삭제"
+                            width="100%"
+                            onClick={onClickDeleteBtn}
+                            bg="pinkBg" />
+                    </div>
+
                 </>
             );
         } else if (crew.member) {
             return (
-                <ThirdaryButton content="탈퇴" width="100px" onClick={onClickResignBtn}/>
+                <Button
+                    content="탈퇴"
+                    width="100px"
+                    onClick={onClickResignBtn}
+                    bg="pinkBg" />
             );
-        } else if(crew.hasRequestedJoin){
+        } else if (crew.hasRequestedJoin) {
             return (
-                <ThirdaryButton
+                <Button
                     content="가입 요청 취소"
                     width="150px"
                     className={styles.actionBtn}
                     onClick={onClickCancelBtn}
+                    bg="pinkBg"
                 />
             );
         }
         else {
             return (
-                <SecondaryHoverButton
+                <Button
                     content="가입 요청"
-                    width="100px"
+                    width="100%"
                     className={styles.actionBtn}
                     onClick={onClickRequestBtn}
+                    bg="secondaryBg"
                 />
             );
         }
@@ -139,75 +151,146 @@ const CrewProfilePage = () => {
         });
     }, [crewId]);
 
+    // TODO: 피드 모아보기 개발중
+    const [feedList, setFeedList] = useState([]); // 피드 데이터
+    const [page, setPage] = useState(1); // 페이지
+    const [isLoading, setIsLoading] = useState(false); // 로딩중인지 여부
+    const observerTarget = useRef(null); // 
+    const handleObserver = useCallback((entries) => {
+        const target = entries[0];
+        if (target.isIntersecting && !isLoading) {
+            setPage(prev => prev + 1);
+        }
+    }, [isLoading]);
+
+    useEffect(() => {
+        const loadFeeds = async () => {
+            setIsLoading(true);
+            const data = await fetchFeedList({ page: page, perPage: 10, scope: "CREW", order: "LATEST", crewId: crewId });
+            console.log("data: ", data);
+            setFeedList(prev => [...data, ...prev]);  // 누적!
+            setIsLoading(false);
+        };
+        loadFeeds();
+    }, [page]);
+
+
     return (
-        <div>
+        <div className={styles.pageWrapper}>
             {!crew && (
-                <div className={styles.loading}>크루 정보를 불러오는 중입니다...</div>
+                <div className={styles.loading}>
+                    크루 정보를 불러오는 중입니다...
+                </div>
             )}
             {crew && (
-                <div className={styles.profileWrapper}>
-                    <CrewProfileImage profileUrl={crew?.profilePath}/>
-                    <div className={styles.infoSection}>
-                        <span className={styles.crewName}>{crew?.crewName}</span>
-                        <div onClick={() => setCrewMemberModalOpen(true)}>
-                            <div className={styles.label}>총 멤버</div>
-                            <div className={styles.memberCount}>
-                                <FontAwesomeIcon icon={faPersonRunning} /> {crew?.totalMemberCnt}명
+                <div>
+                    <div className={styles.profileWrapper}>
+
+                        <div className={styles.profileDiv}>
+                            <ProfileImage profileUrl={crew?.profilePath} size="200px" />
+                        </div>
+
+                        <div className={styles.infoSection}>
+                            <span className={styles.crewName}>
+                                {crew?.crewName}
+                            </span>
+
+                            <div className={styles.flexContainer} onClick={() => setCrewMemberModalOpen(true)}>
+                                <div className={styles.label}>멤버</div>
+                                <div style={{ cursor: "pointer" }}>
+                                    <FontAwesomeIcon icon={faPersonRunning} />
+                                    <span>&nbsp;{crew?.totalMemberCnt}명</span>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <div className={styles.label}>소개</div>
-                            <div className={styles.introduce} onClick={onClickIntroduce}>{crew?.introduce}</div>
-                        </div>
-                        <div>
-                            <div className={styles.label}>주소</div>
-                            <div className={styles.details}>
-                                <div className={styles.region}>{crew?.crewRegion}</div>
-                                <div className={styles.address}>{crew?.crewAddress}</div>
+
+                            <div className={styles.flexContainer}>
+                                <div className={styles.label}>소개</div>
+                                <div className={styles.introduce} onClick={onClickIntroduce}>
+                                    {crew?.introduce.length > 30 ? crew.introduce.substring(0, 30) + '...' : crew.introduce}
+                                </div>
+                            </div>
+
+                            <div className={styles.flexContainer}>
+                                <div className={styles.label}>주소</div>
+                                <div className={`${styles.region} textLightColor`}>
+                                    <span>{crew?.crewRegion}</span>&nbsp;
+                                    <span>{crew?.crewAddress}</span>
+                                </div>
                             </div>
                         </div>
 
+                        <div className={styles.buttonSection}>
+                            <div className={styles.buttonGroup}>{renderActionButtons()}</div>
+                        </div>
                     </div>
-                    <div className={styles.buttonSection}>
-                        <div className={styles.buttonGroup}>{renderActionButtons()}</div>
+
+                    <div style={{ width: "100%", textAlign:"start" }}>
+                        <h3>피드 모아보기</h3>
+                        <hr />
+                        <div className={styles.feedListContainer}>
+                            {
+                                // feedList.map(feed => {
+                                [...Array(100)].map((_, i) => {
+                                    return <div className={styles.squareBox}>
+                                        {/* {feed.feedId} */}
+                                        {i + 1}
+                                    </div>
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
             )}
-            <div className={styles.crewMemberFeeds}>
-                <span>크루원들의 피드 모아보기</span>
-                {/* 크루원들 피드 목록 조회 컴포넌트 추가 */}
-            </div>
-            {modalOpen && (
-                <CheckModal 
-                    title={modalTitle}
-                    description={modalDescription}
-                    onConfirm={handleModalConfirm}
-                    useButton={useButton}
-                    width={modalWidth}
-                    onClose={()=>{
-                        setModalOpen(false);
-                        setModalWidth("400px"); // 모달 너비 초기화
-                        setUseButton(true); // 버튼 사용 여부 초기화
-                    }}/>
-            )}
-            {requestModalOpen && (
-                <CheckModal
-                    title="크루 가입 요청"
-                    width="500px"
-                    description={
-                        <TextArea
-                            placeholder="가입 요청 메시지를 입력하세요.(최대 1000자)"
-                            value={requestMessage}
-                            onChange={setRequestMessage}
-                            width="400px"
-                            height="200px"
-                            maxLength={1000}
-                        />
+
+            {/* <div className={styles.crewMemberFeeds}> */}
+            {/* <span>크루원들의 피드 모아보기</span> */}
+            {/* 크루원들 피드 목록 조회 컴포넌트 추가 */}
+            {/* </div> */}
+
+            {modalOpen && Swal.fire({
+                title: modalTitle,
+                html: modalDescription,
+                showCancelButton: useButton,
+                confirmButtonText: '확인',
+                cancelButtonText: '취소',
+                customClass: { popup: 'custom-swal-width' },
+            }).then(result => {
+                if (result.isConfirmed && handleModalConfirm) {
+                    handleModalConfirm();
+                }
+                setModalOpen(false);
+                setUseButton(true);
+            })}
+            {requestModalOpen && Swal.fire({
+                title: "크루 가입 요청",
+                html: `
+                    <textarea id="swal-input" class="swal2-textarea"
+                        placeholder="가입 요청 메시지를 입력하세요.(최대 400자)"
+                        maxlength="400"
+                        style="width: 100%; max-width: 100%; min-width: 0; height: 200px; box-sizing: border-box; display: block; margin: 0 auto;"
+                    >${requestMessage}</textarea>
+                `,
+                showCancelButton: true,
+                confirmButtonText: '요청',
+                cancelButtonText: '취소',
+                customClass: { popup: 'custom-swal-width' },
+                willOpen: () => {
+                    // popup에 box-sizing: border-box 적용 (중복 방지)
+                    const popup = document.querySelector('.swal2-popup');
+                    if (popup) popup.style.boxSizing = 'border-box';
+                }
+                ,
+                preConfirm: () => {
+                    const input = document.getElementById('swal-input');
+                    if (input) {
+                        setRequestMessage(input.value);
+                        return handleRequestConfirm();
                     }
-                    onConfirm={() => handleRequestConfirm()}
-                    onClose={() => setRequestModalOpen(false)}
-                />
-            )}
+                }
+            }).then(() => {
+                setRequestModalOpen(false);
+            })}
+
             {crewMemberModalOpen && (
                 <CrewMemberListModal
                     crewId={crewId}

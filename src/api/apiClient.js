@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const apiClient = axios.create({
     baseURL: process.env.REACT_APP_API_BASE_URL, // .env에 설정 가능
@@ -28,8 +29,16 @@ apiClient.interceptors.response.use(
         const originalRequest = error.config;
         if (error.response?.status === 400) {
             console.error("Bad request, please check your input.");
-            alert(error.response.data);
+            // alert(error.response.data);
+            Swal.fire({
+                icon: "error",
+                title: "잘못된 접근",
+                text: error.response.data,
+                timer: 1500,
+                showConfirmButton: false
+            });
         }
+
         if (error.response?.status === 401) {
             if(error.response.data === "⚠️ 만료된 엑세스 토큰입니다.") {
                 console.log("만료된 엑세스 토큰입니다.");
@@ -39,7 +48,14 @@ apiClient.interceptors.response.use(
                         return apiClient(originalRequest);
                     })
                     .catch(() => {
-                        alert("로그아웃 되었습니다. 다시 로그인해주세요.");
+                        Swal.fire({
+                            icon: "error",
+                            title: "로그인 만료",
+                            text: "로그아웃 되었습니다. 다시 로그인해주세요.",
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                        // alert("로그아웃 되었습니다. 다시 로그인해주세요.");
                         return apiClient.get('/auth/logout')
                             .then(() => {})
                             .catch((error) => {
@@ -49,7 +65,14 @@ apiClient.interceptors.response.use(
                     });
             } else if(error.response.data === "⚠️ 만료된 리프레시 토큰입니다.") {
                 console.log("만료된 리프레시 토큰입니다.");
-                alert("로그아웃 되었습니다. 다시 로그인해주세요.");
+                Swal.fire({
+                    icon: "error",
+                    title: "로그인 만료",
+                    text: "로그아웃 되었습니다. 다시 로그인해주세요.",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                // alert("로그아웃 되었습니다. 다시 로그인해주세요.");
                 return apiClient.get('/auth/logout')
                     .then(() => {})
                     .catch((error) => {
@@ -57,25 +80,49 @@ apiClient.interceptors.response.use(
                         window.location.href = "/logout/callback";
                     });
             } else if(error.response.data === "⚠️ 만료된 회원가입용 인증 토큰입니다.") {
-                alert("소셜 로그인을 다시 수행하고, 회원가입을 시도해주세요.");
+                Swal.fire({
+                    icon: "error",
+                    title: "로그인 실패",
+                    text: "소셜 로그인을 다시 수행하고, 회원가입을 시도해주세요",
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+                // alert("소셜 로그인을 다시 수행하고, 회원가입을 시도해주세요.");
                 window.location.href = "/login";
             } else {
                 console.warn("Unauthorized, redirecting to login.");
                 window.location.href = "/login";
             }
         }
+
         if (error.response?.status === 403) {
             console.warn("Forbidden, you do not have permission to access this resource.");
-            alert("접근 권한이 없습니다.");
+            Swal.fire({
+                icon: "error",
+                title: "잘못된 접근",
+                text: "접근 권한이 없습니다.",
+                timer: 1500,
+                showConfirmButton: false
+            });
+            // alert("접근 권한이 없습니다.");
             window.history.back(); // 이전 페이지로 이동
         }
+
         if (error.response?.status === 404) {
             console.warn("Resource not found.");
             window.location.href = "/404"; // 또는 "/not-found"
         }
+
         if (error.response?.status >= 500) {
             console.error("Server error, please try again later.");
-            alert("서버 오류가 발생했습니다. 나중에 다시 시도해주세요.");
+            Swal.fire({
+                icon: "error",
+                title: "서버 오류 발생",
+                text: "서버 오류가 발생했습니다. 나중에 다시 시도해주세요.",
+                timer: 1500,
+                showConfirmButton: false
+            });
+            // alert("서버 오류가 발생했습니다. 나중에 다시 시도해주세요.");
         }
         return Promise.reject(error);
     }

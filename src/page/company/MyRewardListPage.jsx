@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from  "./MyRewardListPage.module.css";
-import { SearchBar } from "../../components/search_bar/SearchBar";
-import { TableView } from "../../components/base/AnnouncementTable";
-import axios from "axios";
+// import { SearchBar } from "../../components/search_bar/SearchBar";
+import { Table } from "../../components/base/Table";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../api/apiClient";
 
@@ -45,7 +44,7 @@ const MyRewardListPage = () => {
     <div className={styles.container}>
       <h1>내 피드 광고 목록</h1>
 
-      <TableView
+      <Table
         headers={["번호", "피드ID", "잔액", "충전", "업로드 날짜"]}
         keys={["feedId", "balance", "chargeAmount", "createdAt"]}
         data={data}

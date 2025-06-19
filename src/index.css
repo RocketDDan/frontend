@@ -1,8 +1,7 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700; /* 400: 기본 보통, 700: 두껍게, 300: 얇게 */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -14,4 +13,144 @@ code {
 
 * {
   box-sizing: border-box;
+}
+
+.router-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 3rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.router-container::-webkit-scrollbar {
+  display: none;
+}
+
+.feed-router-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 3rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.feed-router-container::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollX {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+label {
+  margin-bottom: 10px;
+  text-align: start;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .router-container {
+    padding: 0.5rem 0.5rem 6rem 0.5rem;
+  }
+
+  .feed-router-container {
+    padding: 0.5rem 0 6rem 0;
+  }
+}
+
+.primaryColor {
+  color: #7CB2FC;
+}
+
+.primaryBg {
+  background: #7CB2FC;
+  color: #fff;
+}
+
+.secondaryBg {
+  background: #e9f1ff;
+  color: #222 !important;
+}
+
+.secondaryHoverBg:hover {
+  background: #7CB2FC;
+  /* primaryBg와 동일 */
+  color: #fff;
+}
+
+.pinkBg {
+  background-color: #FFBABA;
+  color: #222 !important;
+}
+
+.pinkBg:hover {
+  background: #e75480;
+  color: #fff;
+}
+
+.primaryCheck {
+  color: #7CB2FC;
+}
+
+.primaryCheck:hover {
+  color: #3a8afb;
+}
+
+.primaryCancel {
+  color: #FFBABA;
+}
+
+.primaryCancel:hover {
+  color: #ff0000;
+}
+
+.borderStyle {
+  border: 1px solid #999;
+}
+
+.crownColor {
+  color: #FF7723;
+}
+
+.crownLightColor {
+  color: #faa46f;
+}
+
+.crownLightColor:hover{
+  color: #FF7723;
+}
+
+.grey{
+  color: rgb(176, 176, 176);
+}
+
+.gery:hover{
+  color: grey;
+}
+
+.titleColor {
+  color: #5164ED;
+}
+
+.noData {
+  color: #999;
+  margin-top: 1rem;
+}
+
+.textLightColor {
+  color: #575757;
+}
+
+/* 테이블 */
+tr:hover {
+  background-color: #f5f7fa;
+  transition: background-color 0.2s ease;
+}
+
+thead tr:hover {
+  background-color: inherit;
 }
