@@ -115,21 +115,33 @@ const Header = () => {
 					</span>
 				)}
 
+				{user && menuOpen && <span>
+					<Link
+						// to="/account/setting"
+						to={`/runner/${user.memberId}`}
+						className={currentPath.startsWith(`/runner/${user.memberId}`) && headerStyle.activeLink}
+						onClick={handleMenuLinkClick}>
+						내 프로필
+					</Link>
+				</span>}
+
 				{user && menuOpen && (
 					<span>
 						<Link to={`/runner/${user.memberId}`} className={currentPath.startsWith("/account/setting") ? headerStyle.activeLink : ""} onClick={() => setMenuOpen(false)}>
 							내 정보 수정
 						</Link>
 					</span>
+				)}
 
-				)}
-				{user && menuOpen && (
-					<span>
-						<Link to={KAKAO_LOGOUT_URL} onClick={() => setMenuOpen(false)}>
-							로그아웃
-						</Link>
-					</span>
-				)}
+				{user && menuOpen && <span>
+					<Link
+						to={KAKAO_LOGOUT_URL}
+						onClick={handleMenuLinkClick}>
+						로그아웃
+					</Link>
+				</span>}
+
+				<span></span>
 			</div>
 		</header>
 	);

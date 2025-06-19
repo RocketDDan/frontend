@@ -33,7 +33,7 @@ const RunnerProfilePage = () => {
 
                     <div className={styles.infoSection}>
                         <span className={styles.nickname}>{member.nickname}</span>
-                        <div className={styles.crewGroup} onClick={navigate(`/crew/${member.crewId}`)}>
+                        <div className={styles.crewGroup} onClick={() => navigate(`/crew/${member.crewId}`)}>
                             <div className={styles.label}>소속 크루</div>
 
                             <span className={styles.crewName}>                            

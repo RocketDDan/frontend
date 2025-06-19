@@ -17,7 +17,6 @@
 
 .profileWrapper, .memberFeeds{
   max-width: 1000px;      /* profileWrapper와 동일하게 */
-  min-width: 750px;       /* profileWrapper와 동일하게 */
   margin-left: auto;      /* 가운데 정렬 */
   margin-right: auto;     /* 가운데 정렬 */
   width: 100%;
@@ -99,4 +98,14 @@
   min-height: 120px;
   font-size: 1.3rem;
   color: #888;
+}
+
+@media screen and (max-width: 768px) {
+  .profileWrapper {
+    flex-direction: column;
+  }
+
+  .crewGroup {
+	gap: 10px;
+  }
 }
