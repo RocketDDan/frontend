@@ -6,6 +6,7 @@ import { SecondaryButton } from "../../components/base/Button";
 import { TableView } from "../../components/base/AnnouncementTable";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../api/apiClient"
+import { useAuthStore } from "../../store/authStore";
 
 const AnnouncementListPage = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const AnnouncementListPage = () => {
   const [data, setData] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const limit = 6;
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,20 +53,24 @@ const AnnouncementListPage = () => {
     <div className={styles.container}>
       <h1>공지 사항</h1>
       <div className={styles.topBar}>
-        <div style={{ width: "300px" }}>
-          <SearchBar
-            placeholder="검색하기"
-            value={keyword}
-            onChange={handleChange}
-            onEnter={() => console.log("엔터")}
-          />
-        </div>
+      <div className={styles.searchWrapper}>
+        <SearchBar
+          placeholder="검색하기"
+          value={keyword}
+          onChange={handleChange}
+          onEnter={() => console.log("엔터")}
+        />
+      </div>
+      {user && (
         <SecondaryButton
           width="160px"
           content="새 공지사항 등록"
           onClick={() => navigate("/announcement/upload")}
         />
-      </div>
+      )}
+
+    </div>
+
       <TableView
         headers={["번호", "제목", "작성자", "작성날짜"]}
         keys={["title", "crewName", "createdAt"]}
@@ -73,7 +79,13 @@ const AnnouncementListPage = () => {
         limit={limit}
         totalCount={totalCount}
         setPage={setPage}
-        onRowClick={(row) => navigate(`/announcement/${row.announcementId}/detail`)}
+        onRowClick={(row) => {
+          if (!user) {
+            alert("로그인 후 이용해주세요.");
+            return;
+          }
+          navigate(`/announcement/${row.announcementId}/detail`);
+        }}
       />
     </div>
   );
