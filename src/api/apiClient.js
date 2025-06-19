@@ -91,6 +91,8 @@ apiClient.interceptors.response.use(
                 window.location.href = "/login";
             } else {
                 console.warn("Unauthorized, redirecting to login.");
+                const currentPath = window.location.pathname + window.location.search;
+                localStorage.setItem("redirectAfterLogin", currentPath);
                 window.location.href = "/login";
             }
         }
