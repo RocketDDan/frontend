@@ -1,0 +1,215 @@
+.container {
+    flex: 1;
+    max-width: 468px;
+    height: fit-content;
+    /* height: 600px; */
+    /* border: 0.5px solid; border-radius: 10px; */
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 작성자 정보 행 */
+.writerRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.writerRow>* {
+    flex: 1;
+    cursor: pointer;
+}
+
+/* 피드 이미지 행 */
+.feedImageList {
+    position: relative;
+    display: flex;
+    max-width: 468px;
+    height: 585px;
+    border: 0.5px solid;
+    /* border-radius: 10px; */
+    background-color: black;
+}
+
+.feedImageList>* {
+    max-width: 468px;
+    height: 585px;
+    object-fit: contain;
+    /* contain: 여백; cover: 꽉 채우기 */
+}
+
+.zoomable {
+    transition: transform 0.3s ease;
+    cursor: zoom-in;
+}
+
+.zoomable:active {
+    transform: scale(2);
+    /* 2배 확대 */
+    cursor: zoom-out;
+}
+
+.imageChangeBtn {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: auto;
+    cursor: pointer;
+}
+
+/* 아이콘(하트; 메시지; .....) 행 */
+.iconRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+
+.iconRow>* {
+    flex: 1;
+    text-align: center;
+    width: 100%;
+    margin: auto;
+}
+
+.iconRow>.heartMessage {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.heartMessage>* {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+/* 피드 글 */
+.feedContent {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+    text-align: start;
+    font-size: 14px;
+}
+
+/* 댓글 */
+.commentList {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0.5rem;
+    text-align: start;
+    font-size: 14px;
+}
+
+.commentList>* {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* 기존 mapModalOverlay를 fullscreen 오버레이로 변경 */
+.mapModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* mapModalContent는 실제 카드, 넓게 차지하게 */
+.mapModalContent {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    max-height: 95vh;
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mapHeader {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    /* border-bottom: 1px solid #eee; */
+    padding-bottom: 0.5rem;
+}
+
+.mapHeader h2 {
+    font-size: 1.2rem;
+    color: #34495e;
+    margin: 0;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.closeButton:hover {
+    color: #2c3e50;
+}
+
+.mapBox {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.tag {
+    display: inline-block;
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    width: fit-content;  
+    cursor: pointer;
+    color: #2980b9;
+}
+
+.advertiseTag {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: #ffe3e3;
+    color: #d63031;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 2;
+
+    /* ✅ 아래가 핵심 */
+    display: inline-block;
+    white-space: nowrap;
+    width: auto;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

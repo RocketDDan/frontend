@@ -14,6 +14,7 @@ import CrewMemberListModal from "../../components/crew/CrewMemberListModal";
 import Swal from "sweetalert2";
 import { fetchFeedList } from "../../api/feed.api";
 import { useAuthStore } from "../../store/authStore";
+import FeedDetailModal from "../../components/feed/FeedDetailModal";
 
 const CrewProfilePage = () => {
 	const navigate = useNavigate();
@@ -159,29 +160,6 @@ const CrewProfilePage = () => {
 		});
 	}, [crewId]);
 
-	// TODO: 피드 모아보기 개발중
-	const [feedList, setFeedList] = useState([]); // 피드 데이터
-	const [page, setPage] = useState(1); // 페이지
-	const [isLoading, setIsLoading] = useState(false); // 로딩중인지 여부
-	const observerTarget = useRef(null); // 
-	const handleObserver = useCallback((entries) => {
-		const target = entries[0];
-		if (target.isIntersecting && !isLoading) {
-			setPage(prev => prev + 1);
-		}
-	}, [isLoading]);
-
-	useEffect(() => {
-		const loadFeeds = async () => {
-			setIsLoading(true);
-			const data = await fetchFeedList({ page: page, perPage: 10, scope: "CREW", order: "LATEST", crewId: crewId });
-			console.log("data: ", data);
-			setFeedList(prev => [...data, ...prev]);  // 누적!
-			setIsLoading(false);
-		};
-		loadFeeds();
-	}, [page]);
-
 	useEffect(() => {
 		if (modalOpen) {
 			console.log(modalDescription.replace(/\n/g, "<br />"));
@@ -233,6 +211,34 @@ const CrewProfilePage = () => {
 			});
 		}
 	}, [requestModalOpen]);
+
+	// TODO: 피드 모아보기 개발중
+	const [feedList, setFeedList] = useState([]); // 피드 데이터
+	const [page, setPage] = useState(1); // 페이지
+	const [isLoading, setIsLoading] = useState(false); // 로딩중인지 여부
+	const observerTarget = useRef(null); // 
+	const handleObserver = useCallback((entries) => {
+		const target = entries[0];
+		if (target.isIntersecting && !isLoading) {
+			setPage(prev => prev + 1);
+		}
+	}, [isLoading]);
+
+	useEffect(() => {
+		const loadFeeds = async () => {
+			setIsLoading(true);
+			const data = await fetchFeedList({ page: page, perPage: 10, scope: "CREW", order: "LATEST", crewId: crewId });
+			console.log("data: ", data);
+			setFeedList(prev => [...data, ...prev]);  // 누적!
+			setIsLoading(false);
+		};
+		loadFeeds();
+	}, [page]);
+
+	const [selectedFeed, setSelectedFeed] = useState();
+	// useState(() => {
+
+	// }, [selectedFeed])
 
 	return (
 		<div className={styles.pageWrapper}>
@@ -289,15 +295,23 @@ const CrewProfilePage = () => {
 						<div className={styles.feedListContainer}>
 							{
 								feedList.map(feed => {
-									return <div className={styles.imageBox}>
-										<img
-											key ={feed.feedId}
-											src={feed.feedFileUrlList[0]?.fileUrl}
-											alt="" />
-									</div>
+									return (
+										<div className={styles.imageBox} onClick={() => setSelectedFeed(feed)}>
+											<img
+												key={feed.feedId}
+												src={feed.feedFileUrlList[0]?.fileUrl}
+												alt="" />
+										</div>
+									)
 								})
 							}
 						</div>
+						{selectedFeed && (
+							<FeedDetailModal
+								feed={selectedFeed}
+								onClose={() => setSelectedFeed(null)}
+							/>
+						)}
 					</div>
 				</div>
 			)}
