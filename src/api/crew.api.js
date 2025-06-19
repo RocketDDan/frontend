@@ -89,7 +89,7 @@ const deleteCrew = async (crewId) => {
 // 내 크루 조회
 const fetchMyCrew = async () => {
     try {
-        const response = await apiClient.put('/crews/me');
+        const response = await apiClient.get('/crews/me');
         if (response.status !== 200) {
             throw new Error('내 크루 조회 실패', response.data);
         }

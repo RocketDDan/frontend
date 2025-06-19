@@ -101,16 +101,13 @@ const CrewListPage = () => {
 	}, [handleObserver]);
 
 	useEffect(() => {
-		if (user) {
-			fetchMyCrew().then((data) => {
-				setHasCrew(data !== null);
-				console.log(hasCrew);
-			});
-		}
-
+	if (user) {
+		fetchMyCrew().then((data) => {
+		setHasCrew(data != null && data > 0 );
 		console.log("hasCrew", hasCrew);
-		console.log("user", user);
-	}, []);
+		});
+	}
+	}, [user, hasCrew]);
 
 	const handleSearchBar = () => {
 		setPage(1);
