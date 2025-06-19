@@ -133,7 +133,7 @@ const CrewCreatePage = () => {
                     />
                     <Button
                         content="중복확인"
-                        width="110px"
+                        width="130px"
                         onClick={onClickDuplicateCheck}
                     />
                 </div>
