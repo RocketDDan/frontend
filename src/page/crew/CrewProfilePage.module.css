@@ -4,6 +4,11 @@
   margin-top: 2rem;
 }
 
+.crewWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .flexContainer {
   display: flex;
   justify-content: flex-start;
@@ -19,7 +24,7 @@
 }
 
 .profileWrapper {
-  height: 200px;
+  flex-wrap: wrap;
   width: 100%; /* 이 줄 추가 */
   min-width: 300px; /* 필요시 추가 */
   padding-top: 1rem;
@@ -149,11 +154,32 @@
   box-sizing: border-box !important;
 }
 
+/* 피드 모아보기 */
+.feedListContainer {
+  display: flex;
+  flex-wrap: wrap;           /* 줄바꿈 허용 */
+  gap: 8px;                  /* 요소 간 여백 */
+  justify-content: flex-start;
+  margin-top: 2rem;
+}
+
+.squareBox {
+  width: 120px;
+  height: 120px;
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (max-width: 768px) {
   .profileWrapper {
     flex-direction: column;
     align-items: center;
     padding: 0 16px;
+    gap: 1rem;
   }
 
   .buttonSection {
@@ -169,25 +195,4 @@
     flex-direction: column;
     align-items: flex-start;
   }
-}
-
-
-/* 피드 모아보기 */
-.feedListContainer {
-  display: flex;
-  flex-wrap: wrap;           /* 줄바꿈 허용 */
-  gap: 8px;                  /* 요소 간 여백 */
-  justify-content: flex-start;
-}
-
-.squareBox {
-  width: 120px;
-  height: 120px;
-  background-color: black;
-  border-radius: 5px;
-  color: white;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
+import Swal from "sweetalert2";
 import { useAuthStore } from "../../store/authStore";
 import { useNavigate } from "react-router-dom";
 import CrewCard from "../../components/crew/CrewCard";
@@ -10,6 +11,8 @@ import LoadingSpinner from "../../components/base/LoadingSpinner";
 import { BasicSelect } from "../../components/base/Select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import RequiredLogin from "../../util/RequiredLogin";
+
 
 const CrewListPage = () => {
 	const [hasCrew, setHasCrew] = useState(false);
@@ -44,6 +47,15 @@ const CrewListPage = () => {
 		}
 	}
 
+	const onClickCreateBtn = () => {
+		if (!RequiredLogin(user)) {
+			if (hasCrew) {
+				Swal.fire("크루원은 크루를 생성할 수 없습니다.");
+			} else {
+				navigate("/crew/create");
+			}
+		}
+	}
 	// 검색/필터 변경 시 새로고침 및 page 초기화
 	useEffect(() => {
 		setPage(1);
@@ -147,11 +159,9 @@ const CrewListPage = () => {
 						width="7rem"
 					/>
 				</div>
-
-				{user && !hasCrew && (
-					<button className={style.uploadBtn} onClick={() => {navigate(`/crew/create`)}}>
-                        <FontAwesomeIcon style={{ color: "white" }} icon={faPlus} size="2xl" />
-                    </button>)}
+				<button className={style.uploadBtn} onClick={onClickCreateBtn}>
+					<FontAwesomeIcon style={{ color: "white" }} icon={faPlus} size="2xl" />
+				</button>
 			</div>
 			<div className={style.container}>
 				{crewList.length > 0 &&

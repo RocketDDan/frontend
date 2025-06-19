@@ -32,7 +32,7 @@ const fetchRegionList = async (cd) => {
     try {
         // 지역 조회 api 사용 시 accessToken을 localStorage에서 가져오고, 없으면 새로 발급
         let accessToken = localStorage.getItem('region_accessToken');
-        if (!accessToken) {
+        if (accessToken === null) {
             accessToken = await getAccessToken();
         }
 
