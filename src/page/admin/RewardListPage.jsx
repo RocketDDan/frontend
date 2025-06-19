@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { SearchBar } from "../../components/search_bar/SearchBar";
-import { TableView } from "../../components/base/AnnouncementTable";
+import { Table } from "../../components/base/Table";
 import { BasicSelect } from "../../components/base/Select"
 
 const RewardListPage = () => {
@@ -15,8 +15,8 @@ const RewardListPage = () => {
     const [month, setMonth] = useState("");
     const [day, setDay] = useState("");
     const [totalCharge, setTotalCharge] = useState(0);
-    const [searchTrigger, setSearchTrigger] = useState(false);
-    const [totalCount, setTotalCount] = useState(0);
+    // const [searchTrigger, setSearchTrigger] = useState(false);
+    // const [totalCount, setTotalCount] = useState(0);
     const limit = 6;
     const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ const RewardListPage = () => {
                     createdAt: item.createdAt.split(" ")[0] + " " + item.createdAt.split(" ")[1].split(".")[0],
                 }));
                 setData(updatedData);
-                setTotalCount(res.data.totalCount);
+                // setTotalCount(res.data.totalCount);
 
                 const total = updatedData.reduce((sum, item) => sum + (item.chargeAmount || 0), 0);
                 setTotalCharge(total);
@@ -94,7 +94,7 @@ const RewardListPage = () => {
                 <span style={{ color: "red" }}>{totalCharge.toLocaleString()}원</span>
             </div>
 
-            <TableView
+            <Table
                 headers={["번호", "이름", "피드ID", "잔액", "충전", "업로드 날짜"]}
                 keys={["nickname", "feedId", "balance", "chargeAmount", "createdAt"]}
                 data={data}

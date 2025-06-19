@@ -1,43 +1,69 @@
 .container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    background-color: #f8f9fc;
+    min-height: 100vh;
+}
+
+.title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 2rem;
 }
 
 .form {
     display: flex;
     flex-direction: column;
-    width: 20%;
-    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    gap: 1.5rem;
+}
+
+.profileImageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .subtitleContainer {
     display: flex;
     flex-direction: row;
-}
-
-.profileImageContainer {
-    position: relative;
-    width: 100px;
-    height: 100px;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .nicknameContainer {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
+    gap: 0.5rem;
+    width: 100%;
+    align-items: end;
 }
 
 .errorContainer {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: flex-start;
+    gap: 0.4rem;
     width: 100%;
 }
 
 .error {
-    color: red;
-    font-size: 0.8rem;
-    margin-top: 4px;
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 2px;
+}
+
+.labelLeft {
+    text-align: left;
+    width: 100%;
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import style from "./FeedUploadPage.module.css";
-import { PrimaryButton } from '../../components/base/Button'
-import { TextAreaWithLabel } from '../../components/base/Input';
+import { Button } from '../../components/base/Button'
+import { TextArea } from '../../components/base/Input';
 import { ImageAddBlock } from "../../components/image/ImageAddBlock";
 import { ImageBlock } from "../../components/image/ImageBlock";
 import { v7 as uuid7 } from "uuid";
@@ -128,7 +128,7 @@ const FeedUploadPage = () => {
             </div>
 
             <div>
-                <div style={{ textAlign: "start" }}>위치 검색</div>
+                <div style={{ textAlign: "start", marginBottom: "5px",}}>위치 검색</div>
                 <KakaoMap
                     lat={lat}
                     lng={lng}
@@ -139,8 +139,8 @@ const FeedUploadPage = () => {
             </div>
 
             <div>
-                <TextAreaWithLabel
-                    label="내용"
+                <div style={{ textAlign: "start", marginBottom: "5px",}}>내용</div>
+                <TextArea
                     width="100%"
                     maxHeight="100px"
                     maxLength={1000}
@@ -150,11 +150,11 @@ const FeedUploadPage = () => {
             </div>
 
             <div>
-                <PrimaryButton width="100px" content="등록" onClick={handleSubmit} />
+                <Button width="100px" content="등록" onClick={handleSubmit} />
             </div>
 
             {
-                user && user.role == 'COMPANY' &&
+                user && user.role === 'COMPANY' &&
                 <div>
                     결제 금액: <input type="number" onChange={handleAmount} />원
                 </div>

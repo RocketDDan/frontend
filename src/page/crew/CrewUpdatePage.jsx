@@ -3,7 +3,7 @@ import styles from './CrewUpdatePage.module.css';
 import { useEffect, useState, useRef } from 'react';
 import { fetchCrew, updateCrew } from "../../api/crew.api";
 import { TextArea, TextInput } from '../../components/base/Input';
-import { SecondaryHoverButton } from '../../components/base/Button';
+import { Button, SecondaryHoverButton } from '../../components/base/Button';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
@@ -138,11 +138,12 @@ const CrewUpdatePage = () => {
                         value={crewName}
                         onChange={handleCrewNameChange}
                     />
-                    <SecondaryHoverButton
+                    <Button
                         content="중복확인"
                         width="110px"
                         className={styles.duplicateCheckButton}
                         onClick={onClickDuplicateCheck}
+                        bg="secondaryBg"
                     />
                 </div>
                 {!(crewName?.length > 0) && (
@@ -183,12 +184,12 @@ const CrewUpdatePage = () => {
                     <p className={styles.errorText}>필수 입력 항목입니다.</p>
                 )}
             </div>
-            <SecondaryHoverButton
+            <Button
                 content="크루 수정"
                 width="100%" 
                 onClick={onClickSubmit}
                 disabled={!isFormValid}
-                className={styles.button}
+                bg="secondaryBg"
             />
         </div>
     );

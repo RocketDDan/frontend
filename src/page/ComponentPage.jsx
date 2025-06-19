@@ -1,45 +1,45 @@
-import { TextAreaWithLabel, TextArea, TextInput, TextInputWithLabel, PasswordInputWithLabel } from "../components/base/Input";
+import { TextArea, TextInput } from "../components/base/Input";
 import { SearchBar } from "../components/search_bar/SearchBar";
 import { BasicCheckbox } from "../components/base/Checkbox";
 import { BasicRadio } from "../components/base/Radio";
 import { BasicSelect } from "../components/base/Select";
-import { FeedProfileImage, CrewProfileImage, MemberProfileImage, CrewMemberProfileImage } from "../components/profile/ProfileImage";
-import { PrimaryBigButton, PrimaryButton, SecondaryBigButton, SecondaryButton, ThirdaryButton, CustomButton } from "../components/base/Button";
+import { ProfileImage } from "../components/profile/ProfileImage";
+import { Button } from "../components/base/Button";
 import { SquareFeed } from "../components/feed/SquareFeed";
 
 import MetamongImage from "../assets/images/metamong.jpeg"
 import { useState } from "react";
-import {CheckModal} from "../components/base/CheckModal";
-import {CrewMemberInfo} from "../components/crew/CrewMemberInfo";
+import { CheckModal } from "../components/base/CheckModal";
+import { CrewMemberInfo } from "../components/crew/CrewMemberInfo";
 import Pagenation from "../components/base/Pagenation";
 
 const HomePage = () => {
     const [value1, setValue1] = useState(); // text input
-    const [value2, setValue2] = useState(); // text input with label
+    // const [value2, setValue2] = useState(); // text input with label
     const [value3, setValue3] = useState(); // textarea 
-    const [value4, setValue4] = useState(); // textarea with label
+    // const [value4, setValue4] = useState(); // textarea with label
     const [value5, setValue5] = useState(); // searchbar
     const [value6, setValue6] = useState("value2"); // radio
     const [value7, setValue7] = useState();
-    const [value8, setValue8] = useState(); // password input with label
+    // const [value8, setValue8] = useState(); // password input with label
     const [modalOpen, setModalOpen] = useState(false);
 
     const handleInput1 = (val) => {
         setValue1(val);
         console.log("change: ", val)
     }
-    const handleInput2 = (val) => {
-        setValue2(val);
-        console.log("change: ", val)
-    }
+    // const handleInput2 = (val) => {
+    //     setValue2(val);
+    //     console.log("change: ", val)
+    // }
     const handleInput3 = (val) => {
         setValue3(val);
         console.log("change: ", val)
     }
-    const handleInput4 = (val) => {
-        setValue4(val);
-        console.log("change: ", val)
-    }
+    // const handleInput4 = (val) => {
+    //     setValue4(val);
+    //     console.log("change: ", val)
+    // }
     const handleInput5 = (val) => {
         setValue5(val);
         console.log("change: ", val)
@@ -52,10 +52,10 @@ const HomePage = () => {
         setValue7(val);
         console.log("change: ", val)
     }
-    const handleInput8 = (val) => {
-        setValue8(val);
-        console.log("change: ", val)
-    }
+    // const handleInput8 = (val) => {
+    //     setValue8(val);
+    //     console.log("change: ", val)
+    // }
 
 
     return (
@@ -77,40 +77,14 @@ const HomePage = () => {
                             placeholder={"placeholder"}
                             onChange={handleInput1} />
                     </div>
+                    
                     <div style={{ flex: '1' }}>
-                        <h4>Text Input With Label</h4>
-                        <TextInputWithLabel
-                            label={"라벨"}
-                            width={"100%"}
-                            value={value2}
-                            placeholder={"placeholder"}
-                            onChange={handleInput2} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Text Area With Label</h4>
+                        <h4>Text Area</h4>
                         <TextArea
                             width={"100%"}
                             value={value3}
                             placeholder={"placeholder"}
                             onChange={handleInput3} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Text Area With Label</h4>
-                        <TextAreaWithLabel
-                            label={"라벨"}
-                            width={"100%"}
-                            value={value4}
-                            placeholder={"placeholder"}
-                            onChange={handleInput4} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Password Input With Label</h4>
-                        <PasswordInputWithLabel
-                            label={"라벨"}
-                            width={"100%"}
-                            value={value8}
-                            placeholder={"placeholder"}
-                            onChange={handleInput8} />
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
@@ -174,19 +148,7 @@ const HomePage = () => {
                 <div style={{ display: 'flex', justifyContent: 'start', gap: '5rem' }}>
                     <div style={{ flex: '1' }}>
                         <h4>Feed Profile Image</h4>
-                        <FeedProfileImage />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Crew Profile Image</h4>
-                        <CrewProfileImage />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Member Profile Image</h4>
-                        <MemberProfileImage />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Crew Member Profile Image</h4>
-                        <CrewMemberProfileImage />
+                        <ProfileImage size="30px" />
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
@@ -197,134 +159,12 @@ const HomePage = () => {
                     <div style={{ flex: '1' }}>
                         <h4>Primary Button</h4>
                         <p>width: 90px</p>
-                        <PrimaryButton 
-                        width="90px" 
-                        onClick={() => { console.log("click") }} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Secondary Button</h4>
-                        <p>width: 120px</p>
-                        <SecondaryButton 
-                        width="120px" 
-                        onClick={() => { console.log("click") }} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Primary Big Button</h4>
-                        <p>width: 120px</p>
-                        <PrimaryBigButton 
-                        width="120px" 
-                        onClick={() => { console.log("click") }} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Secondary Big Button</h4>
-                        <p>width: 150px</p>
-                        <SecondaryBigButton 
-                        width="150px" 
-                        onClick={() => { console.log("click") }} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Thirdary Button</h4>
-                        <p>width: 90px</p>
-                        <ThirdaryButton 
-                        width="90px" 
-                        onClick={() => { console.log("click") }} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Custom Button</h4>
-                        <p>width: 90px</p>
-                        <CustomButton 
-                        width="90px" 
-                        onClick={() => { console.log("click") }} />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>Disabled Button</h4>
-                        <p>width: 90px</p>
-                        <CustomButton 
-                        width="90px" 
-                        active={false}
-                        onClick={() => { console.log("click") }} />
+                        <Button
+                            width="90px"
+                            onClick={() => { console.log("click") }} />
                     </div>
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
-
-                {/* 테이블 */}
-                {/* <h2>table 태그</h2>
-                <div style={{ display: 'flex', justifyContent: 'start', gap: '5rem' }}>
-                    <div style={{ flex: '1' }}>
-                        <h4>테이블</h4>
-                        <p>헤더: 선 있음</p>
-                        <p>바디: 선 있음 (마지막 행: 선 있음)</p>
-                        <BasicTable
-                            headerLine={true}
-                            bodyLine={true}
-                            headers={['컬럼1', '컬럼2', '컬럼3', '컬럼4']}
-                            keys={['key1', 'key2', 'key3', 'key4']}
-                            data={[
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                            ]}
-                        />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>테이블</h4>
-                        <p>헤더: 선 있음</p>
-                        <p>바디: 선 있음 (마지막 행: 선 없음)</p>
-                        <BasicTable
-                            headerLine={true}
-                            bodyLine={true}
-                            bodyLastLine={false}
-                            headers={['컬럼1', '컬럼2', '컬럼3', '컬럼4']}
-                            keys={['key1', 'key2', 'key3', 'key4']}
-                            data={[
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                            ]}
-                        />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>테이블</h4>
-                        <p>헤더: 선 있음</p>
-                        <p>바디: 선 없음</p>
-                        <BasicTable
-                            headerLine={true}
-                            bodyLine={false}
-                            headers={['컬럼1', '컬럼2', '컬럼3', '컬럼4']}
-                            keys={['key1', 'key2', 'key3', 'key4']}
-                            data={[
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                            ]}
-                        />
-                    </div>
-                    <div style={{ flex: '1' }}>
-                        <h4>테이블</h4>
-                        <p>헤더: 선 없음</p>
-                        <p>바디: 선 없음</p>
-                        <BasicTable
-                            headerLine={false}
-                            bodyLine={false}
-                            headers={['컬럼1', '컬럼2', '컬럼3', '컬럼4']}
-                            keys={['key1', 'key2', 'key3', 'key4']}
-                            data={[
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                                { 'key1': '값1', 'key2': '값2', 'key3': '값3', 'key4': '값4' },
-                            ]}
-                        />
-                    </div>
-                </div>
-                <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} /> */}
 
                 {/* 피드 */}
                 <h2>피드 태그</h2>
@@ -334,16 +174,16 @@ const HomePage = () => {
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
 
-                {/* 확인 모달창 */} 
+                {/* 확인 모달창 */}
                 <h2>확인 모달창</h2>
                 <div>
                     <button onClick={() => setModalOpen(true)}> 모달 열기 </button>
-                    {modalOpen &&(
-                        <CheckModal 
-                        title="제목" 
-                        description="하시겠습니까?" 
-                        onConfirm={()=>setModalOpen(false)}
-                        onClose={()=>setModalOpen(false)}/>
+                    {modalOpen && (
+                        <CheckModal
+                            title="제목"
+                            description="하시겠습니까?"
+                            onConfirm={() => setModalOpen(false)}
+                            onClose={() => setModalOpen(false)} />
                     )}
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
@@ -351,7 +191,7 @@ const HomePage = () => {
                 {/* 멤버 프로필 목록용 카드*/}
                 <h2>크루 멤버 정보</h2>
                 <div>
-                    <CrewMemberInfo profilePath={MetamongImage} nickname="닉네임" date="2025-06-14 11:11:11"/>
+                    <CrewMemberInfo profilePath={MetamongImage} nickname="닉네임" date="2025-06-14 11:11:11" />
                 </div>
 
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
@@ -359,7 +199,7 @@ const HomePage = () => {
                 {/* 페이지네이션 버튼 */}
                 <h2>페이지네이션 버튼</h2>
                 <div>
-                    <Pagenation page={1} isExistNextPage={false} setPage={() => console.log('nextPage')}/>
+                    <Pagenation page={1} isExistNextPage={false} setPage={() => console.log('nextPage')} />
                 </div>
                 <hr style={{ border: "none", borderBottom: "1px solid #ccc", margin: "8px 0" }} />
 

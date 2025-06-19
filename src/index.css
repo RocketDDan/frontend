@@ -1,8 +1,7 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 700; /* 400: 기본 보통, 700: 두껍게, 300: 얇게 */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -19,36 +18,52 @@ code {
 .router-container {
   flex: 1;
   overflow-y: auto;
-  margin: 0.5rem 3rem;
-  /* 스크롤 숨기기 */
+  padding: 0.5rem 3rem;
   scrollbar-width: none;
-  /* Firefox */
   -ms-overflow-style: none;
-  /* IE 10+ */
-}
-
-
-/* 모바일 대응 */
-@media (max-width: 768px) {
-  .router-container {
-    margin: 0.5rem 0.5rem 6rem 0.5rem;
-  }
 }
 
 .router-container::-webkit-scrollbar {
   display: none;
-  /* Chrome, Safari */
 }
 
-/* Hover */
-
-tr:hover {
-  background-color: #f5f7fa;
-  transition: background-color 0.2s ease;
+.feed-router-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 3rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-thead tr:hover {
-  background-color: inherit;
+.feed-router-container::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollX {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+label {
+  margin-bottom: 10px;
+  text-align: start;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .router-container {
+    padding: 0.5rem 0.5rem 6rem 0.5rem;
+  }
+
+  .feed-router-container {
+    padding: 0.5rem 0 6rem 0;
+  }
+}
+
+.primaryColor {
+  color: #7CB2FC;
 }
 
 .primaryBg {
@@ -61,8 +76,10 @@ thead tr:hover {
   color: #222 !important;
 }
 
-.primaryColor {
-  color: #7CB2FC;
+.secondaryHoverBg:hover {
+  background: #7CB2FC;
+  /* primaryBg와 동일 */
+  color: #fff;
 }
 
 .pinkBg {
@@ -72,13 +89,6 @@ thead tr:hover {
 
 .pinkBg:hover {
   background: #e75480;
-  /* deepPinkBg와 동일하게 */
-  color: #fff;
-}
-
-.secondaryHoverBg:hover {
-  background: #7CB2FC;
-  /* primaryBg와 동일 */
   color: #fff;
 }
 
@@ -88,17 +98,14 @@ thead tr:hover {
 
 .primaryCheck:hover {
   color: #3a8afb;
-  /* hover 시 색상 변경 */
 }
 
 .primaryCancel {
   color: #FFBABA;
-  /* deepPinkBg와 동일 */
 }
 
 .primaryCancel:hover {
   color: #ff0000;
-  /* hover 시 색상 변경 */
 }
 
 .borderStyle {
@@ -107,6 +114,22 @@ thead tr:hover {
 
 .crownColor {
   color: #FF7723;
+}
+
+.crownLightColor {
+  color: #faa46f;
+}
+
+.crownLightColor:hover{
+  color: #FF7723;
+}
+
+.grey{
+  color: rgb(176, 176, 176);
+}
+
+.gery:hover{
+  color: grey;
 }
 
 .titleColor {
@@ -120,4 +143,14 @@ thead tr:hover {
 
 .textLightColor {
   color: #575757;
+}
+
+/* 테이블 */
+tr:hover {
+  background-color: #f5f7fa;
+  transition: background-color 0.2s ease;
+}
+
+thead tr:hover {
+  background-color: inherit;
 }

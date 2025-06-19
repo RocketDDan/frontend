@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import style from "./MemberListPage.module.css";
 import { SearchBar } from "../../components/search_bar/SearchBar";
-import { TableView } from "../../components/base/AnnouncementTable";
+import { Table } from "../../components/base/Table";
 import apiClient from "../../api/apiClient";
 import { BasicSelect } from "../../components/base/Select";
 import Pagination from "../../components/announcement/Pagination";
@@ -70,12 +70,13 @@ const MemberListPage = () => {
             </div>
 
 
-            <div style={{ flex: 1 }}>
-                <TableView
+            <div style={{ flex: 1 }} className="scrollX">
+                <Table
                     headers={["번호", "이름", "이메일", "크루이름", "역할"]}
                     keys={["nickname", "email", "crewName", "crewRole"]}
                     data={data}
                     page={page}
+                    width="600px"
                     height="fit-content"
                     limit={limit}
                 />

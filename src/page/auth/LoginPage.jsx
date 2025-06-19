@@ -3,15 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "./LoginPage.module.css";
 
-import { PrimaryButton, CustomButton } from "../../components/base/Button";
-import {
-	TextInputWithLabel,
-	PasswordInputWithLabel,
-} from "../../components/base/Input";
+import { Button, CustomButton } from "../../components/base/Button";
+import { TextInput } from "../../components/base/Input";
 
 import kakaoLogoImage from "../../assets/images/kakao_logo.png";
 
 import { login } from "../../api/auth.api";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
 	const kakaoLoginURL = `${process.env.REACT_APP_API_BASE_URL}/oauth2/authorization/kakao`;
@@ -57,6 +55,16 @@ const LoginPage = () => {
 	};
 
 	const handleSubmit = async () => {
+		if (!isFormValid) {
+			Swal.fire({
+				icon: "error",
+				title: "비밀번호 입력 오류",
+				text: "비밀번호를 확인해주세요.",
+				timer: 700,
+				showConfirmButton: false
+			});
+			return;
+		}
 		try {
 			await login(emailValue, passwordValue);
 			navigate("/auth/callback");
@@ -69,24 +77,33 @@ const LoginPage = () => {
 
 	return (
 		<div className={styles.container}>
+			<h1>Runners Hi</h1>
+			<div style={{ height: "1rem" }}></div>
 			<div className={styles.form}>
 				<div className={styles.errorContainer}>
-					<TextInputWithLabel
+					<label>
+						아이디(이메일)
+					</label>
+					<TextInput
 						placeholder="이메일"
-						label="아이디(이메일)"
 						width="100%"
 						value={emailValue}
 						onChange={handleEmailChange}
+						closeBtnVisible={true}
 					/>
 					{errors.email && <div className={styles.error}>{errors.email}</div>}
 				</div>
 
 				<div className={styles.errorContainer}>
-					<PasswordInputWithLabel
+					<label>
+						비밀번호
+					</label>
+					<TextInput
 						placeholder="영문, 숫자 포함 8~16자"
-						label="비밀번호"
 						width="100%"
 						value={passwordValue}
+						closeBtnVisible={false}
+						eyeVisible={true}
 						onChange={handlePasswordChange}
 						onEnter={handleSubmit}
 					/>
@@ -96,7 +113,7 @@ const LoginPage = () => {
 				</div>
 
 				<div className={styles.buttonContainer}>
-					<PrimaryButton
+					<Button
 						content="로그인"
 						onClick={handleSubmit}
 						active={isFormValid}

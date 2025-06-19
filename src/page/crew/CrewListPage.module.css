@@ -1,46 +1,52 @@
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 32px 24px;
-    justify-content: flex-start;   /* 카드들을 중앙 정렬 */
-    max-width: 1200px;         /* 최대 너비 제한 */
-    padding-bottom: 40px;
-    margin-left: 100px;            /* 좌우 중앙 정렬 */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 24px;
+  justify-content: flex-start;
+  /* 카드들을 중앙 정렬 */
+  max-width: 1200px;
+  /* 최대 너비 제한 */
+  padding-bottom: 40px;
+  margin-left: 100px;
+  /* 좌우 중앙 정렬 */
 }
 
 .searchHeader {
-	display: flex;
-	max-width: 1000px; /* 기존보다 넓게 */
-    width: 100%;
-    background: #fff;
-    gap: 1rem;
-	margin: 1rem;
+  display: flex;
+  max-width: 1000px;
+  /* 기존보다 넓게 */
+  width: 100%;
+  background: #fff;
+  gap: 1rem;
+  margin: 1rem;
 }
 
 .selectGroup {
-	display: flex;
-	gap: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
 }
 
 .searchBar {
-    flex: 1 1 0;        /* 남은 공간을 모두 차지 */
-    min-width: 0;       /* flex 아이템이 줄어들 수 있도록 */	
+  flex: 1 1 0;
+  /* 남은 공간을 모두 차지 */
+  min-width: 0;
+  /* flex 아이템이 줄어들 수 있도록 */
 }
 
 .pageWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    /* min-height: 100vh;  */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  /* min-height: 100vh;  */
 }
 
 .noRequest {
-    text-align: center;
-	color: #888;
-	font-size: 1.1rem;
-	margin: 40px 0;
+  text-align: center;
+  color: #888;
+  font-size: 1.1rem;
+  margin: 40px 0;
 }
 
 @media (max-width: 768px) {
@@ -56,7 +62,7 @@
     transition: transform 0.3s ease-in-out;
   }
 
-  .searchHeader > * {
+  .searchHeader>* {
     width: 100%;
     max-width: 100%;
   }
@@ -70,12 +76,13 @@
   }
 
   .selectGroup {
-	justify-content: space-between;
+    justify-content: space-between;
   }
 }
 
 /* Prevent horizontal scrolling on small screens */
-:global(body), :global(html) {
+:global(body),
+:global(html) {
   overflow-x: hidden;
 }
 
@@ -83,4 +90,3 @@
 :global(*) {
   box-sizing: border-box;
 }
-

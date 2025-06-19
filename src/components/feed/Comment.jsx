@@ -30,7 +30,11 @@ const Comment = ({ comment, clickDelete }) => {
         const diffMin = Math.floor(diffSec / 60);
         const diffHour = Math.floor(diffMin / 60);
         const diffDay = Math.floor(diffHour / 24);
+        const diffWeek = Math.floor(diffDay / 7);
+        const diffMonth = Math.floor(diffDay / 30);
 
+        if (diffMonth >= 1) return `${diffMonth}개월`;
+        if (diffWeek >= 1) return `${diffWeek}주`;
         if (diffDay >= 1) return `${diffDay}일`;
         if (diffHour >= 1) return `${diffHour}시간`;
         if (diffMin >= 1) return `${diffMin}분`;
@@ -39,31 +43,19 @@ const Comment = ({ comment, clickDelete }) => {
 
     return (
         <div className={style.container}>
-            {/* 프로필 이미지 */}
             <ProfileImage profileUrl={comment.writerProfileUrl} size="30px" />
-
-            {/* 메인 */}
             <div className={style.main}>
-                {/* 닉네임 , 날짜 */}
                 <div className={style.nicknameAndDate}>
                     <b>{comment.writerNickname}</b>
                     <div>{formatRelativeTime(comment.createdAt)}</div>
-                    {/* <div>{comment.createdAt}</div> */}
                 </div>
-                {/* 댓글 */}
-                <div className={style.comment}>
-                    {comment.content}
-                </div>
+                <div className={style.comment}>{comment.content}</div>
             </div>
-
-            {/* 삭제 버튼 */}
-            {comment.mine
-                ? <div
-                className={style.deleteBtn}
-                    onClick={() => { handleClickDelete(comment.commentId) }}>
+            {comment.mine && (
+                <div className={style.deleteBtn} onClick={() => handleClickDelete(comment.commentId)}>
                     삭제
                 </div>
-                : ""}
+            )}
         </div>
     )
 }

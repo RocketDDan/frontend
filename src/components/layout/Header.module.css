@@ -1,34 +1,51 @@
 .container {
     display: flex;
     flex-direction: column;
-    margin: 0 3rem;
-    padding-bottom: 1rem;
-    background: white;
-    border-bottom: 1px solid #ccc;
+    margin: 0 1rem;
+    padding-bottom: 0.5rem;
+    font-family: 'Noto Sans KR', sans-serif;
+    border: none;
 }
 
-/* 모바일 대응 */
-@media (max-width: 768px) {
-    h1{
-        margin: 0;
-    }
-    .container {
-        margin: 0.3rem 1rem;
-        padding-bottom: 0rem;
-        border: none;
-        /* border-bottom: 1px solid #ccc; */
-    }
+.logo {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #34495e;
+    margin-bottom: 0.2rem;
+}
+
+h1 {
+    margin: 0;
 }
 
 .up {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-top: 0.7rem;
 }
 
+/* 기본적으로 감추되, 데스크탑에서만 보이게 */
 .desktopNav {
-    display: flex;
-    gap: 1rem;
+    display: none;
+}
+
+@media (min-width: 769px) {
+    .desktopNav {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+    }
+}
+
+.mobileHide {
+    display: none;
+}
+
+@media (min-width: 769px) {
+    .mobileHide {
+        display: inline;
+    }
 }
 
 .profileWrapper {
@@ -37,32 +54,44 @@
 
 .dropdownMenu {
     position: absolute;
-    width: 7rem;
+    width: 8rem;
     right: 0;
     top: 100%;
-    margin-top: 8px;
+    margin-top: 10px;
     background: white;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eee;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
     z-index: 999;
     display: flex;
     flex-direction: column;
-    padding: 10px;
-    gap: 8px;
+    padding: 12px;
+    gap: 10px;
+    animation: fadeIn 0.25s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .dropdownMenu a {
-    color: #333;
+    color: #34495e;
     text-decoration: none;
-    padding: 4px 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s;
 }
 
 .dropdownMenu a:hover {
-    /* #f5f5f5; */
     background-color: #7CB2FC;
     color: white;
-    border-radius: 5px;
 }
 
 .profileContainer {
@@ -70,64 +99,108 @@
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.profileContainer:hover {
+    background-color: #ecf0f1;
 }
 
 .nickname {
     font-weight: bold;
+    color: #2c3e50;
 }
 
 .nim {
-    font-size: smaller;
+    font-size: 0.85rem;
+    color: #95a5a6;
 }
 
+/* 모바일에서만 보임 */
 .hamburger {
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: 5px;
     cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.hamburger:hover {
+    background-color: #ecf0f1;
 }
 
 .hamburger div {
     width: 25px;
     height: 3px;
-    background-color: black;
+    background-color: #2c3e50;
+    border-radius: 2px;
+    transition: all 0.3s ease;
 }
 
-/* 메뉴 */
+/* 모바일에서 부드러운 전환용 */
 .down {
     display: flex;
-    gap: 1rem;
-    margin-top: 0.5rem;
+    flex-direction: column;
+    padding: 0 1rem;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.3s ease;
+    gap: 1.5rem;
+    margin-top: 0.7rem;
+}
+
+/* 햄버거 메뉴 열렸을 때 */
+.down.open {
+    padding: 1rem;
+    max-height: 600px;
+    opacity: 1;
 }
 
 .down span a {
     text-decoration: none;
-    color: black;
+    color: #2c3e50;
+    font-weight: 500;
+    transition: color 0.2s, border-bottom 0.2s;
+    position: relative;
 }
 
-/* 모바일 대응 */
-@media (max-width: 768px) {
-    .desktopNav {
-        display: none;
-    }
-
-    .hamburger {
-        display: flex;
-    }
-
-    .down {
-        display: none;
-        flex-direction: column;
-    }
-
-    .down.open {
-        display: flex;
-    }
+.down span a:hover {
+    color: #5164ED;
+    border-bottom: 2px solid #5164ED;
+    padding-bottom: 4px;
 }
 
 .activeLink {
     font-weight: bold;
     color: #5164ED;
     border-bottom: 2px solid #5164ED;
-    padding-bottom: 10px;
+    padding-bottom: 4px;
+}
+
+/* 데스크탑 뷰 */
+@media (min-width: 769px) {
+    .container {
+        margin: 0 3rem;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .down {
+        display: flex;
+        flex-direction: row;
+        max-height: none;
+        opacity: 1;
+        padding: 0;
+        border: none;
+    }
+
+    .hamburger {
+        display: none;
+    }
 }
