@@ -184,9 +184,10 @@ const CrewProfilePage = () => {
 
     useEffect(() => {
       if (modalOpen) {
+        console.log(modalDescription.replace(/\n/g, "<br />"));
         Swal.fire({
           title: modalTitle,
-          html: modalDescription,
+          html: modalDescription.replace(/\n/g, "<br />"),
           showCancelButton: useButton,
           confirmButtonText: '확인',
           cancelButtonText: '취소',
