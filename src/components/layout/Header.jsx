@@ -20,6 +20,8 @@ const Header = () => {
 
 	const toggleProfileMenu = () => setProfileOpen((prev) => !prev);
 
+	const handleMenuLinkClick = () => setMenuOpen(false);
+
 	const menuRef = useRef(null);
 	useEffect(() => {
 		const handleClickOutside = (event) => {
@@ -120,7 +122,8 @@ const Header = () => {
 						// to="/account/setting"
 						to={`/runner/${user.memberId}`}
 						className={currentPath.startsWith(`/runner/${user.memberId}`) && headerStyle.activeLink}
-						onClick={handleMenuLinkClick}>
+						onClick={handleMenuLinkClick}
+					>
 						내 프로필
 					</Link>
 				</span>}
