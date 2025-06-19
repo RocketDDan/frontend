@@ -152,6 +152,16 @@ const Header = () => {
 					<Link
 						// to="/account/setting"
 						to={`/runner/${user.memberId}`}
+						className={currentPath.startsWith(`/runner/${user.memberId}`) && headerStyle.activeLink}
+						onClick={handleMenuLinkClick}>
+						내 프로필
+					</Link>
+				</span>}
+
+				{user && menuOpen && <span>
+					<Link
+						// to="/account/setting"
+						to={`/runner/${user.memberId}`}
 						className={currentPath.startsWith("/account/setting") && headerStyle.activeLink}
 						onClick={handleMenuLinkClick}>
 						내 정보 수정

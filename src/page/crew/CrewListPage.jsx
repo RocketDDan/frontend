@@ -6,9 +6,10 @@ import style from "./CrewListPage.module.css";
 import RegionSelector from "../../components/base/RegionSelector";
 import { fetchCrewList, fetchMyCrew } from "../../api/crew.api";
 import { SearchBar } from "../../components/search_bar/SearchBar";
-import { Button } from "../../components/base/Button";
 import LoadingSpinner from "../../components/base/LoadingSpinner";
 import { BasicSelect } from "../../components/base/Select";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const CrewListPage = () => {
 	const [hasCrew, setHasCrew] = useState(false);
@@ -108,6 +109,7 @@ const CrewListPage = () => {
 		}
 
 		console.log("hasCrew", hasCrew);
+		console.log("user", user);
 	}, []);
 
 	const handleSearchBar = () => {
@@ -150,14 +152,9 @@ const CrewListPage = () => {
 				</div>
 
 				{user && !hasCrew && (
-					<div>
-						<Button
-							content="크루 생성"
-							width="100px"
-							onClick={() => navigate("/crew/create")}
-							bg="secondaryBg"
-						/>
-					</div>)}
+					<button className={style.uploadBtn} onClick={() => {navigate(`/crew/create`)}}>
+                        <FontAwesomeIcon style={{ color: "white" }} icon={faPlus} size="2xl" />
+                    </button>)}
 			</div>
 			<div className={style.container}>
 				{crewList.length > 0 &&

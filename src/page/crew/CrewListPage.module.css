@@ -26,6 +26,18 @@
   gap: 0.5rem;
 }
 
+.uploadBtn {
+    position: fixed;
+    right: calc(20px + 3vh);
+    bottom: calc(102.5px + 3vh);
+    width: 50px;
+    height: 50px;
+    border: 0 solid;
+    background-color: #7CB2FC;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
 .searchBar {
   flex: 1 1 0;
   /* 남은 공간을 모두 차지 */
