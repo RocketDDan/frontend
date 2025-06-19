@@ -60,7 +60,7 @@ const AnnouncementListPage = () => {
 					value={keyword}
 					onChange={handleChange}
 					width="15rem"
-					height="100%"
+					height="40px"
 					onEnter={() => console.log("엔터")}
 				/>
 				
@@ -74,7 +74,7 @@ const AnnouncementListPage = () => {
 						{ value: "LATEST", label: "최신순" },
 						{ value: "OLDEST", label: "오래된순" },
 						]}
-						width="160px"
+						width="120px"
 					/>
 				{(user?.role === "ADMIN" || userCrew?.isLeader) && (
 					<Button

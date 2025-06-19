@@ -23,12 +23,19 @@ const RegionSelector = ({ region, setRegion }) => {
 		if (cities.length === 0) {
 			fetchRegionList()
 				.then(data => {
-					const result = data.result;
-					setCities(result);
-					// cd가 "11"인 시/도를 기본 선택
-					const defaultCity = result.find(city => city.cd === "11");
-					if (defaultCity) setSelectedCity(defaultCity);
+					const result = data?.result;
+					if (Array.isArray(result)) {
+						setCities(result);
+						// cd가 "11"인 시/도를 기본 선택
+						const defaultCity = result.find(city => city.cd === "11");
+						if (defaultCity) setSelectedCity(defaultCity);
+					} else {
+						console.error("Invalid region list response:", data);
+					}
 				})
+				.catch(err => {
+					console.error("시/도 목록 조회 실패:", err);
+				});
 		}
 
 		// 선택된 시/도에 따라 구/군 목록 불러오기
