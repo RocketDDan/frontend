@@ -14,6 +14,7 @@ import { checkDuplicateCrewName, createCrew } from '../../api/crew.api';
 const CrewUpdatePage = () => {
     const {crewId} = useParams(); 
     const [crewName, setCrewName] = useState("");
+    const [originalCrewName, setOriginalCrewName] = useState("");
     const [crewImage, setCrewImage] = useState(null);
     const [crewImageFile, setCrewImageFile] = useState(null);
     const [region, setRegion] = useState("");
@@ -93,6 +94,7 @@ const CrewUpdatePage = () => {
     useEffect(() => {
         fetchCrew(crewId).then(data => {
             setCrewName(data.crewName);
+            setOriginalCrewName(data.crewName);
             setCrewImage(data.profilePath);
             setRegion(data.crewRegion);
             setAddress(data.crewAddress);
@@ -140,10 +142,11 @@ const CrewUpdatePage = () => {
                     />
                     <Button
                         content="중복확인"
-                        width="110px"
+                        width="130px"
                         className={styles.duplicateCheckButton}
                         onClick={onClickDuplicateCheck}
                         bg="secondaryBg"
+                        active={crewName !== originalCrewName}
                     />
                 </div>
                 {!(crewName?.length > 0) && (
@@ -156,9 +159,7 @@ const CrewUpdatePage = () => {
             <div className={styles.mb16}>
                 <label className={styles.label}>활동 지역 (50자 이내)</label>
                 <div className={styles.rowFlex}>
-                    <div className={styles.modalWrapper}>
-                        <RegionSelector region={region} setRegion={setRegion} />
-                    </div>
+                    <RegionSelector region={region} setRegion={setRegion} />
                     <TextInput
                         width="100%"
                         placeholder="상세 주소"
@@ -184,13 +185,15 @@ const CrewUpdatePage = () => {
                     <p className={styles.errorText}>필수 입력 항목입니다.</p>
                 )}
             </div>
-            <Button
+            <div style={{ marginTop: "40px" }}>
+                <Button
                 content="크루 수정"
-                width="100%" 
+                width="100%"
                 onClick={onClickSubmit}
                 disabled={!isFormValid}
                 bg="secondaryBg"
-            />
+                />
+            </div>
         </div>
     );
 }
