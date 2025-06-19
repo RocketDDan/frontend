@@ -191,8 +191,8 @@ const CrewProfilePage = () => {
             )}
             {crew && (
                 <div>
-                    <div className={styles.profileWrapper}>
 
+                    <div className={styles.profileWrapper}>
                         <div className={styles.profileDiv}>
                             <ProfileImage profileUrl={crew?.profilePath} size="200px" />
                         </div>

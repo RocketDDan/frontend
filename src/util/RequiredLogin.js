@@ -1,6 +1,8 @@
-const RequiredLogin = ({user}) => {        
+import Swal from 'sweetalert2';
+
+const RequiredLogin = (user) => {
     if (user === null) {
-        alert("로그인이 필요합니다.");
+        Swal.fire("로그인이 필요합니다.");
         return true;
     }
 
