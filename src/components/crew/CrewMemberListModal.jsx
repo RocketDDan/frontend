@@ -87,8 +87,8 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                 }
                 setIsLoading(false);
                 setHasMore(data.length === perPage);
-                console.log("data", data);
-                console.log("crewMemberList", crewMemberList);
+                // console.log("data", data);
+                // console.log("crewMemberList", crewMemberList);
 
             });
         // eslint-disable-next-lines

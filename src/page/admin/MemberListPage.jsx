@@ -32,7 +32,7 @@ const MemberListPage = () => {
                     },
                 });
                 setData(res.data.members);
-                console.log(res.data.members)
+                // console.log(res.data.members)
                 setTotalCount(res.data.totalCount);
             } catch (err) {
                 console.error("회원 데이터 요청 실패", err);

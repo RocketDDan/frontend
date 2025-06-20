@@ -25,7 +25,7 @@ const KakaoMap = ({
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 onLatLngChange?.(position.coords.latitude, position.coords.longitude);
-                console.log("현재 위치: ", lat, lng);
+                // console.log("현재 위치: ", lat, lng);
             },
             (error) => {
                 console.error("위치 정보를 가져오는 중 오류 발생:", error);
@@ -105,7 +105,7 @@ const KakaoMap = ({
         }
 
         window.kakao.maps.event.addListener(markerRef.current, 'click', function () { // 클릭 이벤트
-            console.log("클릭");
+            // console.log("클릭");
             onMarkerClick?.();
         });
     }, [isMapLoaded]);

@@ -33,7 +33,7 @@ const CommentPanel = ({ feed, onClose, writeComment, deleteComment }) => {
 
     // 댓글 작성
     const handleSubmit = async () => {
-        console.log("handleSubmit() :: 살행");
+        // console.log("handleSubmit() :: 살행");
         const isLogin = await checkLoginUser();
         if (!isLogin) return;
         // 댓글 작성 api 호출

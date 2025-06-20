@@ -11,11 +11,11 @@ const KakaoPaySuccessPage = () => {
         const pgToken = params.get("pg_token");
 
         const partnerOrderId = localStorage.getItem("partner_order_id");
-        console.log("partnerOrderId: ", partnerOrderId);
+        // console.log("partnerOrderId: ", partnerOrderId);
 
         sendKakaoPayApprove(pgToken, partnerOrderId)
             .then((res) => {
-                console.log("결제 승인 성공", res.data);
+                // console.log("결제 승인 성공", res.data);
                 navigate("/feed/list");
             })
             .catch((err) => {

@@ -133,7 +133,7 @@ const FeedListPage = () => {
                     const isNearLast = (index === feedList.length - 4);
                     if (isNearLast) {
                         return (
-                            < div ref={observerTarget} style={{ height: '10px', }} />
+                            < div ref={observerTarget} style={{ height: '10px', }} key={"xxxxxxxxxx"} />
                         )
                     }
                     return (

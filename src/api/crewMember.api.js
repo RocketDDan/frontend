@@ -7,7 +7,7 @@ const resignCrewMember = async (crewId, resignRequest) => {
         if (response.status !== 200) {
             throw new Error('크루 멤버 탈퇴 실패', response.data);
         }
-        console.log('크루 멤버 탈퇴 성공', response.data);
+        // console.log('크루 멤버 탈퇴 성공', response.data);
         return response.data;
     } catch (error) {
         throw error;
@@ -21,7 +21,7 @@ const forceRemoveCrewMember = async (crewId, crewMemberId) => {
         if (response.status !== 200) {
             throw new Error('크루 멤버 강퇴 실패', response.data);
         }
-        console.log('크루 멤버 강퇴 성공', response.data);
+        // console.log('크루 멤버 강퇴 성공', response.data);
         return response.data;
     } catch (error) {
         alert(error.message || '크루 멤버 강퇴 실패');
@@ -35,7 +35,7 @@ const fetchCrewMembers = async (crewId, params) => {
         if (response.status !== 200) {
             throw new Error('크루원 목록 조회 실패', response.data);
         }
-        console.log('크루원 목록 조회 성공', response.data);
+        // console.log('크루원 목록 조회 성공', response.data);
         return response.data;
     } catch (error) {
         throw error;
@@ -49,7 +49,7 @@ const changeCrewLeader = async (crewId, crewMemberId) => {
         if (response.status !== 200) {
             throw new Error('크루장 변경 실패', response.data);
         }
-        console.log('크루장 변경 성공', response.data);
+        // console.log('크루장 변경 성공', response.data);
         return response.data;
     } catch (error) {
         throw error;

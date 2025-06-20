@@ -19,7 +19,7 @@ const getAccessToken = async () => {
             }
         );
         const accessToken = data.result.accessToken;
-        console.log('Region Access Token 발급 성공');
+        // console.log('Region Access Token 발급 성공');
         localStorage.setItem('region_accessToken', accessToken);
         return accessToken;
     } catch (error) {

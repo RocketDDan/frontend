@@ -82,7 +82,7 @@ const RewardDetailPage = () => {
 				{ params: { targetDate: hourlyTargetDate } }
 			);
 			setHourlyData(res.data);
-			console.log(res.data);
+			// console.log(res.data);
 		} catch (err) {
 			console.error("시간대별 클릭 수 조회 실패", err);
 		}
@@ -104,8 +104,8 @@ const RewardDetailPage = () => {
 			const clickedDate = lineData.labels[pointIndex]; // 날짜
 			const clickedValue = lineData.datasets[0].data[pointIndex]; // 값
 
-			console.log("Clicked Date:", clickedDate);
-			console.log("Clicked Value:", clickedValue);
+			// console.log("Clicked Date:", clickedDate);
+			// console.log("Clicked Value:", clickedValue);
 
 			setHourlyTargetDate(clickedDate);
 		}
@@ -119,7 +119,7 @@ const RewardDetailPage = () => {
 					{ params: { startDate, endDate } }
 				);
 				setSummary(summaryRes.data);
-				console.log(summaryRes.data);
+				// console.log(summaryRes.data);
 
 				await fetchDailyData();
 				await fetchHourlyData();

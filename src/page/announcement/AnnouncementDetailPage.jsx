@@ -19,7 +19,7 @@ const AnnouncementDetailPage = () => {
 					`/announcements/${announcementId}`
 				);
 				setDetail(res.data);
-				console.log(res.data);
+				// console.log(res.data);
 			} catch (err) {
 				console.error("공지 불러오기 실패:", err);
 			}
