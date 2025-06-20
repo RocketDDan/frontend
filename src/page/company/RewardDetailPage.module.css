@@ -1,6 +1,10 @@
 .container {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   padding: 24px;
   font-family: 'Pretendard', sans-serif;
 }
@@ -10,6 +14,9 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 16px;
+}
+.header > * {
+  flex: 1;
 }
 
 .backBtn {
@@ -28,9 +35,14 @@
 
 .meta {
   display: flex;
+  flex-direction: column;
+  /* align-items: start; */
   gap: 16px;
   font-size: 14px;
   color: #777;
+  white-space: nowrap;      /* 줄바꿈 방지 */
+  overflow: hidden;         /* 넘치는 텍스트 숨김 */
+  text-overflow: ellipsis;  /* 말줄임표 표시 (선택사항) */
 }
 
 .summaryCards {
@@ -64,7 +76,7 @@
 .graphSection {
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 1rem;
 }
 
 .chartBox {
@@ -82,9 +94,10 @@
 }
 
 .dateFilter {
+  width: 100%;
   display: flex;
+  justify-content: end;
   gap: 1rem;
-  flex-wrap: wrap;
 }
 
 .dateFilter label {
@@ -153,5 +166,12 @@
   color: #333;
 }
 
+.hideOnMobile {
+  display: inline-block;
+}
 
-
+@media (max-width: 768px) {
+  .hideOnMobile {
+    display: none;
+  }
+}

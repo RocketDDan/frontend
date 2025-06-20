@@ -54,8 +54,10 @@ const MemberListPage = () => {
                         setPage(1);
                     }}
                 />
+
                 <BasicSelect
-                    width="15rem"
+                    width="7rem"
+                    value=""
                     options={[
                         { value: "", label: "전체" },
                         { value: "COMPANY", label: "기업" },
@@ -64,7 +66,7 @@ const MemberListPage = () => {
                     onChange={handleOptions} />
             </div>
 
-            <div style={{ width: "6rem", display: "flex" }}>
+            <div style={{ width: "100%", display: "flex", justifyContent: "end", marginLeft:"5px" }}>
                 <span>회원수 :&nbsp;</span>
                 <span style={{ color: "red" }}>{totalCount}명</span>
             </div>
@@ -76,7 +78,6 @@ const MemberListPage = () => {
                     keys={["nickname", "email", "crewName", "crewRole"]}
                     data={data}
                     page={page}
-                    width="600px"
                     height="fit-content"
                     limit={limit}
                 />

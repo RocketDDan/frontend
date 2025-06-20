@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { Table } from "../../components/base/Table";
 import { BasicSelect } from "../../components/base/Select"
+import Pagination from "../../components/announcement/Pagination";
 
 const RewardListPage = () => {
     const [keyword, setKeyword] = useState("");
@@ -16,7 +17,7 @@ const RewardListPage = () => {
     const [day, setDay] = useState("");
     const [totalCharge, setTotalCharge] = useState(0);
     // const [searchTrigger, setSearchTrigger] = useState(false);
-    // const [totalCount, setTotalCount] = useState(0);
+    const [totalCount, setTotalCount] = useState(0);
     const limit = 6;
     const navigate = useNavigate();
 
@@ -63,49 +64,59 @@ const RewardListPage = () => {
                         setKeyword(val);
                         setPage(1);
                     }}
-                    width="12rem"
+                    width="100%"
                 />
                 <BasicSelect
                     options={
-                        [{ value: "", label: "전체" },
+                        [{ value: "", label: "월" },
                         ...[...Array(12)].map((_, i) => {
                             return { value: String(i + 1).padStart(2, "0"), label: (i + 1) + "월" }
                         })]
                     }
                     onChange={setMonth}
                     value={month}
-                    width="5rem"
+                    width="6rem"
                 />
                 <BasicSelect
                     options={
-                        [{ value: "", label: "전체" },
+                        [{ value: "", label: "일" },
                         ...[...Array(31)].map((_, i) => {
                             return { value: String(i + 1).padStart(2, "0"), label: (i + 1) + "일" }
                         })]
                     }
                     onChange={setDay}
                     value={day}
-                    width="5rem"
+                    width="6rem"
                 />
             </div>
 
-            <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px", fontWeight: "bold", width: "100%", maxWidth: "1200px", marginLeft: "auto", marginRight: "auto", paddingRight: "8px" }}>
+            <div style={{ width: "100%", display: "flex", justifyContent: "end", marginLeft: "5px" }}>
                 <span>총 수익금 (충전 금액 기준) :&nbsp;</span>
                 <span style={{ color: "red" }}>{totalCharge.toLocaleString()}원</span>
             </div>
 
-            <Table
-                headers={["번호", "이름", "피드ID", "잔액", "충전", "업로드 날짜"]}
-                keys={["nickname", "feedId", "balance", "chargeAmount", "createdAt"]}
-                data={data}
+            <div style={{ flex: 1 }} className="scrollX">
+                <Table
+                    headers={["번호", "회사명", "피드ID", "잔액", "충전", "업로드 날짜"]}
+                    keys={["nickname", "feedId", "balance", "chargeAmount", "createdAt"]}
+                    data={data}
+                    page={page}
+                    height="fit-content"
+                    limit={limit}
+                    onRowClick={(row) =>
+                        navigate(`/company/reward/${row.feedId}/detail`, {
+                            state: { chargeAmount: row.chargeAmount, balance: row.balance  },
+                        })
+                    }
+                />
+            </div>
+
+            {/* 아래 */}
+            <Pagination
                 page={page}
-                height="fit-content"
                 limit={limit}
-                onRowClick={(row) =>
-                    navigate(`/company/reward/${row.feedId}/detail`, {
-                        state: { chargeAmount: row.chargeAmount },
-                    })
-                }
+                total={totalCount}
+                onPageChange={setPage}
             />
         </div>
     )

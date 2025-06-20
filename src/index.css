@@ -1,5 +1,17 @@
-body {
+html, body {
+  height: 100%;
   margin: 0;
+}
+
+:root {
+  --vh: 100%;
+}
+
+.app-container {
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+body {
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 700; /* 400: 기본 보통, 700: 두껍게, 300: 얇게 */
   -webkit-font-smoothing: antialiased;
@@ -54,11 +66,11 @@ label {
 /* 모바일 대응 */
 @media (max-width: 768px) {
   .router-container {
-    padding: 0.5rem 0.5rem 6rem 0.5rem;
+    padding: 0.5rem 0.5rem 0 0.5rem;
   }
 
   .feed-router-container {
-    padding: 0.5rem 0 6rem 0;
+    padding: 0.5rem 0 0 0;
   }
 }
 

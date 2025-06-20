@@ -18,7 +18,7 @@ const SearchBar = ({
     placeholder = "",
     value,
     width = "100%",
-    height = "100%",
+    height = "45px",
     onChange,
     onEnter,
     closeBtnVisible = true,

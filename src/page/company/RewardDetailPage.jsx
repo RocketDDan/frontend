@@ -1,5 +1,5 @@
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./RewardDetailPage.module.css";
 import { Line, Bar } from "react-chartjs-2";
 import dayjs from "dayjs";
@@ -33,12 +33,15 @@ ChartJS.register(
 	Legend
 );
 
+
 const RewardDetailPage = () => {
 	const { feedId } = useParams();
 	const navigate = useNavigate();
 	const location = useLocation();
+	const chartRef = useRef();
 	// 충전금액 꺼내오기
 	const chargeAmount = location.state?.chargeAmount || 0;
+	const balance = location.state?.balance || 0;
 
 	const [summary, setSummary] = useState(null);
 	const [dailyData, setDailyData] = useState([]);
@@ -82,6 +85,29 @@ const RewardDetailPage = () => {
 			console.log(res.data);
 		} catch (err) {
 			console.error("시간대별 클릭 수 조회 실패", err);
+		}
+	};
+
+	const handleClick = (event) => {
+		const chart = chartRef.current;
+		if (!chart) return;
+
+		const points = chart.getElementsAtEventForMode(
+			event,
+			"nearest",
+			{ intersect: true },
+			true
+		);
+
+		if (points.length) {
+			const pointIndex = points[0].index;
+			const clickedDate = lineData.labels[pointIndex]; // 날짜
+			const clickedValue = lineData.datasets[0].data[pointIndex]; // 값
+
+			console.log("Clicked Date:", clickedDate);
+			console.log("Clicked Value:", clickedValue);
+
+			setHourlyTargetDate(clickedDate);
 		}
 	};
 
@@ -163,16 +189,45 @@ const RewardDetailPage = () => {
 
 	return (
 		<div className={styles.container}>
+
 			<div className={styles.header}>
-				<Button content="목록" width="120px" onClick={() => navigate(-1)} bg="primaryBg" />
-				<h2>피드 ID #{feedId}</h2>
+				<div>
+					<div style={{ textAlign: "start" }} className={styles.hideOnMobile}>
+						<Button content="뒤로 가기" width="120px" onClick={() => navigate(-1)} bg="primaryBg" />
+					</div>
+				</div>
+
+				<h2>피드 ID<br />#{feedId}</h2>
+
 				<div className={styles.meta}>
-					<span>충전 금액: {chargeAmount.toLocaleString()}원</span>
+					<div style={{ textAlign: "end" }}>
+						<div>
+							충전 금액
+						</div>
+						<div>
+							{chargeAmount.toLocaleString()}원
+						</div>
+						<div>
+							잔여 금액
+						</div>
+						<div>
+							{balance.toLocaleString()}원
+						</div>
+					</div>
 				</div>
 			</div>
-			<div className={styles.meta}>
-				<span>기준 : {startDate} ~ {endDate}</span>
+
+			<div className={styles.dateFilter}>
+				<label>
+					시작일
+					<input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+				</label>
+				<label>
+					종료일
+					<input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+				</label>
 			</div>
+
 			<div className={styles.summaryCards}>
 				<div className={styles.card}>
 					<p>총 클릭수</p>
@@ -187,28 +242,14 @@ const RewardDetailPage = () => {
 			<div className={styles.graphSection}>
 				<div className={styles.chartBox}>
 					<h3>일자별 클릭 수</h3>
-					<Line data={lineData} options={lineOptions} />
+					<Line data={lineData} options={{ ...lineOptions, onClick: handleClick }} ref={chartRef} />
 				</div>
-				<div className={styles.dateFilter}>
-					<label>
-						시작일
-						<input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-					</label>
-					<label>
-						종료일
-						<input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-					</label>
-				</div>
+			</div>
+			<div className={styles.graphSection}>
 
 				<div className={styles.chartBox}>
 					<h3>{hourlyTargetDate} 시간대별 클릭 분포</h3>
 					<Bar data={barData} options={barOptions} />
-				</div>
-				<div className={styles.dateFilter}>
-					<label>
-						날짜 선택
-						<input type="date" value={hourlyTargetDate} onChange={(e) => setHourlyTargetDate(e.target.value)} />
-					</label>
 				</div>
 			</div>
 		</div>

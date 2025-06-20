@@ -13,7 +13,14 @@ const Header = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 
-	const shouldShowBackButton = !["/", "/feed/list", "/crew/list", "/announcement/list"].includes(location.pathname);
+	const shouldShowBackButton = ![
+		"/",
+		"/feed/list",
+		"/crew/list",
+		"/announcement/list",
+		"/admin/reward/list",
+		"/admin/member/list"
+	].includes(location.pathname);
 	const currentPath = location.pathname;
 
 	const [menuOpen, setMenuOpen] = useState(false);
@@ -44,7 +51,12 @@ const Header = () => {
 	return (
 		<header className={headerStyle.container} ref={menuRef}>
 			<div className={headerStyle.up}>
-				<h1 className={headerStyle.logo}>
+				<h1
+					className={`${headerStyle.logo} ${shouldShowBackButton
+						? headerStyle.mobileBackMode
+						: ""}`}
+				>
+					<Link to="/" className={headerStyle.logoText}>Runners Hi</Link>
 					{shouldShowBackButton && (
 						<FontAwesomeIcon
 							icon={faArrowLeft}
@@ -52,12 +64,6 @@ const Header = () => {
 							className={headerStyle.backIcon}
 						/>
 					)}
-					{
-						!shouldShowBackButton
-						&& (
-							<Link to="/">Runners Hi</Link>
-						)
-					}
 				</h1>
 
 				<nav className={headerStyle.desktopNav}>
@@ -112,7 +118,7 @@ const Header = () => {
 						</span>
 						<span>
 							<Link to="/admin/reward/list" className={currentPath.startsWith("/admin/reward") ? headerStyle.activeLink : ""} onClick={handleMenuLinkClick}>
-								수익 관리
+								기업 피드 관리
 							</Link>
 						</span>
 					</>

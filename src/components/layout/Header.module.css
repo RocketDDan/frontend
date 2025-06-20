@@ -206,7 +206,26 @@ h1 {
     }
 }
 
+.logoText {
+	display: block; /* 항상 보이게 */
+}
+
+/* 기본적으로 숨기기 */
 .backIcon {
-    margin-right: 12px;
-    cursor: pointer;
+	display: none;
+	margin-right: 12px;
+	cursor: pointer;
+}
+
+/* 모바일에서는 조건부로 처리 */
+@media (max-width: 768px) {
+	.backIcon {
+		display: inline-block;
+	}
+
+	/* 모바일 + 뒤로가기 있는 경우에만 logo 숨기기 */
+	/* 조건은 JS로 못 하니 class 조합 필요 (예: .mobileBackMode 추가해서 JS에서 붙이기) */
+	.mobileBackMode .logoText {
+		display: none;
+	}
 }

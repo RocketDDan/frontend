@@ -29,7 +29,25 @@ tr>* {
   font-size: 1rem;
 }
 
-@media (max-width: 768px){
+.email {
+  font-size: 1rem;
+}
+
+.crewName {
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  tr>*:nth-child(1) {
+    display: none;
+  }
+
+  tr>* {
+    padding: 1rem 0.5rem;
+    border-bottom: 1px solid #e0e0e0;
+    white-space: nowrap;
+  }
+
   .wideColumn {
     text-align: start;
   }
@@ -46,5 +64,23 @@ tr>* {
     font-size: 0.7rem;
     white-space: inherit;
     /* text-overflow: ellipsis; */
+  }
+
+  .email {
+    width: 50%;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .crewName {
+    width: 50%;
+    max-width: 80px;
+    white-space: normal;
+    /* ✅ 줄바꿈 허용 */
+    word-break: break-word;
+    /* ✅ 단어 중간에서도 줄바꿈 */
+    overflow-wrap: break-word;
   }
 }

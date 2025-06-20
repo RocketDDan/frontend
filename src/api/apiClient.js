@@ -40,7 +40,8 @@ apiClient.interceptors.response.use(
         }
 
         if (error.response?.status === 401) {
-            if(error.response.data === "⚠️ 만료된 엑세스 토큰입니다.") {
+            if (error.response.data === "⚠️ 만료된 엑세스 토큰입니다."
+                || error.response.data.includes("만료된 엑세스 토큰")) {
                 console.log("만료된 엑세스 토큰입니다.");
                 return apiClient.post("/auth/token/reissue")
                     .then(() => {
@@ -57,13 +58,13 @@ apiClient.interceptors.response.use(
                         });
                         // alert("로그아웃 되었습니다. 다시 로그인해주세요.");
                         return apiClient.get('/auth/logout')
-                            .then(() => {})
+                            .then(() => { })
                             .catch((error) => {
                                 console.error("로그아웃 요청 실패:", error);
                                 window.location.href = "/logout/callback";
                             });
                     });
-            } else if(error.response.data === "⚠️ 만료된 리프레시 토큰입니다.") {
+            } else if (error.response.data === "⚠️ 만료된 리프레시 토큰입니다.") {
                 console.log("만료된 리프레시 토큰입니다.");
                 Swal.fire({
                     icon: "error",
@@ -74,12 +75,12 @@ apiClient.interceptors.response.use(
                 });
                 // alert("로그아웃 되었습니다. 다시 로그인해주세요.");
                 return apiClient.get('/auth/logout')
-                    .then(() => {})
+                    .then(() => { })
                     .catch((error) => {
                         console.error("로그아웃 요청 실패:", error);
                         window.location.href = "/logout/callback";
                     });
-            } else if(error.response.data === "⚠️ 만료된 회원가입용 인증 토큰입니다.") {
+            } else if (error.response.data === "⚠️ 만료된 회원가입용 인증 토큰입니다.") {
                 Swal.fire({
                     icon: "error",
                     title: "로그인 실패",
