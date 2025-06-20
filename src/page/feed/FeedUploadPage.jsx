@@ -56,7 +56,7 @@ const FeedUploadPage = () => {
             });
             return;
         }
-        if (user.role === 'USER') {
+        if (user.role === 'USER' || user.role === 'ADMIN') {
             uploadPersonalFeed();
         } else if (user.role === 'COMPANY') {
             uploadAdvertiseFeed();
@@ -149,16 +149,16 @@ const FeedUploadPage = () => {
                     onChange={handleContent} />
             </div>
 
-            <div>
-                <Button width="100px" content="등록" onClick={handleSubmit} />
-            </div>
-
             {
                 user && user.role === 'COMPANY' &&
                 <div>
                     결제 금액: <input type="number" onChange={handleAmount} />원
                 </div>
             }
+
+            <div>
+                <Button width="100px" content="등록" onClick={handleSubmit} />
+            </div>
         </div>
     )
 }
