@@ -249,10 +249,9 @@ const CrewProfilePage = () => {
 			)}
 			{crew && (
 				<div>
-
 					<div className={styles.profileWrapper}>
 						<div className={styles.profileDiv}>
-							<ProfileImage profileUrl={crew?.profilePath} size="200px" />
+							<ProfileImage profileUrl={crew?.profilePath} size="200px" type="square" />
 						</div>
 
 						<div className={styles.infoSection}>
