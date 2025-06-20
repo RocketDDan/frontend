@@ -40,8 +40,9 @@ apiClient.interceptors.response.use(
         }
 
         if (error.response?.status === 401) {
-            if (error.response.data === "⚠️ 만료된 엑세스 토큰입니다."
-                || error.response.data.includes("만료된 엑세스 토큰")) {
+            console.log(error.response.data);
+            if (error.response.data.error === "만료된 엑세스 토큰입니다."
+                || error.response.error.includes("만료된 엑세스 토큰입니다.")) {
                 console.log("만료된 엑세스 토큰입니다.");
                 return apiClient.post("/auth/token/reissue")
                     .then(() => {
