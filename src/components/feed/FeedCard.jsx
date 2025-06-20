@@ -165,11 +165,6 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
                             #홍보
                         </span>
                     )}
-                    {/* {feed.type === 'PERSONAL' && (
-                        <span className={style.tag}>
-                            #일반
-                        </span>
-                    )} */}
                 </div>
             </div>
 
@@ -178,16 +173,6 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
                 <span className={style.writer}>{feed.writerNickname}</span>
                 <span className={style.content}>{feed.content}</span>
             </div>
-
-            {/* 댓글 */}
-            {/* <div className={style.commentList}>
-                {feed.commentList.map(comment => (
-                    <div key={comment.commentId}>
-                        <span style={{ fontWeight: "bold" }}>{comment.writerNickname}</span>
-                        <span>{comment.content}</span>
-                    </div>
-                ))}
-            </div> */}
 
             {/* 위치 모달 */}
             {isMapOpen && (

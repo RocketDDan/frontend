@@ -15,6 +15,8 @@ import Swal from "sweetalert2";
 import { fetchFeedList } from "../../api/feed.api";
 import { useAuthStore } from "../../store/authStore";
 import FeedDetailModal from "../../components/feed/FeedDetailModal";
+import FeedCard from "../../components/feed/FeedCard";
+import { logAdFeedView } from "../../api/feedViewLog.api";
 
 const CrewProfilePage = () => {
 	const navigate = useNavigate();
@@ -224,10 +226,15 @@ const CrewProfilePage = () => {
 		}
 	}, [isLoading]);
 
+	const handleAdFeedVisible = useCallback((feedId) => {
+        // console.log(`홍보 피드 노출 감지: ${feedId}`);
+        logAdFeedView(feedId);
+    }, []);
+
 	useEffect(() => {
 		const loadFeeds = async () => {
 			setIsLoading(true);
-			const data = await fetchFeedList({ page: page, perPage: 10, scope: "CREW", order: "LATEST", crewId: crewId });
+			const data = await fetchFeedList({ page: page, perPage: 9, scope: "CREW", order: "LATEST", crewId: crewId });
 			console.log("data: ", data);
 			setFeedList(prev => [...data, ...prev]);  // 누적!
 			setIsLoading(false);
@@ -236,9 +243,6 @@ const CrewProfilePage = () => {
 	}, [page]);
 
 	const [selectedFeed, setSelectedFeed] = useState();
-	// useState(() => {
-
-	// }, [selectedFeed])
 
 	return (
 		<div className={styles.pageWrapper}>
@@ -288,7 +292,7 @@ const CrewProfilePage = () => {
 						</div>
 					</div>
 
-					<div style={{ width: "100%", textAlign: "start" }}>
+					<div style={{ width: "100%", textAlign: "start" , maxWidth:"468px" }}>
 						<h3>피드 모아보기</h3>
 						<hr />
 						<div className={styles.feedListContainer}>
@@ -306,9 +310,13 @@ const CrewProfilePage = () => {
 							}
 						</div>
 						{selectedFeed && (
-							<FeedDetailModal
+							<FeedCard
 								feed={selectedFeed}
-								onClose={() => setSelectedFeed(null)}
+								// onCommentClick={() => handleCommentClick(feed)}
+								onAdVisible={handleAdFeedVisible}
+							// <FeedDetailModal
+							// 	feed={selectedFeed}
+							// 	onClose={() => setSelectedFeed(null)}
 							/>
 						)}
 					</div>
