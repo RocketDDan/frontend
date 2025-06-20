@@ -67,6 +67,8 @@
 }
 
 .crewName {
+  width: 100%;
+  text-align: center;
   font-size: 2.2rem;
   font-weight: bold;
 }
@@ -236,6 +238,7 @@
 
 /* Modal Styles */
 .modal {
+  text-align: center;
   position: fixed;
   top: 0;
   left: 0;
@@ -250,21 +253,34 @@
 
 .modalContent {
   position: relative;
-  width: 90%;
+  width: 95%;
   max-width: fit-content;
   background-color: white;
   border-radius: 8px;
-  padding: 20px;
-  max-height: 90vh;
+  padding: 0px;
+  max-height: 95vh;
   overflow-y: auto;
   margin: auto;
 }
 
 .modalCloseIcon {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 1.2rem;
+  right: 1.5rem;
   font-size: 24px;
   cursor: pointer;
   z-index: 10;
+}
+
+.commentModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
 }

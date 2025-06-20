@@ -18,6 +18,7 @@ import FeedDetailModal from "../../components/feed/FeedDetailModal";
 import FeedCard from "../../components/feed/FeedCard";
 import { logAdFeedView } from "../../api/feedViewLog.api"
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import CommentPanel from "../../components/feed/CommentPanel";
 
 const CrewProfilePage = () => {
 	const navigate = useNavigate();
@@ -228,9 +229,9 @@ const CrewProfilePage = () => {
 	}, [isLoading]);
 
 	const handleAdFeedVisible = useCallback((feedId) => {
-        // console.log(`홍보 피드 노출 감지: ${feedId}`);
-        logAdFeedView(feedId);
-    }, []);
+		// console.log(`홍보 피드 노출 감지: ${feedId}`);
+		logAdFeedView(feedId);
+	}, []);
 
 	useEffect(() => {
 		const loadFeeds = async () => {
@@ -244,6 +245,7 @@ const CrewProfilePage = () => {
 	}, [page]);
 
 	const [selectedFeed, setSelectedFeed] = useState();
+	const [modalStatus, setModalStatus] = useState();
 
 	return (
 		<div className={styles.pageWrapper}>
@@ -293,7 +295,7 @@ const CrewProfilePage = () => {
 						</div>
 					</div>
 
-					<div style={{ width: "100%", textAlign: "start" , maxWidth:"468px" }}>
+					<div style={{ width: "100%", textAlign: "start", maxWidth: "468px" }}>
 						<h3>피드 모아보기</h3>
 						<hr />
 						<div className={styles.feedListContainer}>
@@ -325,16 +327,32 @@ const CrewProfilePage = () => {
 							}
 						</div>
 						{selectedFeed && (
-						<div className={styles.modal} onClick={() => setSelectedFeed(null)}>
-							<div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-							<FeedCard
-								feed={selectedFeed}
-								onAdVisible={handleAdFeedVisible}
-							/>
-							<FontAwesomeIcon icon={faClose} className={styles.modalCloseIcon} onClick={() => setSelectedFeed(null)} />
+							<div className={styles.modal} onClick={() => setSelectedFeed(null)}>
+								<div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+									<FeedCard
+										feed={selectedFeed}
+										onCommentClick={() => {
+											setModalStatus(true);
+										}}
+										onAdVisible={handleAdFeedVisible}
+									/>
+									<FontAwesomeIcon
+										icon={faClose}
+										className={styles.modalCloseIcon}
+										onClick={() => setSelectedFeed(null)} />
+								</div>
 							</div>
-						</div>
 						)}
+						{
+							modalStatus
+								? <div className={styles.commentModal}>
+									<CommentPanel
+										feed={selectedFeed}
+										onClose={() => { setModalStatus(false); }}
+									/>
+								</div>
+								: null
+						}
 					</div>
 				</div>
 			)}
@@ -355,6 +373,8 @@ const CrewProfilePage = () => {
 					isLeader={crew.leader}
 				/>
 			)}
+
+
 		</div>
 	);
 };
