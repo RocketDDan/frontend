@@ -16,7 +16,8 @@ import { fetchFeedList } from "../../api/feed.api";
 import { useAuthStore } from "../../store/authStore";
 import FeedDetailModal from "../../components/feed/FeedDetailModal";
 import FeedCard from "../../components/feed/FeedCard";
-import { logAdFeedView } from "../../api/feedViewLog.api";
+import { logAdFeedView } from "../../api/feedViewLog.api"
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 const CrewProfilePage = () => {
 	const navigate = useNavigate();
@@ -298,26 +299,41 @@ const CrewProfilePage = () => {
 						<div className={styles.feedListContainer}>
 							{
 								feedList.map(feed => {
+									const fileUrl = feed.feedFileUrlList[0]?.fileUrl;
+									const isVideo = fileUrl && /\.(mp4|mov|webm)(\?.*)?$/i.test(fileUrl);
 									return (
-										<div className={styles.imageBox} onClick={() => setSelectedFeed(feed)}>
-											<img
-												key={feed.feedId}
-												src={feed.feedFileUrlList[0]?.fileUrl}
-												alt="" />
+										<div className={styles.imageBox} onClick={() => setSelectedFeed(feed)} key={feed.feedId}>
+											{isVideo ? (
+												<video
+													src={fileUrl}
+													controls
+													muted
+													playsInline
+													loop
+													style={{ width: "100%", borderRadius: "10px" }}
+												/>
+											) : (
+												<img
+													src={fileUrl}
+													alt=""
+													style={{ width: "100%", borderRadius: "10px" }}
+												/>
+											)}
 										</div>
 									)
 								})
 							}
 						</div>
 						{selectedFeed && (
+						<div className={styles.modal} onClick={() => setSelectedFeed(null)}>
+							<div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
 							<FeedCard
 								feed={selectedFeed}
-								// onCommentClick={() => handleCommentClick(feed)}
 								onAdVisible={handleAdFeedVisible}
-							// <FeedDetailModal
-							// 	feed={selectedFeed}
-							// 	onClose={() => setSelectedFeed(null)}
 							/>
+							<FontAwesomeIcon icon={faClose} className={styles.modalCloseIcon} onClick={() => setSelectedFeed(null)} />
+							</div>
+						</div>
 						)}
 					</div>
 				</div>

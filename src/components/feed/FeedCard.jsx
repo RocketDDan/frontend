@@ -14,6 +14,8 @@ import { useNavigate } from 'react-router-dom';
 import KakaoMap from '../map/KakaoMap';
 import MediaViewer from '../image/MediaViewer';
 import useCheckLogin from '../../util/RequiredLogin';
+import { useAuthStore } from '../../store/authStore';
+import { deleteFeed } from '../../api/feed.api';
 
 /**
  * 피드 카드
@@ -30,6 +32,7 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
     const navigate = useNavigate();
 
     const adRef = useRef(null);
+    const user = useAuthStore((state) => state.user);
 
     useEffect(() => {
         if (feed.type !== 'ADVERTISE' || !adRef.current || !onAdVisible) return;
@@ -100,6 +103,10 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
         setIsMapOpen(false);
     };
 
+    const handleDeleteFeed = () => {
+        deleteFeed(feed.feedId);
+    }
+
     return (
         <div id={`feed-${feed.feedId}`} className={style.container} key={feed.feedId}>
             {/* 홍보피드이면 관찰 대상 div 추가 */}
@@ -112,10 +119,17 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
                     profileUrl={feed.writerProfileUrl}
                     size="40px"
                     onClick={handleClickProfile} />
-                <span onClick={handleClickProfile}>
+
+                <div onClick={handleClickProfile}>
                     {feed.writerNickname}
-                </span>
-                <div style={{ display: 'flex', justifyContent: 'end', paddingRight: '5px' }}>⋯</div>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'end', paddingRight: '5px' }}>
+                    {user && user.memberId && (feed.writerId === user.memberId) &&
+                        <span onClick={handleDeleteFeed}>삭제</span>
+                    }
+                    {/* <span>&nbsp;</span> */}
+                </div>
             </div>
 
             {/* 피드 이미지들 */}

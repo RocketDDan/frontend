@@ -19,6 +19,9 @@
 .writerRow>* {
     flex: 1;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* 피드 이미지 행 */

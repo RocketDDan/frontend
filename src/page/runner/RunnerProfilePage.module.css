@@ -136,3 +136,49 @@
   object-fit: cover;
   border-radius: 12px;
 }
+
+/* 피드 모아보기 */
+.feedListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  /* 줄바꿈 허용 */
+  gap: 5px;
+  /* 요소 간 여백 */
+  justify-content: flex-start;
+  margin-top: 2rem;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  position: relative;
+  width: 90%;
+  max-width: fit-content;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  max-height: 90vh;
+  overflow-y: auto;
+  margin: auto;
+}
+
+.modalCloseIcon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+}
