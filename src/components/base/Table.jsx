@@ -61,12 +61,14 @@ const TableBody = ({
 							(key === "crewName" && row[key] === "관리자")
 								? style.role
 								: (key === "title")
-									? style.wideColumn
+									? style.titleColumn
 									: (key === "createdAt")
 										? style.createdAt
 										: ""
 						} >
-						{row[key]}
+						{key === "createdAt"
+							? row[key].slice(0, -3)
+							: row[key]}
 					</td>
 				))}
 			</tr>

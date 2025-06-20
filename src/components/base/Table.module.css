@@ -13,8 +13,11 @@ tr>* {
   white-space: nowrap;
 }
 
+.titleColumn {
+  text-align: start;
+}
+
 .wideColumn {
-  flex: 4;
   text-align: start;
 }
 
@@ -28,8 +31,15 @@ tr>* {
 
 @media (max-width: 768px){
   .wideColumn {
-    flex: 4;
     text-align: start;
+  }
+
+  .titleColumn {
+    width: 50%;
+    max-width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .createdAt {
