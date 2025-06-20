@@ -165,7 +165,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                         </div>
                     ))}
                     {/* 무한 스크롤 타겟 */}
-                    {hasMore && <div ref={observerTarget} style={{ height: "20px" }} />}
+                    {hasMore && <div ref={observerTarget} style={{ height: "1px" }} />}
                 </div>
             </div>
         </div>

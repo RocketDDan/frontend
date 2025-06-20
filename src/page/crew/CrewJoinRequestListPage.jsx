@@ -157,9 +157,12 @@ const CrewJoinRequestListPage = () => {
                             className={styles.messageWrapper}
                             onClick={onClickMessage}
                         >
-                            {request.requestMessage.length > 35
+                            {request.requestMessage && request.requestMessage.length > 35
                                 ? request.requestMessage.slice(0, 35) + "..."
                                 : request.requestMessage}
+                            {request.requestMessage == null && (
+                                "메세지 없음"
+                            )}
                         </span>
                         { status === "REQUEST" && (
                         <div className={styles.buttonWrapper}>
