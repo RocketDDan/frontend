@@ -3,7 +3,7 @@
     justify-content: center;
     gap: 3rem;
     align-items: center;
-    height: 100%;
+    height: fit-content;
     /* 업로드 버튼을 위해 */
     /* position: relative; */
 }
@@ -19,7 +19,7 @@
 .feedList {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    /* gap: 2rem; */
     overflow-y: auto;
 }
 

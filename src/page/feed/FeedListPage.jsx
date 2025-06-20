@@ -21,6 +21,7 @@ const FeedListPage = () => {
     const [selectedFeed, setSelectedFeed] = useState(null); // 선택된 피드 (댓글창 열 피드)
     const [page, setPage] = useState(1); // 페이지
     const [isLoading, setIsLoading] = useState(false); // 로딩중인지 여부
+    const [isLastPage, setIsLastPage] = useState(false); // 마지막 페이지인지 여부
     const observerTarget = useRef(null); // 
     const navigate = useNavigate();
     const user = useAuthStore(state => state.user);
@@ -46,13 +47,18 @@ const FeedListPage = () => {
     }, [selectedFeed]);
 
     useEffect(() => {
+        if (isLastPage) return;
         const loadFeeds = async () => {
             setIsLoading(true);
-            const data = await fetchFeedList({ page: page, perPage: 10, scope: "ALL_EXCEPT_ME", order: "LATEST" });
-            setFeedList(prev => [...data, ...prev]);  // 누적!
+            const data = await fetchFeedList({ page: page, perPage: 6, scope: "ALL_EXCEPT_ME", order: "LATEST" });
+            if (data.length === 0) {
+                setIsLastPage(true);
+            }
+            setFeedList(prev => [...prev, ...data]);
             setIsLoading(false);
         };
         loadFeeds();
+        // console.log("page: ", page);
     }, [page]);
 
     // 
@@ -64,14 +70,14 @@ const FeedListPage = () => {
     }, [isLoading]);
 
     const handleAdFeedVisible = useCallback((feedId) => {
-        // console.log(`홍보 피드 노출 감지: ${feedId}`);
         logAdFeedView(feedId);
     }, []);
 
     // 무한 스크롤
     useEffect(() => {
+
         const observer = new IntersectionObserver(handleObserver, {
-            threshold: 0.5
+            threshold: 0.1
         });
 
         if (observerTarget.current) observer.observe(observerTarget.current);
@@ -123,16 +129,29 @@ const FeedListPage = () => {
         <div className={`${style.container} ${selectedFeed ? style.openCommentPanel : ''}`}>
             {/* 피드 목록 (스크롤) */}
             <div className={style.feedList}>
-                {feedList.map(feed =>
-                    <FeedCard
-                        feed={feed}
-                        key={feed.feedId}
-                        onCommentClick={() => handleCommentClick(feed)}
-                        onAdVisible={handleAdFeedVisible}
-                    />
+                {feedList.map((feed, index) => {
+                    const isNearLast = (index === feedList.length - 4);
+                    if (isNearLast) {
+                        return (
+                            < div ref={observerTarget} style={{ height: '10px', }} />
+                        )
+                    }
+                    return (
+                        <FeedCard
+                            feed={feed}
+                            key={feed.feedId}
+                            onCommentClick={() => handleCommentClick(feed)}
+                            onAdVisible={handleAdFeedVisible}
+                        />
+                    )
+                }
                 )}
-                {/* 관찰 타겟 */}
-                <div ref={observerTarget} style={{ height: '20px' }} />
+
+                {isLoading && (
+                    <div style={{ textAlign: 'center', margin: '1rem 0' }}>
+                        <span>로딩 중...</span>
+                    </div>
+                )}
             </div>
             {/* 댓글창 */}
             {
