@@ -7,56 +7,67 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCrown } from "@fortawesome/free-solid-svg-icons";
 import { fetchFeedList } from "../../api/feed.api";
 import FeedDetailModal from "../../components/feed/FeedDetailModal";
+import FeedCard from "../../components/feed/FeedCard";
+import { logAdFeedView } from "../../api/feedViewLog.api";
+import { faClose } from '@fortawesome/free-solid-svg-icons';
 
 const RunnerProfilePage = () => {
     const navigate = useNavigate();
     const { memberId } = useParams();
     const [member, setMember] = useState(null);
+    
 
-    useEffect(() => {
-        console.log("RunnerProfilePage useEffect", memberId);
-        fetchMemberProfile(memberId)
-            .then(data => {
-                setMember(data);
-            });
-    }, [])
+    const handleAdFeedVisible = useCallback((feedId) => {
+        // console.log(`홍보 피드 노출 감지: ${feedId}`);
+        logAdFeedView(feedId);
+    }, []);
 
-    // TODO: 피드 모아보기 개발중
-    const [feedList, setFeedList] = useState([]); // 피드 데이터
-    const [page, setPage] = useState(1); // 페이지
-    const [isLoading, setIsLoading] = useState(false); // 로딩중인지 여부
-    const observerTarget = useRef(null); // 
-    const handleObserver = useCallback((entries) => {
-        const target = entries[0];
-        if (target.isIntersecting && !isLoading) {
-            setPage(prev => prev + 1);
-        }
-    }, [isLoading]);
+  useEffect(() => {
+    console.log("RunnerProfilePage useEffect", memberId);
+    fetchMemberProfile(memberId)
+      .then(data => {
+        setMember(data);
+      });
+  }, [])
 
-    useEffect(() => {
-        const loadFeeds = async () => {
-            setIsLoading(true);
-            const data = await fetchFeedList({ page: page, perPage: 9, scope: "MEMBER", order: "LATEST", memberId: memberId});
-            console.log("data: ", data);
-            setFeedList(prev => [...data, ...prev]);  // 누적!
-            setIsLoading(false);
-        };
-        loadFeeds();
-    }, [page]);
+  // TODO: 피드 모아보기 개발중
+  const [feedList, setFeedList] = useState([]); // 피드 데이터
+  const [page, setPage] = useState(1); // 페이지
+  const [isLoading, setIsLoading] = useState(false); // 로딩중인지 여부
+  const observerTarget = useRef(null); // 
+  const handleObserver = useCallback((entries) => {
+    const target = entries[0];
+    if (target.isIntersecting && !isLoading) {
+      setPage(prev => prev + 1);
+    }
+  }, [isLoading]);
 
-    const [selectedFeed, setSelectedFeed] = useState();
+  useEffect(() => {
+    const loadFeeds = async () => {
+      setIsLoading(true);
+      const data = await fetchFeedList({ page: page, perPage: 9, scope: "MEMBER", order: "LATEST", memberId: memberId });
+      console.log("data: ", data);
+      setFeedList(prev => [...data, ...prev]);  // 누적!
+      setIsLoading(false);
+    };
+    loadFeeds();
+  }, [page]);
 
-    return (
-        <div>
-            {member === null && (
-                <div className={styles.loading}>
-                    <span>로딩 중...</span>
-                </div>
-            )}
-            {member && (
-                <div className={styles.profileWrapper}>
+  const [selectedFeed, setSelectedFeed] = useState();
 
-                    <ProfileImage profileUrl={member.profileImageUrl} size="200px" />
+  const [modalStatus, setModalStatus] = useState();
+
+  return (
+    <div>
+      {member === null && (
+        <div className={styles.loading}>
+          <span>로딩 중...</span>
+        </div>
+      )}
+      {member && (
+        <div className={styles.profileWrapper}>
+
+          <ProfileImage profileUrl={member.profileImageUrl} size="200px" />
 
                     <div className={styles.infoSection}>
                         <span className={styles.nickname}>{member.nickname}</span>
@@ -88,24 +99,48 @@ const RunnerProfilePage = () => {
                 <hr />
                 <div className={styles.feedListContainer}>
                     {
-                        feedList.map(feed => {
-                            return (
-                                <div className={styles.imageBox} onClick={() => setSelectedFeed(feed)}>
-                                    <img
-                                        key={feed.feedId}
-                                        src={feed.feedFileUrlList[0]?.fileUrl}
-                                        alt="" />
-                                </div>
-                            )
-                        })
+                      feedList.map(feed => {
+                        const fileUrl = feed.feedFileUrlList[0]?.fileUrl;
+                        const isVideo = fileUrl && /\.(mp4|mov|webm)(\?.*)?$/i.test(fileUrl); // 확장자 및 쿼리 대응
+
+                        return (
+                          <div
+                            className={styles.imageBox}
+                            onClick={() => setSelectedFeed(feed)}
+                            key={feed.feedId}
+                          >
+                            {isVideo ? (
+                              <video
+                                src={fileUrl}
+                                controls
+                                muted
+                                playsInline
+                                loop
+                                style={{ width: "100%", borderRadius: "10px" }}
+                              />
+                            ) : (
+                              <img
+                                src={fileUrl}
+                                alt=""
+                                style={{ width: "100%", borderRadius: "10px" }}
+                              />
+                            )}
+                          </div>
+                        );
+                      })
                     }
-                </div>
                 {selectedFeed && (
-                    <FeedDetailModal
+                  <div className={styles.modal} onClick={() => setSelectedFeed(null)}>
+                    <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                      <FeedCard
                         feed={selectedFeed}
-                        onClose={() => setSelectedFeed(null)}
-                    />
+                        onAdVisible={handleAdFeedVisible}
+                      />
+                      <FontAwesomeIcon icon={faClose} className={styles.modalCloseIcon} onClick={() => setSelectedFeed(null)} />
+                    </div>
+                  </div>
                 )}
+                </div>
             </div>
         </div>
     )
