@@ -17,7 +17,7 @@ const BasicSelect = ({
     value,
     onChange,
     options = [],
-    width = "100%"
+    width = "100%",
 }) => {
 
     return (
@@ -30,6 +30,7 @@ const BasicSelect = ({
                     container: (base) => ({
                         ...base,
                         width: width, // ✅ 명시적으로 container에 width 적용
+                        
                     }),
                     control: (base, state) => ({
                         ...base,
@@ -37,7 +38,7 @@ const BasicSelect = ({
                         borderColor: '#ccc',
                         boxShadow: 'none',
                         '&:hover': { borderColor: '#888' },
-                        minHeight: '40px', // 필요시 높이 조정
+                        minHeight: '45px',
                     }),
                     menu: (base) => ({
                         ...base,

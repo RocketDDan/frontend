@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import apiClient from "../../api/apiClient"
 import Pagination from "../../components/announcement/Pagination";
 import { useAuthStore } from "../../store/authStore";
-import { BasicSelect } from "../../components/base/Select"; 
+import { BasicSelect } from "../../components/base/Select";
 
 const AnnouncementListPage = () => {
 	const navigate = useNavigate();
@@ -60,26 +60,27 @@ const AnnouncementListPage = () => {
 					value={keyword}
 					onChange={handleChange}
 					width="15rem"
-					height="40px"
+					height="45px"
 					onEnter={() => console.log("엔터")}
 				/>
-				
-					<BasicSelect
-						value={order}
-						onChange={(val) => {
+
+				<BasicSelect
+					value={order}
+					onChange={(val) => {
 						setOrder(val);
 						setPage(1);
-						}}
-						options={[
+					}}
+					options={[
 						{ value: "LATEST", label: "최신순" },
 						{ value: "OLDEST", label: "오래된순" },
-						]}
-						width="120px"
-					/>
+					]}
+					width="120px"
+				/>
+
 				{(user?.role === "ADMIN" || userCrew?.isLeader) && (
 					<Button
-						width="8rem"
-						content="새 공지 등록"
+						width="6rem"
+						content="등록"
 						onClick={() => navigate("/announcement/upload")}
 						bg="primaryBg"
 					/>
