@@ -212,7 +212,7 @@ const SignupPage = () => {
 						비밀번호
 					</label>
 					<TextInput
-						placeholder="영문, 숫자 포함 8~16자"
+						placeholder="영문 대소문자, 숫자, 특수문자(@!#?) 포함 8~16자"
 						width="100%"
 						eyeVisible={true}
 						value={signUpFormData.password}
