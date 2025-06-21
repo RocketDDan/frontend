@@ -72,7 +72,7 @@ const MemberListPage = () => {
             </div>
 
 
-            <div style={{ flex: 1 }} className="scrollX">
+            <div style={{ minHeight: "500px", overflowY: "auto" }}>
                 <Table
                     headers={["번호", "이름", "이메일", "크루이름", "역할"]}
                     keys={["nickname", "email", "crewName", "crewRole"]}
