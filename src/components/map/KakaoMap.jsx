@@ -64,6 +64,7 @@ const KakaoMap = ({
     // 주소 핸들링
     const handleAddress = (val) => {
         setAddress(val);
+        handleMarkerByAddress();
     }
 
     // 주소로 마커 옮기기 + lat, lng 변화
@@ -127,7 +128,7 @@ const KakaoMap = ({
                         value={address}
                         width="100%"
                         onChange={handleAddress}
-                        onEnter={handleMarkerByAddress}
+                        // onEnter={handleMarkerByAddress}
                         closeBtnVisible={true} />
                 </div>
             }
