@@ -40,10 +40,14 @@ const FeedListPage = () => {
 
     // 선택된 피드가 바뀌면 해당 위치로 스크롤 이동
     useEffect(() => {
-        if (selectedFeed) {
+        if (!selectedFeed) return;
+
+        const timeout = setTimeout(() => {
             const el = document.getElementById(`feed-${selectedFeed.feedId}`);
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        }, 0);
+
+        return () => clearTimeout(timeout);
     }, [selectedFeed]);
 
     useEffect(() => {

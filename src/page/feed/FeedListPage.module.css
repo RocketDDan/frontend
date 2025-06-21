@@ -59,9 +59,9 @@
         display: none;
     }
 
-    .openCommentPanel .feedList {
+    /* .openCommentPanel .feedList {
         display: none;
-    }
+    } */
 
     .openCommentPanel .commentPanel {
         display: flex;
