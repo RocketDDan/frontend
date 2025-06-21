@@ -113,7 +113,7 @@ const CrewJoinRequestListPage = () => {
     useEffect(() => {
         // console.log("crewId", crewId);
         handleSearchBar();
-    }, [page, status, crewId])
+    }, [page, status, crewId, nickname])
 
     return (
         <div className={styles.pageWrapper}>
@@ -123,8 +123,11 @@ const CrewJoinRequestListPage = () => {
                         width={"100%"}
                         placeholder="닉네임을 입력해주세요."
                         value={nickname}
-                        onChange={setNickname}
-                        onEnter={handleSearchBar}
+                        onChange={(val) => {
+                            setNickname(val);
+                            // handleSearchBar();
+                        }}
+                        // onEnter={handleSearchBar}
                     />
                 </div>
 
