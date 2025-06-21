@@ -5,7 +5,7 @@ import { CrewMemberInfo } from './CrewMemberInfo';
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { fetchCrewMembers, forceRemoveCrewMember, changeCrewLeader } from '../../api/crewMember.api';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faL, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faWebAwesome } from "@fortawesome/free-brands-svg-icons";
 
 import Swal from "sweetalert2";
@@ -15,15 +15,22 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
     const [crewMemberList, setCrewMemberList] = useState([]);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
-    const [hasMore, setHasMore] = useState(true);
+    const [isLastPage, setIsLastPage] = useState(false);
     const observerTarget = useRef(null);
     const memberListRef = useRef(null);
-    const perPage = 6;
+    const perPage = 10;
     const columnsForMember = [
         { label: "크루원", width: "110px" },
         { label: "가입일", width: "130px" },
     ];
     const columnsForLeader = [...columnsForMember, { label: "관리", width: "100px" }];
+
+    // 검색/필터 변경 시 새로고침
+    const resetAll = () => {
+        setPage(1);
+        setCrewMemberList([]);
+        setIsLastPage(false);
+    };
 
     const onClickPass = (crewMemberId) => {
         Swal.fire({
@@ -55,64 +62,46 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
             if (result.isConfirmed) {
                 forceRemoveCrewMember(crewId, crewMemberId)
                     .then(() => {
-                        setPage(1); // 강퇴 후 첫 페이지로 초기화
-                        setCrewMemberList([]);
-                        setHasMore(true);
+                        resetAll();
                     });
             }
         });
     };
 
-    // 검색/필터 변경 시 새로고침
-    const handleSearchBar = () => {
-        setPage(1);
-        setCrewMemberList([]);
-        setHasMore(true);
-    };
-
     // page 변경 시 데이터 누적
     useEffect(() => {
+        if (isLastPage) return;
         setIsLoading(true);
-        const params = {
-            nickname: nickname,
-            page: page,
-            perPage: perPage,
-        };
-        fetchCrewMembers(crewId, { params })
+        fetchCrewMembers(crewId, { nickname, page, perPage })
             .then(data => {
-                if (page === 1) {
-                    setCrewMemberList(data);
-                } else {
-                    setCrewMemberList(prev => [...prev, ...data]);
-                }
+                setCrewMemberList(prev => [...prev, ...data]);
                 setIsLoading(false);
-                setHasMore(data.length === perPage);
-                // console.log("data", data);
-                // console.log("crewMemberList", crewMemberList);
-
+                if (data.length === 0) {
+                    setIsLastPage(true);
+                }
             });
-        // eslint-disable-next-lines
-    }, [page, crewId, nickname]);
+    }, [page, nickname]);
 
     // IntersectionObserver 콜백
     const handleObserver = useCallback(
         (entries) => {
             const target = entries[0];
-            if (target.isIntersecting && !isLoading && hasMore) {
+            if (target.isIntersecting && !isLoading && !isLastPage) {
                 setTimeout(() => setPage(prev => prev + 1), 100);
             }
         },
-        [isLoading, hasMore]
+        [isLoading]
     );
 
     useEffect(() => {
+        if (page === 1) return;
         const observer = new window.IntersectionObserver(handleObserver, {
             threshold: 0.5,
             root: null, // 내부 스크롤 컨테이너를 root로 지정
         });
         if (observerTarget.current) observer.observe(observerTarget.current);
         return () => observer.disconnect();
-    }, [handleObserver, memberListRef]);
+    }, [handleObserver]);
 
     const handleOverlayClick = (e) => {
         if (e.target === e.currentTarget) {
@@ -129,7 +118,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                         placeholder="닉네임을 입력해주세요."
                         value={nickname}
                         onChange={setNickname}
-                        onEnter={handleSearchBar}
+                        onEnter={resetAll}
                     />
                 </div>
 
@@ -168,7 +157,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                         </div>
                     ))}
                     {/* 무한 스크롤 타겟 */}
-                    {hasMore && <div ref={observerTarget} style={{ height: "20px" }} />}
+                    {!isLastPage && <div ref={observerTarget} style={{ height: "20px", backgroundColor: "yellow" }} />}
                 </div>
             </div>
         </div>
