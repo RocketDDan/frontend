@@ -48,7 +48,7 @@ const MemberListPage = () => {
             <div style={{ width: "100%", display: "flex", justifyContent: "space-between", gap: "1rem" }}>
                 <SearchBar
                     placeholder="회원명, 크루 이름 입력"
-                    width="35rem"
+                    width="30rem"
                     onChange={(val) => {
                         setKeyword(val);
                         setPage(1);
@@ -72,7 +72,7 @@ const MemberListPage = () => {
             </div>
 
 
-            <div style={{ minHeight: "500px", overflowY: "auto" }}>
+            <div style={{ minHeight: "500px", overflowY: "auto", flex: 1 }}>
                 <Table
                     headers={["번호", "이름", "이메일", "크루이름", "역할"]}
                     keys={["nickname", "email", "crewName", "crewRole"]}

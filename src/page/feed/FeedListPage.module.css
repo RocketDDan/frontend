@@ -29,8 +29,10 @@
 
 .uploadBtn {
     position: fixed;
-    right: calc(20px + 3vh);
-    bottom: calc(102.5px + 3vh);
+    /* right: calc(20px + 3vh);
+    bottom: calc(102.5px + 3vh); */
+    right: 3vh;
+    bottom: 3vh;
     width: 50px;
     height: 50px;
     border: 0 solid;
