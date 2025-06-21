@@ -236,6 +236,14 @@
   border-radius: 12px;
 }
 
+.imageBox video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+
 /* Modal Styles */
 .modal {
   text-align: center;

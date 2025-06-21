@@ -308,11 +308,10 @@ const CrewProfilePage = () => {
 											{isVideo ? (
 												<video
 													src={fileUrl}
-													controls
 													muted
 													playsInline
-													loop
-													style={{ width: "100%", borderRadius: "10px" }}
+													preload="metadata"  // 썸네일용으로 첫 프레임만 로드
+													style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "10px" }}
 												/>
 											) : (
 												<img

@@ -139,6 +139,13 @@
   border-radius: 12px;
 }
 
+.imageBox video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
 /* 피드 모아보기 */
 .feedListContainer {
   display: flex;
