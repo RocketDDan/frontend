@@ -5,6 +5,7 @@
   justify-content: flex-start;
   /* 카드들을 중앙 정렬 */
   max-width: 1200px;
+  /* min-height: 40vh; */
   /* 최대 너비 제한 */
   padding-bottom: 40px;
   margin-left: 100px;

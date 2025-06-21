@@ -116,12 +116,12 @@ const CrewListPage = () => {
 	}, [handleObserver]);
 
 	useEffect(() => {
-	if (user) {
-		fetchMyCrew().then((data) => {
-		setHasCrew(data != null && data > 0 );
-		// console.log("hasCrew", hasCrew);
-		});
-	}
+		if (user) {
+			fetchMyCrew().then((data) => {
+				setHasCrew(data != null && data > 0);
+				// console.log("hasCrew", hasCrew);
+			});
+		}
 	}, [user, hasCrew]);
 
 	const handleSearchBar = () => {
@@ -166,14 +166,17 @@ const CrewListPage = () => {
 					<FontAwesomeIcon style={{ color: "white" }} icon={faPlus} size="2xl" />
 				</button>
 			</div>
-			<HomePage region={region}/>
-			<div className={style.container}>
+			<HomePage region={region} />
+			<div className={style.container} style={{ minHeight: "50vh" }}>
 				{crewList.length > 0 &&
 					crewList.map((crew, index) => (
 						<CrewCard key={crew.crewId} crew={crew} />
 					))}
 				{isFetch && crewList.length === 0 && <LoadingSpinner />}
-				{!isFetch && crewList.length === 0 && <span className="noData">크루가 존재하지 않습니다.</span>}
+				{!isFetch && crewList.length === 0
+					&& <span className="noData">
+						크루가 존재하지 않습니다.
+					</span>}
 				{/* 관찰 타겟: 더 불러올 데이터가 있을 때만 렌더링 */}
 				{hasMore && <div ref={observerTarget} style={{ height: "1px" }} />}
 			</div>
