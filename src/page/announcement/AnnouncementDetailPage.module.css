@@ -42,10 +42,7 @@
   text-align: left;
 }
 
-<<<<<<< HEAD
-=======
 /* 첨부파일 */
->>>>>>> b206118a91df5508ee9f41df320993af16feedc4
 .attachSection {
   margin-top: 12px;
 }
@@ -65,17 +62,8 @@
   color: #007bff;
   font-size: 14px;
   text-decoration: underline;
-<<<<<<< HEAD
-  text-align: left;
-  display: inline-block;
-}
-
-.fileIcon {
-  margin-right: 6px;
-=======
   display: inline-block;
   text-align: left;
->>>>>>> b206118a91df5508ee9f41df320993af16feedc4
 }
 
 .fileIcon {
@@ -122,9 +110,6 @@
 }
 
 .quillWrapper .ql-editor {
-<<<<<<< HEAD
-  text-align: left;         
-=======
   text-align: left;
 }
 
@@ -169,5 +154,4 @@
     width: 100%;
     max-width: 100%;
   }
->>>>>>> b206118a91df5508ee9f41df320993af16feedc4
 }

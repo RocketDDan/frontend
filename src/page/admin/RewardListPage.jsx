@@ -95,7 +95,7 @@ const RewardListPage = () => {
                 <span style={{ color: "red" }}>{totalCharge.toLocaleString()}원</span>
             </div>
 
-            <div style={{ flex: 1 }} className="scrollX">
+            <div style={{ minHeight: "500px", overflowY: "auto" }}>
                 <Table
                     headers={["번호", "회사명", "피드ID", "잔액", "충전", "업로드 날짜"]}
                     keys={["nickname", "feedId", "balance", "chargeAmount", "createdAt"]}
