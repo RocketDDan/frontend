@@ -102,15 +102,6 @@
   color: #888;
 }
 
-@media screen and (max-width: 768px) {
-  .profileWrapper {
-    flex-direction: column;
-  }
-
-  .crewGroup {
-	gap: 10px;
-  }
-}
 
 .imageBox {
   width: 120px;
@@ -144,6 +135,29 @@
   height: 100%;
   object-fit: cover;
   border-radius: 12px;
+}
+
+@media screen and (max-width: 768px) {
+  .profileWrapper {
+    flex-direction: column;
+  }
+
+  .crewGroup {
+	gap: 10px;
+  }
+  .imageBox {
+    width: calc((100% - 10px) / 3);
+    height: 120px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #000000;
+  }
 }
 
 /* 피드 모아보기 */
