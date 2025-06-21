@@ -4,7 +4,7 @@ import style from './FeedCard.module.css'
 import { ProfileImage } from '../profile/ProfileImage';
 // icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight, faHeart as faSolidHeart } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faChevronRight, faHeart as faSolidHeart, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faMessage, faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons'
 // dto
 import SampleFeed from "../../dto/feed.dto";
@@ -16,6 +16,7 @@ import MediaViewer from '../image/MediaViewer';
 import useCheckLogin from '../../util/RequiredLogin';
 import { useAuthStore } from '../../store/authStore';
 import { deleteFeed } from '../../api/feed.api';
+import Swal from 'sweetalert2';
 
 /**
  * 피드 카드
@@ -104,7 +105,27 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
     };
 
     const handleDeleteFeed = () => {
-        deleteFeed(feed.feedId);
+        Swal.fire({
+            title: '정말 삭제하시겠습니까?',
+            text: '삭제된 피드는 복구할 수 없습니다.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteFeed(feed.feedId);
+                Swal.fire({
+                    icon: 'success',
+                    title: '삭제 완료',
+                    text: '피드가 삭제되었습니다.',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
+        });
     }
 
     return (
@@ -115,20 +136,26 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
             )}
             {/* 작성자 정보 */}
             <div className={style.writerRow}>
-                <ProfileImage
-                    profileUrl={feed.writerProfileUrl}
-                    size="40px"
-                    onClick={handleClickProfile} />
+                {
+                    (!user || (user.memberId !== feed.writerId)) && (
+                        <ProfileImage
+                            profileUrl={feed.writerProfileUrl}
+                            size="40px"
+                            onClick={handleClickProfile} />
+                    )
+                }
+                {user && user.memberId && (feed.writerId === user.memberId) &&
+                    <div style={{ height: "40px", width: "40px", display: "flex", alignItems: "center", padding: "10px" }}>
+                        <FontAwesomeIcon icon={faTrash} onClick={handleDeleteFeed} color='red' />
+                    </div>
+                }
 
                 <div onClick={handleClickProfile}>
                     {feed.writerNickname}
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'end', paddingRight: '5px' }}>
-                    {user && user.memberId && (feed.writerId === user.memberId) &&
-                        <span onClick={handleDeleteFeed}>삭제</span>
-                    }
-                    {/* <span>&nbsp;</span> */}
+
                 </div>
             </div>
 
