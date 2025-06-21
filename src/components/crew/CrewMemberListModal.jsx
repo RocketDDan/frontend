@@ -28,9 +28,13 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
     // 검색/필터 변경 시 새로고침
     const resetAll = () => {
         setPage(1);
-        setCrewMemberList([]);
         setIsLastPage(false);
+        setCrewMemberList([]);
     };
+
+    const handleNickname = (val) => {
+        setNickname(val);
+    }
 
     const onClickPass = (crewMemberId) => {
         Swal.fire({
@@ -68,19 +72,37 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
         });
     };
 
-    // page 변경 시 데이터 누적
+    // 🔄 nickname 바뀔 때 즉시 데이터 요청
     useEffect(() => {
-        if (isLastPage) return;
+        setPage(1);
+        setIsLastPage(false);
         setIsLoading(true);
-        fetchCrewMembers(crewId, { nickname, page, perPage })
+
+        fetchCrewMembers(crewId, { nickname, page: 1, perPage })
             .then(data => {
-                setCrewMemberList(prev => [...prev, ...data]);
+                setCrewMemberList(data);
                 setIsLoading(false);
                 if (data.length === 0) {
                     setIsLastPage(true);
                 }
             });
-    }, [page, nickname]);
+    }, [nickname]);
+
+    // page 변경 시 데이터 누적 (nickname 변경 시에는 resetAll로 page가 1이 됨)
+    useEffect(() => {
+        if (isLastPage) return;
+
+        setIsLoading(true);
+
+        fetchCrewMembers(crewId, { nickname, page, perPage })
+            .then(data => {
+                setCrewMemberList(prev => page === 1 ? data : [...prev, ...data]);
+                setIsLoading(false);
+                if (data.length === 0) {
+                    setIsLastPage(true);
+                }
+            });
+    }, [page]);
 
     // IntersectionObserver 콜백
     const handleObserver = useCallback(
@@ -105,7 +127,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
 
     const handleOverlayClick = (e) => {
         if (e.target === e.currentTarget) {
-            onClose();
+            onClose?.();
         }
     };
 
@@ -117,8 +139,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                         width={"100%"}
                         placeholder="닉네임을 입력해주세요."
                         value={nickname}
-                        onChange={setNickname}
-                        onEnter={resetAll}
+                        onChange={handleNickname}
                     />
                 </div>
 
@@ -133,7 +154,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                             </div>
                         )}
                     {crewMemberList && crewMemberList.map((member, idx) => (
-                        <div key={idx} className={styles.memberInfo}>
+                        <div key={member.memmberId} className={styles.memberInfo}>
                             <CrewMemberInfo
                                 memberId={member?.memberId}
                                 profilePath={member?.profilePath}
@@ -157,7 +178,10 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                         </div>
                     ))}
                     {/* 무한 스크롤 타겟 */}
-                    {!isLastPage && <div ref={observerTarget} style={{ height: "20px", backgroundColor: "yellow" }} />}
+                    {!isLastPage && <div ref={observerTarget} style={{
+                         height: "20px",
+                        //   backgroundColor: "yellow" 
+                          }} />}
                 </div>
             </div>
         </div>

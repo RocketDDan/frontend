@@ -116,7 +116,7 @@ const AnnouncementDetailPage = () => {
 
 			<div className={styles.buttonGroup}>
 				<Button
-					content="목록으로"
+					content="목록"
 					width="120px"
 					onClick={() => navigate("/announcement/list")}
 					bg="primaryBg"

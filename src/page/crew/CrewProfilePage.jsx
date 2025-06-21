@@ -42,10 +42,14 @@ const CrewProfilePage = () => {
 
 	const onClickCancelBtn = async () => {
 		await deleteCrewJoinRequest(crewId);
-		alert("크루 가입 요청이 취소되었습니다.");
+		await Swal.fire({
+			icon: 'success',
+			title: '가입 요청 취소',
+			text: '크루 가입 요청이 취소되었습니다.',
+			confirmButtonText: '확인'
+		});
 		const data = await fetchCrew(crewId);
 		setCrew(data);
-
 	}
 
 	const onClickRequestBtn = async () => {

@@ -31,7 +31,7 @@ const forceRemoveCrewMember = async (crewId, crewMemberId) => {
 // 크루원 목록 조회 
 const fetchCrewMembers = async (crewId, params) => {
     try {
-        const response = await apiClient.get(`/crews/${crewId}/members`, params);
+        const response = await apiClient.get(`/crews/${crewId}/members`, {params});
         if (response.status !== 200) {
             throw new Error('크루원 목록 조회 실패', response.data);
         }
