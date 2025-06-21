@@ -25,6 +25,17 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
     ];
     const columnsForLeader = [...columnsForMember, { label: "관리", width: "100px" }];
 
+    const fetchCrewsInit = () => {
+        fetchCrewMembers(crewId, { nickname, page: 1, perPage })
+            .then(data => {
+                setCrewMemberList(data);
+                setIsLoading(false);
+                if (data.length === 0) {
+                    setIsLastPage(true);
+                }
+            });
+    }
+
     // 검색/필터 변경 시 새로고침
     const resetAll = () => {
         setPage(1);
@@ -67,6 +78,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                 forceRemoveCrewMember(crewId, crewMemberId)
                     .then(() => {
                         resetAll();
+                        fetchCrewsInit();
                     });
             }
         });
@@ -78,14 +90,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
         setIsLastPage(false);
         setIsLoading(true);
 
-        fetchCrewMembers(crewId, { nickname, page: 1, perPage })
-            .then(data => {
-                setCrewMemberList(data);
-                setIsLoading(false);
-                if (data.length === 0) {
-                    setIsLastPage(true);
-                }
-            });
+        fetchCrewsInit();
     }, [nickname]);
 
     // page 변경 시 데이터 누적 (nickname 변경 시에는 resetAll로 page가 1이 됨)
