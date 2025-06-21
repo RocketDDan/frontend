@@ -296,7 +296,7 @@ const CrewProfilePage = () => {
 					</div>
 
 					<div style={{ width: "100%", textAlign: "start", maxWidth: "468px" }}>
-						<h3>피드 모아보기</h3>
+						<h3>크루원들의 피드 모아보기</h3>
 						<hr />
 						<div className={styles.feedListContainer}>
 							{
