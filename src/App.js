@@ -31,7 +31,7 @@ function AppLayout() {
 			>
 				<Router />
 			</main>
-			<Footer />
+			{/* <Footer /> */}
 		</div>
 	);
 }
