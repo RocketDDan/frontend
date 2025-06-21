@@ -15,7 +15,8 @@ import ProfileImageStyle from './ProfileImage.module.css';
 const ProfileImage = ({
 	profileUrl,
 	size = "30px",
-	onClick 
+	onClick,
+	type = "circle" 
 }) => {
 
 	const handleClick = (e) => {
@@ -25,9 +26,9 @@ const ProfileImage = ({
 	return (
 		<div>
 			<div
-				className={ProfileImageStyle.container}
+				className={`${ type === 'circle' ? ProfileImageStyle.container : ProfileImageStyle.squareContainer}`}
 				style={{
-					width: size,
+					width: type === 'circle' ? size : "350px",
 					height: size,
 				}}
 				onClick={handleClick}>

@@ -4,14 +4,15 @@ import style from './FeedListPage.module.css';
 import { useState, useEffect, useCallback, useRef } from "react";
 // api
 import { fetchFeedList } from "../../api/feed.api";
-// dto
-import SampleFeed from "../../dto/feed.dto";
 // Component
 import FeedCard from "../../components/feed/FeedCard";
 import CommentPanel from '../../components/feed/CommentPanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { logAdFeedView } from '../../api/feedViewLog.api';
+import useCheckLogin from '../../util/RequiredLogin';
+import { useAuthStore } from '../../store/authStore';
 
 
 const FeedListPage = () => {
@@ -20,18 +21,44 @@ const FeedListPage = () => {
     const [selectedFeed, setSelectedFeed] = useState(null); // 선택된 피드 (댓글창 열 피드)
     const [page, setPage] = useState(1); // 페이지
     const [isLoading, setIsLoading] = useState(false); // 로딩중인지 여부
+    const [isLastPage, setIsLastPage] = useState(false); // 마지막 페이지인지 여부
     const observerTarget = useRef(null); // 
     const navigate = useNavigate();
+    const user = useAuthStore(state => state.user);
+    const checkLoginUser = useCheckLogin();
+
+    // 이전 위치에서 돌아왔을 때 스크롤이 아래에 있을 수 있어 초기 상태로?
+    // useEffect(() => {
+    //     window.scrollTo(0, 0);
+    // }, []);
+
+    // 로그인 상태 바뀔 때 피드 초기화
+    useEffect(() => {
+        setFeedList([]);
+        setPage(1);
+    }, [user]);
+
+    // 선택된 피드가 바뀌면 해당 위치로 스크롤 이동
+    useEffect(() => {
+        if (selectedFeed) {
+            const el = document.getElementById(`feed-${selectedFeed.feedId}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, [selectedFeed]);
 
     useEffect(() => {
+        if (isLastPage) return;
         const loadFeeds = async () => {
             setIsLoading(true);
-            const data = await fetchFeedList({ page: page, perPage: 10, scope: "ALL_EXCEPT_ME", order: "LATEST" });
-            setFeedList(prev => [...data, ...prev]);  // 누적!
+            const data = await fetchFeedList({ page: page, perPage: 6, scope: "ALL_EXCEPT_ME", order: "LATEST" });
+            if (data.length === 0) {
+                setIsLastPage(true);
+            }
+            setFeedList(prev => [...prev, ...data]);
             setIsLoading(false);
         };
-
         loadFeeds();
+        // console.log("page: ", page);
     }, [page]);
 
     // 
@@ -42,17 +69,20 @@ const FeedListPage = () => {
         }
     }, [isLoading]);
 
-    //
+    const handleAdFeedVisible = useCallback((feedId) => {
+        logAdFeedView(feedId);
+    }, []);
+
+    // 무한 스크롤
     useEffect(() => {
+
         const observer = new IntersectionObserver(handleObserver, {
-            threshold: 0.5
+            threshold: 0.1
         });
 
         if (observerTarget.current) observer.observe(observerTarget.current);
         return () => observer.disconnect();
     }, [handleObserver]);
-
-
 
     // 댓글창 열거나 닫기
     const handleCommentClick = (feed) => {
@@ -88,7 +118,10 @@ const FeedListPage = () => {
         })
     }
 
-    const handlePlusBtn = () => {
+    // 피드 업로드 버튼
+    const handlePlusBtn = async () => {
+        const isLogin = await checkLoginUser();
+        if (!isLogin) return;
         navigate("/feed/upload");
     }
 
@@ -96,15 +129,29 @@ const FeedListPage = () => {
         <div className={`${style.container} ${selectedFeed ? style.openCommentPanel : ''}`}>
             {/* 피드 목록 (스크롤) */}
             <div className={style.feedList}>
-                {feedList.map(feed =>
-                    <FeedCard
-                        feed={feed}
-                        key={feed.feedId}
-                        onCommentClick={() => handleCommentClick(feed)}
-                    />
+                {feedList.map((feed, index) => {
+                    const isNearLast = (index === feedList.length - 4);
+                    if (isNearLast) {
+                        return (
+                            < div ref={observerTarget} style={{ height: '10px', }} key={"xxxxxxxxxx"} />
+                        )
+                    }
+                    return (
+                        <FeedCard
+                            feed={feed}
+                            key={feed.feedId}
+                            onCommentClick={() => handleCommentClick(feed)}
+                            onAdVisible={handleAdFeedVisible}
+                        />
+                    )
+                }
                 )}
-                {/* 관찰 타겟 */}
-                <div ref={observerTarget} style={{ height: '20px' }} />
+
+                {isLoading && (
+                    <div style={{ textAlign: 'center', margin: '1rem 0' }}>
+                        <span>로딩 중...</span>
+                    </div>
+                )}
             </div>
             {/* 댓글창 */}
             {

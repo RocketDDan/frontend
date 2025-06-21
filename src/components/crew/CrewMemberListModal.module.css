@@ -39,7 +39,7 @@
     gap: 20px;
     width: 100%;
     margin-bottom: 18px;
-    max-height: 500px;         /* 목록 최대 높이 제한 */
+    /* max-height: 500px;         목록 최대 높이 제한 */
     overflow-y: auto;         /* 스크롤 가능 */
     scrollbar-width: none;    /* Firefox: 기본적으로 스크롤바 숨김 */
 }

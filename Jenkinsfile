@@ -56,4 +56,17 @@ pipeline {
             }
         }
     }
+
+    post {
+        always {
+            echo "🧹 Cleaning up core dumps and temporary build output"
+            sh '''
+            # 코어 덤프 제거
+            rm -f $WORKSPACE/core.* || true
+
+            # build 결과물만 제거
+            rm -rf $WORKSPACE/build || true
+            '''
+        }
+    }
 }

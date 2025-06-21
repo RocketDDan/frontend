@@ -4,7 +4,6 @@ import ComponentPage from "../page/ComponentPage";
 
 // 관리자 (admin)
 import MemberListPage from "../page/admin/MemberListPage"
-import MemberUpdatePage from "../page/admin/MemberUpdatePage"
 import RewardListPage from "../page/admin/RewardListPage";
 
 // 공지 (announcement)
@@ -35,7 +34,6 @@ import FeedUpdatePage from "../page/feed/FeedUpdatePage";
 import RunnerProfilePage from "../page/runner/RunnerProfilePage";
 
 // 홈 (home)
-import HomePage from "../page/HomePage";
 import NotFoundPage from "../page/NotFoundPage";
 import CrewJoinRequestListPage from "../page/crew/CrewJoinRequestListPage";
 import KakaoPaySuccessPage from "../page/pay/KakaoPaySuccessPage";
@@ -53,7 +51,6 @@ const Router = () => {
 
             {/* 관리자 */}
             <Route path="/admin/member/list" element={<MemberListPage/>} />
-            <Route path="/admin/member/:memberId/update" element={<MemberUpdatePage/>} />
             <Route path="/admin/reward/list" element={<RewardListPage/>} />
 
             {/* 회사 */}
@@ -89,7 +86,7 @@ const Router = () => {
             <Route path="/runner/:memberId" element={<RunnerProfilePage/>}/>
 
             {/* 홈 */}
-            <Route path="/" element={<HomePage/>} />
+            <Route path="/" element={<FeedListPage/>} />
 
             {/* 페이 */}
             <Route path="/pay/kakao/success" element={<KakaoPaySuccessPage/>} />

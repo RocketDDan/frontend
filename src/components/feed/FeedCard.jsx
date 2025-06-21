@@ -12,6 +12,10 @@ import { fetchLikeFeed, fetchUnlikeFeed } from '../../api/likeFeed.api';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import KakaoMap from '../map/KakaoMap';
+import MediaViewer from '../image/MediaViewer';
+import useCheckLogin from '../../util/RequiredLogin';
+import { useAuthStore } from '../../store/authStore';
+import { deleteFeed } from '../../api/feed.api';
 
 /**
  * 피드 카드
@@ -19,16 +23,45 @@ import KakaoMap from '../map/KakaoMap';
  * @param {Function} onCommentClick
  * @returns 
  */
-const FeedCard = ({ feed, onCommentClick }) => {
+const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
 
     const [isLiked, setIsLiked] = useState(feed.like); // 유저가 좋아하는지 여부
     const [likeCount, setLikeCount] = useState(feed.likeCount); // 좋아요 수
     const [currentIndex, setCurrentIndex] = useState(0); // 현재 이미지 인덱스
     const [isMapOpen, setIsMapOpen] = useState(false);
-    const mapRef = useRef(null);
     const navigate = useNavigate();
 
-    const handleLike = () => {
+    const adRef = useRef(null);
+    const user = useAuthStore((state) => state.user);
+
+    useEffect(() => {
+        if (feed.type !== 'ADVERTISE' || !adRef.current || !onAdVisible) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    onAdVisible(feed.feedId);
+                }
+            },
+            {
+                threshold: 1.0 // ✅ 요소의 100%가 보여야 트리거
+            }
+        );
+
+        observer.observe(adRef.current);
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [feed, onAdVisible]);
+
+    const checkLoginUser = useCheckLogin();
+
+    const handleLike = async () => {
+        const isLogin = await checkLoginUser();
+        if (!isLogin) return;
+
+        // 로그인된 사용자만 실행할 코드
         setIsLiked(true);
         setLikeCount(likeCount + 1);
         fetchLikeFeed(feed.feedId)
@@ -38,7 +71,9 @@ const FeedCard = ({ feed, onCommentClick }) => {
             });
     };
 
-    const handleUnlike = () => {
+    const handleUnlike = async () => {
+        const isLogin = await checkLoginUser();
+        if (!isLogin) return;
         setIsLiked(false);
         setLikeCount(likeCount - 1);
         fetchUnlikeFeed(feed.feedId)
@@ -68,16 +103,33 @@ const FeedCard = ({ feed, onCommentClick }) => {
         setIsMapOpen(false);
     };
 
+    const handleDeleteFeed = () => {
+        deleteFeed(feed.feedId);
+    }
+
     return (
-        <div className={style.container} key={feed.feedId}>
+        <div id={`feed-${feed.feedId}`} className={style.container} key={feed.feedId}>
+            {/* 홍보피드이면 관찰 대상 div 추가 */}
+            {feed.type === 'ADVERTISE' && (
+                <div ref={adRef} style={{ height: '1px' }} />
+            )}
             {/* 작성자 정보 */}
             <div className={style.writerRow}>
                 <ProfileImage
                     profileUrl={feed.writerProfileUrl}
                     size="40px"
                     onClick={handleClickProfile} />
-                <span onClick={handleClickProfile}>{feed.writerNickname}</span>
-                <div style={{ display: 'flex', justifyContent: 'end', paddingRight: '5px' }}>⋯</div>
+
+                <div onClick={handleClickProfile}>
+                    {feed.writerNickname}
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'end', paddingRight: '5px' }}>
+                    {user && user.memberId && (feed.writerId === user.memberId) &&
+                        <span onClick={handleDeleteFeed}>삭제</span>
+                    }
+                    {/* <span>&nbsp;</span> */}
+                </div>
             </div>
 
             {/* 피드 이미지들 */}
@@ -116,20 +168,15 @@ const FeedCard = ({ feed, onCommentClick }) => {
                     </span>
                 </div>
                 <div>{feed.feedFileUrlList.length > 1 && '.'.repeat(feed.feedFileUrlList.length)}</div>
-                <div style={{ textAlign: "end" }}>
+                <div style={{ display: "flex", justifyContent: "end", gap: "0.5rem" }}>
                     {feed.lat && feed.lng && (
-                        <span className={style.tag} onClick={openLocationModal} style={{ backgroundColor: '#ffe3e3', cursor: 'pointer' }}>
+                        <span className={`${style.tag} pinkBg`} onClick={openLocationModal}>
                             #위치
                         </span>
                     )}
                     {feed.type === 'ADVERTISE' && (
-                        <span className={style.tag} style={{ backgroundColor: '#ffe3e3', color: '#d63031' }}>
+                        <span className={`${style.tag} secondaryBg`}>
                             #홍보
-                        </span>
-                    )}
-                    {feed.type === 'PERSONAL' && (
-                        <span className={style.tag} style={{ backgroundColor: '#e3f2fd', color: '#2980b9' }}>
-                            #일반
                         </span>
                     )}
                 </div>
@@ -137,18 +184,8 @@ const FeedCard = ({ feed, onCommentClick }) => {
 
             {/* 피드 글 */}
             <div className={style.feedContent}>
-                <span style={{ fontWeight: "bold" }}>{feed.writerNickname}</span>
-                <span>{feed.content}</span>
-            </div>
-
-            {/* 댓글 */}
-            <div className={style.commentList}>
-                {feed.commentList.map(comment => (
-                    <div key={comment.commentId}>
-                        <span style={{ fontWeight: "bold" }}>{comment.writerNickname}</span>
-                        <span>{comment.content}</span>
-                    </div>
-                ))}
+                <span className={style.writer}>{feed.writerNickname}</span>
+                <span className={style.content}>{feed.content}</span>
             </div>
 
             {/* 위치 모달 */}
@@ -175,35 +212,6 @@ const FeedCard = ({ feed, onCommentClick }) => {
             )}
         </div>
     );
-};
-
-const MediaViewer = ({ fileUrl }) => {
-    const videoRef = useRef(null);
-
-    const isVideo = (url) => {
-        if (!url) return false;
-        const cleanUrl = url.split('?')[0];
-        return cleanUrl.endsWith('.mp4') || cleanUrl.endsWith('.mov') || cleanUrl.endsWith('.webm');
-    };
-
-    const isVideoFile = isVideo(fileUrl);
-
-    useEffect(() => {
-        if (isVideoFile && videoRef.current) {
-            videoRef.current.load();
-        }
-    }, [fileUrl, isVideoFile]);
-
-    if (isVideoFile) {
-        return (
-            <video ref={videoRef} style={{ width: '100%', height: 'auto' }} controls>
-                <source src={fileUrl} type="video/mp4" />
-                브라우저가 video 태그를 지원하지 않습니다.
-            </video>
-        );
-    }
-
-    return <img src={fileUrl} alt="피드 이미지" style={{ width: '100%', height: 'auto' }} />;
 };
 
 export default FeedCard;

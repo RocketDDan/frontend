@@ -22,7 +22,13 @@ function AppLayout() {
 	return (
 		<div className="app-container">
 			<Header />
-			<main className={`router-container ${location.pathname === '/feed/list' ? 'feed-router-container' : ''}`}>
+			<main className={
+				`router-container 
+				${(location.pathname === '/feed/list' || location.pathname === '/')
+					? 'feed-router-container'
+					: ''}`
+			}
+			>
 				<Router />
 			</main>
 			<Footer />

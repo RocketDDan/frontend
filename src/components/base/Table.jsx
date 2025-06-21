@@ -1,5 +1,9 @@
 import style from "./Table.module.css";
 
+const formatMoney = (number) => {
+	return number.toLocaleString();
+}
+
 const Table = ({
 	headers,
 	keys,
@@ -61,12 +65,24 @@ const TableBody = ({
 							(key === "crewName" && row[key] === "관리자")
 								? style.role
 								: (key === "title")
-									? style.wideColumn
+									? style.titleColumn
 									: (key === "createdAt")
 										? style.createdAt
-										: ""
+										: (key === "email")
+											? style.email
+											: (key === "crewName")
+												? style.crewName
+												: ""
 						} >
-						{row[key]}
+						<span>
+							{(key === "createdAt")
+								? row[key].slice(0, -3)
+								: (key === "balance" || key == "chargeAmount")
+									? formatMoney(row[key]) + "원"
+									: row[key]}
+						</span>
+
+
 					</td>
 				))}
 			</tr>

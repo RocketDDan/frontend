@@ -7,6 +7,14 @@
     overflow: hidden;
 }
 
+.squareContainer {
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    overflow: hidden;
+}
+
 .crewContainer{
     border-radius: 50%;
     object-fit: cover;

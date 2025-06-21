@@ -19,6 +19,9 @@
 .writerRow>* {
     flex: 1;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* 피드 이미지 행 */
@@ -113,20 +116,32 @@
     gap: 0.5rem;
 }
 
+/* 기존 mapModalOverlay를 fullscreen 오버레이로 변경 */
 .mapModalOverlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
     z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 
+/* mapModalContent는 실제 카드, 넓게 차지하게 */
 .mapModalContent {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    max-height: 95vh;
     background: white;
     border-radius: 12px;
-    padding: 1.5rem;
-    width: 90vw;
-    max-width: 500px;
+    padding: 1rem;
+    overflow-y: auto;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     position: relative;
     display: flex;
@@ -136,9 +151,9 @@
 
 .mapHeader {
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
-    border-bottom: 1px solid #eee;
+    /* border-bottom: 1px solid #eee; */
     padding-bottom: 0.5rem;
 }
 
@@ -176,7 +191,7 @@
     font-weight: 500;
     transition: all 0.3s ease;
     white-space: nowrap;
-    width: fit-content;
+    width: fit-content;  
     cursor: pointer;
     color: #2980b9;
 }
@@ -200,30 +215,4 @@
     max-width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.feedContent {
-    display: flex;
-    gap: 0.5rem;
-    padding: 0 0.5rem;
-    font-size: 14px;
-    text-align: start;
-    align-items: flex-start;
-    /* ✅ 닉네임과 내용 위 정렬 */
-}
-
-.writer {
-    font-weight: bold;
-    max-width: 5rem;
-    flex-shrink: 0;
-    /* ✅ 줄어들지 않도록 고정 */
-    word-break: break-all;
-    /* 닉네임이 길어도 줄바꿈 허용 */
-}
-
-.content {
-    flex: 1;
-    /* ✅ 남은 영역 차지 */
-    word-break: break-word;
-    /* ✅ 긴 단어 줄바꿈 */
 }

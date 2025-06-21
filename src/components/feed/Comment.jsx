@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { ProfileImage } from '../profile/ProfileImage';
 import style from './Comment.module.css';
 
@@ -11,6 +12,12 @@ const Comment = ({ comment, clickDelete }) => {
 
     const handleClickDelete = (commentId) => {
         clickDelete?.(commentId)
+    }
+
+    const navigate = useNavigate();
+
+    const goToMemberPrpfilePage = () => {
+        navigate(`/runner/${comment.writerId}`);
     }
 
     // 상대 시간 포맷터
@@ -43,10 +50,10 @@ const Comment = ({ comment, clickDelete }) => {
 
     return (
         <div className={style.container}>
-            <ProfileImage profileUrl={comment.writerProfileUrl} size="30px" />
+            <ProfileImage profileUrl={comment.writerProfileUrl} size="30px" onClick={goToMemberPrpfilePage} />
             <div className={style.main}>
                 <div className={style.nicknameAndDate}>
-                    <b>{comment.writerNickname}</b>
+                    <b onClick={goToMemberPrpfilePage}>{comment.writerNickname}</b>
                     <div>{formatRelativeTime(comment.createdAt)}</div>
                 </div>
                 <div className={style.comment}>{comment.content}</div>

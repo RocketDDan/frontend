@@ -17,7 +17,6 @@
 
 .profileWrapper, .memberFeeds{
   max-width: 1000px;      /* profileWrapper와 동일하게 */
-  min-width: 750px;       /* profileWrapper와 동일하게 */
   margin-left: auto;      /* 가운데 정렬 */
   margin-right: auto;     /* 가운데 정렬 */
   width: 100%;
@@ -35,6 +34,8 @@
 }
 
 .nickname {
+  width: 100%;
+  text-align: center;
   font-size: 2.2rem;
   font-weight: bold;
   margin-bottom : 15px;
@@ -99,4 +100,101 @@
   min-height: 120px;
   font-size: 1.3rem;
   color: #888;
+}
+
+@media screen and (max-width: 768px) {
+  .profileWrapper {
+    flex-direction: column;
+  }
+
+  .crewGroup {
+	gap: 10px;
+  }
+}
+
+.imageBox {
+  width: 120px;
+  height: 120px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #000000;
+}
+
+.imageBox:hover {
+  border-color: #5164ED;
+  /* background-color: #1c2f64; */
+  transform: scale(1.03);
+}
+
+.imageBox img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* 피드 모아보기 */
+.feedListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  /* 줄바꿈 허용 */
+  gap: 5px;
+  /* 요소 간 여백 */
+  justify-content: flex-start;
+  margin-top: 2rem;
+}
+
+/* Modal Styles */
+.modal {
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  position: relative;
+  width: 95%;
+  max-width: fit-content;
+  background-color: white;
+  border-radius: 8px;
+  padding: 0px;
+  max-height: 95vh;
+  overflow-y: auto;
+  margin: auto;
+}
+
+.modalCloseIcon {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.commentModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
 }

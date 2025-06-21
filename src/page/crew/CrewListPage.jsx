@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
+import Swal from "sweetalert2";
 import { useAuthStore } from "../../store/authStore";
 import { useNavigate } from "react-router-dom";
 import CrewCard from "../../components/crew/CrewCard";
@@ -6,9 +7,12 @@ import style from "./CrewListPage.module.css";
 import RegionSelector from "../../components/base/RegionSelector";
 import { fetchCrewList, fetchMyCrew } from "../../api/crew.api";
 import { SearchBar } from "../../components/search_bar/SearchBar";
-import { Button } from "../../components/base/Button";
 import LoadingSpinner from "../../components/base/LoadingSpinner";
 import { BasicSelect } from "../../components/base/Select";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import useCheckLogin from "../../util/RequiredLogin";
+import HomePage from "../HomePage";
 
 const CrewListPage = () => {
 	const [hasCrew, setHasCrew] = useState(false);
@@ -23,6 +27,8 @@ const CrewListPage = () => {
 
 	const observerTarget = useRef(null);
 	const navigate = useNavigate();
+	const checkLoginUser = useCheckLogin();
+
 	// user 정보
 	const user = useAuthStore((state) => state.user);
 
@@ -43,6 +49,16 @@ const CrewListPage = () => {
 		}
 	}
 
+	const onClickCreateBtn = async () => {
+		const isLogin = await checkLoginUser();
+		if (isLogin) {
+			if (hasCrew) {
+				Swal.fire("크루원은 크루를 생성할 수 없습니다.");
+			} else {
+				navigate("/crew/create");
+			}
+		}
+	}
 	// 검색/필터 변경 시 새로고침 및 page 초기화
 	useEffect(() => {
 		setPage(1);
@@ -100,15 +116,13 @@ const CrewListPage = () => {
 	}, [handleObserver]);
 
 	useEffect(() => {
-		if (user) {
-			fetchMyCrew().then((data) => {
-				setHasCrew(data !== null);
-				console.log(hasCrew);
-			});
-		}
-
-		console.log("hasCrew", hasCrew);
-	}, []);
+	if (user) {
+		fetchMyCrew().then((data) => {
+		setHasCrew(data != null && data > 0 );
+		// console.log("hasCrew", hasCrew);
+		});
+	}
+	}, [user, hasCrew]);
 
 	const handleSearchBar = () => {
 		setPage(1);
@@ -148,17 +162,11 @@ const CrewListPage = () => {
 						width="7rem"
 					/>
 				</div>
-
-				{user && !hasCrew && (
-					<div>
-						<Button
-							content="크루 생성"
-							width="100px"
-							onClick={() => navigate("/crew/create")}
-							bg="secondaryBg"
-						/>
-					</div>)}
+				<button className={style.uploadBtn} onClick={onClickCreateBtn}>
+					<FontAwesomeIcon style={{ color: "white" }} icon={faPlus} size="2xl" />
+				</button>
 			</div>
+			<HomePage region={region}/>
 			<div className={style.container}>
 				{crewList.length > 0 &&
 					crewList.map((crew, index) => (

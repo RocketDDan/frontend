@@ -87,6 +87,9 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
                 }
                 setIsLoading(false);
                 setHasMore(data.length === perPage);
+                // console.log("data", data);
+                // console.log("crewMemberList", crewMemberList);
+
             });
         // eslint-disable-next-lines
     }, [page, crewId, nickname]);
@@ -96,7 +99,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
         (entries) => {
             const target = entries[0];
             if (target.isIntersecting && !isLoading && hasMore) {
-                setPage(prev => prev + 1);
+                setTimeout(() => setPage(prev => prev + 1), 100);
             }
         },
         [isLoading, hasMore]
@@ -104,8 +107,8 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
 
     useEffect(() => {
         const observer = new window.IntersectionObserver(handleObserver, {
-            threshold: 0.1,
-            root: memberListRef.current, // 내부 스크롤 컨테이너를 root로 지정
+            threshold: 0.5,
+            root: null, // 내부 스크롤 컨테이너를 root로 지정
         });
         if (observerTarget.current) observer.observe(observerTarget.current);
         return () => observer.disconnect();

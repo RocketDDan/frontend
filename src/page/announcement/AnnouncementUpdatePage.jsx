@@ -16,11 +16,14 @@ const AnnouncementUpdatePage = () => {
   const [newFiles, setNewFiles] = useState([]);
 
   const urlToFile = async (url, filename) => {
-    const response = await fetch(`${url}?not-from-cache-please`);
-    const blob = await response.blob();
-    const contentType = blob.type || "application/octet-stream";
-    return new File([blob], filename, { type: contentType });
-  };
+  const response = await fetch(`${url}?not-from-cache-please`);
+  const blob = await response.blob();
+  const contentType = blob.type || "application/octet-stream"; 
+  const cleanName = filename.split("/").pop().replace(/^release\/announcement\/\d+\//, ""); 
+  return new File([blob], cleanName, { type: contentType });
+};
+
+
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -30,7 +33,7 @@ const AnnouncementUpdatePage = () => {
       setExistingFiles(
         (res.data.attachPaths || []).map((url) => ({
           name: decodeURIComponent(url.split("/").pop().split("?")[0]),
-          url,
+          url
         }))
       );
     };
@@ -46,32 +49,42 @@ const AnnouncementUpdatePage = () => {
   };
 
   const handleUpdate = async () => {
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
+  const formData = new FormData();
+  formData.append("title", title);
+  formData.append("content", content);
 
-    // 기존 파일을 File 객체로 변환
-    const existingFilePromises = existingFiles.map((file) =>
-      urlToFile(file.url, file.name)
+  // 기존 파일을 File 객체로 변환
+  const existingFilePromises = existingFiles.map((file) => {
+  const fullName = decodeURIComponent(file.name);
+  const cleanName = fullName.includes("/") ? fullName.split("/").pop() : fullName;
+  return urlToFile(file.url, cleanName);
+  });
+
+ 
+  const convertedExistingFiles = await Promise.all(existingFilePromises);
+
+
+  
+
+  // 기존 파일 + 새 파일 합쳐서 전송
+  [...convertedExistingFiles, ...newFiles].forEach((file) =>
+    formData.append("files", file)
+  );
+
+  try {
+    await apiClient.put(
+      `/announcements/${announcementId}`,
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } }
     );
-    const convertedExistingFiles = await Promise.all(existingFilePromises);
+    alert("수정 완료했습니다.");
+    navigate(`/announcement/${announcementId}/detail`);
+  } catch (err) {
+    console.error("수정 실패", err);
+    alert("수정에 실패했습니다.");
+  }
+};
 
-    // 기존 파일 + 새 파일 합쳐서 전송
-    [...convertedExistingFiles, ...newFiles].forEach((file) =>
-      formData.append("files", file)
-    );
-
-    try {
-      await apiClient.put(`/announcements/${announcementId}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      alert("수정 완료했습니다.");
-      navigate(`/announcement/${announcementId}/detail`);
-    } catch (err) {
-      console.error("수정 실패", err);
-      alert("수정에 실패했습니다.");
-    }
-  };
 
   return (
     <div className={styles.container}>
@@ -84,24 +97,23 @@ const AnnouncementUpdatePage = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-      </div>
+    </div>
 
-      <div className={styles.section}>
+    <div className={styles.section}>
         <label className={styles.label}>첨부파일</label>
-        <AnnouncementFileUploader
-          maxFiles={3}
-          onFilesChange={handleNewFilesChange}
-          initialFiles={existingFiles}
-          onRemoveInitialFile={(file) => removeExistingFile(file.url)}
-        />
-      </div>
+            <AnnouncementFileUploader
+            maxFiles={3}
+            onFilesChange={handleNewFilesChange}
+            initialFiles={existingFiles}
+            onRemoveInitialFile={(file) => removeExistingFile(file.url)}/>
+    </div>
 
-      <div className={styles.formGroup}>
+    <div className={styles.formGroup}>
         <label className={styles.label}>본문</label>
-        <div className={styles.quillWrapper}>
-          <ReactQuill value={content} onChange={setContent} style={{ height: "100%" }} />
-        </div>
-      </div>
+            <div className={styles.quillWrapper}>
+                <ReactQuill value={content} onChange={setContent} style={{ height: '100%' }} />
+            </div>
+    </div>
 
     <div className={styles.buttonGroup}>
         <Button content="수정 완료" width="120px" onClick={handleUpdate} bg = "primaryBg" />

@@ -6,7 +6,7 @@ const fetchCrew = async (crewId) => {
         if (response.status !== 200) {
             throw new Error('크루 정보 조회 실패', response.data);
         }
-        console.log('크루 정보 조회 성공', response.data);
+        // console.log('크루 정보 조회 성공', response.data);
         return response.data;
     } catch (error) {
         throw error;
@@ -19,7 +19,7 @@ const fetchCrewList = async (params) => {
         if (response.status !== 200) {
             throw new Error('크루 목록 조회 실패', response.data);
         }
-        console.log('크루 목록 조회 성공', response.data);
+        // console.log('크루 목록 조회 성공', response.data);
         return response.data;
     } catch (error) {
         throw error;
@@ -33,13 +33,13 @@ const createCrew = async (crew, profileFile) => {
         if (profileFile) {
             formData.append("profile", profileFile);
         }
-        console.log('profileFile', profileFile);
+        // console.log('profileFile', profileFile);
         const response = await apiClient.post('/crews', formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
         });
-        console.log('크루 생성 성공', response.data);
+        // console.log('크루 생성 성공', response.data);
         return response.data;
     } catch (error) {
         throw error;
@@ -65,7 +65,7 @@ const updateCrew = async (crewId, crew, profileFile) => {
             throw new Error('크루 수정 실패', response.data);
         }
 
-        console.log('크루 수정 성공', response.data);
+        // console.log('크루 수정 성공', response.data);
         return response.data;
     } catch (error) {
         throw error;
@@ -79,7 +79,7 @@ const deleteCrew = async (crewId) => {
         if (response.status !== 200) {
             throw new Error('크루 삭제 실패', response.data);
         }
-        console.log('크루 삭제 성공', response.data);
+        // console.log('크루 삭제 성공', response.data);
         return response.data;
     } catch (error) {
         throw error;
@@ -89,11 +89,11 @@ const deleteCrew = async (crewId) => {
 // 내 크루 조회
 const fetchMyCrew = async () => {
     try {
-        const response = await apiClient.put('/crews/me');
+        const response = await apiClient.get('/crews/me');
         if (response.status !== 200) {
             throw new Error('내 크루 조회 실패', response.data);
         }
-        console.log('내 크루 조회 성공', response.data);
+        // console.log('내 크루 조회 성공', response.data);
         return response.data;
     } catch (error) {
         throw error;
@@ -109,7 +109,7 @@ const checkDuplicateCrewName = async (crewName) => {
         if (response.status !== 200) {
             throw new Error('크루 이름 중복 조회 실패', response.data);
         }
-        console.log('크루 이름 중복 조회 성공', response.data);
+        // console.log('크루 이름 중복 조회 성공', response.data);
         return response.data;
     } catch (error) {
         throw error;
@@ -124,7 +124,7 @@ const checkDuplicateCrewName = async (crewName) => {
 const fetchRecommendedCrews = async (params = {}) => {
     try {
         const response = await apiClient.get('/crews/recommend', { params });
-        console.log('추천 크루 조회 성공', response.data);
+        // console.log('추천 크루 조회 성공', response.data);
         return response.data;
     } catch (error) {
         throw error;

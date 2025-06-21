@@ -47,7 +47,7 @@ const CrewCreatePage = () => {
 
     // 파일 선택 시 미리보기
     const handleImageChange = (e) => {
-        console.log("파일 변경");
+        // console.log("파일 변경");
         const file = e.target.files[0];
         if (file) {
             crewImageFileRef.current = file; // ref에 저장
@@ -74,8 +74,8 @@ const CrewCreatePage = () => {
                 crewRegion: region,
                 crewAddress: address,
             };
-            console.log("크루 정보:", crew);
-            console.log("크루 이미지 파일:", crewImageFileRef.current);
+            // console.log("크루 정보:", crew);
+            // console.log("크루 이미지 파일:", crewImageFileRef.current);
             // ref에서 파일 꺼내서 전달
             const crewId = await createCrew(crew, crewImageFileRef.current);
             navigate(`/crew/${crewId}`);
@@ -133,7 +133,7 @@ const CrewCreatePage = () => {
                     />
                     <Button
                         content="중복확인"
-                        width="110px"
+                        width="130px"
                         onClick={onClickDuplicateCheck}
                     />
                 </div>

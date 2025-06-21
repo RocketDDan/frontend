@@ -44,7 +44,6 @@ const FeedUploadPage = () => {
 
     // 등록
     const handleSubmit = () => {
-        console.log(user);
         if (user == null) {
             Swal.fire({
                 icon: 'error',
@@ -56,7 +55,7 @@ const FeedUploadPage = () => {
             });
             return;
         }
-        if (user.role === 'USER') {
+        if (user.role === 'USER' || user.role === 'ADMIN') {
             uploadPersonalFeed();
         } else if (user.role === 'COMPANY') {
             uploadAdvertiseFeed();
@@ -105,7 +104,6 @@ const FeedUploadPage = () => {
     const handleLatLng = (lat, lng) => {
         setLat(lat);
         setLng(lng);
-        console.log("lat: ", lat, " | lng: ", lng);
     }
 
     return (
@@ -149,16 +147,16 @@ const FeedUploadPage = () => {
                     onChange={handleContent} />
             </div>
 
-            <div>
-                <Button width="100px" content="등록" onClick={handleSubmit} />
-            </div>
-
             {
                 user && user.role === 'COMPANY' &&
                 <div>
                     결제 금액: <input type="number" onChange={handleAmount} />원
                 </div>
             }
+
+            <div>
+                <Button width="100px" content="등록" onClick={handleSubmit} />
+            </div>
         </div>
     )
 }

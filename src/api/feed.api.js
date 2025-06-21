@@ -10,6 +10,16 @@ const fetchFeedList = async (params) => {
     }
 };
 
+const deleteFeed = async (feedId) => {
+    try {
+        const response = await apiClient.delete('/feeds/'+ feedId);
+        return response.data;
+    } catch (error) {
+        console.error('피드 삭제 실패:', error);
+        throw error;
+    }
+};
+
 const uploadFeed = async (content, lat, lng, fileList) => {
     try {
         const formData = new FormData();
@@ -53,4 +63,4 @@ const uploadFeedByCompany = async (content, lat, lng, fileList, amount) => {
     }
 }
 
-export { fetchFeedList, uploadFeed, uploadFeedByCompany }
+export { fetchFeedList, deleteFeed, uploadFeed, uploadFeedByCompany, }

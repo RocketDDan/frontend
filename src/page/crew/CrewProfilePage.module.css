@@ -4,10 +4,16 @@
   margin-top: 2rem;
 }
 
+.crewWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .flexContainer {
   display: flex;
   justify-content: flex-start;
-  align-items: baseline; /* 위쪽 기준 정렬로 변경 */
+  align-items: baseline;
+  /* 위쪽 기준 정렬로 변경 */
   margin-bottom: 8px;
 }
 
@@ -19,9 +25,11 @@
 }
 
 .profileWrapper {
-  height: 200px;
-  width: 100%; /* 이 줄 추가 */
-  min-width: 300px; /* 필요시 추가 */
+  flex-wrap: wrap;
+  width: 100%;
+  /* 이 줄 추가 */
+  min-width: 300px;
+  /* 필요시 추가 */
   padding-top: 1rem;
   display: flex;
   align-items: center;
@@ -30,7 +38,7 @@
 }
 
 .profileDiv {
-  width: 200px;
+  width: 350px;
 }
 
 .infoSection {
@@ -50,18 +58,22 @@
   line-height: 1.4;
 }
 
-.region, .introduce {
-  display: inline-block; /* 정렬 맞춤 */
+.region,
+.introduce {
+  display: inline-block;
+  /* 정렬 맞춤 */
   line-height: 1.4;
   word-break: break-word;
 }
 
 .crewName {
+  width: 100%;
+  text-align: center;
   font-size: 2.2rem;
   font-weight: bold;
 }
 
-.memberCount{
+.memberCount {
   cursor: pointer;
   font-size: 1.2rem;
 }
@@ -90,7 +102,7 @@
   gap: 1rem;
 }
 
-.bottomButtonGroup{
+.bottomButtonGroup {
   display: flex;
   gap: 1rem;
 }
@@ -107,7 +119,7 @@
   margin-top: 20px;
   border-bottom: #ccc solid 1px;
   font-size: 1.3rem;
-  padding: 20px;  
+  padding: 20px;
   text-align: left;
 }
 
@@ -120,14 +132,16 @@
 /* 마우스 올렸을 때만 스크롤바 보이게 */
 .crewName:hover,
 .address:hover {
-  scrollbar-width: thin;         /* Firefox: 얇은 스크롤바 */
+  scrollbar-width: thin;
+  /* Firefox: 얇은 스크롤바 */
 }
 
 
 .crewName:hover::-webkit-scrollbar,
 .address:hover::-webkit-scrollbar {
   display: block;
-  height: 6px;                   /* 원하는 두께 */
+  height: 6px;
+  /* 원하는 두께 */
   background: #eee;
 }
 
@@ -145,8 +159,31 @@
 }
 
 /* 전역 CSS 또는 CrewProfilePage.module.css에 추가 */
-.swal2-popup, .custom-swal-width {
+.swal2-popup,
+.custom-swal-width {
   box-sizing: border-box !important;
+}
+
+/* 피드 모아보기 */
+.feedListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  /* 줄바꿈 허용 */
+  gap: 5px;
+  /* 요소 간 여백 */
+  justify-content: flex-start;
+  margin-top: 2rem;
+}
+
+.squareBox {
+  width: 120px;
+  height: 120px;
+  background-color: black;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
@@ -154,6 +191,7 @@
     flex-direction: column;
     align-items: center;
     padding: 0 16px;
+    gap: 1rem;
   }
 
   .buttonSection {
@@ -169,4 +207,80 @@
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+.imageBox {
+  width: 120px;
+  height: 120px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #000000;
+}
+
+.imageBox:hover {
+  border-color: #5164ED;
+  /* background-color: #1c2f64; */
+  transform: scale(1.03);
+}
+
+.imageBox img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Modal Styles */
+.modal {
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  position: relative;
+  width: 95%;
+  max-width: fit-content;
+  background-color: white;
+  border-radius: 8px;
+  padding: 0px;
+  max-height: 95vh;
+  overflow-y: auto;
+  margin: auto;
+}
+
+.modalCloseIcon {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.commentModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
 }

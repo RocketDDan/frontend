@@ -8,6 +8,7 @@ import { deleteFeedComment, fetchFeedCommentList, postFeedComment } from '../../
 import sampleFeed from '../../dto/feed.dto';
 import Swal from 'sweetalert2';
 import Comment from './Comment';
+import useCheckLogin from '../../util/RequiredLogin';
 
 
 /**
@@ -19,6 +20,7 @@ const CommentPanel = ({ feed, onClose, writeComment, deleteComment }) => {
 
     const [inputValue, setInputValue] = useState("");
     const [commentList, setCommentList] = useState([]);
+    const checkLoginUser = useCheckLogin();
 
     // 댓글 작성 값 변경
     const handleInputChange = (val) => {
@@ -31,7 +33,9 @@ const CommentPanel = ({ feed, onClose, writeComment, deleteComment }) => {
 
     // 댓글 작성
     const handleSubmit = async () => {
-        console.log("handleSubmit() :: 살행");
+        // console.log("handleSubmit() :: 살행");
+        const isLogin = await checkLoginUser();
+        if (!isLogin) return;
         // 댓글 작성 api 호출
         await postFeedComment(feed.feedId, inputValue);
         writeComment?.(feed.feedId);
