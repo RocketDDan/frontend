@@ -54,27 +54,32 @@ const AnnouncementListPage = () => {
 			<h1>공지 사항</h1>
 			{/* 위 */}
 			<div className={style.topBar}>
-				<SearchBar
-					placeholder="검색하기"
-					value={keyword}
-					onChange={handleChange}
-					width="15rem"
-					height="45px"
-					// onEnter={() => console.log("엔터")}
-				/>
-
-				<BasicSelect
-					value={order}
-					onChange={(val) => {
-						setOrder(val);
-						setPage(1);
-					}}
-					options={[
-						{ value: "LATEST", label: "최신순" },
-						{ value: "OLDEST", label: "오래된순" },
-					]}
-					width="120px"
-				/>
+				<div className={style.topBarLeft}>
+					<div>
+						<SearchBar
+							placeholder="검색하기"
+							value={keyword}
+							onChange={handleChange}
+							width="100%"
+							height="45px"
+						// onEnter={() => console.log("엔터")}
+						/>
+					</div>
+					<div>
+						<BasicSelect
+							value={order}
+							onChange={(val) => {
+								setOrder(val);
+								setPage(1);
+							}}
+							options={[
+								{ value: "LATEST", label: "최신순" },
+								{ value: "OLDEST", label: "오래된순" },
+							]}
+							width="120px"
+						/>
+					</div>
+				</div>
 
 				{(user?.role === "ADMIN" || userCrew?.isLeader) && (
 					<Button
