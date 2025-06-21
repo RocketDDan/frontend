@@ -119,7 +119,7 @@ const CrewListPage = () => {
 	if (user) {
 		fetchMyCrew().then((data) => {
 		setHasCrew(data != null && data > 0 );
-		console.log("hasCrew", hasCrew);
+		// console.log("hasCrew", hasCrew);
 		});
 	}
 	}, [user, hasCrew]);

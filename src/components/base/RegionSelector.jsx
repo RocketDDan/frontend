@@ -49,7 +49,7 @@ const RegionSelector = ({ region, setRegion }) => {
 				}
 				const result = data.result;
 				setDistricts(result);
-				console.log('지역 목록 조회 성공:', result);
+				// console.log('지역 목록 조회 성공:', result);
 			} catch (err) {
 				console.error('지역 목록 조회 실패:', err);
 			}

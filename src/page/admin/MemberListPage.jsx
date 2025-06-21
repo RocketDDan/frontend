@@ -32,7 +32,7 @@ const MemberListPage = () => {
                     },
                 });
                 setData(res.data.members);
-                console.log(res.data.members)
+                // console.log(res.data.members)
                 setTotalCount(res.data.totalCount);
             } catch (err) {
                 console.error("회원 데이터 요청 실패", err);
@@ -72,7 +72,7 @@ const MemberListPage = () => {
             </div>
 
 
-            <div style={{ flex: 1 }} className="scrollX">
+            <div style={{ minHeight: "500px", overflowY: "auto" }}>
                 <Table
                     headers={["번호", "이름", "이메일", "크루이름", "역할"]}
                     keys={["nickname", "email", "crewName", "crewRole"]}

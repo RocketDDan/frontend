@@ -143,7 +143,7 @@ const Header = () => {
 				{user && menuOpen && <span>
 					<Link
 						to={`/runner/${user.memberId}`}
-						className={currentPath.startsWith(`/runner/${user.memberId}`) && headerStyle.activeLink}
+						className={currentPath.startsWith(`/runner/${user.memberId}`) ? headerStyle.activeLink : ""}
 						onClick={handleMenuLinkClick}
 					>
 						내 프로필

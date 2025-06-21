@@ -166,7 +166,7 @@ const CrewProfilePage = () => {
 
 	useEffect(() => {
 		if (modalOpen) {
-			console.log(modalDescription.replace(/\n/g, "<br />"));
+			// console.log(modalDescription.replace(/\n/g, "<br />"));
 			Swal.fire({
 				title: modalTitle,
 				html: modalDescription.replace(/\n/g, "<br />"),
@@ -237,8 +237,8 @@ const CrewProfilePage = () => {
 		const loadFeeds = async () => {
 			setIsLoading(true);
 			const data = await fetchFeedList({ page: page, perPage: 9, scope: "CREW", order: "LATEST", crewId: crewId });
-			console.log("data: ", data);
-			setFeedList(prev => [...data, ...prev]);  // 누적!
+			// console.log("data: ", data);
+			setFeedList(prev => [...prev, ...data]);  // 누적!
 			setIsLoading(false);
 		};
 		loadFeeds();

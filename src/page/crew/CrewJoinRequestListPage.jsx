@@ -111,7 +111,7 @@ const CrewJoinRequestListPage = () => {
     }
 
     useEffect(() => {
-        console.log("crewId", crewId);
+        // console.log("crewId", crewId);
         handleSearchBar();
     }, [page, status, crewId])
 

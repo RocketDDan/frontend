@@ -23,7 +23,7 @@ const RunnerProfilePage = () => {
     }, []);
 
   useEffect(() => {
-    console.log("RunnerProfilePage useEffect", memberId);
+    // console.log("RunnerProfilePage useEffect", memberId);
     fetchMemberProfile(memberId)
       .then(data => {
         setMember(data);
@@ -46,7 +46,7 @@ const RunnerProfilePage = () => {
     const loadFeeds = async () => {
       setIsLoading(true);
       const data = await fetchFeedList({ page: page, perPage: 9, scope: "MEMBER", order: "LATEST", memberId: memberId });
-      console.log("data: ", data);
+      // console.log("data: ", data);
       setFeedList(prev => [...data, ...prev]);  // 누적!
       setIsLoading(false);
     };

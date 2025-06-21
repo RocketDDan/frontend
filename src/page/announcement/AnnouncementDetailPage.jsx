@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
+
 import styles from "./AnnouncementDetailPage.module.css";
 import { Button } from "../../components/base/Button";
 import apiClient from "../../api/apiClient";
@@ -19,7 +20,7 @@ const AnnouncementDetailPage = () => {
 					`/announcements/${announcementId}`
 				);
 				setDetail(res.data);
-				console.log(res.data);
+				// console.log(res.data);
 			} catch (err) {
 				console.error("공지 불러오기 실패:", err);
 			}

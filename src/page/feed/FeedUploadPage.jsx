@@ -44,7 +44,6 @@ const FeedUploadPage = () => {
 
     // 등록
     const handleSubmit = () => {
-        console.log(user);
         if (user == null) {
             Swal.fire({
                 icon: 'error',
@@ -105,7 +104,6 @@ const FeedUploadPage = () => {
     const handleLatLng = (lat, lng) => {
         setLat(lat);
         setLng(lng);
-        console.log("lat: ", lat, " | lng: ", lng);
     }
 
     return (

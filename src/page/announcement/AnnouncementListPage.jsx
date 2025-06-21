@@ -23,7 +23,6 @@ const AnnouncementListPage = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				console.log(`${process.env.REACT_APP_API_BASE_URL}/announcements`);
 				const res = await apiClient.get("/announcements", {
 					params: {
 						page,
@@ -33,7 +32,7 @@ const AnnouncementListPage = () => {
 					}
 				});
 
-				console.log("응답:", res.data);
+				// console.log("응답:", res.data);
 
 				setData(res.data.announcements);
 				setTotalCount(res.data.totalCount);
@@ -61,7 +60,7 @@ const AnnouncementListPage = () => {
 					onChange={handleChange}
 					width="15rem"
 					height="45px"
-					onEnter={() => console.log("엔터")}
+					// onEnter={() => console.log("엔터")}
 				/>
 
 				<BasicSelect
