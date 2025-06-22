@@ -32,7 +32,7 @@ const CrewListPage = () => {
 	// user 정보
 	const user = useAuthStore((state) => state.user);
 
-	const perPage = 6;
+	const perPage = 50;
 
 	const orderOptions = [
 		{ value: "LATEST", label: "최신순" },

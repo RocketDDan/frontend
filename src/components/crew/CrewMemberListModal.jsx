@@ -18,7 +18,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
     const [isLastPage, setIsLastPage] = useState(false);
     const observerTarget = useRef(null);
     const memberListRef = useRef(null);
-    const perPage = 20;
+    const perPage = 50;
     const columnsForMember = [
         { label: "크루원", width: "110px" },
         { label: "가입일", width: "130px" },
