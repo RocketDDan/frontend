@@ -41,6 +41,8 @@ const TextInput = ({
 
 	const handleEnter = (e) => {
 		if (e.key === "Enter") {
+			e.preventDefault(); 
+			e.stopPropagation();
 			onEnter?.();
 		}
 	}
@@ -115,6 +117,8 @@ const TextArea = ({
 
 	const handleEnter = (e) => {
 		if (e.key === "Enter") {
+			e.preventDefault(); 
+			e.stopPropagation();
 			onEnter?.();
 		}
 	}

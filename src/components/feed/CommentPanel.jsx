@@ -33,17 +33,19 @@ const CommentPanel = ({ feed, onClose, writeComment, deleteComment }) => {
 
     // 댓글 작성
     const handleSubmit = async () => {
-        // console.log("handleSubmit() :: 살행");
+        console.log("handleSubmit() :: 살행");
+        if (!inputValue.trim()) return; // ✅ 빈 값 방지
+
         const isLogin = await checkLoginUser();
         if (!isLogin) return;
+
         // 댓글 작성 api 호출
         await postFeedComment(feed.feedId, inputValue);
         writeComment?.(feed.feedId);
         handleInputClear();
+
         // react event queue 안정성 위해 defer 처리
-        setTimeout(() => {
-            fetchData();
-        }, 0);
+        fetchData();
     }
 
     // 댓글 목록 가져오기

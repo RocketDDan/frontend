@@ -66,8 +66,17 @@ const FeedUploadPage = () => {
     const uploadPersonalFeed = () => {
         uploadFeed(content, lat, lng, fileList.map(file => file.file))
             .then((data) => {
-                // 업로드 후 피드 목록으로 이동
-                navigate("/feed/list");
+                Swal.fire({
+                    icon: 'success',
+                    title: '업로드 완료!',
+                    text: '피드가 성공적으로 등록되었습니다.',
+                    timer: 1500,
+                    showConfirmButton: false,
+                }).then((res) => {
+                    // 업로드 후 피드 목록으로 이동
+                    // navigate("/feed/list");
+                    navigate(`/runner/${user.memberId}`);
+                });
             })
             .catch((err) => {
                 console.error('업로드 실패:', err);
@@ -84,6 +93,17 @@ const FeedUploadPage = () => {
     const uploadAdvertiseFeed = () => {
         uploadFeedByCompany(content, lat, lng, fileList.map(file => file.file), amount)
             .then((data) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: '업로드 완료!',
+                    text: '피드가 성공적으로 등록되었습니다.',
+                    timer: 1500,
+                    showConfirmButton: false,
+                }).then((res) => {
+                    // 업로드 후 피드 목록으로 이동
+                    // navigate("/feed/list");
+                    navigate(`/runner/${user.memberId}`);
+                });
                 // 업로드 후 피드 목록으로 이동
                 localStorage.setItem("partner_order_id", data.partner_order_id)
                 window.location.href = data.next_redirect_pc_url;
@@ -126,7 +146,7 @@ const FeedUploadPage = () => {
             </div>
 
             <div>
-                <div style={{ textAlign: "start", marginBottom: "5px",}}>위치 검색</div>
+                <div style={{ textAlign: "start", marginBottom: "5px", }}>위치 검색</div>
                 <KakaoMap
                     lat={lat}
                     lng={lng}
@@ -137,7 +157,7 @@ const FeedUploadPage = () => {
             </div>
 
             <div>
-                <div style={{ textAlign: "start", marginBottom: "5px",}}>내용</div>
+                <div style={{ textAlign: "start", marginBottom: "5px", }}>내용</div>
                 <TextArea
                     width="100%"
                     maxHeight="100px"

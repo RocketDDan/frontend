@@ -24,7 +24,7 @@ import Swal from 'sweetalert2';
  * @param {Function} onCommentClick
  * @returns 
  */
-const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
+const FeedCard = ({ feed, onCommentClick, onAdVisible, onDeleteFeed }) => {
 
     const [isLiked, setIsLiked] = useState(feed.like); // 유저가 좋아하는지 여부
     const [likeCount, setLikeCount] = useState(feed.likeCount); // 좋아요 수
@@ -123,6 +123,9 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible }) => {
                     text: '피드가 삭제되었습니다.',
                     timer: 1500,
                     showConfirmButton: false
+                }).then(() => {
+                    // console.log('✅ 피드 삭제 완료 후 처리');
+                    onDeleteFeed?.();
                 });
             }
         });

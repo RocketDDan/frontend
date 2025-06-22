@@ -6,34 +6,52 @@ import { fetchMemberProfile } from "../../api/member.api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCrown } from "@fortawesome/free-solid-svg-icons";
 import { fetchFeedList } from "../../api/feed.api";
-import FeedDetailModal from "../../components/feed/FeedDetailModal";
 import FeedCard from "../../components/feed/FeedCard";
 import { logAdFeedView } from "../../api/feedViewLog.api";
 import { faClose } from '@fortawesome/free-solid-svg-icons';
+import CommentPanel from "../../components/feed/CommentPanel";
 
 const RunnerProfilePage = () => {
   const navigate = useNavigate();
   const { memberId } = useParams();
   const [member, setMember] = useState(null);
+  const [feedList, setFeedList] = useState([]); // 피드 데이터
+  const [page, setPage] = useState(1); // 페이지
+  const [isLoading, setIsLoading] = useState(false); // 로딩중인지 여부
+  const [selectedFeed, setSelectedFeed] = useState();
+  const [modalStatus, setModalStatus] = useState();
 
+  const loadFeeds = async () => {
+    if (page === 1) setFeedList([]);
+    setIsLoading(true);
+    const data = await fetchFeedList({ page: page, perPage: 20, scope: "MEMBER", order: "LATEST", memberId: memberId });
+    // console.log("data: ", data);
+    setFeedList(prev => [...data, ...prev]);  // 누적!
+    setIsLoading(false);
+  };
+
+  const loadMember = async () => {
+    const data = await fetchMemberProfile(memberId);
+    setMember(data);
+  }
 
   const handleAdFeedVisible = useCallback((feedId) => {
     // console.log(`홍보 피드 노출 감지: ${feedId}`);
     logAdFeedView(feedId);
   }, []);
 
-  useEffect(() => {
-    // console.log("RunnerProfilePage useEffect", memberId);
-    fetchMemberProfile(memberId)
-      .then(data => {
-        setMember(data);
-      });
-  }, [])
+  const handleDeleteFeed = () => {
+    // 1. feedList에서 해당 피드 제거
+    setFeedList((prev) => prev.filter((f) => f.feedId !== selectedFeed.feedId));
 
-  // TODO: 피드 모아보기 개발중
-  const [feedList, setFeedList] = useState([]); // 피드 데이터
-  const [page, setPage] = useState(1); // 페이지
-  const [isLoading, setIsLoading] = useState(false); // 로딩중인지 여부
+    // 2. 모달 닫기
+    setSelectedFeed(null);
+    setModalStatus(false);
+
+    // 3. 필요 시 page 초기화 (선택)
+    setPage(1);
+  }
+
   const observerTarget = useRef(null); // 
   const handleObserver = useCallback((entries) => {
     const target = entries[0];
@@ -43,19 +61,9 @@ const RunnerProfilePage = () => {
   }, [isLoading]);
 
   useEffect(() => {
-    const loadFeeds = async () => {
-      setIsLoading(true);
-      const data = await fetchFeedList({ page: page, perPage: 9, scope: "MEMBER", order: "LATEST", memberId: memberId });
-      // console.log("data: ", data);
-      setFeedList(prev => [...data, ...prev]);  // 누적!
-      setIsLoading(false);
-    };
+    loadMember();
     loadFeeds();
-  }, [page]);
-
-  const [selectedFeed, setSelectedFeed] = useState();
-
-  const [modalStatus, setModalStatus] = useState();
+  }, [memberId, page])
 
   return (
     <div>
@@ -134,12 +142,26 @@ const RunnerProfilePage = () => {
               <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
                 <FeedCard
                   feed={selectedFeed}
+                  onCommentClick={() => {
+                    setModalStatus(true);
+                  }}
+                  onDeleteFeed={handleDeleteFeed}
                   onAdVisible={handleAdFeedVisible}
                 />
                 <FontAwesomeIcon icon={faClose} className={styles.modalCloseIcon} onClick={() => setSelectedFeed(null)} />
               </div>
             </div>
           )}
+          {
+            modalStatus
+              ? <div className={styles.commentModal}>
+                <CommentPanel
+                  feed={selectedFeed}
+                  onClose={() => { setModalStatus(false); }}
+                />
+              </div>
+              : null
+          }
         </div>
       </div>
     </div>

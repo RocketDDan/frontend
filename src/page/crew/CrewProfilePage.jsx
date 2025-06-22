@@ -14,7 +14,6 @@ import CrewMemberListModal from "../../components/crew/CrewMemberListModal";
 import Swal from "sweetalert2";
 import { fetchFeedList } from "../../api/feed.api";
 import { useAuthStore } from "../../store/authStore";
-import FeedDetailModal from "../../components/feed/FeedDetailModal";
 import FeedCard from "../../components/feed/FeedCard";
 import { logAdFeedView } from "../../api/feedViewLog.api"
 import { faClose } from "@fortawesome/free-solid-svg-icons";
@@ -250,7 +249,17 @@ const CrewProfilePage = () => {
 
 	const [selectedFeed, setSelectedFeed] = useState();
 	const [modalStatus, setModalStatus] = useState();
-
+	const handleDeleteFeed = () => {
+		// 1. feedList에서 해당 피드 제거
+		setFeedList((prev) => prev.filter((f) => f.feedId !== selectedFeed.feedId));
+	
+		// 2. 모달 닫기
+		setSelectedFeed(null);
+		setModalStatus(false);
+	
+		// 3. 필요 시 page 초기화 (선택)
+		setPage(1);
+	}
 	return (
 		<div className={styles.pageWrapper}>
 			{!crew && (
@@ -337,6 +346,7 @@ const CrewProfilePage = () => {
 										onCommentClick={() => {
 											setModalStatus(true);
 										}}
+										onDeleteFeed={handleDeleteFeed}
 										onAdVisible={handleAdFeedVisible}
 									/>
 									<FontAwesomeIcon
