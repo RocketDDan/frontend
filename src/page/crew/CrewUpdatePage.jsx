@@ -142,7 +142,7 @@ const CrewUpdatePage = () => {
                     />
                     <Button
                         content="중복확인"
-                        width="130px"
+                        width="10rem"
                         className={styles.duplicateCheckButton}
                         onClick={onClickDuplicateCheck}
                         bg="secondaryBg"
