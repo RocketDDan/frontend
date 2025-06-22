@@ -26,13 +26,14 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
     const columnsForLeader = [...columnsForMember, { label: "관리", width: "100px" }];
 
     const fetchCrewsInit = () => {
-        fetchCrewMembers(crewId, { nickname, page: 1, perPage })
+        fetchCrewMembers(crewId, { nickname, page: page, perPage })
             .then(data => {
                 setCrewMemberList(data);
                 setIsLoading(false);
                 if (data.length === 0) {
                     setIsLastPage(true);
                 }
+                console.log(data);
             });
     }
 
@@ -91,44 +92,45 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
         setIsLoading(true);
 
         fetchCrewsInit();
+
     }, [nickname]);
 
-    // page 변경 시 데이터 누적 (nickname 변경 시에는 resetAll로 page가 1이 됨)
-    useEffect(() => {
-        if (isLastPage) return;
+    // // page 변경 시 데이터 누적 (nickname 변경 시에는 resetAll로 page가 1이 됨)
+    // useEffect(() => {
+    //     if (isLastPage) return;
 
-        setIsLoading(true);
+    //     setIsLoading(true);
 
-        fetchCrewMembers(crewId, { nickname, page, perPage })
-            .then(data => {
-                setCrewMemberList(prev => page === 1 ? data : [...prev, ...data]);
-                setIsLoading(false);
-                if (data.length === 0) {
-                    setIsLastPage(true);
-                }
-            });
-    }, [page]);
+    //     fetchCrewMembers(crewId, { nickname, page, perPage })
+    //         .then(data => {
+    //             setCrewMemberList(prev => page === 1 ? data : [...prev, ...data]);
+    //             setIsLoading(false);
+    //             if (data.length === 0) {
+    //                 setIsLastPage(true);
+    //             }
+    //         });
+    // }, [page]);
 
-    // IntersectionObserver 콜백
-    const handleObserver = useCallback(
-        (entries) => {
-            const target = entries[0];
-            if (target.isIntersecting && !isLoading && !isLastPage) {
-                setTimeout(() => setPage(prev => prev + 1), 100);
-            }
-        },
-        [isLoading]
-    );
+    // // IntersectionObserver 콜백
+    // const handleObserver = useCallback(
+    //     (entries) => {
+    //         const target = entries[0];
+    //         if (target.isIntersecting && !isLoading && !isLastPage) {
+    //             setTimeout(() => setPage(prev => prev + 1), 100);
+    //         }
+    //     },
+    //     [isLoading]
+    // );
 
-    useEffect(() => {
-        if (page === 1) return;
-        const observer = new window.IntersectionObserver(handleObserver, {
-            threshold: 0.5,
-            root: null, // 내부 스크롤 컨테이너를 root로 지정
-        });
-        if (observerTarget.current) observer.observe(observerTarget.current);
-        return () => observer.disconnect();
-    }, [handleObserver]);
+    // useEffect(() => {
+    //     if (page === 1) return;
+    //     const observer = new window.IntersectionObserver(handleObserver, {
+    //         threshold: 0.5,
+    //         root: null, // 내부 스크롤 컨테이너를 root로 지정
+    //     });
+    //     if (observerTarget.current) observer.observe(observerTarget.current);
+    //     return () => observer.disconnect();
+    // }, [handleObserver]);
 
     const handleOverlayClick = (e) => {
         if (e.target === e.currentTarget) {

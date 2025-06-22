@@ -20,7 +20,7 @@ const CrewJoinRequestListPage = () => {
     const [nickname, setNickname] = useState(""); // 닉네임 상태
     const [page, setPage] = useState(1); // 페이지 상태
     const [status, setStatus] = useState("REQUEST"); // 상태 필터링 상태
-    const perPage = 5;
+    const perPage = 30;
 
     // 가입 요청 상태 옵션 정의
     const statusOptions = [
