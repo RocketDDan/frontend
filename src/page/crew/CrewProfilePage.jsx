@@ -85,9 +85,9 @@ const CrewProfilePage = () => {
 	};
 
 
-	const handleRequestConfirm = async () => {
+	const handleRequestConfirm = async (message) => {
 		try {
-			await requestCrewJoin(crewId, requestMessage);
+			await requestCrewJoin(crewId, message);
 			setRequestMessage("");
 			const data = await fetchCrew(crewId);
 			setCrew(data);
@@ -209,8 +209,9 @@ const CrewProfilePage = () => {
 				preConfirm: () => {
 					const input = document.getElementById('swal-input');
 					if (input) {
-						setRequestMessage(input.value);
-						return handleRequestConfirm();
+						const message = input.value;
+						setRequestMessage(message);
+						return handleRequestConfirm(message);
 					}
 				}
 			}).then(() => {

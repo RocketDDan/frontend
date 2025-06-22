@@ -10,28 +10,22 @@ const HomePage = ({region}) => {
     const [isFetch, setIsFetch] = useState(true);
 
     useEffect(() => {
+        setIsFetch(true);
         fetchRecommendedCrews({ region: region, perPage: 10 })
             .then((data) => {
                 setCrewList(data);
-                // if(data.length === 0){
-                //     setIsFetch(false);
-                // }
-                // else{
-                //     setIsFetch(true);
-                // }
                 setIsFetch(false);
             });
-
-    }, [region, isFetch]);
+    }, [region]);
     return ( 
         <div>
-            {isFetch && crewList.length === 0 && (<LoadingSpinner/>)}
+            {isFetch && (<LoadingSpinner/>)}
             {crewList.length > 0 && (    
                 <>
                 <div className={styles.crewListScrollWrapper}>  
                     <div className={styles.crewListContainer}>
                         {[...crewList, ...crewList].map((crew, idx) => (
-                            <CrewCard key={idx} crew={crew} />
+                            <CrewCard key={crew.crewId} crew={crew} />
                         ))}
                     </div>
                 </div> 
