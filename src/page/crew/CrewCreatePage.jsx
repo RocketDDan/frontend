@@ -132,7 +132,7 @@ const CrewCreatePage = () => {
                         onChange={handleCrewNameChange}
                     />
                     <Button
-                        content="중복확인"
+                        content="중복"
                         width="10rem"
                         onClick={onClickDuplicateCheck}
                     />

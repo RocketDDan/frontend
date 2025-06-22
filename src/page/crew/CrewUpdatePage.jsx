@@ -141,7 +141,7 @@ const CrewUpdatePage = () => {
                         onChange={handleCrewNameChange}
                     />
                     <Button
-                        content="중복확인"
+                        content="중복"
                         width="10rem"
                         className={styles.duplicateCheckButton}
                         onClick={onClickDuplicateCheck}
