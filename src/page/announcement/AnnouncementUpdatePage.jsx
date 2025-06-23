@@ -6,6 +6,7 @@ import styles from "./AnnouncementUpdatePage.module.css";
 import { Button } from "../../components/base/Button";
 import AnnouncementFileUploader from "../../components/announcement/AnnouncementFileUploader";
 import apiClient from "../../api/apiClient";
+import Swal from "sweetalert2";
 
 const AnnouncementUpdatePage = () => {
   const { announcementId } = useParams();

@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import apiClient from "./apiClient";
 
 // 크루 멤버 탈퇴 
