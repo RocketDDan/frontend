@@ -93,20 +93,12 @@ const FeedUploadPage = () => {
     const uploadAdvertiseFeed = () => {
         uploadFeedByCompany(content, lat, lng, fileList.map(file => file.file), amount)
             .then((data) => {
-                Swal.fire({
-                    icon: 'success',
-                    title: '업로드 완료!',
-                    text: '피드가 성공적으로 등록되었습니다.',
-                    timer: 1500,
-                    showConfirmButton: false,
-                }).then((res) => {
-                    // 업로드 후 피드 목록으로 이동
-                    // navigate("/feed/list");
-                    navigate(`/runner/${user.memberId}`);
-                });
                 // 업로드 후 피드 목록으로 이동
                 localStorage.setItem("partner_order_id", data.partner_order_id)
-                window.location.href = data.next_redirect_pc_url;
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                const redirectUrl = isMobile ? data.next_redirect_mobile_url : data.next_redirect_pc_url;
+                // window.location.href = data.next_redirect_pc_url; // [발표용] 웹에서 모바일 화면으로 테스트할 때 이거 써야함
+                window.location.href = redirectUrl; // [배포용] 실제 배포 환경에선 이렇게 해야 함 (모바일과 웹 뷰 다름)
             })
             .catch((err) => {
                 console.error('업로드 실패:', err);
