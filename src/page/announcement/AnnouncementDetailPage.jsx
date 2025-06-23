@@ -7,6 +7,7 @@ import styles from "./AnnouncementDetailPage.module.css";
 import { Button } from "../../components/base/Button";
 import apiClient from "../../api/apiClient";
 import { useAuthStore } from "../../store/authStore";
+import Swal from "sweetalert2";
 
 const AnnouncementDetailPage = () => {
 	const { announcementId } = useParams();
@@ -36,17 +37,31 @@ const AnnouncementDetailPage = () => {
 			await apiClient.delete(
 				`/announcements/${announcementId}`
 			);
-			alert("삭제가 완료되었습니다.");
+			// alert("삭제가 완료되었습니다.");
+			Swal.fire({
+				icon: 'success',
+				title: '삭제 완료',
+				text: '삭제가 완료되었습니다.',
+				confirmButtonText: '확인',
+				timer: 1500,
+				showConfirmButton: false
+			});
 			navigate("/announcement/list");
 		} catch (err) {
 			console.error("삭제 실패:", err);
-			alert("삭제에 실패했습니다.");
+			// alert("삭제에 실패했습니다.");
+			Swal.fire({
+				icon: 'error',
+				title: '삭제 실패',
+				text: '삭제에 실패했습니다.',
+				confirmButtonText: '확인'
+			});
 		}
 	};
-	
+
 	if (!detail) return <div>로딩 중...</div>;
 	const imageFiles =
-  		detail.attachPaths?.filter((_, idx) => detail.attachIsImageList?.[idx]) || [];
+		detail.attachPaths?.filter((_, idx) => detail.attachIsImageList?.[idx]) || [];
 
 	return (
 		<div className={styles.container}>
@@ -64,17 +79,17 @@ const AnnouncementDetailPage = () => {
 			{/* 이미지 미리보기 */}
 			{imageFiles.length > 0 && (
 				<div className={styles.imagePreviewSection}>
-				<label className={styles.label}>이미지 미리보기</label>
-				<div className={styles.imageList}>
-					{imageFiles.map((img, idx) => (
-					<img
-						key={idx}
-						src={img}
-						alt={`preview-${idx}`}
-						className={styles.previewImage}
-					/>
-					))}
-				</div>
+					<label className={styles.label}>이미지 미리보기</label>
+					<div className={styles.imageList}>
+						{imageFiles.map((img, idx) => (
+							<img
+								key={idx}
+								src={img}
+								alt={`preview-${idx}`}
+								className={styles.previewImage}
+							/>
+						))}
+					</div>
 				</div>
 			)}
 

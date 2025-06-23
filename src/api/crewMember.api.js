@@ -24,14 +24,20 @@ const forceRemoveCrewMember = async (crewId, crewMemberId) => {
         // console.log('크루 멤버 강퇴 성공', response.data);
         return response.data;
     } catch (error) {
-        alert(error.message || '크루 멤버 강퇴 실패');
+        // alert(error.message || '크루 멤버 강퇴 실패');
+        Swal.fire({
+            icon: 'error',
+            title: '강퇴 실패',
+            text: error.message || '크루 멤버 강퇴에 실패했습니다.',
+            confirmButtonText: '확인'
+        });
     }
 };
 
 // 크루원 목록 조회 
 const fetchCrewMembers = async (crewId, params) => {
     try {
-        const response = await apiClient.get(`/crews/${crewId}/members`, {params});
+        const response = await apiClient.get(`/crews/${crewId}/members`, { params });
         if (response.status !== 200) {
             throw new Error('크루원 목록 조회 실패', response.data);
         }

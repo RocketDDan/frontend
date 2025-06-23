@@ -9,10 +9,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import RegionSelector from '../../components/base/RegionSelector';
 import { checkDuplicateCrewName, createCrew } from '../../api/crew.api';
+import Swal from 'sweetalert2';
 
 
 const CrewUpdatePage = () => {
-    const {crewId} = useParams(); 
+    const { crewId } = useParams();
     const [crewName, setCrewName] = useState("");
     const [originalCrewName, setOriginalCrewName] = useState("");
     const [crewImage, setCrewImage] = useState(null);
@@ -30,10 +31,23 @@ const CrewUpdatePage = () => {
         checkDuplicateCrewName(crewName)
             .then((response) => {
                 if (response.data) {
-                    alert("이미 사용 중인 크루명입니다.");
+                    // alert("이미 사용 중인 크루명입니다.");
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '중복된 크루명',
+                        text: '이미 사용 중인 크루명입니다.',
+                        confirmButtonText: '확인'
+                    });
                     setIsDuplicateChecked(false);
                 } else {
-                    alert("사용 가능한 크루명입니다.");
+                    // alert("사용 가능한 크루명입니다.");
+                    Swal.fire({
+                        icon: 'success',
+                        title: '사용 가능',
+                        text: '사용 가능한 크루명입니다.',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
                     setIsDuplicateChecked(true);
                 }
             });
@@ -89,7 +103,7 @@ const CrewUpdatePage = () => {
             isDuplicateChecked
         );
     }
-    , [crewName, region, address, introduction, isDuplicateChecked]);
+        , [crewName, region, address, introduction, isDuplicateChecked]);
 
     useEffect(() => {
         fetchCrew(crewId).then(data => {
@@ -120,7 +134,7 @@ const CrewUpdatePage = () => {
                             className={styles.circleImgTag}
                         />
                     ) : (
-                        <FontAwesomeIcon icon={faCamera} className={styles.imageIcon}/>
+                        <FontAwesomeIcon icon={faCamera} className={styles.imageIcon} />
                     )}
                     <input
                         ref={fileInputRef}
@@ -187,11 +201,11 @@ const CrewUpdatePage = () => {
             </div>
             <div style={{ marginTop: "40px" }}>
                 <Button
-                content="크루 수정"
-                width="100%"
-                onClick={onClickSubmit}
-                disabled={!isFormValid}
-                bg="secondaryBg"
+                    content="크루 수정"
+                    width="100%"
+                    onClick={onClickSubmit}
+                    disabled={!isFormValid}
+                    bg="secondaryBg"
                 />
             </div>
         </div>

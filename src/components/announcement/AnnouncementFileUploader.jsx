@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./AnnouncementFileUploader.module.css";
+import Swal from "sweetalert2";
 
 const AnnouncementFileUploader = ({
   maxFiles = 3,
@@ -15,13 +16,25 @@ const AnnouncementFileUploader = ({
 
     const hasKorean = selected.some((file) => /[\u3131-\uD79D]/ugi.test(file.name));
     if (hasKorean) {
-      alert("파일 이름에 한글이 포함되어 있습니다. 영문 파일명으로 변경해주세요.");
+      // alert("파일 이름에 한글이 포함되어 있습니다. 영문 파일명으로 변경해주세요.");
+      Swal.fire({
+        icon: 'warning',
+        title: '파일명 오류',
+        text: '파일 이름에 한글이 포함되어 있습니다. 영문 파일명으로 변경해주세요.',
+        confirmButtonText: '확인'
+      });
       return;
     }
 
     const total = initialFiles.length + newFiles.length + selected.length;
     if (total > maxFiles) {
-      alert(`파일은 최대 ${maxFiles}개까지 첨부할 수 있습니다.`);
+      // alert(`파일은 최대 ${maxFiles}개까지 첨부할 수 있습니다.`);
+      Swal.fire({
+        icon: 'warning',
+        title: '파일 개수 오류',
+        text: `파일은 최대 ${maxFiles}개까지 첨부할 수 있습니다.`,
+        confirmButtonText: '확인'
+      });
       return;
     }
 

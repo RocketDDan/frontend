@@ -7,6 +7,7 @@ import { Button } from "../../components/base/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { checkDuplicateCrewName, createCrew } from "../../api/crew.api";
+import Swal from "sweetalert2";
 
 const CrewCreatePage = () => {
     const [crewName, setCrewName] = useState("");
@@ -25,10 +26,23 @@ const CrewCreatePage = () => {
             checkDuplicateCrewName(crewName)
                 .then((response) => {
                     if (response.data) {
-                        alert("이미 사용 중인 크루명입니다.");
+                        // alert("이미 사용 중인 크루명입니다.");
+                        Swal.fire({
+                            icon: 'warning',
+                            title: '크루명 중복',
+                            text: '이미 사용 중인 크루명입니다.',
+                            confirmButtonText: '확인'
+                        });
                         setIsDuplicateChecked(false);
                     } else {
-                        alert("사용 가능한 크루명입니다.");
+                        // alert("사용 가능한 크루명입니다.");
+                        Swal.fire({
+                            icon: 'success',
+                            title: '사용 가능',
+                            text: '사용 가능한 크루명입니다.',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
                         setIsDuplicateChecked(true);
                     }
                 });
