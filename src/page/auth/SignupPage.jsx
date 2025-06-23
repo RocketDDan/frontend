@@ -10,6 +10,7 @@ import { ImageAddBlock } from "../../components/image/ImageAddBlock";
 import { ProfileImage } from "../../components/profile/ProfileImage";
 
 import { checkNicknameDuplicate, signUp } from "../../api/auth.api";
+import Swal from "sweetalert2";
 
 const SignupPage = () => {
 	const location = useLocation();
@@ -106,13 +107,32 @@ const SignupPage = () => {
 		try {
 			const isDuplicate = await checkNicknameDuplicate(signUpFormData.nickname);
 			if (isDuplicate) {
-				alert("이미 사용 중인 닉네임입니다.");
+				// alert("이미 사용 중인 닉네임입니다.");
+				Swal.fire({
+					icon: 'warning',
+					title: '닉네임 중복',
+					text: '이미 사용 중인 닉네임입니다.',
+					confirmButtonText: '확인'
+				});
 			} else {
-				alert("사용 가능한 닉네임입니다.");
+				// alert("사용 가능한 닉네임입니다.");
+				Swal.fire({
+					icon: 'success',
+					title: '사용 가능',
+					text: '사용 가능한 닉네임입니다.',
+					timer: 1500,
+					showConfirmButton: false
+				});
 				setIsNicknameChecked(true);
 			}
 		} catch (error) {
-			alert("닉네임 중복 확인에 실패했습니다. 나중에 다시 시도해주세요.");
+			// alert("닉네임 중복 확인에 실패했습니다. 나중에 다시 시도해주세요.");
+			Swal.fire({
+				icon: 'error',
+				title: '확인 실패',
+				text: '닉네임 중복 확인에 실패했습니다. 나중에 다시 시도해주세요.',
+				confirmButtonText: '확인'
+			});
 		}
 	};
 
