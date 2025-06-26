@@ -38,7 +38,9 @@ const Comment = ({ comment, clickDelete }) => {
         const diffDay = Math.floor(diffHour / 24);
         const diffWeek = Math.floor(diffDay / 7);
         const diffMonth = Math.floor(diffDay / 30);
+        const diffYear = Math.floor(diffMonth / 12);
 
+        if (diffYear >= 1) return `${diffYear}년`;
         if (diffMonth >= 1) return `${diffMonth}개월`;
         if (diffWeek >= 1) return `${diffWeek}주`;
         if (diffDay >= 1) return `${diffDay}일`;
