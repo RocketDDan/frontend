@@ -1,11 +1,14 @@
+// style
 import headerStyle from "./Header.module.css";
-
-import { useEffect, useRef, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../store/authStore";
-import { ProfileImage } from "../profile/ProfileImage";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// react
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+// store
+import { useAuthStore } from "../../store/authStore";
+// component
+import { ProfileImage } from "../profile/ProfileImage";
 
 const Header = () => {
 	const KAKAO_LOGOUT_REDIRECT_URL = `${process.env.REACT_APP_API_BASE_URL}/auth/logout`;
@@ -34,6 +37,10 @@ const Header = () => {
 		setMenuOpen(false);
 	}
 
+	const goBack = () => {
+		navigate(-1);
+	}
+
 	const menuRef = useRef(null);
 	useEffect(() => {
 		const handleClickOutside = (event) => {
@@ -60,7 +67,7 @@ const Header = () => {
 					{shouldShowBackButton && (
 						<FontAwesomeIcon
 							icon={faArrowLeft}
-							onClick={() => navigate(-1)}
+							onClick={goBack}
 							className={headerStyle.backIcon}
 						/>
 					)}

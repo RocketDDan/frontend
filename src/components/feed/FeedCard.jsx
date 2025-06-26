@@ -1,22 +1,25 @@
 // css
 import style from './FeedCard.module.css'
-// image
-import { ProfileImage } from '../profile/ProfileImage';
-// icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight, faHeart as faSolidHeart, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faMessage, faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons'
-// dto
-import SampleFeed from "../../dto/feed.dto";
-import { fetchLikeFeed, fetchUnlikeFeed } from '../../api/feed/likeFeed.api';
+import { faChevronLeft, faChevronRight, faHeart as faSolidHeart, faTrash } from '@fortawesome/free-solid-svg-icons'
+import Swal from 'sweetalert2';
+// react
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+// dto
+// import SampleFeed from "../../dto/feed.dto";
+// component
+import { ProfileImage } from '../profile/ProfileImage';
 import KakaoMap from '../map/KakaoMap';
 import MediaViewer from '../image/MediaViewer';
-import useCheckLogin from '../../util/RequiredLogin';
-import { useAuthStore } from '../../store/authStore';
+// api
+import { fetchLikeFeed, fetchUnlikeFeed } from '../../api/feed/likeFeed.api';
 import { deleteFeed } from '../../api/feed/feed.api';
-import Swal from 'sweetalert2';
+// store
+import { useFeed } from "../../store/FeedContext";
+import { useAuthStore } from '../../store/authStore';
+import useCheckLogin from '../../util/RequiredLogin';
 
 /**
  * 피드 카드
@@ -34,6 +37,8 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible, onDeleteFeed }) => {
 
     const adRef = useRef(null);
     const user = useAuthStore((state) => state.user);
+
+    const { setLastViewedFeedId } = useFeed();
 
     useEffect(() => {
         if (feed.type !== 'ADVERTISE' || !adRef.current || !onAdVisible) return;
@@ -93,6 +98,7 @@ const FeedCard = ({ feed, onCommentClick, onAdVisible, onDeleteFeed }) => {
     };
 
     const handleClickProfile = () => {
+        setLastViewedFeedId(feed.feedId);
         navigate(`/runner/${feed.writerId}`);
     };
 

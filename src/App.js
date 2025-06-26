@@ -4,14 +4,16 @@ import { BrowserRouter, useLocation } from 'react-router-dom';
 
 import Router from './route/Router';
 import Header from './components/layout/Header';
-import Footer from './components/layout/Footer'
+import { FeedProvider } from './store/FeedContext';
 
 function App() {
 	return (
 		<div className="App">
-			<BrowserRouter>
-				<AppLayout />
-			</BrowserRouter>
+			<FeedProvider>
+				<BrowserRouter>
+					<AppLayout />
+				</BrowserRouter>
+			</FeedProvider>
 		</div>
 	);
 }
