@@ -27,7 +27,7 @@ const updateFeedComment = async (feedId, commentId, { newComment }) => {
         const response = await apiClient.put(`/feeds/${feedId}/comments/${commentId}`, { newComment });
         return response.data;
     } catch (error) {
-        console.error('피드 수정 실패:', error);
+        console.error('댓글 수정 실패:', error);
         throw error;
     }
 };
