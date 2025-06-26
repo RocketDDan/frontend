@@ -20,19 +20,18 @@ const Comment = ({ comment, clickDelete }) => {
         navigate(`/runner/${comment.writerId}`);
     }
 
-    // 상대 시간 포맷터
+    /**
+     * 상대 시간 포맷터
+     * @param {*} createdAt YYYY-MM-DD HH:mm:ss
+     * @returns 상대 시간 정보
+     */
     const formatRelativeTime = (createdAt) => {
         const now = new Date();
-        const createdDate = new Date(
-            createdAt.substring(0, 4),               // year
-            createdAt.substring(5, 7) - 1,           // month (0-based)
-            createdAt.substring(8, 10),              // day
-            createdAt.substring(11, 13),             // hour
-            createdAt.substring(14, 16),             // minute
-            createdAt.substring(17, 19)              // second
-        );
+        const createdDate = new Date(createdAt.replace(' ', 'T'));
 
         const diffMs = now - createdDate;
+        if (diffMs < 0) return '방금';
+
         const diffSec = Math.floor(diffMs / 1000);
         const diffMin = Math.floor(diffSec / 60);
         const diffHour = Math.floor(diffMin / 60);
