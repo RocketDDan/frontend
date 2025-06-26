@@ -3,7 +3,7 @@ import styles from './CrewMemberListModal.module.css';
 import { CrewHeader } from './CrewHeader';
 import { CrewMemberInfo } from './CrewMemberInfo';
 import { SearchBar } from "../../components/search_bar/SearchBar";
-import { fetchCrewMembers, forceRemoveCrewMember, changeCrewLeader } from '../../api/crewMember.api';
+import { fetchCrewMembers, forceRemoveCrewMember, changeCrewLeader } from '../../api/crew/crewMember.api';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faL, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faWebAwesome } from "@fortawesome/free-brands-svg-icons";

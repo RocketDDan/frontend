@@ -1,23 +1,28 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import useCheckLogin from "../../util/RequiredLogin";
-import { useNavigate } from "react-router-dom";
+// style
 import styles from "./CrewProfilePage.module.css";
 import { faPersonRunning } from "@fortawesome/free-solid-svg-icons";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
+// react
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+// api
+import { deleteCrew, fetchCrew } from "../../api/crew/crew.api";
+import { resignCrewMember } from "../../api/crew/crewMember.api";
+import { deleteCrewJoinRequest, requestCrewJoin } from "../../api/crew/crewJoinRequest.api";
+import { fetchFeedList } from "../../api/feed/feed.api";
+import { logAdFeedView } from "../../api/feed/feedViewLog.api"
+// component
 import { Button } from "../../components/base/Button";
 import { ProfileImage } from "../../components/profile/ProfileImage";
-import { deleteCrew, fetchCrew } from "../../api/crew.api";
-import { resignCrewMember } from "../../api/crewMember.api";
-import { deleteCrewJoinRequest, requestCrewJoin } from "../../api/crewJoinRequest.api";
 import CrewMemberListModal from "../../components/crew/CrewMemberListModal";
-import Swal from "sweetalert2";
-import { fetchFeedList } from "../../api/feed.api";
-import { useAuthStore } from "../../store/authStore";
 import FeedCard from "../../components/feed/FeedCard";
-import { logAdFeedView } from "../../api/feedViewLog.api"
-import { faClose } from "@fortawesome/free-solid-svg-icons";
 import CommentPanel from "../../components/feed/CommentPanel";
+// store
+import { useAuthStore } from "../../store/authStore";
+import useCheckLogin from "../../util/RequiredLogin";
+
 
 const CrewProfilePage = () => {
 	const navigate = useNavigate();

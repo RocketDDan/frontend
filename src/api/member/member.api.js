@@ -1,4 +1,4 @@
-import apiClient from "./apiClient";
+import apiClient from "../_base/apiClient";
 
 // 회원 정보 조회 (GET /members/{memberId})
 const fetchMemberInfo = async (memberId) => {

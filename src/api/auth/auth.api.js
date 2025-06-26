@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import apiClient from "./apiClient";
+import apiClient from "../_base/apiClient";
 
 export const fetchUserInfo = async () => {
   try {

@@ -1,15 +1,16 @@
+// style
+import styles from "./LoginPage.module.css";
+import Swal from "sweetalert2";
+// react
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-import styles from "./LoginPage.module.css";
-
+// api
+import { login } from "../../api/auth/auth.api";
+// component
 import { Button, CustomButton } from "../../components/base/Button";
 import { TextInput } from "../../components/base/Input";
-
 import kakaoLogoImage from "../../assets/images/kakao_logo.png";
 
-import { login } from "../../api/auth.api";
-import Swal from "sweetalert2";
 
 const LoginPage = () => {
 	const kakaoLoginURL = `${process.env.REACT_APP_API_BASE_URL}/oauth2/authorization/kakao`;

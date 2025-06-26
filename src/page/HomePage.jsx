@@ -1,6 +1,10 @@
+// style
 import styles from './HomePage.module.css';
+// react
 import { useEffect, useState } from 'react';
-import { fetchRecommendedCrews } from '../api/crew.api';
+// api
+import { fetchRecommendedCrews } from '../api/crew/crew.api';
+// component
 import CrewCard from '../components/crew/CrewCard';
 import LoadingSpinner from "../components/base/LoadingSpinner";
 

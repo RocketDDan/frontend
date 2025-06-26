@@ -1,9 +1,11 @@
+// style
 import style from "./RewardListPage.module.css";
-
-import apiClient from "../../api/apiClient";
+// react
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+// api
+import apiClient from "../../api/_base/apiClient";
+// component
 import { SearchBar } from "../../components/search_bar/SearchBar";
 import { Table } from "../../components/base/Table";
 import { BasicSelect } from "../../components/base/Select"

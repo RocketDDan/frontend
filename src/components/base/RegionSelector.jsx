@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import style from "./RegionSelector.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { fetchRegionList, getAccessToken } from "../../api/region.api";
+import { fetchRegionList, getAccessToken } from "../../api/external/region.api";
 
 /**
  * 

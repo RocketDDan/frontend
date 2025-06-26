@@ -1,4 +1,4 @@
-import apiClient from './apiClient'; // apiClient 설정을 별도로 분리하여 import
+import apiClient from '../_base/apiClient'; // apiClient 설정을 별도로 분리하여 import
 
 const fetchCrew = async (crewId) => {
     try {

@@ -1,17 +1,22 @@
+// style
 import styles from "./CrewJoinRequestListPage.module.css";
-import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import { fetchCrewJoinRequestList } from "../../api/crewJoinRequest.api";
-import { sampleCrewJoinRequest } from "../../dto/crew.dto";
-import {CrewMemberInfo} from "../../components/crew/CrewMemberInfo";
-import {CrewHeader} from "../../components/crew/CrewHeader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { approveCrewJoinRequest, rejectCrewJoinRequest } from "../../api/crewJoinRequest.api"; // 크루 가입 요청 승인 API
-import { SearchBar } from "../../components/search_bar/SearchBar";
-import { BasicSelect} from "../../components/base/Select";
-import Pagination from "../../components/announcement/Pagination";
 import Swal from "sweetalert2";
+// react
+import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+// api
+import { fetchCrewJoinRequestList } from "../../api/crew/crewJoinRequest.api";
+import { approveCrewJoinRequest, rejectCrewJoinRequest } from "../../api/crew/crewJoinRequest.api"; // 크루 가입 요청 승인 API
+// component
+import { CrewMemberInfo } from "../../components/crew/CrewMemberInfo";
+import { CrewHeader } from "../../components/crew/CrewHeader";
+import { SearchBar } from "../../components/search_bar/SearchBar";
+import { BasicSelect } from "../../components/base/Select";
+import Pagination from "../../components/announcement/Pagination";
+import { sampleCrewJoinRequest } from "../../dto/crew.dto";
+
 
 const CrewJoinRequestListPage = () => {
     const { crewId } = useParams(); // 여기서 crewId를 받아옴
@@ -104,10 +109,10 @@ const CrewJoinRequestListPage = () => {
         }
         // 크루 가입 요청 목록을 가져오는 API 호출
         fetchCrewJoinRequestList(crewId, params)
-        .then(data => {
-            setCrewJoinRequestList(data.crewJoinRequestList);
-            setTotal(data.totalCount);
-        })
+            .then(data => {
+                setCrewJoinRequestList(data.crewJoinRequestList);
+                setTotal(data.totalCount);
+            })
     }
 
     useEffect(() => {
@@ -119,7 +124,7 @@ const CrewJoinRequestListPage = () => {
         <div className={styles.pageWrapper}>
             <div className={styles.searchHeader}>
                 <div className={styles.searchBar}>
-                    <SearchBar 
+                    <SearchBar
                         width={"100%"}
                         placeholder="닉네임을 입력해주세요."
                         value={nickname}
@@ -127,7 +132,7 @@ const CrewJoinRequestListPage = () => {
                             setNickname(val);
                             // handleSearchBar();
                         }}
-                        // onEnter={handleSearchBar}
+                    // onEnter={handleSearchBar}
                     />
                 </div>
 
@@ -143,60 +148,60 @@ const CrewJoinRequestListPage = () => {
             </div>
 
             <div className={styles.crewHeader}>
-                <CrewHeader columns={columns}/>
+                <CrewHeader columns={columns} />
             </div>
 
-            <div style={{flex: 1}} className={styles.crewJoinRequestList}>
-                { crewJoinRequestList.length > 0 && crewJoinRequestList.map((request, idx) => (
-                <div className={styles.requestWrapper} key={idx}>
-                    <CrewMemberInfo 
-                        memberId={request.memberId}
-                        nickname={request.nickname} 
-                        profilePath={request.profilePath} 
-                        date={request.requestDate.slice(0, 10)} 
-                    />
-                    <div className={styles.messageAndButtonWrapper}>
-                        <span
-                            className={styles.messageWrapper}
-                            onClick={onClickMessage}
-                        >
-                            {request.requestMessage && request.requestMessage.length > 35
-                                ? request.requestMessage.slice(0, 35) + "..."
-                                : request.requestMessage}
-                            {request.requestMessage == null && (
-                                "메세지 없음"
+            <div style={{ flex: 1 }} className={styles.crewJoinRequestList}>
+                {crewJoinRequestList.length > 0 && crewJoinRequestList.map((request, idx) => (
+                    <div className={styles.requestWrapper} key={idx}>
+                        <CrewMemberInfo
+                            memberId={request.memberId}
+                            nickname={request.nickname}
+                            profilePath={request.profilePath}
+                            date={request.requestDate.slice(0, 10)}
+                        />
+                        <div className={styles.messageAndButtonWrapper}>
+                            <span
+                                className={styles.messageWrapper}
+                                onClick={onClickMessage}
+                            >
+                                {request.requestMessage && request.requestMessage.length > 35
+                                    ? request.requestMessage.slice(0, 35) + "..."
+                                    : request.requestMessage}
+                                {request.requestMessage == null && (
+                                    "메세지 없음"
+                                )}
+                            </span>
+                            {status === "REQUEST" && (
+                                <div className={styles.buttonWrapper}>
+                                    <FontAwesomeIcon
+                                        icon={faCheck}
+                                        className="primaryCheck"
+                                        onClick={() => onClickAcceptBtn(request.crewJoinRequestId)}
+                                    />
+                                    <FontAwesomeIcon
+                                        icon={faXmark}
+                                        className="primaryCancel"
+                                        onClick={() => onClickDenyBtn(request.crewJoinRequestId)}
+                                    />
+                                </div>
                             )}
-                        </span>
-                        { status === "REQUEST" && (
-                        <div className={styles.buttonWrapper}>
-                            <FontAwesomeIcon 
-                                icon={faCheck} 
-                                className="primaryCheck"
-                                onClick={() => onClickAcceptBtn(request.crewJoinRequestId)}  
-                            />
-                            <FontAwesomeIcon 
-                                icon={faXmark} 
-                                className="primaryCancel"
-                                onClick={() => onClickDenyBtn(request.crewJoinRequestId)}
-                            />
+                            {status === "ACCEPT" && (
+                                <span style={{ color: "#7CB2FC" }}>승인</span>
+                            )}
+                            {status === "DENY" && (
+                                <span style={{ color: "#FF7723" }}>거절</span>
+                            )}
                         </div>
-                        )}
-                        { status === "ACCEPT" && (
-                            <span style={{color: "#7CB2FC"}}>승인</span>
-                        )}
-                        { status === "DENY" && (
-                            <span style={{color: "#FF7723"}}>거절</span>
-                        )}
                     </div>
-                </div>
-                )) }
-                { crewJoinRequestList.length === 0 && (
+                ))}
+                {crewJoinRequestList.length === 0 && (
                     <div className={styles.noRequests}>이력이 없습니다.</div>
                 )}
             </div>
 
 
-            <Pagination page={page} total={total} limit={perPage} onPageChange={setPage}/>
+            <Pagination page={page} total={total} limit={perPage} onPageChange={setPage} />
         </div>
     );
 }

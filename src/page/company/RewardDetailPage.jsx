@@ -1,11 +1,16 @@
+// style
+import styles from "./RewardDetailPage.module.css";
+// react
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import styles from "./RewardDetailPage.module.css";
+// component
+import { Button } from "../../components/base/Button";
+// api
+import apiClient from "../../api/_base/apiClient";
+// external
 import { Line, Bar } from "react-chartjs-2";
 import dayjs from "dayjs";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
-import { Button } from "../../components/base/Button";
-
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -17,10 +22,7 @@ import {
 	Tooltip,
 	Legend,
 } from "chart.js";
-import apiClient from "../../api/apiClient";
-
 dayjs.extend(isSameOrBefore);
-
 // Chart.js 컴포넌트 등록
 ChartJS.register(
 	CategoryScale,

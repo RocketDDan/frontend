@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import apiClient from "./apiClient";
+import apiClient from "../_base/apiClient";
 
 // 크루 멤버 탈퇴 
 const resignCrewMember = async (crewId, resignRequest) => {

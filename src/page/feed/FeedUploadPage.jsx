@@ -1,15 +1,21 @@
-import { useState } from "react";
+// style
 import style from "./FeedUploadPage.module.css";
-import { Button } from '../../components/base/Button'
-import { TextArea } from '../../components/base/Input';
-import { ImageAddBlock } from "../../components/image/ImageAddBlock";
-import { ImageBlock } from "../../components/image/ImageBlock";
-import { v7 as uuid7 } from "uuid";
-import { uploadFeed, uploadFeedByCompany } from "../../api/feed.api";
-import { useNavigate } from "react-router-dom";
-import KakaoMap from "../../components/map/KakaoMap";
 import Swal from "sweetalert2";
+// react
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { v7 as uuid7 } from "uuid";
+// api
+import { uploadFeed, uploadFeedByCompany } from "../../api/feed/feed.api";
+// component
+import { Button } from '../../components/base/Button'
+import KakaoMap from "../../components/map/KakaoMap";
+import { TextArea } from '../../components/base/Input';
+import { ImageBlock } from "../../components/image/ImageBlock";
+import { ImageAddBlock } from "../../components/image/ImageAddBlock";
+// store
 import { useAuthStore } from "../../store/authStore";
+
 
 const FeedUploadPage = () => {
 

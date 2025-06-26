@@ -1,4 +1,4 @@
-import apiClient from './apiClient';
+import apiClient from '../_base/apiClient';
 
 /**
  * 피드 댓글 가져오기
@@ -11,6 +11,23 @@ const fetchFeedCommentList = async (feedId) => {
         return response.data;
     } catch (error) {
         console.error("댓글 가져오기 실패:", error);
+        throw error;
+    }
+};
+
+/**
+ * 피드 댓글 수정하기
+ * @param {Number} feedId 
+ * @param {Number} commentId 
+ * @param {String} newComment 
+ * @returns 
+ */
+const updateFeedComment = async (feedId, commentId, { newComment }) => {
+    try {
+        const response = await apiClient.put(`/feeds/${feedId}/comments/${commentId}`, { newComment });
+        return response.data;
+    } catch (error) {
+        console.error('피드 수정 실패:', error);
         throw error;
     }
 };
@@ -46,4 +63,4 @@ const deleteFeedComment = async (feedId, commentId) => {
         throw error;
     }
 };
-export { fetchFeedCommentList, postFeedComment, deleteFeedComment }
+export { fetchFeedCommentList, updateFeedComment, postFeedComment, deleteFeedComment }

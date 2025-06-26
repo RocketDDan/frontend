@@ -4,7 +4,7 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { TextInput } from '../base/Input';
 import { Button } from '../base/Button';
 import { useCallback, useEffect, useState } from 'react';
-import { deleteFeedComment, fetchFeedCommentList, postFeedComment } from '../../api/feedComment.api';
+import { deleteFeedComment, fetchFeedCommentList, postFeedComment } from '../../api/feed/feedComment.api';
 import sampleFeed from '../../dto/feed.dto';
 import Swal from 'sweetalert2';
 import Comment from './Comment';

@@ -1,11 +1,15 @@
-import { useState } from "react";
-import AnnouncementFileUploader from "../../components/announcement/AnnouncementFileUploader";
+// style
+import styles from "./AnnouncementUploadPage.module.css";
 import 'react-quill-new/dist/quill.snow.css';
+import Swal from "sweetalert2";
+// react
+import { useState } from "react";
 import ReactQuill from "react-quill-new";
 import { useNavigate } from "react-router-dom";
-import apiClient from "../../api/apiClient";
-import styles from "./AnnouncementUploadPage.module.css";
-import Swal from "sweetalert2";
+// api
+import apiClient from "../../api/_base/apiClient";
+// componet
+import AnnouncementFileUploader from "../../components/announcement/AnnouncementFileUploader";
 
 const AnnouncementUploadPage = () => {
 	const navigate = useNavigate();

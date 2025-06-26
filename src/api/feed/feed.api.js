@@ -1,4 +1,4 @@
-import apiClient from './apiClient';
+import apiClient from '../_base/apiClient';
 
 const fetchFeedList = async (params) => {
     try {
@@ -12,10 +12,20 @@ const fetchFeedList = async (params) => {
 
 const deleteFeed = async (feedId) => {
     try {
-        const response = await apiClient.delete('/feeds/'+ feedId);
+        const response = await apiClient.delete('/feeds/' + feedId);
         return response.data;
     } catch (error) {
         console.error('피드 삭제 실패:', error);
+        throw error;
+    }
+};
+
+const updateFeed = async (feedId, { content, lat, lng, fileList }) => {
+    try {
+        const response = await apiClient.put(`/feeds/${feedId}`, { content, lat, lng, fileList });
+        return response.data;
+    } catch (error) {
+        console.error('피드 수정 실패:', error);
         throw error;
     }
 };
@@ -63,4 +73,4 @@ const uploadFeedByCompany = async (content, lat, lng, fileList, amount) => {
     }
 }
 
-export { fetchFeedList, deleteFeed, uploadFeed, uploadFeedByCompany, }
+export { fetchFeedList, updateFeed, deleteFeed, uploadFeed, uploadFeedByCompany, }

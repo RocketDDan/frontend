@@ -1,13 +1,17 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+// style
+import styles from "./AnnouncementDetailPage.module.css";
+import Swal from "sweetalert2";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
-
-import styles from "./AnnouncementDetailPage.module.css";
+// react
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+// api
+import apiClient from "../../api/_base/apiClient";
+// component
 import { Button } from "../../components/base/Button";
-import apiClient from "../../api/apiClient";
+// store
 import { useAuthStore } from "../../store/authStore";
-import Swal from "sweetalert2";
 
 const AnnouncementDetailPage = () => {
 	const { announcementId } = useParams();

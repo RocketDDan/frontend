@@ -1,18 +1,24 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import Swal from "sweetalert2";
-import { useAuthStore } from "../../store/authStore";
-import { useNavigate } from "react-router-dom";
-import CrewCard from "../../components/crew/CrewCard";
+// style
 import style from "./CrewListPage.module.css";
-import RegionSelector from "../../components/base/RegionSelector";
-import { fetchCrewList, fetchMyCrew } from "../../api/crew.api";
-import { SearchBar } from "../../components/search_bar/SearchBar";
-import LoadingSpinner from "../../components/base/LoadingSpinner";
-import { BasicSelect } from "../../components/base/Select";
+import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import useCheckLogin from "../../util/RequiredLogin";
+// react
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+// api
+import { fetchCrewList, fetchMyCrew } from "../../api/crew/crew.api";
+// component
+import RegionSelector from "../../components/base/RegionSelector";
+import CrewCard from "../../components/crew/CrewCard";
 import HomePage from "../HomePage";
+import LoadingSpinner from "../../components/base/LoadingSpinner";
+import { SearchBar } from "../../components/search_bar/SearchBar";
+import { BasicSelect } from "../../components/base/Select";
+// store
+import useCheckLogin from "../../util/RequiredLogin";
+import { useAuthStore } from "../../store/authStore";
+
 
 const CrewListPage = () => {
 	const [hasCrew, setHasCrew] = useState(false);

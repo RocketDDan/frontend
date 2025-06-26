@@ -1,4 +1,4 @@
-import apiClient from './apiClient';
+import apiClient from '../_base/apiClient';
 
 const logAdFeedView = async (feedId) => {
     try {

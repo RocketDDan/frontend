@@ -1,13 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { TextArea, TextInput } from "../../components/base/Input";
-import RegionSelector from "../../components/base/RegionSelector";
+// style
 import styles from "./CrewCreatePage.module.css";
-import { Button } from "../../components/base/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { checkDuplicateCrewName, createCrew } from "../../api/crew.api";
 import Swal from "sweetalert2";
+// react
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+// api
+import { checkDuplicateCrewName, createCrew } from "../../api/crew/crew.api";
+// component
+import { TextArea, TextInput } from "../../components/base/Input";
+import RegionSelector from "../../components/base/RegionSelector";
+import { Button } from "../../components/base/Button";
 
 const CrewCreatePage = () => {
     const [crewName, setCrewName] = useState("");

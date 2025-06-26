@@ -1,11 +1,13 @@
+// react
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../store/authStore";
-
+// login
 import LoadingSpinner from "../../components/base/LoadingSpinner";
-
-import { fetchUserInfo } from "../../api/auth.api";
-import { fetchMyCrew, fetchCrew } from "../../api/crew.api";
+// api
+import { fetchUserInfo } from "../../api/auth/auth.api";
+import { fetchMyCrew, fetchCrew } from "../../api/crew/crew.api";
+// store
+import { useAuthStore } from "../../store/authStore";
 
 const LoginCallback = () => {
   const navigate = useNavigate();

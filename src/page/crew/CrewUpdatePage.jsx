@@ -1,15 +1,17 @@
-import { useParams, useNavigate } from 'react-router-dom';
+// style
 import styles from './CrewUpdatePage.module.css';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Swal from 'sweetalert2';
+// react
 import { useEffect, useState, useRef } from 'react';
-import { fetchCrew, updateCrew } from "../../api/crew.api";
+import { useParams, useNavigate } from 'react-router-dom';
+// api
+import { fetchCrew, updateCrew, checkDuplicateCrewName, createCrew  } from "../../api/crew/crew.api";
+// component
 import { TextArea, TextInput } from '../../components/base/Input';
 import { Button, SecondaryHoverButton } from '../../components/base/Button';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import RegionSelector from '../../components/base/RegionSelector';
-import { checkDuplicateCrewName, createCrew } from '../../api/crew.api';
-import Swal from 'sweetalert2';
 
 
 const CrewUpdatePage = () => {

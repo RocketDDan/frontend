@@ -1,16 +1,17 @@
+// style
+import style from "./SignupPage.module.css";
+import Swal from "sweetalert2";
+// react
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
-import style from "./SignupPage.module.css";
-
+// component
 import { Button } from "../../components/base/Button";
 import { TextInput, } from "../../components/base/Input";
 import { BasicRadio } from "../../components/base/Radio";
 import { ImageAddBlock } from "../../components/image/ImageAddBlock";
 import { ProfileImage } from "../../components/profile/ProfileImage";
-
-import { checkNicknameDuplicate, signUp } from "../../api/auth.api";
-import Swal from "sweetalert2";
+// api
+import { checkNicknameDuplicate, signUp } from "../../api/auth/auth.api";
 
 const SignupPage = () => {
 	const location = useLocation();

@@ -8,14 +8,14 @@ import { faChevronLeft, faChevronRight, faHeart as faSolidHeart, faTrash } from 
 import { faMessage, faHeart as faRegularHeart } from '@fortawesome/free-regular-svg-icons'
 // dto
 import SampleFeed from "../../dto/feed.dto";
-import { fetchLikeFeed, fetchUnlikeFeed } from '../../api/likeFeed.api';
+import { fetchLikeFeed, fetchUnlikeFeed } from '../../api/feed/likeFeed.api';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import KakaoMap from '../map/KakaoMap';
 import MediaViewer from '../image/MediaViewer';
 import useCheckLogin from '../../util/RequiredLogin';
 import { useAuthStore } from '../../store/authStore';
-import { deleteFeed } from '../../api/feed.api';
+import { deleteFeed } from '../../api/feed/feed.api';
 import Swal from 'sweetalert2';
 
 /**

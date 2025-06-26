@@ -1,16 +1,18 @@
 // css
 import style from './FeedListPage.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 // library
 import { useState, useEffect, useCallback, useRef } from "react";
 // api
-import { fetchFeedList } from "../../api/feed.api";
+import { fetchFeedList } from "../../api/feed/feed.api";
+import { logAdFeedView } from '../../api/feed/feedViewLog.api';
 // Component
 import FeedCard from "../../components/feed/FeedCard";
 import CommentPanel from '../../components/feed/CommentPanel';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { logAdFeedView } from '../../api/feedViewLog.api';
+
+// auth
 import useCheckLogin from '../../util/RequiredLogin';
 import { useAuthStore } from '../../store/authStore';
 

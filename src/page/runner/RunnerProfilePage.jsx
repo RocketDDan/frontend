@@ -1,15 +1,18 @@
+// style
+import styles from "./RunnerProfilePage.module.css";
+import { faClose, faCrown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import styles from "./RunnerProfilePage.module.css";
-import { ProfileImage } from "../../components/profile/ProfileImage";
-import { fetchMemberProfile } from "../../api/member.api";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCrown } from "@fortawesome/free-solid-svg-icons";
-import { fetchFeedList } from "../../api/feed.api";
+// api
+import { fetchMemberProfile } from "../../api/member/member.api";
+import { fetchFeedList } from "../../api/feed/feed.api";
+import { logAdFeedView } from "../../api/feed/feedViewLog.api";
+// component
 import FeedCard from "../../components/feed/FeedCard";
-import { logAdFeedView } from "../../api/feedViewLog.api";
-import { faClose } from '@fortawesome/free-solid-svg-icons';
 import CommentPanel from "../../components/feed/CommentPanel";
+import { ProfileImage } from "../../components/profile/ProfileImage";
 
 const RunnerProfilePage = () => {
   const navigate = useNavigate();

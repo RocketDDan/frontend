@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { sendKakaoPayApprove } from "../../api/pay.api";
+// api
+import { sendKakaoPayApprove } from "../../api/pay/pay.api";
 
 const KakaoPaySuccessPage = () => {
     const navigate = useNavigate();
