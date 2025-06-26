@@ -42,7 +42,7 @@ const RewardListPage = () => {
                     createdAt: item.createdAt.split(" ")[0] + " " + item.createdAt.split(" ")[1].split(".")[0],
                 }));
                 setData(updatedData);
-                // setTotalCount(res.data.totalCount);
+                setTotalCount(res.data.totalCount);
 
                 const total = updatedData.reduce((sum, item) => sum + (item.chargeAmount || 0), 0);
                 setTotalCharge(total);
