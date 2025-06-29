@@ -48,6 +48,7 @@ const SearchBar = ({
                 value={value}
                 onChange={handleChange}
                 onKeyDown={handleEnter}
+                onCompositionEnd={(e) => onChange?.(e.target.value)}
                 maxLength={50}
                 style={{ width: "100%", height: "100%" }}
             />

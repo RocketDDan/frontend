@@ -83,6 +83,23 @@ const CrewListPage = () => {
 		});
 	}, [order, region]);
 
+	useEffect(() => {
+		setPage(1);
+		setIsLoading(true);
+		fetchCrewList({
+			crewName: name,
+			page: 1,
+			perPage,
+			region,
+			order,
+		}).then((data) => {
+			setCrewList(data);
+			setIsLoading(false);
+			setHasMore(data.length === perPage);
+			afterFetchCrewList(data);
+		});
+	}, [name]);
+
 	// page 변경 시 데이터 누적 (page 1은 위에서 처리함)
 	useEffect(() => {
 		if (page === 1) return; // page 1은 위에서 처리함

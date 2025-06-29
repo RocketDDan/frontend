@@ -18,7 +18,7 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
     const [isLastPage, setIsLastPage] = useState(false);
     const observerTarget = useRef(null);
     const memberListRef = useRef(null);
-    const perPage = 50;
+    const perPage = 5;
     const columnsForMember = [
         { label: "크루원", width: "110px" },
         { label: "가입일", width: "130px" },
@@ -42,6 +42,15 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
         setPage(1);
         setIsLastPage(false);
         setCrewMemberList([]);
+        setIsLoading(true);
+        fetchCrewMembers(crewId, { nickname, page: 1, perPage })  // page는 1로 고정
+            .then(data => {
+                setCrewMemberList(data);
+                setIsLoading(false);
+                if (data.length === 0) {
+                    setIsLastPage(true);
+                }
+            });
     };
 
     const handleNickname = (val) => {
@@ -85,52 +94,43 @@ const CrewMemberListModal = ({ crewId, isLeader, onClose }) => {
         });
     };
 
-    // 🔄 nickname 바뀔 때 즉시 데이터 요청
     useEffect(() => {
-        setPage(1);
-        setIsLastPage(false);
-        setIsLoading(true);
-
-        fetchCrewsInit();
-
+        resetAll();
     }, [nickname]);
 
-    // // page 변경 시 데이터 누적 (nickname 변경 시에는 resetAll로 page가 1이 됨)
-    // useEffect(() => {
-    //     if (isLastPage) return;
+    useEffect(() => {
+        if (isLastPage) return;
 
-    //     setIsLoading(true);
+        setIsLoading(true);
 
-    //     fetchCrewMembers(crewId, { nickname, page, perPage })
-    //         .then(data => {
-    //             setCrewMemberList(prev => page === 1 ? data : [...prev, ...data]);
-    //             setIsLoading(false);
-    //             if (data.length === 0) {
-    //                 setIsLastPage(true);
-    //             }
-    //         });
-    // }, [page]);
+        fetchCrewMembers(crewId, { nickname, page, perPage })
+            .then(data => {
+                setCrewMemberList(prev => page === 1 ? data : [...prev, ...data]);
+                setIsLoading(false);
+                if (data.length === 0) {
+                    setIsLastPage(true);
+                }
+            });
+    }, [page]);
 
-    // // IntersectionObserver 콜백
-    // const handleObserver = useCallback(
-    //     (entries) => {
-    //         const target = entries[0];
-    //         if (target.isIntersecting && !isLoading && !isLastPage) {
-    //             setTimeout(() => setPage(prev => prev + 1), 100);
-    //         }
-    //     },
-    //     [isLoading]
-    // );
+    const handleObserver = useCallback(
+        (entries) => {
+            const target = entries[0];
+            if (target.isIntersecting && !isLoading && !isLastPage) {
+                setPage(prev => prev + 1);
+            }
+        },
+        [isLoading]
+    );
 
-    // useEffect(() => {
-    //     if (page === 1) return;
-    //     const observer = new window.IntersectionObserver(handleObserver, {
-    //         threshold: 0.5,
-    //         root: null, // 내부 스크롤 컨테이너를 root로 지정
-    //     });
-    //     if (observerTarget.current) observer.observe(observerTarget.current);
-    //     return () => observer.disconnect();
-    // }, [handleObserver]);
+    useEffect(() => {
+        const observer = new window.IntersectionObserver(handleObserver, {
+            threshold: 0.5,
+            root: null, // 내부 스크롤 컨테이너를 root로 지정
+        });
+        if (observerTarget.current) observer.observe(observerTarget.current);
+        return () => observer.disconnect();
+    }, [handleObserver]);
 
     const handleOverlayClick = (e) => {
         if (e.target === e.currentTarget) {
