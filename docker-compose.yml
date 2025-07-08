@@ -1,0 +1,11 @@
+services:
+  frontend:
+    image: hanol98/runners-hi-frontend:latest
+    container_name: runners-hi-frontend
+    ports:
+      - "3000:80"
+    networks:
+      - runners-hi-network
+networks:
+  runners-hi-network:
+    external: true # 외부 네트워크 사용
