@@ -98,18 +98,20 @@ pipeline {
         }
 
         // (선택) 바로 Argo CD sync 를 트리거 하고 싶다면 아래 스테이지 추가
-        stage('ArgoCD Sync (optional)') {
+        stage('ArgoCD Sync') {
             steps {
                 withCredentials([
-                    string(credentialsId: 'argocd-token', variable: 'ARGO_TOKEN'),
-                    string(credentialsId: 'argocd-server', variable: 'ARGO_SERVER')
+                    string(credentialsId: 'argocd-server', variable: 'ARGO_SERVER'),
+                    string(credentialsId: 'argocd-token',  variable: 'ARGO_TOKEN')
                 ]) {
-                    sh """
-                        echo "🔄 Logging into Argo CD"
-                        argocd login ${ARGO_SERVER} --grpc-web --auth-token ${ARGO_TOKEN} --insecure
-                        echo "🛰️ Sync application"
-                        argocd app sync runners-hi-frontend
-                    """
+                    sh '''
+                    # 1) 로그인 옵션 순서 수정
+                    argocd login --grpc-web --insecure --auth-token ${ARGO_TOKEN} ${ARGO_SERVER}
+                    # 2) 앱 동기화
+                    argocd app sync runners-hi-frontend
+                '''
+                // 또는 아래 한 줄만
+                // argocd --grpc-web --insecure --server ${ARGO_SERVER} --auth-token ${ARGO_TOKEN} app sync runners-hi-frontend --yes
                 }
             }
         }
