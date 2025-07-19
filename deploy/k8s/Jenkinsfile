@@ -56,7 +56,7 @@ pipeline {
                     ]) {
                         sh """
                             echo "🔑 Docker login"
-                            echo "${DOCKER_USER}" | docker login -u "${DOCKER_PASS}" --password-stdin
+                            echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
                             echo "🚀 Pushing image"
                             docker push ${IMAGE_NAME}:${BUILD_NUMBER}
                         """
