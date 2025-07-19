@@ -1,0 +1,5 @@
+namespace: runners-hi
+
+resources:
+  - service-frontend.yaml
+  - deployment-frontend.yaml

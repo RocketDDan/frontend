@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: runners-hi-frontend
-  namespace: frontend
+  # namespace: frontend
   labels:
     app: runners-hi-frontend
 spec:
