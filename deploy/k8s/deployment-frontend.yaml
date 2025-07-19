@@ -6,7 +6,7 @@ metadata:
   labels:
     app: runners-hi-frontend
 spec:
-  replicas: 1  # 필요에 따라 복제 개수 늘리기
+  replicas: 3  # 필요에 따라 복제 개수 늘리기
   selector:
     matchLabels:
       app: runners-hi-frontend
