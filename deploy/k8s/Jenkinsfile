@@ -90,7 +90,7 @@ pipeline {
                         sh """
                             git add ${K8S_MANIFEST_DIR}/deployment-frontend.yaml
                             git commit -m "ci: bump frontend image to ${BUILD_NUMBER}"
-                            git push https://${GIT_USER}:${GIT_PASS}@github.com/your-org/runners-hi.git HEAD:main
+                            git push https://github.com/RocketDDan/frontend.git HEAD:main
                         """
                     }
                 }
