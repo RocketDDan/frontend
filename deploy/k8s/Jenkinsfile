@@ -1,0 +1,126 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'NodeJS 16.13.2'
+    }
+
+    environment {
+        // Docker Hub 로그인 정보 (Jenkins Credential ID)
+        IMAGE_NAME        = 'hanol98/runners-hi-frontend'
+        K8S_MANIFEST_DIR  = 'deploy/k8s'
+        GIT_CONFIG_USERNAME = 'hanol98'
+        GIT_CONFIG_EMAIL = 'hanol98@naver.com'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh '''
+                    echo "📦 Installing dependencies"
+                    npm install
+                '''
+            }
+        }
+
+        stage('Build React') {
+            steps {
+                sh '''
+                    echo "🔨 Building React App"
+                    CI=false GENERATE_SOURCEMAP=false npm run build
+                '''
+            }
+        }
+
+        stage('Build & Push Docker Image') {
+            steps {
+                script {
+                    // 1) Docker 빌드
+                    sh """
+                        echo "🐳 Building Docker image"
+                        docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} .
+                    """
+                    // 2) Docker Hub 로그인 & 푸시
+                    withCredentials([
+                        usernamePassword(
+                            credentialsId: 'Docker-Hub-Access-Token',
+                            usernameVariable: 'DOCKER_USER',
+                            passwordVariable: 'DOCKER_PASS'
+                        )
+                    ]) {
+                        sh """
+                            echo "🔑 Docker login"
+                            echo "${DOCKER_USER}" | docker login -u "${DOCKER_PASS}" --password-stdin
+                            echo "🚀 Pushing image"
+                            docker push ${IMAGE_NAME}:${BUILD_NUMBER}
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('GitOps: Update K8s Manifest') {
+            steps {
+                script {
+                    // Git 사용자 정보 설정
+                    sh """
+                        git config user.name "${GIT_CONFIG_USERNAME}"
+                        git config user.email "${GIT_CONFIG_EMAIL}"
+                    """
+                    // deployment YAML의 image 태그 업데이트
+                    sh """
+                        echo "✏️ Bumping K8s manifest image tag"
+                        sed -i \\
+                        -e "s|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${BUILD_NUMBER}|g" \\
+                        ${K8S_MANIFEST_DIR}/deployment-frontend.yaml
+                    """
+                    // 커밋 & 푸시
+                    withCredentials([
+                        usernamePassword(
+                            credentialsId: 'Git-Hub-Access-Token',
+                            usernameVariable: 'GIT_USER',
+                            passwordVariable: 'GIT_PASS')
+                    ]) {
+                        sh """
+                            git add ${K8S_MANIFEST_DIR}/deployment-frontend.yaml
+                            git commit -m "ci: bump frontend image to ${BUILD_NUMBER}"
+                            git push https://${GIT_USER}:${GIT_PASS}@github.com/your-org/runners-hi.git HEAD:main
+                        """
+                    }
+                }
+            }
+        }
+
+        // (선택) 바로 Argo CD sync 를 트리거 하고 싶다면 아래 스테이지 추가
+        stage('ArgoCD Sync (optional)') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'argocd-token', variable: 'ARGO_TOKEN'),
+                    string(credentialsId: 'argocd-server', variable: 'ARGO_SERVER')
+                ]) {
+                    sh """
+                        echo "🔄 Logging into Argo CD"
+                        argocd login ${ARGO_SERVER} --grpc-web --auth-token ${ARGO_TOKEN} --insecure
+                        echo "🛰️ Sync application"
+                        argocd app sync runners-hi-frontend
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo '🧹 Cleaning workspace'
+            sh '''
+                rm -rf build
+            '''
+        }
+    }
+}
