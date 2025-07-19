@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: runners-hi-frontend
+spec:
+  source:
+    repoURL: https://github.com/your-org/runners-hi.git
+    targetRevision: HEAD
+    path: deploy/k8s   # ← 매니페스트 폴더
+    directory:
+      recurse: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: frontend
+  project: default
