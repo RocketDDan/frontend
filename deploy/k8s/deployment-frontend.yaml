@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: hanol98/runners-hi-frontend:81
+        image: hanol98/runners-hi-frontend:82
         ports:
         - containerPort: 80
         # readinessProbe/livenessProbe 등 추가 가능
