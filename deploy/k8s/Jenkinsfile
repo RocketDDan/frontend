@@ -44,15 +44,21 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                // Pipeline Caching 플러그인 사용
-                cache(
-                    cacheKey: "npm-${hashFiles('package-lock.json')}",
-                    paths: ["node_modules"]
-                ) {
-                    sh '''
-                        echo "📦 Installing dependencies"
-                        npm ci
-                    '''
+                script {
+                    // package-lock.json 해시를 키로 사용
+                    def lockHash = hashFiles('package-lock.json')
+                    // arbitraryFileCache DSL 로 node_modules 캐시
+                    cache(caches: [
+                        arbitraryFileCache(
+                            name: "npm-${lockHash}",
+                            path: 'node_modules'
+                        )
+                    ]) {
+                        sh '''
+                            echo "📦 Installing dependencies (with cache)"
+                            npm ci
+                        '''
+                    }
                 }
             }
         }
