@@ -14,6 +14,24 @@ pipeline {
     }
 
     stages {
+
+        stage('Skip Check') {
+            when {
+                expression {
+                    // 마지막 커밋 메시지를 읽어서 [ci skip] 포함 시 전체 파이프라인 종료
+                    return sh(
+                        script: 'git log -1 --pretty=%B', 
+                        returnStdout: true
+                    ).trim().contains('[ci skip]')
+                }
+            }
+            steps {
+                echo "📌 Detected [ci skip], skipping entire build."
+                // 에러 없이 종료
+                script { currentBuild.result = 'SUCCESS'; error('Skipping build') }
+            }
+        }
+
         stage('Checkout') {
             steps {
                 checkout scm
@@ -98,28 +116,28 @@ pipeline {
         }
 
         // (선택) 바로 Argo CD sync 를 트리거 하고 싶다면 아래 스테이지 추가
-        stage('ArgoCD Sync') {
-            steps {
-                withCredentials([
-                    string(credentialsId: 'argocd-server', variable: 'ARGO_SERVER'),
-                    string(credentialsId: 'argocd-token',  variable: 'ARGO_TOKEN')
-                ]) {
-                    sh """
-                        # 1) 동기화 실행
-                        argocd --grpc-web --insecure \
-                        --server ${ARGO_SERVER} \
-                        --auth-token ${ARGO_TOKEN} \
-                        app sync runners-hi-frontend
+        // stage('ArgoCD Sync') {
+        //     steps {
+        //         withCredentials([
+        //             string(credentialsId: 'argocd-server', variable: 'ARGO_SERVER'),
+        //             string(credentialsId: 'argocd-token',  variable: 'ARGO_TOKEN')
+        //         ]) {
+        //             sh """
+        //                 # 1) 동기화 실행
+        //                 argocd --grpc-web --insecure \
+        //                     --server ${ARGO_SERVER} \
+        //                     --auth-token ${ARGO_TOKEN} \
+        //                     app sync runners-hi-frontend
 
-                        # 2) (선택) 동기화가 끝날 때까지 대기
-                        argocd --grpc-web --insecure \
-                        --server ${ARGO_SERVER} \
-                        --auth-token ${ARGO_TOKEN} \
-                        app wait runners-hi-frontend --health --timeout 300
-                    """
-                }
-            }
-        }
+        //                 # 2) (선택) 동기화가 끝날 때까지 대기
+        //                 argocd --grpc-web --insecure \
+        //                     --server ${ARGO_SERVER} \
+        //                     --auth-token ${ARGO_TOKEN} \
+        //                     app wait runners-hi-frontend --health --timeout 300
+        //             """
+        //         }
+        //     }
+        // }
     }
 
     post {
