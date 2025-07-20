@@ -19,23 +19,6 @@ pipeline {
     }
 
     stages {
-        stage('Skip Check') {
-            when {
-                expression {
-                    // 마지막 커밋 메시지를 읽어서 [ci skip] 포함 시 전체 파이프라인 종료
-                    return sh(
-                        script: 'git log -1 --pretty=%B', 
-                        returnStdout: true
-                    ).trim().contains('[ci skip]')
-                }
-            }
-            steps {
-                echo "📌 Detected [ci skip], skipping entire build."
-                // 에러 없이 종료
-                script { currentBuild.result = 'SUCCESS'; error('Skipping build') }
-            }
-        }
-
         stage('Checkout') {
             steps {
                 checkout scm
@@ -86,62 +69,6 @@ pipeline {
                 }
             }
         }
-
-        // stage('GitOps: Update K8s Manifest') {
-        //     steps {
-        //         script {
-        //             // Git 사용자 정보 설정
-        //             sh """
-        //                 git config user.name "${GIT_CONFIG_USERNAME}"
-        //                 git config user.email "${GIT_CONFIG_EMAIL}"
-        //             """
-        //             // deployment YAML의 image 태그 업데이트
-        //             sh """
-        //                 echo "✏️ Bumping K8s manifest image tag"
-        //                 sed -i \\
-        //                 -e "s|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${BUILD_NUMBER}|g" \\
-        //                 ${K8S_MANIFEST_DIR}/deployment-frontend.yaml
-        //             """
-        //             // 커밋 & 푸시
-        //             withCredentials([
-        //                 usernamePassword(
-        //                     credentialsId: 'Git-Hub-Access-Token',
-        //                     usernameVariable: 'GIT_USER',
-        //                     passwordVariable: 'GIT_PASS')
-        //             ]) {
-        //                 sh """
-        //                     git add ${K8S_MANIFEST_DIR}/deployment-frontend.yaml
-        //                     git commit -m "ci: bump frontend image to ${BUILD_NUMBER} [ci skip]"
-        //                     git push https://${GIT_USER}:${GIT_PASS}@github.com/RocketDDan/frontend.git HEAD:main
-        //                 """
-        //             }
-        //         }
-        //     }
-        // }
-
-        // (선택) 바로 Argo CD sync 를 트리거 하고 싶다면 아래 스테이지 추가
-        // stage('ArgoCD Sync') {
-        //     steps {
-        //         withCredentials([
-        //             string(credentialsId: 'argocd-server', variable: 'ARGO_SERVER'),
-        //             string(credentialsId: 'argocd-token',  variable: 'ARGO_TOKEN')
-        //         ]) {
-        //             sh """
-        //                 # 1) 동기화 실행
-        //                 argocd --grpc-web --insecure \
-        //                     --server ${ARGO_SERVER} \
-        //                     --auth-token ${ARGO_TOKEN} \
-        //                     app sync runners-hi-frontend
-
-        //                 # 2) (선택) 동기화가 끝날 때까지 대기
-        //                 argocd --grpc-web --insecure \
-        //                     --server ${ARGO_SERVER} \
-        //                     --auth-token ${ARGO_TOKEN} \
-        //                     app wait runners-hi-frontend --health --timeout 300
-        //             """
-        //         }
-        //     }
-        // }
     }
 
     post {

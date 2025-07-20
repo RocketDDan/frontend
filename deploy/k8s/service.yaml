@@ -4,11 +4,11 @@ metadata:
   name: runners-hi-frontend
   # namespace: frontend
 spec:
-  type: ClusterIP   # 내부용; 외부 노출 시 NodePort 또는 LoadBalancer로 변경
+  type: NodePort
   selector:
     app: runners-hi-frontend
   ports:
   - name: http
     port: 80
     targetPort: 80
-    protocol: TCP
+    nodePort: 30000
