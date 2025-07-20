@@ -105,11 +105,17 @@ pipeline {
                     string(credentialsId: 'argocd-token',  variable: 'ARGO_TOKEN')
                 ]) {
                     sh """
-                        # 로그인 없이 동기화만 수행 (--yes로 확인 생략)
+                        # 1) 동기화 실행
                         argocd --grpc-web --insecure \
-                            --server ${ARGO_SERVER} \
-                            --auth-token ${ARGO_TOKEN} \
-                            app sync runners-hi-frontend --yes
+                        --server ${ARGO_SERVER} \
+                        --auth-token ${ARGO_TOKEN} \
+                        app sync runners-hi-frontend
+
+                        # 2) (선택) 동기화가 끝날 때까지 대기
+                        argocd --grpc-web --insecure \
+                        --server ${ARGO_SERVER} \
+                        --auth-token ${ARGO_TOKEN} \
+                        app wait runners-hi-frontend --health --timeout 300
                     """
                 }
             }
