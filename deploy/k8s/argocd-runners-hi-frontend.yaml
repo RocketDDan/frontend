@@ -14,3 +14,7 @@ spec:
     server: https://kubernetes.default.svc
     namespace: runners-hi
   project: default
+  syncPolicy:
+    automated:
+      prune: true       # 선택: Git에서 제거된 리소스도 함께 삭제
+      selfHeal: true    # 선택: 클러스터 드리프트 자동 복구
