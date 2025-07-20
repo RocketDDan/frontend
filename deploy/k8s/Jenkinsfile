@@ -104,14 +104,13 @@ pipeline {
                     string(credentialsId: 'argocd-server', variable: 'ARGO_SERVER'),
                     string(credentialsId: 'argocd-token',  variable: 'ARGO_TOKEN')
                 ]) {
-                    sh '''
-                    # 1) 로그인 옵션 순서 수정
-                    argocd login --grpc-web --insecure --auth-token ${ARGO_TOKEN} ${ARGO_SERVER}
-                    # 2) 앱 동기화
-                    argocd app sync runners-hi-frontend
-                '''
-                // 또는 아래 한 줄만
-                // argocd --grpc-web --insecure --server ${ARGO_SERVER} --auth-token ${ARGO_TOKEN} app sync runners-hi-frontend --yes
+                    sh """
+                        # 로그인 없이 동기화만 수행 (--yes로 확인 생략)
+                        argocd --grpc-web --insecure \
+                            --server ${ARGO_SERVER} \
+                            --auth-token ${ARGO_TOKEN} \
+                            app sync runners-hi-frontend --yes
+                    """
                 }
             }
         }
