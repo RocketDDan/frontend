@@ -45,19 +45,20 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // package-lock.json 해시를 키로 사용
-                    def lockHash = hashFiles('package-lock.json')
-                    // arbitraryFileCache DSL 로 node_modules 캐시
+                    // 1) package-lock.json 내용을 읽어서 SHA1 해시 계산
+                    def lockHash = sha1 text: readFile('package-lock.json')
+        
+                    // 2) node_modules 디렉터리를 SHA1 해시를 키로 캐시
                     cache(caches: [
-                        arbitraryFileCache(
-                            name: "npm-${lockHash}",
-                            path: 'node_modules'
-                        )
+                    arbitraryFileCache(
+                        name: "npm-${lockHash}",
+                        path: 'node_modules'
+                    )
                     ]) {
-                        sh '''
-                            echo "📦 Installing dependencies (with cache)"
-                            npm ci
-                        '''
+                    sh '''
+                        echo "📦 Installing dependencies (with cache)"
+                        npm ci
+                    '''
                     }
                 }
             }
