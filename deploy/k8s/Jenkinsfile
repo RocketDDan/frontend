@@ -87,37 +87,37 @@ pipeline {
             }
         }
 
-        stage('GitOps: Update K8s Manifest') {
-            steps {
-                script {
-                    // Git 사용자 정보 설정
-                    sh """
-                        git config user.name "${GIT_CONFIG_USERNAME}"
-                        git config user.email "${GIT_CONFIG_EMAIL}"
-                    """
-                    // deployment YAML의 image 태그 업데이트
-                    sh """
-                        echo "✏️ Bumping K8s manifest image tag"
-                        sed -i \\
-                        -e "s|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${BUILD_NUMBER}|g" \\
-                        ${K8S_MANIFEST_DIR}/deployment-frontend.yaml
-                    """
-                    // 커밋 & 푸시
-                    withCredentials([
-                        usernamePassword(
-                            credentialsId: 'Git-Hub-Access-Token',
-                            usernameVariable: 'GIT_USER',
-                            passwordVariable: 'GIT_PASS')
-                    ]) {
-                        sh """
-                            git add ${K8S_MANIFEST_DIR}/deployment-frontend.yaml
-                            git commit -m "ci: bump frontend image to ${BUILD_NUMBER} [ci skip]"
-                            git push https://${GIT_USER}:${GIT_PASS}@github.com/RocketDDan/frontend.git HEAD:main
-                        """
-                    }
-                }
-            }
-        }
+        // stage('GitOps: Update K8s Manifest') {
+        //     steps {
+        //         script {
+        //             // Git 사용자 정보 설정
+        //             sh """
+        //                 git config user.name "${GIT_CONFIG_USERNAME}"
+        //                 git config user.email "${GIT_CONFIG_EMAIL}"
+        //             """
+        //             // deployment YAML의 image 태그 업데이트
+        //             sh """
+        //                 echo "✏️ Bumping K8s manifest image tag"
+        //                 sed -i \\
+        //                 -e "s|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${BUILD_NUMBER}|g" \\
+        //                 ${K8S_MANIFEST_DIR}/deployment-frontend.yaml
+        //             """
+        //             // 커밋 & 푸시
+        //             withCredentials([
+        //                 usernamePassword(
+        //                     credentialsId: 'Git-Hub-Access-Token',
+        //                     usernameVariable: 'GIT_USER',
+        //                     passwordVariable: 'GIT_PASS')
+        //             ]) {
+        //                 sh """
+        //                     git add ${K8S_MANIFEST_DIR}/deployment-frontend.yaml
+        //                     git commit -m "ci: bump frontend image to ${BUILD_NUMBER} [ci skip]"
+        //                     git push https://${GIT_USER}:${GIT_PASS}@github.com/RocketDDan/frontend.git HEAD:main
+        //                 """
+        //             }
+        //         }
+        //     }
+        // }
 
         // (선택) 바로 Argo CD sync 를 트리거 하고 싶다면 아래 스테이지 추가
         // stage('ArgoCD Sync') {
